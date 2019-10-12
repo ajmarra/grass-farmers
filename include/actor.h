@@ -12,17 +12,17 @@ class Actor {
         
         virtual void reset(void) = 0;
         
-        double get_x(void);
+        double getX(void);
         
-        double get_y(void);
+        double getY(void);
         
-        double get_width(void);
+        double getWidth(void);
 
-        double get_height(void);
+        double getHeight(void);
 
-        double get_x_speed(void);
+        double getXSpeed(void);
         
-        double get_y_speed(void);
+        double getYSpeed(void);
 
         bool collides(Actor a);
 };
