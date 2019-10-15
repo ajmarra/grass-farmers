@@ -20,15 +20,15 @@ void Actor::update(void) {
 }
 
 void Actor::setFacing(int x, int y) {
-    float x = this->getCenterX() - x;
-    float y = this->getCenterY() - y;
-    this->direction = atan(y / x);
+    float yDiff = this->getCenterX() - x;
+    float xDiff = this->getCenterY() - y;
+    this->direction = atan(xDiff / yDiff);
 }
 
 void Actor::setFacing(Actor a) {
-    float x = this->getCenterX() - a.getCenterX();
-    float y = this->getCenterY() - a.getCenterY();
-    this->direction = atan(y / x);
+    float xDiff = this->getCenterX() - a.getCenterX();
+    float yDiff = this->getCenterY() - a.getCenterY();
+    this->direction = atan(xDiff / yDiff);
 }
 
 bool Actor::collides(Actor a) {
