@@ -1,41 +1,34 @@
+#include "math.h"
+
 #include "actor.h"
+
+#define PI 3.14159265
 
 Actor::Actor(double x, double y, double width, double height) {
     this->x = x;
     this->y = y;
     this->width = width;
     this->height = height;
-    this->xSpeed = 0;
-    this->ySpeed = 0;
+    this->xSpeed =
+    this->ySpeed =
+    this->direction = 0;
 }
 
-void Actor::run(void) {
+void Actor::update(void) {
     x += xSpeed;
     y += ySpeed;
 }
 
-double Actor::getX(void) {
-    return x;
+void Actor::setFacing(int x, int y) {
+    float x = this->getCenterX() - x;
+    float y = this->getCenterY() - y;
+    this->direction = atan(y / x);
 }
 
-double Actor::getX(void) {
-    return y;
-}
-
-double Actor::getWidth(void) {
-    return width;
-}
-
-double Actor::getHeight(void) {
-    return height;
-}
-
-double Actor::getXSpeed(void) {
-    return xSpeed;
-}
-
-double Actor::getYSpeed(void) {
-    return ySpeed;
+void Actor::setFacing(Actor a) {
+    float x = this->getCenterX() - a.getCenterX();
+    float y = this->getCenterY() - a.getCenterY();
+    this->direction = atan(y / x);
 }
 
 bool Actor::collides(Actor a) {
@@ -44,5 +37,5 @@ bool Actor::collides(Actor a) {
         a.getX() + a.getWidth() >= this->x &&
         a.getY() <= this->y + this->height &&
         a.getY() + a.getHeight() >= this->y
-    )
+    );
 }

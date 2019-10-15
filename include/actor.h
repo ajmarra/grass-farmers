@@ -3,27 +3,52 @@
 
 class Actor {
     protected:
-        double x, y, x_speed, y_speed, width, height;
+        /**
+         * x and y -- the coordinates of the top left pixel
+         * width and height -- the number of pixels on the sides
+        */ 
+        double x, y, xSpeed, ySpeed, width, height;
+        int direction;
 
     public:
         Actor(double x, double y, double width, double height);
         
-        virtual void run(void);
+        virtual void update(void);
         
-        virtual void reset(void) = 0;
+        double getX(void) { return x; };
         
-        double getX(void);
-        
-        double getY(void);
-        
-        double getWidth(void);
+        double getY(void) { return y; };
 
-        double getHeight(void);
+        double getCenterX(void) { return (x + width / 2); };
 
-        double getXSpeed(void);
+        double getCenterY(void) { return (y + height / 2); };
         
-        double getYSpeed(void);
+        double getWidth(void) { return width; };
 
+        double getHeight(void) { return height; };
+
+        double getXSpeed(void) { return xSpeed; };
+
+        void setXSpeed(int s) { this->xSpeed = s; };
+        
+        double getYSpeed(void) { return ySpeed; };
+
+        void setYSpeed(int s) { this->ySpeed = s; };
+
+        void setDirection(int d) { direction = d; };
+
+        int getDirection(void) { return direction; };
+
+        void setFacing(int x, int y);
+
+        void setFacing(Actor a);
+
+        /**
+         * Calculates if Actor a is touching this actor.
+         * (the outer pixels are next to eachother, or the actors are overlapping).
+         * 
+         * a -- the actor for comparison
+        */
         bool collides(Actor a);
 };
 
