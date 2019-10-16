@@ -1,25 +1,23 @@
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#ifndef FREDVIEW_H
+#define FREDVIEW_H
 
-class CharacterView {
+#include "character_view.h"
 
+class FredView : public character_view {
+    
 private:
     int health, experience, level;
     int inventory[5]; //Temporary -- Needs to be replaced with Item object
 
-
-
 public:
 
-	CharacterView() {};
-	CharacterView(int health, int experience, int level);
+    FredView(int health, int experience, int level);
 
     void setExperience(int);
     void setLevel(int);
 
     int getExperience(void);
     int getLevel(void);
-
-
 };
-#endif // CHARACTER_H
+
+#endif //FREDVIEW_H

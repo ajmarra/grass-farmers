@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "character_view.h"
+#include "view/character_view.h"
 
 CharacterView::CharacterView(int health, int experience, int level) {
     this->health = health;
