@@ -1,6 +1,6 @@
 #include "math.h"
 
-#include "actor.h"
+#include "logic/actor.h"
 
 #define PI 3.14159265
 
