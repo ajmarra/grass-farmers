@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "logic/item.h"
+#include "logic/actor.h"
 
 Item::Item(int quantity, bool stackable) {
     this->quantity = quantity;

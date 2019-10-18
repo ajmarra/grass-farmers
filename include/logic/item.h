@@ -4,7 +4,7 @@
 
 #include "actor.h"
 
-class Item {
+class Item : public Actor {
 private:
 	int quantity;
 	bool stackable;
