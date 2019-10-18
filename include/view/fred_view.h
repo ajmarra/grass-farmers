@@ -3,7 +3,7 @@
 
 #include "character_view.h"
 
-class FredView : public character_view {
+class FredView : public CharacterView {
     
 private:
     int health, experience, level;
