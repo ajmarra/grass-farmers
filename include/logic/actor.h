@@ -14,7 +14,7 @@ class Actor {
 		Actor() {};
         Actor(double x, double y, double width, double height);
         
-        void update(void);
+        virtual void update(void);
         
         double getX(void) { return x; };
         

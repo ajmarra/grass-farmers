@@ -7,7 +7,7 @@ int main(int argc, char** argv)
   // create main window
   sf::RenderWindow App(sf::VideoMode(800,600,32), "Hello World - SFML");
 
-  Item item = Item(-100, -100, 1, false);
+  Item item = Item(-400, -300, 1, false);
   ItemView itemView = ItemView(item.getX(), item.getY(), 1, false);
 
   // start main loop

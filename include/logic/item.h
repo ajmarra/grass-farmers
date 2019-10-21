@@ -17,6 +17,8 @@ public:
 	int getQuantity(void);
 	void increaseQuantity(void);
 	void decreaseQuantity(void);
+
+	//void collectItem(Item toCollect);
 };
 
 #endif //ITEM_H

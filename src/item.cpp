@@ -27,3 +27,4 @@ void Item::decreaseQuantity(void) {
 		this->quantity -= 1;
 	}
 }
+
