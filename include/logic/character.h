@@ -9,7 +9,7 @@ class Character : public Actor {
         int health;
         int mass;
         double topSpeed;
-        int movement;
+        int desiredDirection;
     
     public:
         Character(double x, double y, double width, double height, double weight, double topSpeed, int maxHealth);
@@ -24,7 +24,7 @@ class Character : public Actor {
          * 
          * d -- angle in degrees
         */
-        void setMovement(int d) { this->movement = d; };
+        void setDesiredDirection(int d) { this->desiredDirection = d; };
 };
 
 #endif

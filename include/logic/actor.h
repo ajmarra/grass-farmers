@@ -1,6 +1,9 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 
+#include "math.h"
+#define PI 3.14159265
+
 class Actor {
     protected:
         /**

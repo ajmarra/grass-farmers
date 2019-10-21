@@ -1,8 +1,4 @@
-#include "math.h"
-
 #include "logic/actor.h"
-
-#define PI 3.14159265
 
 Actor::Actor(double x, double y, double width, double height) {
     this->x = x;
