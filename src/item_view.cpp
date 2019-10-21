@@ -9,7 +9,7 @@ ItemView::ItemView(int x, int y, int quantity, bool stackable) {
 	this->quantity = quantity;
 	this->stackable = stackable;
 
-	sf::Vector2f itemSize(10, 10);
+	sf::Vector2f itemSize(20, 20);
 	this->itemShape.setSize(itemSize);
 	this->itemShape.setFillColor(sf::Color::Red);
 	this->itemShape.setOrigin(x, y);

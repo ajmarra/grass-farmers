@@ -10,7 +10,7 @@ private:
 	bool stackable;
 
 public:
-	Item() {};
+	//Item() {};
 	Item(int x, int y, int quantity, bool stackable);
 
 	bool isStackable(void);

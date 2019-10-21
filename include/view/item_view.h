@@ -1,5 +1,5 @@
-#ifndef ITEM_H
-#define ITEM_H
+#ifndef ITEM_VIEW_H
+#define ITEM_VIEW_H
 
 #include <logic/actor.h>
 
@@ -12,7 +12,9 @@ private:
 public:
 	ItemView(int x, int y, int quantity, bool stackable);
 
+	sf::RectangleShape getItemShape(void) { return (itemShape); };
+
 
 };
 
-#endif //ITEM_H
+#endif //ITEM_VIEW_H
