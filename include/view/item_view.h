@@ -5,12 +5,12 @@
 
 class ItemView : public Actor {
 private:
-	int quantity;
+	int quantity, x, y;
 	bool stackable;
+	sf::RectangleShape itemShape;
 
 public:
-	ItemView() {};
-	ItemView(int quantity, bool stackable);
+	ItemView(int x, int y, int quantity, bool stackable);
 
 
 };

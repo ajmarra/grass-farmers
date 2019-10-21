@@ -1,9 +1,12 @@
 #include <SFML/Graphics.hpp>
+#include <view/item_view.h>
 
 int main(int argc, char** argv)
 {
   // create main window
   sf::RenderWindow App(sf::VideoMode(800,600,32), "Hello World - SFML");
+
+  ItemView item = ItemView(0, 0, 1, false);
 
   // start main loop
   while(App.isOpen())
