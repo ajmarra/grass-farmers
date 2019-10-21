@@ -1,5 +1,3 @@
-#include "math.h"
-
 #include "character.h"
 #include "actor.h"
 
@@ -19,5 +17,6 @@ void Character::damage(int d) {
 void Character::update(void) {
     Actor::update();
 
-    //put moving code here in the update method (based on the current actual direction/speed, and the desired direction/top speed and acceleration)
+    xSpeed = topSpeed * cos(desiredDirection * (PI / 180));
+    ySpeed = topSpeed * sin(desiredDirection * (PI / 180));
 }
