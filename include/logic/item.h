@@ -6,11 +6,10 @@
 
 class Item : public Actor {
 private:
-	int quantity, x, y;
+	int quantity;
 	bool stackable;
 
 public:
-	//Item() {};
 	Item(int x, int y, int quantity, bool stackable);
 
 	bool isStackable(void);

@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "logic/item.h"
+#include <logic/item.h>
 #include <logic/actor.h>
 
 Item::Item(int x, int y, int quantity, bool stackable) {
