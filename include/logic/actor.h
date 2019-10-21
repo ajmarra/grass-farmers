@@ -35,12 +35,28 @@ class Actor {
 
         void setYSpeed(int s) { this->ySpeed = s; };
 
+        /**
+         * Sets the direction of movement.
+         * 
+         * d -- direction
+        */
         void setDirection(int d) { direction = d; };
 
         int getDirection(void) { return direction; };
 
+        /**
+         * Sets the orientation of the actor.
+         * 
+         * x -- x coordinate to face
+         * y -- y coordinate to face
+        */
         void setFacing(int x, int y);
 
+        /**
+         * Sets the orientation of the actor.
+         * 
+         * a -- the actor to face towards
+        */
         void setFacing(Actor a);
 
         /**
