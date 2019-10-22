@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include "view/character_view.h"
-#include "view/fred_view.h"
+#include "character_view.h"
+#include "fred_view.h"
 
 FredView::FredView(int health, int experience, int level) {
     this->health = health;

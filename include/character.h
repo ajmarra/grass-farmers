@@ -14,9 +14,9 @@ class Character : public Actor {
     public:
         Character(double x, double y, double width, double height, double weight, double topSpeed, int maxHealth);
 
-        void Character::update(void) override;
+        void update(void) override;
         
-        void damage(int d) { health -= d; };
+        void damage(int d);
 
         /**
          * sets the direction that the character wants to go (not necessarily 

@@ -1,4 +1,4 @@
-#include "logic/actor.h"
+#include "actor.h"
 
 Actor::Actor(double x, double y, double width, double height) {
     this->x = x;
