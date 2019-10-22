@@ -10,14 +10,15 @@ private:
 	bool stackable;
 
 public:
-	Item() {};
-	Item(int quantity, bool stackable);
+	Item(int x, int y, int quantity, bool stackable);
 
 	bool isStackable(void);
 
 	int getQuantity(void);
 	void increaseQuantity(void);
 	void decreaseQuantity(void);
+
+	//void collectItem(Item toCollect);
 };
 
 #endif //ITEM_H

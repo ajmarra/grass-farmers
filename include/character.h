@@ -9,14 +9,14 @@ class Character : public Actor {
         int health;
         int mass;
         double topSpeed;
-        int movement;
+        int desiredDirection;
     
     public:
         Character(double x, double y, double width, double height, double weight, double topSpeed, int maxHealth);
 
-        void Character::update(void) override;
+        void update(void) override;
         
-        void damage(int d) { health -= d; };
+        void damage(int d);
 
         /**
          * sets the direction that the character wants to go (not necessarily 
@@ -24,7 +24,7 @@ class Character : public Actor {
          * 
          * d -- angle in degrees
         */
-        void setMovement(int d) { this->movement = d; };
+        void setDesiredDirection(int d) { this->desiredDirection = d; };
 };
 
 #endif
