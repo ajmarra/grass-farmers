@@ -22,6 +22,7 @@ int main(int argc, char** argv)
   //when the user chooses an enemy difficulty, it will automatically close the menu and open the pong game view
   while(App.isOpen())
       {
+        ScreenControl->update(App);
         sf::Event Event;
         while(App.pollEvent(Event))
 

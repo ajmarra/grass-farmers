@@ -1,11 +1,16 @@
 #include "view/screen_control.h"
+#include "fred.h"
+#include <iostream>
 
-
+Fred fred(50, 50);
+sf::RectangleShape fredShape;
 
 void updateMenuView(sf::RenderWindow &window, sf::Font &font){
     window.clear(sf::Color::Black);
    
-
+    fredShape.setSize(sf::Vector2f(fred.getWidth(), fred.getHeight()));
+    fredShape.setFillColor(sf::Color::White);
+    window.draw(fredShape);
 
     sf::Text menu_message;
     menu_message.setFont(font);
@@ -42,6 +47,19 @@ ScreenController::ScreenController(sf::RenderWindow &window, sf::Font &font){
 void ScreenController::switchScreens(sf::RenderWindow &window, sf::Event Event, sf::Font &font){
     if (sf::Event::KeyPressed == Event.type){        
         switch (Event.key.code){
+            case sf::Keyboard::W:
+                fred.setDesiredDirection(270);
+                break;
+            case sf::Keyboard::A:
+                fred.setDesiredDirection(180);
+                break;
+            case sf::Keyboard::S:
+                fred.setDesiredDirection(90);
+                break;
+            case sf::Keyboard::D:
+                fred.setDesiredDirection(0);
+                break;
+
             case sf::Keyboard::M:
                 updateMenuView(window, font);
                 break;
@@ -58,3 +76,10 @@ void ScreenController::switchScreens(sf::RenderWindow &window, sf::Event Event, 
     }}
 }
 
+void ScreenController::update(sf::RenderWindow &window) {
+    window.clear(sf::Color::Black);
+    fred.update();
+    fredShape.setPosition(fred.getX(), fred.getY());
+    window.draw(fredShape);
+    window.display();
+}
