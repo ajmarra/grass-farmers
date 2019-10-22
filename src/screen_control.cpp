@@ -1,5 +1,3 @@
-//#include "view/options_view.h"
-//#include "view/menu_view.h"
 #include "view/screen_control.h"
 #include <iostream>
 
