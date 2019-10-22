@@ -2,12 +2,21 @@
 // #include "../include/view/options_view.h"
 #include "view/screen_control.h"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 int main(int argc, char** argv)
 {
   sf::RenderWindow App(sf::VideoMode(800,600,32), "Fred the Farmer");
+
+  sf::Font font;
+  if (!font.loadFromFile("../resources/bit5x3.ttf"))
+  {
+	  // error...
+	  std::cout << "ERROR LOADING FONT FROM FILE" << std::endl;
+  }
+
   // create main window
-  ScreenController* ScreenControl = new ScreenController(App); //initiate start menu
+  ScreenController* ScreenControl = new ScreenController(App, font); //initiate start menu
 
   //displays the start menu until the user chooses an enemy difficulty or closes the menu
   //when the user chooses an enemy difficulty, it will automatically close the menu and open the pong game view
@@ -22,7 +31,7 @@ int main(int argc, char** argv)
             App.close();
             return 0;
            }
-           ScreenControl->switchScreens(App, Event);
+           ScreenControl->switchScreens(App, Event, font);
   }
   
       }
