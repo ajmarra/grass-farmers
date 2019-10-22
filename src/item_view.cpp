@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
-#include <logic/item.h>
-#include<view/item_view.h>
-#include <logic/actor.h>
+#include "item.h"
+#include "item_view.h"
+#include "actor.h"
 
 ItemView::ItemView(int x, int y, int quantity, bool stackable) {
 	this->x = x;

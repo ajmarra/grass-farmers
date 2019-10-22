@@ -1,7 +1,7 @@
 #ifndef ITEM_VIEW_H
 #define ITEM_VIEW_H
 
-#include <logic/actor.h>
+#include <actor.h>
 
 class ItemView : public Actor {
 private:

@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include <logic/item.h>
-#include <view/item_view.h>
+#include "item.h"
+#include "item_view.h"
 
 int main(int argc, char** argv)
 {
