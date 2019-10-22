@@ -1,10 +1,13 @@
 #include <SFML/Graphics.hpp>
-#include "logic/item.h"
-#include "logic/actor.h"
+#include <logic/item.h>
+#include <logic/actor.h>
 
-Item::Item(int quantity, bool stackable) {
+Item::Item(int x, int y, int quantity, bool stackable) {
+	this->x = x;
+	this->y = y;
     this->quantity = quantity;
     this->stackable = stackable;
+
 }
 
 bool Item::isStackable(void) {
@@ -24,3 +27,4 @@ void Item::decreaseQuantity(void) {
 		this->quantity -= 1;
 	}
 }
+

@@ -1,8 +1,4 @@
-#include "math.h"
-
 #include "logic/actor.h"
-
-#define PI 3.14159265
 
 Actor::Actor(double x, double y, double width, double height) {
     this->x = x;
@@ -22,13 +18,13 @@ void Actor::update(void) {
 void Actor::setFacing(int x, int y) {
     float yDiff = this->getCenterX() - x;
     float xDiff = this->getCenterY() - y;
-    this->direction = atan(xDiff / yDiff);
+    this->direction = atan(xDiff / yDiff) * 180 / PI;
 }
 
 void Actor::setFacing(Actor a) {
     float xDiff = this->getCenterX() - a.getCenterX();
     float yDiff = this->getCenterY() - a.getCenterY();
-    this->direction = atan(xDiff / yDiff);
+    this->direction = atan(xDiff / yDiff) * 180 / PI;
 }
 
 bool Actor::collides(Actor a) {

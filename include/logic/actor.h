@@ -1,6 +1,9 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 
+#include "math.h"
+#define PI 3.14159265
+
 class Actor {
     protected:
         /**
@@ -11,6 +14,7 @@ class Actor {
         int direction;
 
     public:
+		Actor() {};
         Actor(double x, double y, double width, double height);
         
         virtual void update(void);
@@ -35,12 +39,28 @@ class Actor {
 
         void setYSpeed(int s) { this->ySpeed = s; };
 
+        /**
+         * Sets the direction of movement.
+         * 
+         * d -- direction
+        */
         void setDirection(int d) { direction = d; };
 
         int getDirection(void) { return direction; };
 
+        /**
+         * Sets the orientation of the actor.
+         * 
+         * x -- x coordinate to face
+         * y -- y coordinate to face
+        */
         void setFacing(int x, int y);
 
+        /**
+         * Sets the orientation of the actor.
+         * 
+         * a -- the actor to face towards
+        */
         void setFacing(Actor a);
 
         /**
