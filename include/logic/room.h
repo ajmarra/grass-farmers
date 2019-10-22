@@ -9,16 +9,11 @@
 #define room_hpp
 
 #include <stdio.h>
-#include "logic/actor.h"
-#include "logic/exit.h"
+#include <logic/actor.h>
 
 class Room : public Actor {
-protected:
-    &Exit exit;
-    
 public:
-    Room(double x, double y, double width, double height, &Exit exit);
-    &Exit getExit();
-}
+    Room(double x, double y, double width, double height);
+};
 
 #endif /* room_hpp */

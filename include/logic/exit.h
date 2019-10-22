@@ -8,16 +8,16 @@
 #ifndef exit_h
 #define exit_h
 
-#include "logic/actor.h"
-#include "logic/room.h"
+#include <logic/actor.h>
+#include <logic/room.h>
 
-class Exit :: public Actor {
+class Exit : public Actor {
 protected:
     Room& destination;
     
 public:
-    void setDestination(Room& newDest);
+    Exit(double x, double y, double width, double height, Room& destination);
     Room& getDestination();
-}
+};
 
 #endif /* exit_h */

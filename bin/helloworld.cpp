@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <logic/item.h>
 #include <view/item_view.h>
+#include <logic/exit.h>
+#include <logic/room.h>
 
 int main(int argc, char** argv)
 {
@@ -9,6 +11,10 @@ int main(int argc, char** argv)
 
   Item item = Item(-400, -300, 1, false);
   ItemView itemView = ItemView(item.getX(), item.getY(), 1, false);
+  
+  Room room = Room(-400, -300, 400, 300);
+  Exit exit = Exit(100, 100, 10, 50, room);
+
 
   // start main loop
   while(App.isOpen())
