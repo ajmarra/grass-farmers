@@ -4,12 +4,12 @@
 #include <SFML/Graphics.hpp>
 class ScreenController{
     public:
-    ScreenController(sf::RenderWindow &window);
-    void switchScreens(sf::RenderWindow &window, sf::Event Event);
+    ScreenController(sf::RenderWindow &window, sf::Font &font);
+    void switchScreens(sf::RenderWindow &window, sf::Event Event, sf::Font &font);
     
 };
 
-void updateMenuView(sf::RenderWindow &window);
-void updateOptionsView(sf::RenderWindow &window);
+void updateMenuView(sf::RenderWindow &window, sf::Font &font);
+void updateOptionsView(sf::RenderWindow &window, sf::Font &font);
 
 #endif
