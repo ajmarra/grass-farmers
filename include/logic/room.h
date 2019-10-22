@@ -9,7 +9,7 @@
 #define room_hpp
 
 #include <stdio.h>
-#include <logic/actor.h>
+#include <actor.h>
 
 class Room : public Actor {
 public:
