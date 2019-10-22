@@ -1,16 +1,10 @@
 #include "view/screen_control.h"
-#include <iostream>
 
 
 
-void updateMenuView(sf::RenderWindow &window){
+void updateMenuView(sf::RenderWindow &window, sf::Font &font){
     window.clear(sf::Color::Black);
-    sf::Font font;
-    if (!font.loadFromFile("src/bit5x3.ttf"))
-    {
-        // error...
-        std::cout << "ERROR LOADING FONT FROM FILE" << std::endl;
-    }
+   
 
 
     sf::Text menu_message;
@@ -26,14 +20,8 @@ void updateMenuView(sf::RenderWindow &window){
 
 
 //display start menu and options
-void updateOptionsView(sf::RenderWindow &window){
+void updateOptionsView(sf::RenderWindow &window, sf::Font &font){
     window.clear(sf::Color::Black);
-    sf::Font font;
-    if (!font.loadFromFile("src/bit5x3.ttf"))
-    {
-        // error...
-        std::cout << "ERROR LOADING FONT FROM FILE" << std::endl;
-    }
 
 
     sf::Text options_message;
@@ -48,17 +36,17 @@ void updateOptionsView(sf::RenderWindow &window){
     window.display();
 }
 
-ScreenController::ScreenController(sf::RenderWindow &window){
-    updateMenuView(window);
+ScreenController::ScreenController(sf::RenderWindow &window, sf::Font &font){
+    updateMenuView(window, font);
 }
-void ScreenController::switchScreens(sf::RenderWindow &window, sf::Event Event){
+void ScreenController::switchScreens(sf::RenderWindow &window, sf::Event Event, sf::Font &font){
     if (sf::Event::KeyPressed == Event.type){        
         switch (Event.key.code){
             case sf::Keyboard::M:
-                updateMenuView(window);
+                updateMenuView(window, font);
                 break;
             case sf::Keyboard::O:
-                updateOptionsView(window);
+                updateOptionsView(window, font);
                 break;
 
                 //where game will be drawm
