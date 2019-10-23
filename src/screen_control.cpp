@@ -1,11 +1,10 @@
-#include "view/screen_control.h"
+#include "screen_control.h"
 
 
 
 void updateMenuView(sf::RenderWindow &window, sf::Font &font){
     window.clear(sf::Color::Black);
    
-
 
     sf::Text menu_message;
     menu_message.setFont(font);
