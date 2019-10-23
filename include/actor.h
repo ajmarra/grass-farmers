@@ -15,6 +15,7 @@ class Actor {
 
     public:
 		Actor() {};
+        
         Actor(double x, double y, double width, double height);
         
         virtual void update(void);

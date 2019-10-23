@@ -25,6 +25,11 @@ class Character : public Actor {
          * d -- angle in degrees
         */
         void setDesiredDirection(int d) { this->desiredDirection = d; };
+
+        /**
+         * 
+        */
+        void stop() { this->desiredDirection = -1; };
 };
 
 #endif
