@@ -23,12 +23,12 @@ class Character : public Actor {
          * the same as the current direction it is going, since acceleration).
          * 
          * d -- angle in degrees
-        */
+         */
         void setDesiredDirection(int d) { this->desiredDirection = d; };
 
         /**
          * 
-        */
+         */
         void stop() { this->desiredDirection = -1; };
 };
 

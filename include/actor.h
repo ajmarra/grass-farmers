@@ -9,7 +9,7 @@ class Actor {
         /**
          * x and y -- the coordinates of the top left pixel
          * width and height -- the number of pixels on the sides
-        */ 
+         */ 
         double x, y, xSpeed, ySpeed, width, height;
         int direction;
 
@@ -44,7 +44,7 @@ class Actor {
          * Sets the direction of movement.
          * 
          * d -- direction
-        */
+         */
         void setDirection(int d) { direction = d; };
 
         int getDirection(void) { return direction; };
@@ -54,14 +54,14 @@ class Actor {
          * 
          * x -- x coordinate to face
          * y -- y coordinate to face
-        */
+         */
         void setFacing(int x, int y);
 
         /**
          * Sets the orientation of the actor.
          * 
          * a -- the actor to face towards
-        */
+         */
         void setFacing(Actor a);
 
         /**
@@ -69,7 +69,7 @@ class Actor {
          * (the outer pixels are next to eachother, or the actors are overlapping).
          * 
          * a -- the actor for comparison
-        */
+         */
         bool collides(Actor a);
 };
 
