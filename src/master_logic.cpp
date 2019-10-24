@@ -6,7 +6,7 @@ MasterLogic::MasterLogic(void) {
 }
 
 void MasterLogic::update(void) {
-    while (!paused) {
+    if (!paused) {
         for (int i = 0; i < actorList.size(); i++)
             actorList.at(i)->update();
     }

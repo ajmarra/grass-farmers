@@ -14,6 +14,8 @@ class MasterLogic {
     public:
         MasterLogic(void);
 
+        void init(void);
+
         void update(void);
 };
 

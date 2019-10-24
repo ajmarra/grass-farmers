@@ -5,11 +5,11 @@
 
 int main(int argc, char** argv) {
     sf::RenderWindow App(sf::VideoMode(800,800,32), "Fred the Farmer");
-    //MasterLogic logic;
+    MasterLogic logic;
 
 
     while(App.isOpen()) {
-        //logic.update();
+        logic.update();
 
         sf::Event Event;
         while(App.pollEvent(Event)) {
@@ -18,6 +18,10 @@ int main(int argc, char** argv) {
                 return 0;
             }
         }
+
+        App.clear(sf::Color::Black);
+        
+        App.display();
     }
     return 0;
 }

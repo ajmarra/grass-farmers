@@ -1,5 +1,5 @@
 #include "view.h"
 
-View::View() {
-    
+View::View(std::vector<std::unique_ptr<Actor>> &actorList) {
+    this->actorList = actorList;
 }
