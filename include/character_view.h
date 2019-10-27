@@ -18,6 +18,8 @@ public:
 
     int getExperience(void);
     int getLevel(void);
+    
+    void update();
 
 };
 
