@@ -1,14 +1,14 @@
 #ifndef MASTER_LOGIC_H
 #define MASTER_LOGIC_H
 
-#include <vector>
+#include <list>
 #include <memory>
 
 #include "actor.h"
 
 class MasterLogic {
     private:
-        std::vector<std::unique_ptr<Actor>> actorList;
+        std::list<std::unique_ptr<Actor>> actorList;
         bool paused = false;
 
     public:
@@ -16,7 +16,7 @@ class MasterLogic {
 
         void init(void);
 
-        void update(void);
+        void update(float dt);
 };
 
 #endif

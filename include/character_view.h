@@ -8,17 +8,21 @@ private:
     int inventory[5]; //Temporary -- Needs to be replaced with Item object
 
 public:
-
 	CharacterView() {};
-	CharacterView(int health, int experience, int level);
+	
+    CharacterView(int health, int experience, int level);
 
     void setExperience(int);
+    
+    int getExperience(void);
+
     void setLevel(int);
 
-    int getExperience(void);
     int getLevel(void);
-
-
 };
 
+<<<<<<< Updated upstream:include/character_view.h
 #endif
+=======
+#endif
+>>>>>>> Stashed changes:include/view/character_view.h

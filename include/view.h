@@ -1,17 +1,17 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include <vector>
+#include <list>
 #include <memory>
 
 #include "actor.h"
 
 class View {
     protected:
-        std::vector<std::unique_ptr<Actor>> actorList;
+        std::list<std::unique_ptr<Actor>> actorList;
     
     public:
-        View(std::vector<std::unique_ptr<Actor>> &actorList);
+        View(std::list<std::unique_ptr<Actor>> &actorList);
 };
 
 #endif
