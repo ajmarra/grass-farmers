@@ -1,5 +1,6 @@
 #ifndef CHARACTER_VIEW_H
 #define CHARACTER_VIEW_H
+#include "logic/room.h"
 
 class CharacterView {
 
@@ -17,7 +18,6 @@ public:
 
     int getExperience(void);
     int getLevel(void);
-
 
 };
 
