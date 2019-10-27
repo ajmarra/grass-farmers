@@ -3,8 +3,10 @@
 ################################################################################
 
 /.vs
+/.vscode
 /cmake
 /out/build/x64-Debug
 /CMakeSettings.json
 /debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_CXX.bin
 /debug
+/Debug
