@@ -1,5 +1,4 @@
 #include "character.h"
-#include "actor.h"
 
 Character::Character(double x, double y, double width, double height, double mass, double topSpeed, int maxHealth)
     : Actor(x, y, width, height) {
