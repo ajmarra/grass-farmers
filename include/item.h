@@ -10,11 +10,11 @@ private:
 	bool stackable;
 
 public:
-	Item(int x, int y, int quantity, bool stackable);
+	Item(double x, double y, int quantity, bool stackable);
 
-	bool isStackable(void);
+	bool isStackable(void) { return stackable; };
 
-	int getQuantity(void);
+	int getQuantity(void) { return quantity; };
 	void increaseQuantity(void);
 	void decreaseQuantity(void);
 
