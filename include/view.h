@@ -12,6 +12,10 @@ class View {
     
     public:
         View(std::list<std::unique_ptr<Actor>> &actorList);
+
+        void update(float dt) {
+            
+        }
 };
 
 #endif

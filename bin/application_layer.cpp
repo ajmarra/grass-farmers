@@ -1,11 +1,13 @@
 #include <SFML/Graphics.hpp>
 
 #include "master_logic.h"
+#include "master_view.h"
 
 
 int main(int argc, char** argv) {
     sf::RenderWindow App(sf::VideoMode(800,800,32), "Fred the Farmer");
     MasterLogic logic;
+    MasterView view(logic.getActorList(), App);
 
 
     while(App.isOpen()) {
