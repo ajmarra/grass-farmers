@@ -1,5 +1,6 @@
 #ifndef CHARACTER_VIEW_H
 #define CHARACTER_VIEW_H
+#include "logic/room.h"
 
 class CharacterView {
 
@@ -15,14 +16,11 @@ public:
     void setExperience(int);
     
     int getExperience(void);
-
-    void setLevel(int);
+    int getLevel(void);
+    
+    void update();
 
     int getLevel(void);
 };
 
-<<<<<<< Updated upstream:include/character_view.h
 #endif
-=======
-#endif
->>>>>>> Stashed changes:include/view/character_view.h
