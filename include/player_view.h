@@ -12,7 +12,7 @@ class PlayerView : public View {
         sf::RenderWindow window;
 
     public:
-        PlayerView(std::list<std::unique_ptr<Actor>> &actorList, sf::RenderWindow &window);
+        PlayerView(std::list<std::shared_ptr<Actor>> &actorList, int control, sf::RenderWindow &window);
 };
 
 #endif

@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
         clock.restart();
 
         logic.update(delta);
-        ScreenControl->update(App);
+        //ScreenControl->update(App);
         sf::Event Event;
         while(App.pollEvent(Event)) {
             if(Event.type == sf::Event::Closed) {

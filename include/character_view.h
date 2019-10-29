@@ -14,13 +14,12 @@ public:
     CharacterView(int health, int experience, int level);
 
     void setExperience(int);
+    void setLevel(int);
     
     int getExperience(void);
     int getLevel(void);
     
     void update();
-
-    int getLevel(void);
 };
 
 #endif

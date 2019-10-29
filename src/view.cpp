@@ -1,7 +1,8 @@
 #include "view.h"
 
-View::View(std::list<std::unique_ptr<Actor>> &actorList, int controller) {
+View::View(std::list<std::shared_ptr<Actor>> &actorList, int control) {
     this->actorList = actorList;
+    this->control = control;
 }
 
 void View::update(float delta) {

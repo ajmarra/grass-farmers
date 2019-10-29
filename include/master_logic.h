@@ -8,7 +8,7 @@
 
 class MasterLogic {
     private:
-        std::list<std::unique_ptr<Actor>> actorList;
+        std::list<std::shared_ptr<Actor>> actorList;
         bool paused = false;
 
     public:
@@ -18,7 +18,7 @@ class MasterLogic {
 
         void update(float delta);
 
-        std::list<std::unique_ptr<Actor>> &getActorList(void) { return actorList; };
+        std::list<std::shared_ptr<Actor>> &getActorList(void) { return actorList; };
 };
 
 #endif

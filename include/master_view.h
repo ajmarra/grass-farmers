@@ -9,7 +9,7 @@
 
 class MasterView {
     public:
-        MasterView(std::list<std::unique_ptr<Actor>> &actorList, sf::RenderWindow &window);
+        MasterView(std::list<std::shared_ptr<Actor>> &actorList, sf::RenderWindow &window);
 
         void update(float delta, sf::Event e);
 };

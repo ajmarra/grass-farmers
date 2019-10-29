@@ -1,6 +1,6 @@
 #include "master_view.h"
 
-MasterView::MasterView(std::list<std::unique_ptr<Actor>> &actorList, sf::RenderWindow &window) {
+MasterView::MasterView(std::list<std::shared_ptr<Actor>> &actorList, sf::RenderWindow &window) {
 
 }
 

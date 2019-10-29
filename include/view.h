@@ -8,14 +8,13 @@
 
 class View {
     protected:
-        std::list<std::unique_ptr<Actor>> actorList;
+        std::list<std::shared_ptr<Actor>> actorList;
+        int control; //stores the spot in the list of the actor that this view is controlling
     
     public:
-        View(std::list<std::unique_ptr<Actor>> &actorList);
+        View(std::list<std::shared_ptr<Actor>> &actorList, int control);
 
-        void update(float delta) {
-            
-        }
+        void update(float delta);
 };
 
 #endif
