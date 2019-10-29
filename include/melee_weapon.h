@@ -19,7 +19,7 @@ public:
 
 	//swings melee weapon and returns a double for damage precentage based on strength value
 	//The speed value dictates the wait time between each attack
-	double attack(void);
+	double swingWeapon(void);
 
 };
 

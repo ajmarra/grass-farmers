@@ -21,6 +21,9 @@ public:
 	//The speed value dictates the wait time between each attack
 	double fireGun(void);
 
+	//Might not need this if we make ammo continuous?
+	//void reloadGun(void);
+
 };
 
 #endif RANGE_H

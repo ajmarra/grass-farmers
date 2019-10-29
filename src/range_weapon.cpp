@@ -13,10 +13,10 @@ void RangeWeapon::setStrength(int strength) {
 	this->strength = strength;
 }
 
-void RangeWeapon::setfireRate(int fireRate) {
+void RangeWeapon::setFireRate(int fireRate) {
 	this->fireRate = fireRate;
 }
 
-double RangeWeapon::attack(void) {
+double RangeWeapon::fireGun(void) {
 
 }

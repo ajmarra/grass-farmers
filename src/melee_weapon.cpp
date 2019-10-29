@@ -16,6 +16,6 @@ void MeleeWeapon::setSpeed(int speed) {
 	this->speed = speed;
 }
 
-double MeleeWeapon::attack(void) {
+double MeleeWeapon::swingWeapon(void) {
 
 }
