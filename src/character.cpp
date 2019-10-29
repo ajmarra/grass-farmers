@@ -13,9 +13,11 @@ void Character::damage(int d) {
     if (health > maxHealth) health = maxHealth;
 }
 
-void Character::update(void) {
-    Actor::update();
+void Character::update(float delta) {
+    Actor::update(delta);
 
-    xSpeed = topSpeed * cos(desiredDirection * (PI / 180));
-    ySpeed = topSpeed * sin(desiredDirection * (PI / 180));
+    if (direction >= 0) {
+        xSpeed = topSpeed * cos(desiredDirection * (PI / 180));
+        ySpeed = topSpeed * sin(desiredDirection * (PI / 180));
+    }
 }
