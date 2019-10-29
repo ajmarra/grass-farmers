@@ -5,7 +5,7 @@
 class ScreenController{
     public:
     ScreenController(sf::RenderWindow &window, sf::Font &font);
-    void switchScreens(sf::RenderWindow &window, sf::Event Event, sf::Font &font);
+    void switchScreens(sf::RenderWindow &window, sf::Event Event, sf::Font &font, float delta);
     void update(sf::RenderWindow &window);
     
 };
