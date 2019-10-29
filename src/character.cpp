@@ -13,7 +13,7 @@ void Character::damage(int d) {
     if (health > maxHealth) health = maxHealth;
 }
 
-void Character::update(float dt) {
+void Character::update(float delta) {
     Actor::update(dt);
 
     if (direction >= 0) {

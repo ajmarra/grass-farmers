@@ -4,6 +4,6 @@ MasterView::MasterView(std::list<std::unique_ptr<Actor>> &actorList, sf::RenderW
 
 }
 
-void MasterView::update(float dt, sf::Event e) {
+void MasterView::update(float delta, sf::Event e) {
 
 }

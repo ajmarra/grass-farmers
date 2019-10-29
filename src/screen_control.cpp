@@ -1,5 +1,6 @@
 #include "screen_control.h"
-
+#include "fred.h"
+#include <iostream>
 
 
 void updateMenuView(sf::RenderWindow &window, sf::Font &font){
@@ -38,7 +39,7 @@ void updateOptionsView(sf::RenderWindow &window, sf::Font &font){
 ScreenController::ScreenController(sf::RenderWindow &window, sf::Font &font){
     updateMenuView(window, font);
 }
-void ScreenController::switchScreens(sf::RenderWindow &window, sf::Event Event, sf::Font &font){
+void ScreenController::switchScreens(sf::RenderWindow &window, sf::Event Event, sf::Font &font, float delta){
     if (sf::Event::KeyPressed == Event.type){        
         switch (Event.key.code){
             case sf::Keyboard::M:

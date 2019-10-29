@@ -10,9 +10,9 @@ Actor::Actor(double x, double y, double width, double height) {
     this->direction = 0;
 }
 
-void Actor::update(float dt) {
-    x += xSpeed * dt;
-    y += ySpeed * dt;
+void Actor::update(float delta) {
+    x += xSpeed * delta;
+    y += ySpeed * delta;
 }
 
 void Actor::setFacing(int x, int y) {

@@ -8,7 +8,7 @@ void MasterLogic::init(void) {
     
 }
 
-void MasterLogic::update(float dt) {
+void MasterLogic::update(float delta) {
     if (!paused) {
         for (std::list<std::unique_ptr<Actor>>::iterator it = actorList.begin;
             it != actorList.end; it++)

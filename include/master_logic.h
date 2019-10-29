@@ -16,9 +16,9 @@ class MasterLogic {
 
         void init(void);
 
-        void update(float dt);
+        void update(float delta);
 
-        std::list<std::unique_ptr<Actor>> getActorList(void) { return actorList; };
+        std::list<std::unique_ptr<Actor>> &getActorList(void) { return actorList; };
 };
 
 #endif

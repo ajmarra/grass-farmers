@@ -14,7 +14,7 @@ class Character : public Actor {
     public:
         Character(double x, double y, double width, double height, double weight, double topSpeed, int maxHealth);
 
-        void update(float dt) override;
+        void update(float delta) override;
         
         void damage(int d);
 

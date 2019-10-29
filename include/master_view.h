@@ -11,7 +11,7 @@ class MasterView {
     public:
         MasterView(std::list<std::unique_ptr<Actor>> &actorList, sf::RenderWindow &window);
 
-        void update(float dt, sf::Event e);
+        void update(float delta, sf::Event e);
 };
 
 #endif
