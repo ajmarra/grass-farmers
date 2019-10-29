@@ -14,7 +14,7 @@ class Character : public Actor {
     public:
         Character(double x, double y, double width, double height, double weight, double topSpeed, int maxHealth);
 
-        void update(void) override;
+        void update(float delta) override;
         
         void damage(int d);
 
@@ -23,8 +23,13 @@ class Character : public Actor {
          * the same as the current direction it is going, since acceleration).
          * 
          * d -- angle in degrees
-        */
+         */
         void setDesiredDirection(int d) { this->desiredDirection = d; };
+
+        /**
+         * 
+         */
+        void stop() { this->desiredDirection = -1; };
 };
 
 #endif
