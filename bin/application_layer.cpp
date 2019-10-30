@@ -1,16 +1,19 @@
 #include <SFML/Graphics.hpp>
+#include <list>
+#include <memory>
 #include <iostream>
 
 #include "master_logic.h"
 #include "master_view.h"
-#include "screen_control.h"
-
 
 int main(int argc, char** argv) {
-    sf::RenderWindow App(sf::VideoMode(800,800,32), "Fred the Farmer");
+    //game window
+    std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>(sf::VideoMode(800,800,32), "Fred the Farmer");
     
-    //for game clock
+    //game clock
     sf::Clock clock;
+
+    //delta time
     float delta;
 
     sf::Font font;
@@ -19,34 +22,22 @@ int main(int argc, char** argv) {
         // error...
         std::cout << "ERROR LOADING FONT FROM FILE" << std::endl;
     }
+    
     MasterLogic logic;
-    MasterView view(logic.getActorList(), App);
+    std::shared_ptr<MasterView> view = std::make_shared<MasterView>(window);
+    view->init(logic.getActorList());
+    logic.init(view);
+    logic.startDemo();
 
-    // create main window
-    ScreenController* ScreenControl = new ScreenController(App, font); //initiate start menu
-
-    //displays the start menu until the user chooses an enemy difficulty or closes the menu
-    //when the user chooses an enemy difficulty, it will automatically close the menu and open the pong game view
-    while(App.isOpen()) {
-        //game loop
+    //game loop
+    while (window->isOpen()) {
         delta = clock.getElapsedTime().asSeconds(); //can change to milliseconds if necessary
         clock.restart();
 
         logic.update(delta);
-        //ScreenControl->update(App);
-        sf::Event Event;
-        while(App.pollEvent(Event)) {
-            if(Event.type == sf::Event::Closed) {
-                App.close();
-                return 0;
-            }
-           ScreenControl->switchScreens(App, Event, font, delta);
-        }
+        view->update(delta);
+        window->display();
     }
-
-    App.clear(sf::Color::Black);
-    
-    App.display();
 
     // Done.
     return 0;
