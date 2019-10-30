@@ -9,10 +9,9 @@
 class View {
     protected:
         std::list<std::shared_ptr<Actor>> actorList;
-        int control; //stores the spot in the list of the actor that this view is controlling
-    
+
     public:
-        View(std::list<std::shared_ptr<Actor>> &actorList, int control);
+        View(std::list<std::shared_ptr<Actor>> &actorList);
 
         void update(float delta);
 };
