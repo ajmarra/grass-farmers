@@ -9,45 +9,40 @@ class Actor {
         /**
          * x and y -- the coordinates of the top left pixel
          * width and height -- the number of pixels on the sides
+         * speed -- magnitude of the speed of the actor
          */ 
-        double x, y, xSpeed, ySpeed, width, height;
-        int direction;
+        double x, y, width, height, speed;
+        int orientation, direction; //orientation and direction of movement
 
     public:
-		Actor() {};
-        
         Actor(double x, double y, double width, double height);
         
         virtual void update(float delta);
         
-        double getX(void) { return x; };
+        double getX(void) { return this->x; };
         
-        double getY(void) { return y; };
+        double getY(void) { return this->y; };
 
-        double getCenterX(void) { return (x + width / 2); };
+        double getCenterX(void) { return (this->x + this->width / 2); };
 
-        double getCenterY(void) { return (y + height / 2); };
+        double getCenterY(void) { return (this->y + this->height / 2); };
         
-        double getWidth(void) { return width; };
+        double getWidth(void) { return this->width; };
 
-        double getHeight(void) { return height; };
+        double getHeight(void) { return this->height; };
 
-        double getXSpeed(void) { return xSpeed; };
+        void setSpeed(int s) { this->speed = s; };
 
-        void setXSpeed(int s) { this->xSpeed = s; };
-        
-        double getYSpeed(void) { return ySpeed; };
-
-        void setYSpeed(int s) { this->ySpeed = s; };
+        double getSpeed(void) { return this->speed; };
 
         /**
          * Sets the direction of movement.
          * 
          * d -- direction
          */
-        void setDirection(int d) { direction = d; };
+        void setDirection(int d) { this->direction = d; };
 
-        int getDirection(void) { return direction; };
+        int getDirection(void) { return this->direction; };
 
         /**
          * Sets the orientation of the actor.
@@ -55,14 +50,16 @@ class Actor {
          * x -- x coordinate to face
          * y -- y coordinate to face
          */
-        void setFacing(int x, int y);
+        void setOrientation(int x, int y);
 
         /**
          * Sets the orientation of the actor.
          * 
          * a -- the actor to face towards
          */
-        void setFacing(Actor a);
+        void setOrientation(Actor a);
+
+        int getOrientation() { return this->orientation; };
 
         /**
          * Calculates if Actor a is touching this actor.

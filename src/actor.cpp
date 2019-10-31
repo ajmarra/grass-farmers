@@ -5,26 +5,25 @@ Actor::Actor(double x, double y, double width, double height) {
     this->y = y;
     this->width = width;
     this->height = height;
-    this->xSpeed =
-    this->ySpeed =
+    this->speed =
     this->direction = 0;
 }
 
 void Actor::update(float delta) {
-    x += xSpeed * delta;
-    y += ySpeed * delta;
+    x += speed * sin(this->direction * (PI / 180)) * delta;
+    y += speed * sin(this->direction * (PI / 180)) * delta;
 }
 
-void Actor::setFacing(int x, int y) {
+void Actor::setOrientation(int x, int y) {
     float yDiff = this->getCenterX() - x;
     float xDiff = this->getCenterY() - y;
-    this->direction = atan(xDiff / yDiff) * 180 / PI;
+    this->orientation = atan(xDiff / yDiff) * 180 / PI;
 }
 
-void Actor::setFacing(Actor a) {
+void Actor::setOrientation(Actor a) {
     float xDiff = this->getCenterX() - a.getCenterX();
     float yDiff = this->getCenterY() - a.getCenterY();
-    this->direction = atan(xDiff / yDiff) * 180 / PI;
+    this->orientation = atan(xDiff / yDiff) * 180 / PI;
 }
 
 bool Actor::collides(Actor a) {
