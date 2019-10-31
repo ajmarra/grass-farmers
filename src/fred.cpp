@@ -1,5 +1,6 @@
 #include "fred.h"
 #include "item.h"
+#include <iostream>
 
 Fred::Fred(double x, double y) : Character(x, y, 50, 50, 10, 200, 100) {
 
@@ -16,6 +17,7 @@ void Fred::addItem(Item* toAdd) {
 		}
 		i++;
 	}
+	std::cout << inventory;
 }
 
 Item* Fred::removeItemAtIndex(int index) {

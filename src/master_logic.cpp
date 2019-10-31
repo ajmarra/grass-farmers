@@ -12,6 +12,10 @@ void MasterLogic::startDemo(void) {
     std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
     this->actorList.push_front(fred);
     this->view->setPlayer(fred);
+
+	std::shared_ptr<Item> testItem = std::make_shared<Item>(100, 100, 3, true);
+	this->actorList.push_back(testItem);
+	fred->addItem(&testItem);
 }
 
 void MasterLogic::update(float delta) {
