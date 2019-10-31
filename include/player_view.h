@@ -14,7 +14,7 @@ class PlayerView : public View {
         std::shared_ptr<Fred> fred;
 
 		//temporary for collision checking
-		std::shared_ptr<Fred> temp;
+		std::shared_ptr<Item> temp;
 
         void pollEvents(void);
 

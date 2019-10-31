@@ -1,12 +1,12 @@
 #include "player_view.h"
 #include <iostream>
 
-#include "fred.h"
+#include "item.h"
 
 PlayerView::PlayerView(std::list<std::shared_ptr<Actor>> &actorList, std::shared_ptr<Fred> &fred, std::shared_ptr<sf::RenderWindow> &window)
     : View(actorList) {
     this->fred = fred;
-	this->temp = std::make_shared<Fred>(100, 100);
+	this->temp = std::make_shared<Item>(100, 100, 3, true);
     this->window = window;
 }
 
