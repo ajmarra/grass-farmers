@@ -6,12 +6,25 @@
 #include <memory>
 
 #include "actor.h"
+#include "fred.h"
+
+#include "view.h"
+#include "player_view.h"
 
 class MasterView {
-    public:
-        MasterView(std::list<std::shared_ptr<Actor>> &actorList, sf::RenderWindow &window);
+    private:
+        std::shared_ptr<sf::RenderWindow> window;
+        std::list<std::shared_ptr<Actor>> actorList;
+        std::shared_ptr<PlayerView> player;
 
-        void update(float delta, sf::Event e);
+    public:
+        MasterView(std::shared_ptr<sf::RenderWindow> &window);
+
+        void init(std::list<std::shared_ptr<Actor>> &actorList);
+
+        void setPlayer(std::shared_ptr<Fred> &fred);
+
+        void update(float delta);
 };
 
 #endif

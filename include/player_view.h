@@ -6,13 +6,21 @@
 #include <memory>
 
 #include "view.h"
+#include "fred.h"
 
 class PlayerView : public View {
     private:
-        sf::RenderWindow window;
+        std::shared_ptr<sf::RenderWindow> window;
+        std::shared_ptr<Fred> fred;
+
+        void pollEvents(void);
+
+        void drawScreen(void);
 
     public:
-        PlayerView(std::list<std::shared_ptr<Actor>> &actorList, int control, sf::RenderWindow &window);
+        PlayerView(std::list<std::shared_ptr<Actor>> &actorList, std::shared_ptr<Fred> &fred, std::shared_ptr<sf::RenderWindow> &window);
+
+        void update(float delta);
 };
 
 #endif

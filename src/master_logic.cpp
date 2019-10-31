@@ -4,8 +4,14 @@ MasterLogic::MasterLogic(void) {
     
 }
 
-void MasterLogic::init(void) {
-    
+void MasterLogic::init(std::shared_ptr<MasterView> &view) {
+    this->view = view;
+}
+
+void MasterLogic::startDemo(void) {
+    std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
+    this->actorList.push_front(fred);
+    this->view->setPlayer(fred);
 }
 
 void MasterLogic::update(float delta) {

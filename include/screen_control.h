@@ -2,7 +2,12 @@
 #define screencontrol_h
 
 #include <SFML/Graphics.hpp>
-class ScreenController{
+
+/**
+ * displays the start menu until the user chooses an enemy difficulty or closes the menu
+ * when the user chooses an enemy difficulty, it will automatically close the menu and open the pong game view
+ */
+class ScreenController {
     public:
     ScreenController(sf::RenderWindow &window, sf::Font &font);
     void switchScreens(sf::RenderWindow &window, sf::Event Event, sf::Font &font, float delta);
