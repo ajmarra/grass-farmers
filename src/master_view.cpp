@@ -4,12 +4,12 @@ MasterView::MasterView(std::shared_ptr<sf::RenderWindow> &window) {
     this->window = window;
 }
 
-void MasterView::init(std::list<std::shared_ptr<Actor>> &actorList) {
-    this->actorList = actorList;
+void MasterView::init(std::shared_ptr<MasterLogic> &logic) {
+    this->logic = logic;
 }
 
 void MasterView::setPlayer(std::shared_ptr<Fred> &fred) {
-    player = std::make_shared<PlayerView>(this->actorList, fred, this->window);
+    player = std::make_shared<PlayerView>(this->logic->getActorList(), fred, this->window);
 }
 
 void MasterView::update(float delta) {

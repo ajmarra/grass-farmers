@@ -9,10 +9,12 @@
 
 #include "master_view.h"
 
+class MasterView;
+
 class MasterLogic {
     private:
-        std::list<std::shared_ptr<Actor>> actorList;
         std::shared_ptr<MasterView> view;
+        std::list<std::shared_ptr<Actor>> actorList;
         bool paused = false;
 
     public:
