@@ -6,7 +6,7 @@ Fred::Fred(double x, double y) : Character(x, y, 50, 50, 10, 200, 100) {
 
 }
 
-void Fred::addItem(Item* toAdd) {
+void Fred::addItem(std::shared_ptr<Item> &toAdd) {
 	bool notAdded = true;
 	int i = 0;
 
@@ -17,11 +17,10 @@ void Fred::addItem(Item* toAdd) {
 		}
 		i++;
 	}
-	std::cout << inventory;
 }
 
-Item* Fred::removeItemAtIndex(int index) {
-	Item* toReturn = inventory[index];
+std::shared_ptr<Item> Fred::removeItemAtIndex(int index) {
+	std::shared_ptr<Item> toReturn = inventory[index];
 	inventory[index] = nullptr;
 	return (toReturn);
 }

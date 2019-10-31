@@ -5,16 +5,19 @@
 #include "character.h"
 #include "item.h"
 
+#include <memory>
+#include <iostream>
+
 class Fred : public Character {
     private:
-        Item* inventory[4];
+		std::shared_ptr<Item> inventory[4];
 
     public:
         Fred(double x, double y);
 		
-		void addItem(Item* toAdd);
-		Item* getItemAtIndex(int index) { return this->inventory[index]; };
-		Item* removeItemAtIndex(int index);
+		void addItem(std::shared_ptr<Item> &toAdd);
+		std::shared_ptr<Item> getItemAtIndex(int index) { return this->inventory[index]; };
+		std::shared_ptr<Item> removeItemAtIndex(int index);
 		
 };
 

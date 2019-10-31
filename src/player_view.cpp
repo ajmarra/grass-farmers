@@ -69,6 +69,11 @@ void PlayerView::drawScreen(void) {
     test.setPosition(this->fred->getX(), this->fred->getY());
     this->window->draw(test);
 
+	sf::CircleShape testItem(10);
+	testItem.setFillColor(sf::Color::Red);
+	testItem.setPosition(100, 100);
+	this->window->draw(testItem);
+
 }
 
 void PlayerView::update(float delta) {
