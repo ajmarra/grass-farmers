@@ -26,4 +26,4 @@ public:
 
 };
 
-#endif RANGE_H
+#endif //RANGE_H
