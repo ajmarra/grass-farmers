@@ -6,7 +6,7 @@
 PlayerView::PlayerView(std::list<std::shared_ptr<Actor>> &actorList, std::shared_ptr<Fred> &fred, std::shared_ptr<sf::RenderWindow> &window)
     : View(actorList) {
     this->fred = fred;
-	this->temp = std::make_shared<Item>(100, 100, 3, true);
+	this->temp = std::make_shared<Item>(100, 100, 50, 50, 3, true);
     this->window = window;
 }
 
@@ -72,7 +72,8 @@ void PlayerView::drawScreen(void) {
     test.setPosition(this->fred->getX(), this->fred->getY());
     this->window->draw(test);
 
-	sf::CircleShape testItem(10);
+	sf::RectangleShape testItem(sf::Vector2f(50, 50));
+	//sf::CircleShape testItem(50);
 	testItem.setFillColor(sf::Color::Red);
 	testItem.setPosition(100, 100);
 	if (this->fred->collides(*this->temp)) {

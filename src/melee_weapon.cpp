@@ -1,7 +1,7 @@
 #include "item.h"
 #include "melee_weapon.h"
 
-MeleeWeapon::MeleeWeapon(double x, double y, int strength, int speed) {
+MeleeWeapon::MeleeWeapon(double x, double y, double width, double height, int strength, int speed) : Item(x, y, width, height, 1, false) {
 	this->x = x;
 	this->y = y;
 	this->strength = strength;

@@ -13,7 +13,7 @@ void MasterLogic::startDemo(void) {
     this->actorList.push_front(fred);
     this->view->setPlayer(fred);
 
-	std::shared_ptr<Item> testItem = std::make_shared<Item>(100, 100, 3, true);
+	std::shared_ptr<Item> testItem = std::make_shared<Item>(100, 100, 10, 10, 3, true);
 	this->actorList.push_back(testItem);
 	fred->addItem(testItem);
 }
