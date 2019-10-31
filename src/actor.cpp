@@ -10,6 +10,9 @@ Actor::Actor(double x, double y, double width, double height) {
 }
 
 void Actor::update(float delta) {
+    //sanity check
+    if (this->speed < 0) this->speed = 0;
+
     x += speed * sin(this->direction * (PI / 180)) * delta;
     y += speed * sin(this->direction * (PI / 180)) * delta;
 }

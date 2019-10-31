@@ -42,7 +42,17 @@ class Actor {
          */
         void setDirection(int d) { this->direction = d; };
 
+        /**
+         * Returns the direction of movement.
+         */
         int getDirection(void) { return this->direction; };
+
+        /**
+         * Sets the orientation of the actor.
+         * 
+         * d -- direction to face
+         */
+        void setOrientation(int d) { this->orientation = d; };
 
         /**
          * Sets the orientation of the actor.
@@ -59,6 +69,9 @@ class Actor {
          */
         void setOrientation(Actor a);
 
+        /**
+         * Returns the orientation of the actor.
+         */
         int getOrientation() { return this->orientation; };
 
         /**
