@@ -13,6 +13,9 @@ class PlayerView : public View {
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<Fred> fred;
 
+		//temporary for collision checking
+		std::shared_ptr<Item> temp;
+
         void pollEvents(void);
 
         void drawScreen(void);

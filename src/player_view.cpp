@@ -1,9 +1,12 @@
 #include "player_view.h"
 #include <iostream>
 
+#include "item.h"
+
 PlayerView::PlayerView(std::list<std::shared_ptr<Actor>> &actorList, std::shared_ptr<Fred> &fred, std::shared_ptr<sf::RenderWindow> &window)
     : View(actorList) {
     this->fred = fred;
+	this->temp = std::make_shared<Item>(100, 100, 3, true);
     this->window = window;
 }
 
@@ -72,7 +75,12 @@ void PlayerView::drawScreen(void) {
 	sf::CircleShape testItem(10);
 	testItem.setFillColor(sf::Color::Red);
 	testItem.setPosition(100, 100);
+	if (this->fred->collides(*this->temp)) {
+		testItem.setFillColor(sf::Color::Green);
+	}
 	this->window->draw(testItem);
+
+	
 
 }
 
