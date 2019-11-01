@@ -1,4 +1,5 @@
 #include "master_logic.h"
+#include "logic/room.h"
 
 MasterLogic::MasterLogic(void) {
     
@@ -20,4 +21,8 @@ void MasterLogic::update(float delta) {
             it != actorList.end(); it++)
             (*it)->update(delta);
     }
+}
+
+std::shared_ptr<Room> MasterLogic::getCurrentRoom() {
+    return currentRoom;
 }

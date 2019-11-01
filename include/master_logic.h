@@ -9,11 +9,14 @@
 
 #include "master_view.h"
 
+#include "logic/room.h"
+
 class MasterLogic {
     private:
         std::list<std::shared_ptr<Actor>> actorList;
         std::shared_ptr<MasterView> view;
         bool paused = false;
+        std::shared_ptr<Room> currentRoom;
 
     public:
         MasterLogic(void);
@@ -25,6 +28,8 @@ class MasterLogic {
         void update(float delta);
 
         std::list<std::shared_ptr<Actor>> &getActorList(void) { return actorList; };
+    
+        std::shared_ptr<Room> getCurrentRoom();
 };
 
 #endif
