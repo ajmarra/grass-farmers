@@ -10,12 +10,14 @@
 
 #include "view.h"
 #include "player_view.h"
+#include "character_view.h"
 
 class MasterView {
     private:
         std::shared_ptr<sf::RenderWindow> window;
         std::list<std::shared_ptr<Actor>> actorList;
         std::shared_ptr<PlayerView> player;
+        std::shared_ptr<CharacterView> characters;
 
     public:
         MasterView(std::shared_ptr<sf::RenderWindow> &window);
