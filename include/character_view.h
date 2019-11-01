@@ -1,6 +1,7 @@
 #ifndef CHARACTER_VIEW_H
 #define CHARACTER_VIEW_H
 #include "logic/room.h"
+#include <SFML/Graphics.hpp>
 //#include "master_logic.h"
 
 class CharacterView {
@@ -8,10 +9,11 @@ class CharacterView {
 private:
     int health, experience, level;
     std::shared_ptr<Room> curRoom;
+    std::shared_ptr<sf::RenderWindow> window;
     int inventory[5]; //Temporary -- Needs to be replaced with Item object
 
 public:
-    CharacterView(int health, int experience, int level);
+    CharacterView(int health, int experience, int level, std::shared_ptr<sf::RenderWindow> window);
 
     void setExperience(int);
     void setLevel(int);

@@ -50,7 +50,7 @@ void PlayerView::pollEvents() {
 }
 
 void PlayerView::drawScreen(void) {
-    window->clear(sf::Color::Black);
+    //window->clear(sf::Color::Black);
 
     for (std::list<std::shared_ptr<Actor>>::iterator it = this->actorList.begin();
         it != this->actorList.end(); it++) {

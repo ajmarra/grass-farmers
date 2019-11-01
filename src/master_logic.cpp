@@ -1,5 +1,4 @@
 #include "master_logic.h"
-#include "logic/room.h"
 
 MasterLogic::MasterLogic(void) {
     
@@ -11,8 +10,10 @@ void MasterLogic::init(std::shared_ptr<MasterView> &view) {
 
 void MasterLogic::startDemo(void) {
     std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
+    currentRoom = std::make_shared<Room>(400, 400, 400, 400);
     this->actorList.push_front(fred);
     this->view->setPlayer(fred);
+    this->view->setRoom(currentRoom);
 }
 
 void MasterLogic::update(float delta) {

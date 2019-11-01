@@ -11,6 +11,7 @@
 #include "view.h"
 #include "player_view.h"
 #include "character_view.h"
+#include "logic/room.h"
 
 class MasterView {
     private:
@@ -25,6 +26,8 @@ class MasterView {
         void init(std::list<std::shared_ptr<Actor>> &actorList);
 
         void setPlayer(std::shared_ptr<Fred> &fred);
+
+        void setRoom(std::shared_ptr<Room> room);
 
         void update(float delta);
 };
