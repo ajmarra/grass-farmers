@@ -16,7 +16,7 @@ class MasterLogic {
         bool paused = false;
 
     public:
-        MasterLogic(void);
+        MasterLogic(void) { };
 
         void init(std::shared_ptr<MasterView> &mv);
 

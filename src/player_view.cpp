@@ -56,20 +56,16 @@ void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Black);
 
     for (std::list<std::shared_ptr<Actor>>::iterator it = this->logic->getActorList().begin();
-        it != this->logic->getActorList().end(); it++) {
-        sf::RectangleShape fredShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
-        fredShape.setFillColor(sf::Color::White);
-        fredShape.setPosition((*it)->getX(), (*it)->getY());
-        this->window->draw(fredShape);
-
-        //switch () {
-
-        //}
+        it != this->logic->getActorList().end(); ++it) {
+        switch ((*it)->getType()) {
+            case ActorType::FRED:
+                sf::RectangleShape fredShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+                fredShape.setFillColor(sf::Color::White);
+                fredShape.setPosition((*it)->getX(), (*it)->getY());
+                this->window->draw(fredShape);
+                break;
+        }
     }
-    sf::RectangleShape test(sf::Vector2f(50,50));
-    test.setFillColor(sf::Color::White);
-    test.setPosition(this->fred->getX(), this->fred->getY());
-    this->window->draw(test);
 
 }
 
