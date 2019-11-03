@@ -9,7 +9,8 @@
 
 #include "master_view.h"
 
-#include "logic/room.h"
+#include "room.h"
+#include "exit.h"
 
 class MasterLogic {
     private:
@@ -17,6 +18,7 @@ class MasterLogic {
         std::shared_ptr<MasterView> view;
         bool paused = false;
         std::shared_ptr<Room> currentRoom;
+        std::shared_ptr<Exit> currentExit;
 
     public:
         MasterLogic(void);
