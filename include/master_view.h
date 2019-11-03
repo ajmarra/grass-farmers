@@ -13,8 +13,6 @@
 #include "view.h"
 #include "player_view.h"
 
-class MasterLogic;
-
 class MasterView {
     private:
         std::shared_ptr<sf::RenderWindow> window;

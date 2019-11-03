@@ -7,8 +7,6 @@
 #include "actor.h"
 #include "fred.h"
 
-#include "master_view.h"
-
 class MasterView;
 
 class MasterLogic {

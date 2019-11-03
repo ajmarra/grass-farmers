@@ -18,7 +18,7 @@ class PlayerView : public View {
         void drawScreen(void);
 
     public:
-        PlayerView(std::list<std::shared_ptr<Actor>> &actorList, std::shared_ptr<Fred> &fred, std::shared_ptr<sf::RenderWindow> &window);
+        PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred> &fred, std::shared_ptr<sf::RenderWindow> &window);
 
         void update(float delta);
 };

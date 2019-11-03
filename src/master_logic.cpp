@@ -1,4 +1,5 @@
 #include "master_logic.h"
+#include "master_view.h"
 
 MasterLogic::MasterLogic(void) {
     
