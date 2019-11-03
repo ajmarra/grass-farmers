@@ -2,19 +2,11 @@
 #include "item.h"
 #include "actor.h"
 
-Item::Item(int x, int y, int quantity, bool stackable) {
+Item::Item(double x, double y, int quantity, bool stackable) {
 	this->x = x;
 	this->y = y;
     this->quantity = quantity;
     this->stackable = stackable;
-}
-
-bool Item::isStackable(void) {
-	return(this->stackable);
-}
-
-int Item::getQuantity(void) {
-	return(this->quantity);
 }
 
 void Item::increaseQuantity(void) {
@@ -26,4 +18,6 @@ void Item::decreaseQuantity(void) {
 		this->quantity -= 1;
 	}
 }
+
+
 

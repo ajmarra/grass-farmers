@@ -5,16 +5,22 @@
 #include <memory>
 
 #include "actor.h"
+#include "fred.h"
+
+#include "master_view.h"
 
 class MasterLogic {
     private:
         std::list<std::shared_ptr<Actor>> actorList;
+        std::shared_ptr<MasterView> view;
         bool paused = false;
 
     public:
         MasterLogic(void);
 
-        void init(void);
+        void init(std::shared_ptr<MasterView> &mv);
+
+        void startDemo(void);
 
         void update(float delta);
 
