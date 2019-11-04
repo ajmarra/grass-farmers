@@ -1,8 +1,5 @@
 #include "master_logic.h"
-
-MasterLogic::MasterLogic(void) {
-    
-}
+#include "master_view.h"
 
 void MasterLogic::init(std::shared_ptr<MasterView> &view) {
     this->view = view;

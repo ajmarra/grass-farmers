@@ -1,6 +1,7 @@
 #include "actor.h"
 
-Actor::Actor(double x, double y, double width, double height) {
+Actor::Actor(ActorType type, double x, double y, double width, double height) {
+    this->type = type;
     this->x = x;
     this->y = y;
     this->width = width;
