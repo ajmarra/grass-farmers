@@ -4,6 +4,8 @@
 #include "math.h"
 #define PI 3.14159265
 
+enum class ActorType { ROOM, EXIT, FRED, ENEMY, WEAPON, BULLET, TRAP };
+
 class Actor {
     protected:
         /**
@@ -12,13 +14,16 @@ class Actor {
          */ 
         double x, y, xSpeed, ySpeed, width, height;
         int direction;
+        ActorType type;
 
     public:
-		Actor() {};
+		Actor() { };
         
-        Actor(double x, double y, double width, double height);
+        Actor(ActorType type, double x, double y, double width, double height);
         
         virtual void update(float delta);
+
+        ActorType getType() { return this->type; };
         
         double getX(void) { return x; };
         

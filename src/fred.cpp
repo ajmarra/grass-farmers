@@ -2,7 +2,7 @@
 #include "item.h"
 #include <iostream>
 
-Fred::Fred(double x, double y) : Character(x, y, 50, 50, 10, 200, 100) {
+Fred::Fred(double x, double y) : Character(ActorType::FRED, x, y, 50, 50, 10, 200, 100) {
 
 }
 
