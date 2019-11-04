@@ -72,8 +72,8 @@ void PlayerView::drawScreen(void) {
     test.setPosition(this->fred->getX(), this->fred->getY());
     this->window->draw(test);
 
-	sf::RectangleShape testItem(sf::Vector2f(50, 50));
-	//sf::CircleShape testItem(50);
+	//sf::RectangleShape testItem(sf::Vector2f(50, 50));
+	sf::CircleShape testItem(25);
 	testItem.setFillColor(sf::Color::Red);
 	testItem.setPosition(100, 100);
 	if (this->fred->collides(*this->temp)) {

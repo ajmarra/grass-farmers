@@ -8,7 +8,7 @@
 
 int main(int argc, char** argv) {
     //game window
-    std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>(sf::VideoMode(800,800,32), "Fred the Farmer");
+    std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>(sf::VideoMode(1200,900,64), "Fred the Farmer");
     
     //game clock
     sf::Clock clock;
