@@ -1,7 +1,8 @@
+#include "actor.h"
 #include "character.h"
 
-Character::Character(double x, double y, double width, double height, double mass, double topSpeed, int maxHealth)
-    : Actor(x, y, width, height) {
+Character::Character(ActorType type, double x, double y, double width, double height, double mass, double topSpeed, int maxHealth)
+    : Actor(type, x, y, width, height) {
     this->mass = mass;
     this->topSpeed = topSpeed;
     this->health =

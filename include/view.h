@@ -6,12 +6,14 @@
 
 #include "actor.h"
 
+#include "master_logic.h"
+
 class View {
     protected:
-        std::list<std::shared_ptr<Actor>> actorList;
+        std::shared_ptr<MasterLogic> logic;
 
     public:
-        View(std::list<std::shared_ptr<Actor>> &actorList);
+        View(std::shared_ptr<MasterLogic> &logic);
 
         void update(float delta);
 };
