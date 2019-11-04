@@ -37,6 +37,11 @@ int main(int argc, char** argv) {
         logic->update(delta);
         view->update(delta);
         window->display();
+
+        //check for window closed event
+        sf::Event Event;
+        while (window->pollEvent(Event))
+            if (Event.type == sf::Event::Closed) window->close();
     }
 
     // Done.

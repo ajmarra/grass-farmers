@@ -13,7 +13,7 @@ class PlayerView : public View {
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<Fred> fred;
 
-        void pollEvents(void);
+        void pollInput(void);
 
         void drawScreen(void);
 
