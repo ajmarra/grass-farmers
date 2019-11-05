@@ -2,7 +2,8 @@
 #include "item.h"
 #include "actor.h"
 
-Item::Item(double x, double y, double width, double height, int quantity, bool stackable) : Actor(x, y, width, height) {
+Item::Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable) : 
+	Actor(type, x, y, width, height) {
 	this->x = x;
 	this->y = y;
     this->quantity = quantity;

@@ -35,11 +35,21 @@ void PlayerView::drawScreen(void) {
         it != this->logic->getActorList().end(); ++it) {
         switch ((*it)->getType()) {
             case ActorType::FRED:
-                sf::RectangleShape fredShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
-                fredShape.setFillColor(sf::Color::White);
-                fredShape.setPosition((*it)->getX(), (*it)->getY());
-                this->window->draw(fredShape);
-                break;
+			{
+				sf::RectangleShape fredShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+				fredShape.setFillColor(sf::Color::White);
+				fredShape.setPosition((*it)->getX(), (*it)->getY());
+				this->window->draw(fredShape);
+			}
+				break;
+			case ActorType::WEAPON:
+			{
+				sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+				itemShape.setFillColor(sf::Color::Red);
+				itemShape.setPosition((*it)->getX(), (*it)->getY());
+				this->window->draw(itemShape);
+			}
+				break;
         }
     }
 

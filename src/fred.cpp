@@ -14,6 +14,7 @@ void Fred::addItem(std::shared_ptr<Item> &toAdd) {
 		if (inventory[i] == nullptr) {
 			inventory[i] = toAdd;
 			notAdded = false;
+			toAdd->setXY(700, 10);
 		}
 		i++;
 	}

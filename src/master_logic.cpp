@@ -10,9 +10,9 @@ void MasterLogic::startDemo(void) {
     this->actorList.push_front(fred);
     this->view->setPlayer(fred);
 
-	std::shared_ptr<Item> testItem = std::make_shared<Item>(100, 100, 10, 10, 3, true);
+	std::shared_ptr<Item> testItem = std::make_shared<Item>(ActorType::WEAPON, 150, 150, 20, 20, 1, false);
 	this->actorList.push_back(testItem);
-	fred->addItem(testItem);
+	//fred->addItem(testItem);
 }
 
 void MasterLogic::update(float delta) {

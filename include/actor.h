@@ -4,7 +4,7 @@
 #include "math.h"
 #define PI 3.14159265
 
-enum class ActorType { ROOM, EXIT, FRED, ENEMY, WEAPON, BULLET, TRAP };
+enum class ActorType { ROOM, EXIT, FRED, ENEMY, HEALTH, WEAPON, BULLET, TRAP };
 
 class Actor {
     protected:
@@ -28,6 +28,11 @@ class Actor {
         double getX(void) { return x; };
         
         double getY(void) { return y; };
+
+		void setXY(double x, double y) {
+			this->x = x;
+			this->y = y;
+		};
 
         double getCenterX(void) { return (x + width / 2); };
 
