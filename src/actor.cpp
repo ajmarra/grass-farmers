@@ -14,20 +14,20 @@ void Actor::update(float delta) {
     //sanity check
     if (this->speed < 0) this->speed = 0;
 
-    x += speed * sin(this->direction * (PI / 180)) * delta;
-    y += speed * sin(this->direction * (PI / 180)) * delta;
+    x += this->getXSpeed() * delta;
+    y += this->getYSpeed() * delta;
 }
 
 void Actor::setOrientation(int x, int y) {
     float yDiff = this->getCenterX() - x;
     float xDiff = this->getCenterY() - y;
-    this->orientation = atan(xDiff / yDiff) * 180 / PI;
+    this->orientation = atan(yDiff / xDiff) * 180 / PI;
 }
 
 void Actor::setOrientation(Actor a) {
     float xDiff = this->getCenterX() - a.getCenterX();
     float yDiff = this->getCenterY() - a.getCenterY();
-    this->orientation = atan(xDiff / yDiff) * 180 / PI;
+    this->orientation = atan(yDiff / xDiff) * 180 / PI;
 }
 
 bool Actor::collides(Actor a) {

@@ -17,11 +17,17 @@ void Character::damage(int d) {
 void Character::update(float delta) {
     Actor::update(delta);
 
-    if (desiredDirection >= 0) {
-        xSpeed = topSpeed * cos(desiredDirection * (PI / 180));
-        ySpeed = topSpeed * sin(desiredDirection * (PI / 180));
+    if (this->desiredDirection >= 0) {
+        double newXSpeed = this->getXSpeed() + ((100 / mass)
+            * cos(this->desiredDirection * (PI / 180)));
+        double newYSpeed = this->getYSpeed() + ((100 / mass)
+            * sin(this->desiredDirection * (PI / 180)));
+        this->speed = sqrt(pow(newXSpeed, 2) + pow(newYSpeed, 2));
+        this->direction = atan(newYSpeed / newXSpeed) * 180 / PI;
+
+        if (this->speed > this->topSpeed) this->speed = this->topSpeed;
     }
     else {
-        xSpeed = ySpeed = 0;
+        speed -= 100 / mass;
     }
 }

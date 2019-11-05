@@ -18,6 +18,8 @@ class Actor {
         ActorType type;
 
     public:
+        Actor() { }; //Do not use default constructor. Left here because Item class currently uses it.
+
         Actor(ActorType type, double x, double y, double width, double height);
         
         virtual void update(float delta);
@@ -39,6 +41,10 @@ class Actor {
         void setSpeed(int s) { this->speed = s; };
 
         double getSpeed(void) { return this->speed; };
+
+        double getXSpeed(void) { return (speed * cos(this->direction * (PI / 180))); };
+
+        double getYSpeed(void) { return (speed * sin(this->direction * (PI / 180))); };
 
         /**
          * Sets the direction of movement.
