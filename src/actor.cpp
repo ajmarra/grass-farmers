@@ -1,21 +1,21 @@
 #include "actor.h"
 
+#include "math.h"
+#define PI 3.14159265
+
 Actor::Actor(ActorType type, double x, double y, double width, double height) {
     this->type = type;
     this->x = x;
     this->y = y;
     this->width = width;
     this->height = height;
-    this->speed =
-    this->direction = 0;
+    this->xSpeed =
+    this->ySpeed = 0;
 }
 
 void Actor::update(float delta) {
-    //sanity check
-    if (this->speed < 0) this->speed = 0;
-
-    x += this->getXSpeed() * delta;
-    y += this->getYSpeed() * delta;
+    this->x += this->xSpeed * delta;
+    this->y += this->ySpeed * delta;
 }
 
 void Actor::setOrientation(int x, int y) {
@@ -30,11 +30,28 @@ void Actor::setOrientation(Actor a) {
     this->orientation = atan(yDiff / xDiff) * 180 / PI;
 }
 
-bool Actor::collides(Actor a) {
+bool Actor::collidesSquare(Actor a) {
     return (
         a.getX() <= this->x + this->width &&
         a.getX() + a.getWidth() >= this->x &&
         a.getY() <= this->y + this->height &&
         a.getY() + a.getHeight() >= this->y
+    );
+}
+
+bool Actor::collidesCircle(Actor a) {
+    return (
+        sqrt(pow(this->getCenterX() - a.getCenterX(), 2) +
+        pow(this->getCenterY() - a.getCenterY(), 2)) <
+        (this->getHeight() / 2) + (a.getHeight() / 2)
+    );
+}
+
+bool Actor::liesInsideSquare(Actor a) {
+    return (
+        a.getX() <= this->x &&
+        a.getX() + a.getWidth() >= this->x + this->width &&
+        a.getY() <= this->y &&
+        a.getY() + a.getHeight() >= this->y + this->height
     );
 }

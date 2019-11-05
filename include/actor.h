@@ -1,9 +1,6 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 
-#include "math.h"
-#define PI 3.14159265
-
 enum class ActorType { ROOM, EXIT, FRED, ENEMY, WEAPON, BULLET, TRAP };
 
 class Actor {
@@ -13,8 +10,8 @@ class Actor {
          * width and height -- the number of pixels on the sides
          * speed -- magnitude of the speed of the actor
          */ 
-        double x, y, width, height, speed;
-        int orientation, direction; //orientation and direction of movement
+        double x, y, width, height, xSpeed, ySpeed;
+        int orientation; //orientation of the actor
         ActorType type;
 
     public:
@@ -38,25 +35,9 @@ class Actor {
 
         double getHeight(void) { return this->height; };
 
-        void setSpeed(int s) { this->speed = s; };
+        double getXSpeed(void) { return xSpeed; };
 
-        double getSpeed(void) { return this->speed; };
-
-        double getXSpeed(void) { return (speed * cos(this->direction * (PI / 180))); };
-
-        double getYSpeed(void) { return (speed * sin(this->direction * (PI / 180))); };
-
-        /**
-         * Sets the direction of movement.
-         * 
-         * d -- direction
-         */
-        void setDirection(int d) { this->direction = d; };
-
-        /**
-         * Returns the direction of movement.
-         */
-        int getDirection(void) { return this->direction; };
+        double getYSpeed(void) { return ySpeed; };
 
         /**
          * Sets the orientation of the actor.
@@ -86,12 +67,22 @@ class Actor {
         int getOrientation() { return this->orientation; };
 
         /**
-         * Calculates if Actor a is touching this actor.
+         * Calculates if square Actor a is touching this square actor.
          * (the outer pixels are next to eachother, or the actors are overlapping).
          * 
          * a -- the actor for comparison
          */
-        bool collides(Actor a);
+        bool collidesSquare(Actor a);
+
+        /**
+         * Calculates if circular Actor a is touching this circular actor.
+         * (the outer pixels are next to eachother, or the actors are overlapping).
+         * 
+         * a -- the actor for comparison
+         */
+        bool collidesCircle(Actor a);
+
+        bool liesInsideSquare(Actor a);
 };
 
 #endif
