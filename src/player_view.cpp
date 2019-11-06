@@ -26,6 +26,11 @@ void PlayerView::pollInput() {
     else
         fred->setDesiredDirection(atan2(y, x) * 180 / PI + 360);
 
+	// Collecting an item
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
+		fred->addItem(logic->getItemList());
+	}
+
 }
 
 void PlayerView::drawScreen(void) {
