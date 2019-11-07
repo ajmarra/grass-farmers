@@ -5,7 +5,7 @@ Character::Character(ActorType type, double x, double y, double width, double he
     : Actor(type, x, y, width, height) {
     this->mass = mass;
     this->topSpeed = topSpeed;
-    this->health =
+	this->health = maxHealth;
     this->maxHealth = maxHealth;
 }
 

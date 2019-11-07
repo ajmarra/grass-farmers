@@ -31,6 +31,11 @@ void PlayerView::pollInput() {
 		fred->addItem(this->logic->getItemList());
 	}
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelected(0);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelected(1);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelected(2);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelected(3);
+
 }
 
 void PlayerView::drawScreen(void) {
@@ -42,19 +47,23 @@ void PlayerView::drawScreen(void) {
 	sf::RectangleShape inventoryBlock3(sf::Vector2f(75, 75));
 	sf::RectangleShape inventoryBlock4(sf::Vector2f(75, 75));
 
-	inventoryBlock1.setOutlineColor(sf::Color::White);
+	if (fred->getSelectedIndex() == 0) inventoryBlock1.setOutlineColor(sf::Color::Green); 
+	else inventoryBlock1.setOutlineColor(sf::Color::White); 
+	inventoryBlock1.setPosition(800, 20);
 	inventoryBlock1.setOutlineThickness(5);
 	inventoryBlock1.setFillColor(sf::Color::Black);
-	inventoryBlock1.setPosition(800, 20);
-	inventoryBlock2.setOutlineColor(sf::Color::White);
+	if (fred->getSelectedIndex() == 1) inventoryBlock2.setOutlineColor(sf::Color::Green);
+	else inventoryBlock2.setOutlineColor(sf::Color::White);
 	inventoryBlock2.setPosition(900, 20);
 	inventoryBlock2.setOutlineThickness(5);
 	inventoryBlock2.setFillColor(sf::Color::Black);
-	inventoryBlock3.setOutlineColor(sf::Color::White);
+	if (fred->getSelectedIndex() == 2) inventoryBlock3.setOutlineColor(sf::Color::Green);
+	else inventoryBlock3.setOutlineColor(sf::Color::White);
 	inventoryBlock3.setPosition(1000, 20);
 	inventoryBlock3.setOutlineThickness(5);
 	inventoryBlock3.setFillColor(sf::Color::Black);
-	inventoryBlock4.setOutlineColor(sf::Color::White);
+	if (fred->getSelectedIndex() == 3) inventoryBlock4.setOutlineColor(sf::Color::Green);
+	else inventoryBlock4.setOutlineColor(sf::Color::White);
 	inventoryBlock4.setPosition(1100, 20);
 	inventoryBlock4.setOutlineThickness(5);
 	inventoryBlock4.setFillColor(sf::Color::Black);
