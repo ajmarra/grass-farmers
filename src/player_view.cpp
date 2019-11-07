@@ -28,13 +28,40 @@ void PlayerView::pollInput() {
 
 	// Collecting an item
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
-		fred->addItem(logic->getItemList());
+		fred->addItem(this->logic->getItemList());
 	}
 
 }
 
 void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Black);
+
+	sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
+	sf::RectangleShape inventoryBlock2(sf::Vector2f(75, 75));
+	sf::RectangleShape inventoryBlock3(sf::Vector2f(75, 75));
+	sf::RectangleShape inventoryBlock4(sf::Vector2f(75, 75));
+
+	inventoryBlock1.setOutlineColor(sf::Color::White);
+	inventoryBlock1.setOutlineThickness(5);
+	inventoryBlock1.setFillColor(sf::Color::Black);
+	inventoryBlock1.setPosition(800, 20);
+	inventoryBlock2.setOutlineColor(sf::Color::White);
+	inventoryBlock2.setPosition(900, 20);
+	inventoryBlock2.setOutlineThickness(5);
+	inventoryBlock2.setFillColor(sf::Color::Black);
+	inventoryBlock3.setOutlineColor(sf::Color::White);
+	inventoryBlock3.setPosition(1000, 20);
+	inventoryBlock3.setOutlineThickness(5);
+	inventoryBlock3.setFillColor(sf::Color::Black);
+	inventoryBlock4.setOutlineColor(sf::Color::White);
+	inventoryBlock4.setPosition(1100, 20);
+	inventoryBlock4.setOutlineThickness(5);
+	inventoryBlock4.setFillColor(sf::Color::Black);
+
+	this->window->draw(inventoryBlock1);
+	this->window->draw(inventoryBlock2);
+	this->window->draw(inventoryBlock3);
+	this->window->draw(inventoryBlock4);
 
     for (std::list<std::shared_ptr<Actor>>::iterator it = this->logic->getActorList().begin();
         it != this->logic->getActorList().end(); ++it) {

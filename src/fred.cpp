@@ -12,21 +12,26 @@ void Fred::addItem(std::list<std::shared_ptr<Item>> itemList) {
 	int i = 0;
 	std::shared_ptr<Item> toAdd;
 
-	for (std::list<std::shared_ptr<Item>>::iterator it = itemList.begin(); it != itemList.end(); it++) {
+	for (std::list<std::shared_ptr<Item>>::iterator it = itemList.begin(); it != itemList.end(); ++it) {
 		if (this->collides(*(*it))) {
 			toAdd = (*it);
+
+			while (notAdded) {
+				if (inventory[i] == NULL) {
+					inventory[i] = toAdd;
+					notAdded = false;
+					if(i == 0) toAdd->setXY(825, 50);
+					else if (i == 1) toAdd->setXY(925, 50);
+					else if (i == 2) toAdd->setXY(1025, 50);
+					else if (i == 3) toAdd->setXY(1125, 50);
+				}
+				i++;
+			}
+
 			break;
 		}
 	}
 	
-	while (notAdded) {
-		if (inventory[i] == nullptr) {
-			inventory[i] = toAdd;
-			notAdded = false;
-			toAdd->setXY(700, 10);
-		}
-		i++;
-	}
 }
 
 std::shared_ptr<Item> Fred::removeItemAtIndex(int index) {
