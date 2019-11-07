@@ -1,5 +1,10 @@
 #include "actor.h"
 #include "character.h"
+#include "item.h"
+
+#include <memory>
+#include <iostream>
+#include <list>
 
 Character::Character(ActorType type, double x, double y, double width, double height, double mass, double topSpeed, int maxHealth)
     : Actor(type, x, y, width, height) {
@@ -24,4 +29,15 @@ void Character::update(float delta) {
     else {
         xSpeed = ySpeed = 0;
     }
+}
+
+std::shared_ptr<Item> Character::removeItemAtIndex(int index) {
+	std::shared_ptr<Item> toReturn = inventory[index];
+	inventory[index] = nullptr;
+	return (toReturn);
+}
+
+void Character::dropItem() {
+	std::shared_ptr<Item> toDrop = this->removeItemAtIndex(selectedIndex);
+	if (toDrop != nullptr) toDrop->setXY(this->getCenterX(), this->getCenterY());
 }

@@ -11,18 +11,19 @@
 
 class Fred : public Character {
     private:
-		std::shared_ptr<Item> inventory[4];
-		std::shared_ptr<Item> selectedItem;
-		int selectedIndex = 0;
+		//std::shared_ptr<Item> inventory[4];
+		//std::shared_ptr<Item> selectedItem;
+		//int selectedIndex = 0;
 
     public:
         Fred(double x, double y);
 		
 		void addItem(std::list<std::shared_ptr<Item>> itemList);
 		std::shared_ptr<Item> getItemAtIndex(int index) { return this->inventory[index]; };
-		std::shared_ptr<Item> removeItemAtIndex(int index);
+		//std::shared_ptr<Item> removeItemAtIndex(int index);
 
-		void dropItem(void);
+
+		/*void dropItem(void);
 
 		void setSelected(int toSelect) { 
 			selectedItem = inventory[toSelect];
@@ -30,7 +31,7 @@ class Fred : public Character {
 		};
 
 		int getSelectedIndex() { return selectedIndex; };
-		std::shared_ptr<Item> getSelectedItem() { return selectedItem; };
+		std::shared_ptr<Item> getSelectedItem() { return selectedItem; }; */
 
 		
 };
