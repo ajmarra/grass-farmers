@@ -36,6 +36,7 @@ void PlayerView::pollInput() {
 void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Black);
 
+	// Hard coded inventory blocks
 	sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
 	sf::RectangleShape inventoryBlock2(sf::Vector2f(75, 75));
 	sf::RectangleShape inventoryBlock3(sf::Vector2f(75, 75));
