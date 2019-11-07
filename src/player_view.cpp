@@ -27,10 +27,16 @@ void PlayerView::pollInput() {
         fred->setDesiredDirection(atan2(y, x) * 180 / PI + 360);
 
 	// Collecting an item
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
 		fred->addItem(this->logic->getItemList());
 	}
+	
+	// Drop an item
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
+		fred->dropItem();
+	}
 
+	// Inventory selection
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelected(0);
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelected(1);
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelected(2);

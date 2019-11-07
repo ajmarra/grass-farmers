@@ -44,3 +44,8 @@ std::shared_ptr<Item> Fred::removeItemAtIndex(int index) {
 	return (toReturn);
 }
 
+void Fred::dropItem() {
+	std::shared_ptr<Item> toDrop = this->removeItemAtIndex(selectedIndex);
+	if(toDrop != nullptr) toDrop->setXY(this->getCenterX(), this->getCenterY());
+}
+
