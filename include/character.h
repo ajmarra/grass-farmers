@@ -4,6 +4,9 @@
 #include "actor.h"
 
 class Character : public Actor {
+    private:
+        void move(void);
+
     protected:
         int maxHealth;
         int health;
