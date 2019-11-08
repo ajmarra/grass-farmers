@@ -19,6 +19,8 @@ class MasterLogic {
         bool paused = false;
         std::shared_ptr<Room> currentRoom;
         std::shared_ptr<Exit> currentExit;
+    
+        std::shared_ptr<Fred> fred;
 
     public:
         MasterLogic(void);
