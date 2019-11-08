@@ -9,11 +9,14 @@
 #include <list>
 
 class Character : public Actor {
+    private:
+        void move(void);
+
     protected:
         int maxHealth;
         int health;
         int mass;
-        double topSpeed;
+        double maxSpeed;
         int desiredDirection = -1;
 
 		std::shared_ptr<Item> inventory[4];
@@ -21,7 +24,7 @@ class Character : public Actor {
 		int selectedIndex = 0;
     
     public:
-        Character(ActorType type, double x, double y, double width, double height, double weight, double topSpeed, int maxHealth);
+        Character(ActorType type, double x, double y, double width, double height, double mass, double maxSpeed, int maxHealth);
 
         void update(float delta) override;
         
