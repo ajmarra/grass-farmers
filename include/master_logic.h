@@ -13,6 +13,7 @@ class MasterLogic {
     private:
         std::shared_ptr<MasterView> view;
         std::list<std::shared_ptr<Actor>> actorList;
+		std::list<std::shared_ptr<Item>> itemList;
         bool paused = false;
 
     public:
@@ -25,6 +26,8 @@ class MasterLogic {
         void update(float delta);
 
         std::list<std::shared_ptr<Actor>> &getActorList(void) { return actorList; };
+
+		std::list<std::shared_ptr<Item>> &getItemList(void) { return itemList; };
 };
 
 #endif

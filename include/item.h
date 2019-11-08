@@ -10,8 +10,7 @@ private:
 	bool stackable;
 
 public:
-	Item() {};
-	Item(double x, double y, int quantity, bool stackable);
+	Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable);
 
 	bool isStackable(void) { return stackable; };
 

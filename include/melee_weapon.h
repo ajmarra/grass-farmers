@@ -9,7 +9,7 @@ private:
 	int strength, speed;
 
 public:
-	MeleeWeapon(double x, double y, int strength, int speed);
+	MeleeWeapon(double x, double y, double height, double width, int strength, int speed);
 
 	int getStrength(void) { return strength; };
 	int getSpeed(void) { return speed; };
