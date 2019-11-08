@@ -3,7 +3,7 @@
 #include <iostream>
 #include <list>
 
-Fred::Fred(double x, double y) : Character(ActorType::FRED, x, y, 50, 50, 30, 200, 100) {
+Fred::Fred(double x, double y) : Character(ActorType::FRED, x, y, 50, 50, 10, 200, 100) {
 
 }
 
