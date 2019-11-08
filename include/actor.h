@@ -11,7 +11,7 @@ class Actor {
 		 * speed -- magnitude of the speed of the actor
          */ 
         double x, y, width, height, xSpeed, ySpeed;
-        int direction;
+		int orientation; //orientation of the actor
         ActorType type;
 
     public:
