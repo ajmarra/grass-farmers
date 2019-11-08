@@ -12,7 +12,7 @@ void Fred::addItem(std::list<std::shared_ptr<Item>> itemList) {
 	int i = 0;
 	std::shared_ptr<Item> toAdd;
 	for (std::list<std::shared_ptr<Item>>::iterator it = itemList.begin(); it != itemList.end(); ++it) {
-		if (this->collides(*(*it))) {
+		if (this->collidesSquare(*(*it))) {
 			toAdd = (*it);
 			i = 0;
 			while (notAdded) {
