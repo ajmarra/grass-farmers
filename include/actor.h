@@ -10,12 +10,12 @@ class Actor {
          * width and height -- the number of pixels on the sides
 		 * speed -- magnitude of the speed of the actor
          */ 
-        double x, y, xSpeed, ySpeed, width, height;
+        double x, y, width, height, xSpeed, ySpeed;
         int direction;
         ActorType type;
 
     public:
-		Actor() { };// Do not use default constructor. Left here because Item class currently uses it.
+		Actor() { }; //Do not use default constructor. Left here because Item class currently uses it.
         
         Actor(ActorType type, double x, double y, double width, double height);
         
