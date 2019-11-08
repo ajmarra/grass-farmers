@@ -39,7 +39,9 @@ class Actor {
 
         double getYSpeed(void) { return ySpeed; };
 
-        int getDirection(void);
+        double getSpeed(void);
+
+        double getDirection(void);
 
         /**
          * Sets the orientation of the actor.

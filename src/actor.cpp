@@ -18,8 +18,12 @@ void Actor::update(float delta) {
     this->y += this->ySpeed * delta;
 }
 
-int Actor::getDirection(void) {
-    return (rint(atan2(this->ySpeed, this->xSpeed) * 180.0 / PI));
+double Actor::getSpeed(void) {
+    return sqrt(pow(this->xSpeed, 2) + pow(this->ySpeed, 2));
+}
+
+double Actor::getDirection(void) {
+    return (atan2(this->ySpeed, this->xSpeed) * 180.0 / PI);
 }
 
 void Actor::setOrientation(int x, int y) {
