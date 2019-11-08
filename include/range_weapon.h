@@ -9,7 +9,7 @@ private:
 	int strength, fireRate, type;
 
 public:
-	RangeWeapon(double x, double y, int strength, int fireRate, int type);
+	RangeWeapon(double x, double y, double width, double height, int strength, int fireRate, int type);
 
 	int getStrength(void) { return strength; };
 	int getFireRate(void) { return fireRate; };

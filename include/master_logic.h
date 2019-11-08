@@ -7,15 +7,16 @@
 #include "actor.h"
 #include "fred.h"
 
-#include "master_view.h"
+class MasterView;
 
 #include "room.h"
 #include "exit.h"
 
 class MasterLogic {
     private:
-        std::list<std::shared_ptr<Actor>> actorList;
         std::shared_ptr<MasterView> view;
+        std::list<std::shared_ptr<Actor>> actorList;
+		std::list<std::shared_ptr<Item>> itemList;
         bool paused = false;
         std::shared_ptr<Room> currentRoom;
         std::shared_ptr<Exit> currentExit;
@@ -23,7 +24,7 @@ class MasterLogic {
         std::shared_ptr<Fred> fred;
 
     public:
-        MasterLogic(void);
+        MasterLogic(void) { };
 
         void init(std::shared_ptr<MasterView> &mv);
 
@@ -34,6 +35,8 @@ class MasterLogic {
         std::list<std::shared_ptr<Actor>> &getActorList(void) { return actorList; };
     
         std::shared_ptr<Room> getCurrentRoom();
+
+		std::list<std::shared_ptr<Item>> &getItemList(void) { return itemList; };
 };
 
 #endif

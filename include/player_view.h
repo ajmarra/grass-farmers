@@ -13,12 +13,12 @@ class PlayerView : public View {
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<Fred> fred;
 
-        void pollEvents(void);
+        void pollInput(void);
 
         void drawScreen(void);
 
     public:
-        PlayerView(std::list<std::shared_ptr<Actor>> &actorList, std::shared_ptr<Fred> &fred, std::shared_ptr<sf::RenderWindow> &window);
+        PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred> &fred, std::shared_ptr<sf::RenderWindow> &window);
 
         void update(float delta);
 };

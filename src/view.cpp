@@ -1,7 +1,7 @@
 #include "view.h"
 
-View::View(std::list<std::shared_ptr<Actor>> &actorList) {
-    this->actorList = actorList;
+View::View(std::shared_ptr<MasterLogic> &logic) {
+    this->logic = logic;
 }
 
 void View::update(float delta) {
