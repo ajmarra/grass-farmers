@@ -43,7 +43,19 @@ void PlayerView::pollInput() {
 }
 
 void PlayerView::drawScreen(void) {
-    //window->clear(sf::Color::Black);
+    window->clear(sf::Color::Black);
+    
+    //Current room and exit
+    sf::RectangleShape room;
+    room.setSize(sf::Vector2f(curRoom->getWidth(), curRoom->getHeight()));
+    room.setPosition(curRoom->getX(), curRoom->getY());
+    room.setFillColor(sf::Color::Magenta);
+    window->draw(room);
+    
+    sf::RectangleShape exit;
+    exit.setSize(sf::Vector2f(curExit->getWidth(), curExit->getHeight()));
+    exit.setPosition(curExit->getX(), curExit->getY());
+    exit.setFillColor(sf::Color::Cyan);
 
 	//Fred's Health Bar
 	sf::RectangleShape maxHealthBar(sf::Vector2f(5*fred->getMaxHealth(), 20));
@@ -111,4 +123,12 @@ void PlayerView::drawScreen(void) {
 void PlayerView::update(float delta) {
     this->pollInput();
     this->drawScreen();
+}
+
+void PlayerView::setCurrentRoom(std::shared_ptr<Room> currentRoom) {
+    this->curRoom = currentRoom;
+}
+
+void PlayerView::setCurrentExit(std::shared_ptr<Exit> currentExit) {
+    this->curExit = currentExit;
 }
