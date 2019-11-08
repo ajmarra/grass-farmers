@@ -4,15 +4,18 @@
 #include "actor.h"
 
 class Character : public Actor {
+    private:
+        void move(void);
+
     protected:
         int maxHealth;
         int health;
         int mass;
-        double topSpeed;
+        double maxSpeed;
         int desiredDirection = -1;
     
     public:
-        Character(ActorType type, double x, double y, double width, double height, double weight, double topSpeed, int maxHealth);
+        Character(ActorType type, double x, double y, double width, double height, double mass, double maxSpeed, int maxHealth);
 
         void update(float delta) override;
         

@@ -1,5 +1,8 @@
 #include "actor.h"
 
+#include "math.h"
+#define PI 3.14159265
+
 Actor::Actor(ActorType type, double x, double y, double width, double height) {
     this->type = type;
     this->x = x;
@@ -7,32 +10,56 @@ Actor::Actor(ActorType type, double x, double y, double width, double height) {
     this->width = width;
     this->height = height;
     this->xSpeed =
-    this->ySpeed =
-    this->direction = 0;
+    this->ySpeed = 0;
 }
 
 void Actor::update(float delta) {
-    x += xSpeed * delta;
-    y += ySpeed * delta;
+    this->x += this->xSpeed * delta;
+    this->y += this->ySpeed * delta;
 }
 
-void Actor::setFacing(int x, int y) {
+double Actor::getSpeed(void) {
+    return sqrt(pow(this->xSpeed, 2) + pow(this->ySpeed, 2));
+}
+
+double Actor::getDirection(void) {
+    return (atan2(this->ySpeed, this->xSpeed) * 180.0 / PI);
+}
+
+void Actor::setOrientation(int x, int y) {
     float yDiff = this->getCenterX() - x;
     float xDiff = this->getCenterY() - y;
-    this->direction = atan(xDiff / yDiff) * 180 / PI;
+    this->orientation = atan(yDiff / xDiff) * 180 / PI;
 }
 
-void Actor::setFacing(Actor a) {
+void Actor::setOrientation(Actor a) {
     float xDiff = this->getCenterX() - a.getCenterX();
     float yDiff = this->getCenterY() - a.getCenterY();
-    this->direction = atan(xDiff / yDiff) * 180 / PI;
+    this->orientation = atan(yDiff / xDiff) * 180 / PI;
 }
 
-bool Actor::collides(Actor a) {
+bool Actor::collidesSquare(Actor a) {
     return (
         a.getX() <= this->x + this->width &&
         a.getX() + a.getWidth() >= this->x &&
         a.getY() <= this->y + this->height &&
         a.getY() + a.getHeight() >= this->y
+    );
+}
+
+bool Actor::collidesCircle(Actor a) {
+    return (
+        sqrt(pow(this->getCenterX() - a.getCenterX(), 2) +
+        pow(this->getCenterY() - a.getCenterY(), 2)) <
+        (this->getHeight() / 2) + (a.getHeight() / 2)
+    );
+}
+
+bool Actor::liesInsideSquare(Actor a) {
+    return (
+        a.getX() <= this->x &&
+        a.getX() + a.getWidth() >= this->x + this->width &&
+        a.getY() <= this->y &&
+        a.getY() + a.getHeight() >= this->y + this->height
     );
 }

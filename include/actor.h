@@ -1,9 +1,6 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 
-#include "math.h"
-#define PI 3.14159265
-
 enum class ActorType { ROOM, EXIT, FRED, ENEMY, WEAPON, BULLET, TRAP };
 
 class Actor {
@@ -11,48 +8,47 @@ class Actor {
         /**
          * x and y -- the coordinates of the top left pixel
          * width and height -- the number of pixels on the sides
+         * speed -- magnitude of the speed of the actor
          */ 
-        double x, y, xSpeed, ySpeed, width, height;
-        int direction;
+        double x, y, width, height, xSpeed, ySpeed;
+        int orientation; //orientation of the actor
         ActorType type;
 
     public:
-		Actor() { };
-        
+        Actor() { }; //Do not use default constructor. Left here because Item class currently uses it.
+
         Actor(ActorType type, double x, double y, double width, double height);
         
         virtual void update(float delta);
 
         ActorType getType() { return this->type; };
         
-        double getX(void) { return x; };
+        double getX(void) { return this->x; };
         
-        double getY(void) { return y; };
+        double getY(void) { return this->y; };
 
-        double getCenterX(void) { return (x + width / 2); };
+        double getCenterX(void) { return (this->x + this->width / 2); };
 
-        double getCenterY(void) { return (y + height / 2); };
+        double getCenterY(void) { return (this->y + this->height / 2); };
         
-        double getWidth(void) { return width; };
+        double getWidth(void) { return this->width; };
 
-        double getHeight(void) { return height; };
+        double getHeight(void) { return this->height; };
 
         double getXSpeed(void) { return xSpeed; };
 
-        void setXSpeed(int s) { this->xSpeed = s; };
-        
         double getYSpeed(void) { return ySpeed; };
 
-        void setYSpeed(int s) { this->ySpeed = s; };
+        double getSpeed(void);
+
+        double getDirection(void);
 
         /**
-         * Sets the direction of movement.
+         * Sets the orientation of the actor.
          * 
-         * d -- direction
+         * d -- direction to face
          */
-        void setDirection(int d) { direction = d; };
-
-        int getDirection(void) { return direction; };
+        void setOrientation(int d) { this->orientation = d; };
 
         /**
          * Sets the orientation of the actor.
@@ -60,22 +56,37 @@ class Actor {
          * x -- x coordinate to face
          * y -- y coordinate to face
          */
-        void setFacing(int x, int y);
+        void setOrientation(int x, int y);
 
         /**
          * Sets the orientation of the actor.
          * 
          * a -- the actor to face towards
          */
-        void setFacing(Actor a);
+        void setOrientation(Actor a);
 
         /**
-         * Calculates if Actor a is touching this actor.
+         * Returns the orientation of the actor.
+         */
+        int getOrientation() { return this->orientation; };
+
+        /**
+         * Calculates if square Actor a is touching this square actor.
          * (the outer pixels are next to eachother, or the actors are overlapping).
          * 
          * a -- the actor for comparison
          */
-        bool collides(Actor a);
+        bool collidesSquare(Actor a);
+
+        /**
+         * Calculates if circular Actor a is touching this circular actor.
+         * (the outer pixels are next to eachother, or the actors are overlapping).
+         * 
+         * a -- the actor for comparison
+         */
+        bool collidesCircle(Actor a);
+
+        bool liesInsideSquare(Actor a);
 };
 
 #endif
