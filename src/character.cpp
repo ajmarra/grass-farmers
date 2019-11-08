@@ -2,6 +2,9 @@
 #include "character.h"
 #include "item.h"
 
+#include "math.h"
+#define PI 3.14159265
+
 #include <memory>
 #include <iostream>
 #include <list>
