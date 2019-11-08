@@ -47,6 +47,13 @@ void PlayerView::pollInput() {
 void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Black);
 
+	//Fred's Health Bar
+	sf::RectangleShape maxHealthBar(sf::Vector2f(5*fred->getMaxHealth(), 20));
+	maxHealthBar.setPosition(10, 20);
+	maxHealthBar.setFillColor(sf::Color::Green);
+
+	this->window->draw(maxHealthBar);
+
 	// Hard coded inventory blocks
 	sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
 	sf::RectangleShape inventoryBlock2(sf::Vector2f(75, 75));

@@ -42,6 +42,9 @@ class Character : public Actor {
          */
         void stop() { this->desiredDirection = -1; };
 
+		int getHealth() { return health; };
+		int getMaxHealth() { return maxHealth; };
+
 		std::shared_ptr<Item> removeItemAtIndex(int index);
 
 		void dropItem(void);
