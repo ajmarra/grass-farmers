@@ -5,7 +5,6 @@ MasterView::MasterView(std::shared_ptr<sf::RenderWindow> &window) {
     this->window = window;
 }
 
-
 void MasterView::init(std::shared_ptr<MasterLogic> &logic) {
     this->logic = logic;
 }

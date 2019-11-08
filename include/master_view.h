@@ -12,7 +12,6 @@
 
 #include "view.h"
 #include "player_view.h"
-#include "character_view.h"
 #include "room.h"
 #include "exit.h"
 
@@ -21,7 +20,6 @@ class MasterView {
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<MasterLogic> logic;
         std::shared_ptr<PlayerView> player;
-        std::shared_ptr<CharacterView> characters;
 
     public:
         MasterView(std::shared_ptr<sf::RenderWindow> &window);
