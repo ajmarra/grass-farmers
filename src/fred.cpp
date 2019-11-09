@@ -37,15 +37,3 @@ void Fred::addItem(std::list<std::shared_ptr<Item>> itemList) {
 	}
 	
 }
-
-/*std::shared_ptr<Item> Fred::removeItemAtIndex(int index) {
-	std::shared_ptr<Item> toReturn = inventory[index];
-	inventory[index] = nullptr;
-	return (toReturn);
-}
-
-void Fred::dropItem() {
-	std::shared_ptr<Item> toDrop = this->removeItemAtIndex(selectedIndex);
-	if(toDrop != nullptr) toDrop->setXY(this->getCenterX(), this->getCenterY());
-}*/
-
