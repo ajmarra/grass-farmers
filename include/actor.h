@@ -92,6 +92,8 @@ class Actor {
 		bool collidesCircle(Actor a);
 
 		bool liesInsideSquare(Actor a);
+    
+        void hardStop() { this->xSpeed = 0; this->ySpeed = 0; };
 };
 
 #endif
