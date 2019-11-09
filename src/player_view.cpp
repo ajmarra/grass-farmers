@@ -45,6 +45,19 @@ void PlayerView::pollInput() {
 void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Black);
 
+	//Current room and exit
+	sf::RectangleShape room;
+	room.setSize(sf::Vector2f(curRoom->getWidth(), curRoom->getHeight()));
+	room.setPosition(curRoom->getX(), curRoom->getY());
+	room.setFillColor(sf::Color::Magenta);
+	this->window->draw(room);
+
+	sf::RectangleShape exit;
+	exit.setSize(sf::Vector2f(curExit->getWidth(), curExit->getHeight()));
+	exit.setPosition(curExit->getX(), curExit->getY());
+	exit.setFillColor(sf::Color::Cyan);
+	this->window->draw(exit);
+
 	// Fred's Health Bar
 	sf::RectangleShape healthBar(sf::Vector2f(5 * fred -> getHealth() , 20));
 	healthBar.setPosition(10, 20);
