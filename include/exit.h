@@ -1,25 +1,21 @@
-//
-//  exit.h
-//  
-//
-//  Created by Sean Thomson on 10/19/19.
-//
-
-#ifndef exit_h
-#define exit_h
+#ifndef EXIT_H
+#define EXIT_H
 
 #include <memory>
-#include <actor.h>
-#include <room.h>
+
+#include "actor.h"
+#include "room.h"
 
 class Exit : public Actor {
-protected:
-    std::shared_ptr<Room> destination;
-    
-public:
-    Exit(double x, double y, double width, double height, std::shared_ptr<Room> destination);
-    std::shared_ptr<Room> getDestination();
-    void setDestination(std::shared_ptr<Room> newDest);
+    protected:
+        std::shared_ptr<Room> destination;
+        
+    public:
+        Exit(double x, double y, std::shared_ptr<Room> destination);
+
+        std::shared_ptr<Room> getDestination() { return this->destination; };
+
+        void setDestination(std::shared_ptr<Room> destination) { this->destination = destination; };
 };
 
-#endif /* exit_h */
+#endif
