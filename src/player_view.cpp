@@ -59,11 +59,11 @@ void PlayerView::drawScreen(void) {
     this->window->draw(exit);
 
 	//Fred's Health Bar
-	sf::RectangleShape maxHealthBar(sf::Vector2f(5*fred->getMaxHealth(), 20));
-	maxHealthBar.setPosition(10, 20);
-	maxHealthBar.setFillColor(sf::Color::Green);
+	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getMaxHealth(), 20));
+	healthBar.setPosition(10, 20);
+	healthBar.setFillColor(sf::Color::Green);
 
-	this->window->draw(maxHealthBar);
+	this->window->draw(healthBar);
 
 	// Hard coded inventory blocks
 	sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
