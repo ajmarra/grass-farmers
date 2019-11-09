@@ -56,7 +56,7 @@ void MasterLogic::update(float delta) {
                     currentExit->setXY((currentRoom->getX() + currentRoom->getWidth())/2, currentRoom->getY() + currentRoom->getHeight() - 10);
                     view->setRoom(currentRoom);
                     view->setExit(currentExit);
-                    curActor->setXY(currentExit->getX(), currentExit->getY() - currentExit->getHeight() - 50);
+                    curActor->setXY(currentExit->getX(), currentExit->getY() - currentExit->getHeight() - 100);
                 }
                 else {
                     curActor->update(delta);
@@ -64,23 +64,23 @@ void MasterLogic::update(float delta) {
             }
             else if (!curActor->liesInsideSquare((*currentRoom))) {
                 if (curActor->getY() < currentRoom->getY()) {
-                    fred->stop();
+                    curActor->hardStop();
                     curActor->setXY(curActor->getX(), curActor->getY() + 1);
                 }
                 else if (curActor->getY() + curActor->getHeight() > currentRoom->getY() + currentRoom->getHeight()) {
-                    fred->stop();
+                    curActor->hardStop();
                     curActor->setXY(curActor->getX(), curActor->getY() - 1);
                 }
                 else if (curActor->getX() < currentRoom->getX()) {
-                    fred->stop();
+                    curActor->hardStop();
                     curActor->setXY(curActor->getX() + 1, curActor->getY());
                 }
                 else if (curActor->getX() + curActor->getWidth() > currentRoom->getX() + currentRoom->getWidth()) {
-                    fred->stop();
+                    curActor->hardStop();
                     curActor->setXY(curActor->getX() - 1, curActor->getY());
                 }
                 else {
-                    fred->stop();
+                    curActor->hardStop();
                     curActor->setXY(curActor->getX() - 1, curActor->getY() - 1);
                 }
             }
