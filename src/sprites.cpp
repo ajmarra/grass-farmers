@@ -14,14 +14,15 @@ void Sprite::update(float delta, double direction){
         elapsedTime -= frameRate;
 
         //in case it goes off array map
-        if (cur_sprite.x >= cur_sprite.x) {
-            cur_sprite.x = 0;
-        } }
+        if (spriteFrame.left >= 128) {
+            spriteFrame.left = 0;
+        }
+    }
         
        
        //up 1
         if ((direction >= -135.0) && (direction < -45.0) && (move = 0)){
-            spriteFrame.left = 196;
+            spriteFrame.top = 196;
             spriteFrame.left = 0;
             move = 1;
 
@@ -29,7 +30,7 @@ void Sprite::update(float delta, double direction){
 
         //up2
         else if ((direction >= -135.0) && (direction < -45.0) && (move = 1)){
-            spriteFrame.left = 196;
+            spriteFrame.top= 196;
             spriteFrame.left = 64;
             move = 0;
 
@@ -57,7 +58,7 @@ void Sprite::update(float delta, double direction){
 
         //down 1
         else if ((direction <= 135.0) && (direction > 45.0) && (move = 0)){
-            spriteFrame.left = 64;
+            spriteFrame.top = 64;
             spriteFrame.left = 0;
             move = 1;
 
@@ -65,7 +66,7 @@ void Sprite::update(float delta, double direction){
 
         //down 2
          else if ((direction <= 135.0) && (direction > 45.0) && (move = 1)){
-            spriteFrame.left = 64;
+            spriteFrame.top = 64;
             spriteFrame.left = 0;
             move = 0;
 

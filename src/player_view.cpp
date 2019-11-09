@@ -104,7 +104,7 @@ void PlayerView::drawScreen(void) {
 				sf::RectangleShape fredShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
 				fredShape.setTexture(&FredSprite.spriteMap);
 				fredShape.setTextureRect(FredSprite.spriteFrame);
-				fredShape.setFillColor(sf::Color::White);
+				//fredShape.setFillColor(sf::Color::White);
 				fredShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(fredShape);
 			}
