@@ -17,7 +17,3 @@ Room::Room(double x, double y, double width, double height) {
 void Room::setActorList(std::list<std::shared_ptr<Actor>> newActorList) {
     this->actorList = newActorList;
 }
-
-std::list<std::shared_ptr<Actor>> Room::getActorList() {
-    return this->actorList;
-}

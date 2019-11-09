@@ -97,8 +97,8 @@ void PlayerView::drawScreen(void) {
 	this->window->draw(inventoryBlock3);
 	this->window->draw(inventoryBlock4);
 
-    for (std::list<std::shared_ptr<Actor>>::iterator it = this->logic->getActorList().begin();
-        it != this->logic->getActorList().end(); ++it) {
+    for (std::list<std::shared_ptr<Actor>>::iterator it = this->curRoom->getActorList().begin();
+        it != this->curRoom->getActorList().end(); ++it) {
         switch ((*it)->getType()) {
             case ActorType::FRED:
 			{

@@ -23,7 +23,7 @@ public:
     
     void setActorList(std::list<std::shared_ptr<Actor>> newActorList);
     
-    std::list<std::shared_ptr<Actor>> getActorList();
+    std::list<std::shared_ptr<Actor>> &getActorList(void) { return actorList; };
 };
 
 #endif /* room_hpp */

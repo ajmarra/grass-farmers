@@ -16,8 +16,6 @@ void MasterLogic::startDemo(void) {
     this->actorList.push_front(fred);
     
     this->view->setPlayer(fred);
-    this->view->setRoom(currentRoom);
-    this->view->setExit(currentExit);
 
 	// Creating items to test
 	std::shared_ptr<Item> testItem = std::make_shared<Item>(ActorType::WEAPON, 150, 150, 20, 20, 1, false);
@@ -35,33 +33,43 @@ void MasterLogic::startDemo(void) {
 	std::shared_ptr<Item> testItem4 = std::make_shared<Item>(ActorType::WEAPON, 450, 550, 20, 20, 1, false);
 	this->actorList.push_back(testItem4);
 	this->itemList.push_back(testItem4);
+    
+    currentRoom->setActorList(this->actorList);
+    
+    this->view->setRoom(currentRoom);
+    this->view->setExit(currentExit);
 }
 
 void MasterLogic::update(float delta) {
-    
-    // Check if desired direction will cause Fred to go out of bounds
-    // Don't allow him to go if true
-    
     if (!paused) {
         for (std::list<std::shared_ptr<Actor>>::iterator it = actorList.begin(); it != actorList.end(); it++) {
             std::shared_ptr<Actor> curActor = (*it);
             if (curActor != fred) {
                 curActor->update(delta);
             }
+            
+            // Check to make sure Fred is still within the current room
             else if (curActor->liesInsideSquare((*currentRoom))) {
+                
+                // Check if Fred uses the exit
                 if (curActor->collidesSquare((*currentExit))) {
                     std::shared_ptr<Room> temp = currentRoom;
                     currentRoom = currentExit->getDestination();
                     currentExit->setDestination(temp);
                     currentExit->setXY((currentRoom->getX() + currentRoom->getWidth())/2, currentRoom->getY() + currentRoom->getHeight() - 10);
+                    curActor->setXY(currentExit->getX(), currentExit->getY() - currentExit->getHeight() - 100);
+                    std::list<std::shared_ptr<Actor>> curList = currentRoom->getActorList();
+                    curList.push_back(curActor);
+                    currentRoom->setActorList(curList);
                     view->setRoom(currentRoom);
                     view->setExit(currentExit);
-                    curActor->setXY(currentExit->getX(), currentExit->getY() - currentExit->getHeight() - 100);
                 }
                 else {
                     curActor->update(delta);
                 }
             }
+            
+            // If Fred reaches the outside of the room, push him back inside
             else if (!curActor->liesInsideSquare((*currentRoom))) {
                 if (curActor->getY() < currentRoom->getY()) {
                     curActor->hardStop();
