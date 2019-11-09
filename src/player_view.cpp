@@ -50,12 +50,13 @@ void PlayerView::drawScreen(void) {
     room.setSize(sf::Vector2f(curRoom->getWidth(), curRoom->getHeight()));
     room.setPosition(curRoom->getX(), curRoom->getY());
     room.setFillColor(sf::Color::Magenta);
-    window->draw(room);
+    this->window->draw(room);
     
     sf::RectangleShape exit;
     exit.setSize(sf::Vector2f(curExit->getWidth(), curExit->getHeight()));
     exit.setPosition(curExit->getX(), curExit->getY());
     exit.setFillColor(sf::Color::Cyan);
+    this->window->draw(exit);
 
 	//Fred's Health Bar
 	sf::RectangleShape maxHealthBar(sf::Vector2f(5*fred->getMaxHealth(), 20));
