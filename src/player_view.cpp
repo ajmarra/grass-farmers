@@ -44,6 +44,19 @@ void PlayerView::pollInput() {
 
 void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Black);
+    
+    //Current room and exit
+    sf::RectangleShape room;
+    room.setSize(sf::Vector2f(curRoom->getWidth(), curRoom->getHeight()));
+    room.setPosition(curRoom->getX(), curRoom->getY());
+    room.setFillColor(sf::Color::Magenta);
+    this->window->draw(room);
+    
+    sf::RectangleShape exit;
+    exit.setSize(sf::Vector2f(curExit->getWidth(), curExit->getHeight()));
+    exit.setPosition(curExit->getX(), curExit->getY());
+    exit.setFillColor(sf::Color::Cyan);
+    this->window->draw(exit);
 
 	//Fred's Health Bar
 	sf::RectangleShape maxHealthBar(sf::Vector2f(5*fred->getMaxHealth(), 20));
@@ -84,8 +97,8 @@ void PlayerView::drawScreen(void) {
 	this->window->draw(inventoryBlock3);
 	this->window->draw(inventoryBlock4);
 
-    for (std::list<std::shared_ptr<Actor>>::iterator it = this->logic->getActorList().begin();
-        it != this->logic->getActorList().end(); ++it) {
+    for (std::list<std::shared_ptr<Actor>>::iterator it = this->curRoom->getActorList().begin();
+        it != this->curRoom->getActorList().end(); ++it) {
         switch ((*it)->getType()) {
             case ActorType::FRED:
 			{
@@ -111,4 +124,12 @@ void PlayerView::drawScreen(void) {
 void PlayerView::update(float delta) {
     this->pollInput();
     this->drawScreen();
+}
+
+void PlayerView::setCurrentRoom(std::shared_ptr<Room> currentRoom) {
+    this->curRoom = currentRoom;
+}
+
+void PlayerView::setCurrentExit(std::shared_ptr<Exit> currentExit) {
+    this->curExit = currentExit;
 }

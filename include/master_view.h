@@ -12,6 +12,8 @@
 
 #include "view.h"
 #include "player_view.h"
+#include "room.h"
+#include "exit.h"
 
 class MasterView {
     private:
@@ -25,6 +27,10 @@ class MasterView {
         void init(std::shared_ptr<MasterLogic> &logic);
 
         void setPlayer(std::shared_ptr<Fred> &fred);
+
+        void setRoom(std::shared_ptr<Room> room);
+    
+        void setExit(std::shared_ptr<Exit> exit);
 
         void update(float delta);
 };
