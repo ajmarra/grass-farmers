@@ -5,12 +5,14 @@
 #include <list>
 #include <memory>
 #include <math.h>
+
 #define PI 3.14159265
 
 PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred> &fred, std::shared_ptr<sf::RenderWindow> &window)
     : View(logic) {
     this->fred = fred;
     this->window = window;
+
 	
 	
 	FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
@@ -25,25 +27,11 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
 void PlayerView::pollInput() {
     sf::Event Event;
     int x = 0, y = 0;
-	keyPress = 0;
 
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-		 y -= 1;
-		 keyPress = 1;
-		 }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-		 x -= 1;
-		 keyPress = 1;
-		 } 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-		 y+= 1;
-		 keyPress = 1;
-		 }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-		 x += 1;
-		 keyPress = 1;
-		 }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) y -= 1;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) x -= 1;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) y += 1;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) x += 1;
 
     if (x == 0 && y == 0) fred->stop();
     else fred->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
@@ -63,13 +51,24 @@ void PlayerView::pollInput() {
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelected(1);
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelected(2);
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelected(3);
-	
-	
 
 }
 
 void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Green);
+    
+    //Current room and exit
+    sf::RectangleShape room;
+    room.setSize(sf::Vector2f(curRoom->getWidth(), curRoom->getHeight()));
+    room.setPosition(curRoom->getX(), curRoom->getY());
+    room.setFillColor(sf::Color::Magenta);
+    this->window->draw(room);
+    
+    sf::RectangleShape exit;
+    exit.setSize(sf::Vector2f(curExit->getWidth(), curExit->getHeight()));
+    exit.setPosition(curExit->getX(), curExit->getY());
+    exit.setFillColor(sf::Color::Cyan);
+    this->window->draw(exit);
 
 	//Fred's Health Bar
 	sf::RectangleShape maxHealthBar(sf::Vector2f(5*fred->getMaxHealth(), 20));
@@ -110,14 +109,16 @@ void PlayerView::drawScreen(void) {
 	this->window->draw(inventoryBlock3);
 	this->window->draw(inventoryBlock4);
 
-    for (std::list<std::shared_ptr<Actor>>::iterator it = this->logic->getActorList().begin();
-        it != this->logic->getActorList().end(); ++it) {
+    for (std::list<std::shared_ptr<Actor>>::iterator it = this->curRoom->getActorList().begin();
+        it != this->curRoom->getActorList().end(); ++it) {
         switch ((*it)->getType()) {
             case ActorType::FRED:
 			{
 				sf::RectangleShape fredShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
 				fredShape.setTexture(&FredSprite.spriteMap);
 				fredShape.setTextureRect(FredSprite.spriteFrame);
+				//fredShape.setFillColor(sf::Color::White);
+				
 				//fredShape.setFillColor(sf::Color::White);
 				fredShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(fredShape);
@@ -140,6 +141,13 @@ void PlayerView::update(float delta) {
     this->pollInput();
 	FredSprite.setSprite(fred->getDirection());
 	FredSprite.update(delta);
-	
     this->drawScreen();
+}
+
+void PlayerView::setCurrentRoom(std::shared_ptr<Room> currentRoom) {
+    this->curRoom = currentRoom;
+}
+
+void PlayerView::setCurrentExit(std::shared_ptr<Exit> currentExit) {
+    this->curExit = currentExit;
 }
