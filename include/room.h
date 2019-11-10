@@ -1,18 +1,10 @@
-//
-//  room.hpp
-//  
-//
-//  Created by Sean Thomson on 10/19/19.
-//
+#ifndef ROOM_H
+#define ROOM_H
 
-#ifndef room_hpp
-#define room_hpp
-
-#include <stdio.h>
-#include <actor.h>
-#include <item.h>
 #include <list>
 #include <memory>
+
+#include "actor.h"
 
 class Room : public Actor {
 private:
@@ -21,9 +13,9 @@ private:
 public:
     Room(double x, double y, double width, double height);
     
-    void setActorList(std::list<std::shared_ptr<Actor>> newActorList);
+    void setActorList(std::list<std::shared_ptr<Actor>> newActorList) { this->actorList = newActorList; };
     
     std::list<std::shared_ptr<Actor>> &getActorList(void) { return actorList; };
 };
 
-#endif /* room_hpp */
+#endif
