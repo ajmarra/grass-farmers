@@ -1,5 +1,5 @@
 #include "player_view.h"
-#include "sprites.h"
+#include "graphics.h"
 
 #include <SFML/Graphics.hpp>
 #include <list>
@@ -25,11 +25,25 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
 void PlayerView::pollInput() {
     sf::Event Event;
     int x = 0, y = 0;
+	keyPress = 0;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) y -= 1;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) x -= 1;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) y += 1;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) x += 1;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+		 y -= 1;
+		 keyPress = 1;
+		 }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+		 x -= 1;
+		 keyPress = 1;
+		 } 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+		 y+= 1;
+		 keyPress = 1;
+		 }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+		 x += 1;
+		 keyPress = 1;
+		 }
 
     if (x == 0 && y == 0) fred->stop();
     else fred->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
@@ -124,6 +138,8 @@ void PlayerView::drawScreen(void) {
 
 void PlayerView::update(float delta) {
     this->pollInput();
-	FredSprite.update(delta,fred->getDirection());
+	FredSprite.setSprite(fred->getDirection());
+	FredSprite.update(delta);
+	
     this->drawScreen();
 }

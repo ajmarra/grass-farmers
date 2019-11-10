@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <memory>
-#include "sprites.h"
+#include "graphics.h"
 
 #include "view.h"
 #include "fred.h"
@@ -14,7 +14,8 @@ class PlayerView : public View {
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<Fred> fred;
         
-        Sprite FredSprite;
+        Graphics FredSprite;
+        int keyPress = 0;
 
         void pollInput(void);
 
