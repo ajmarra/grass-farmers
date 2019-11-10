@@ -63,7 +63,7 @@ void PlayerView::drawScreen(void) {
 	healthBar.setPosition(10, 20);
 	healthBar.setFillColor(sf::Color::Green);
 
-	this->window->draw(healthBar);
+	//this->window->draw(healthBar);
 
 	// Hard coded inventory blocks
 	sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
@@ -106,6 +106,7 @@ void PlayerView::drawScreen(void) {
 				fredShape.setFillColor(sf::Color::White);
 				fredShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(fredShape);
+				this->window->draw(healthBar);
 			}
 				break;
 			case ActorType::WEAPON:
@@ -114,6 +115,14 @@ void PlayerView::drawScreen(void) {
 				itemShape.setFillColor(sf::Color::Red);
 				itemShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(itemShape);
+			}
+				break;
+			case ActorType::ENEMY:
+			{
+				sf::RectangleShape enemyShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+				enemyShape.setFillColor(sf::Color::Yellow);
+				enemyShape.setPosition((*it)->getX(), (*it)->getY());
+				this->window->draw(enemyShape);
 			}
 				break;
         }
