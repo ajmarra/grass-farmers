@@ -35,14 +35,6 @@ void Graphics::setSprite(double direction){
 
     }
 
-    // //up2
-    // else if ((direction >= -135.0) && (direction < -45.0) && (move = 1)){
-    //     spriteFrame.top= 196;
-    //     spriteFrame.left = 64;
-    //     move = 0;
-
-    // }
-
     // //left1
     else if ((((direction < -135.0) && (direction >= -180.0)) || 
     ((direction <= 180.0) && (direction > 135.0)))){
@@ -51,16 +43,6 @@ void Graphics::setSprite(double direction){
 
     }
 
-    // //left2
-    // else if ((((direction < -135.0) && (direction >= -180.0)) || 
-    // ((direction <= 180.0) && (direction > 135.0)))
-    //     && (move = 1)){
-    //     spriteFrame.top = 128;
-    //     spriteFrame.left = 64;
-    //     move = 0;
-
-    // }
-
     //down 1
     else if ((direction <= 135.0) && (direction > 45.0)){
         spriteFrame.top = 64;
@@ -68,13 +50,6 @@ void Graphics::setSprite(double direction){
 
     }
 
-    // //down 2
-    //     else if ((direction <= 135.0) && (direction > 45.0) && (move = 1)){
-    //     spriteFrame.top = 64;
-    //     spriteFrame.left = 64;
-    //     move = 0;
-
-    // }
 
     // //right1
     else if ((((direction < 45.0) && (direction > 0.0)) || 
@@ -83,38 +58,5 @@ void Graphics::setSprite(double direction){
         spriteFrame.top = 0;
 
 
-    }
-
-    // //right2
-    // else if ((((direction < 45.0) && (direction > 0.0)) || 
-    // ((direction <= -45.0) && (direction <=0.0)))
-    //     && (move = 1)){
-    //     spriteFrame.top = 0;
-    //     spriteFrame.left = 64;
-    //     move = 0;
-
-    // }
-
-
-
-
-        // else if ((((direction >= 315.0) && (direction < 360.0)) || 
-        //     ((direction >= 0.0) && (direction < 45.0))) &&
-        //  (move = 0)){
-        //     spriteFrame.top = 0;
-        //     spriteFrame.left = 0;
-        //     move = 1;
-
-        // }
-        // else if ((((direction >= 315.0) && (direction < 360.0)) || 
-        //     ((direction >= 0.0) && (direction < 45.0))) &&
-        //  (move = 1)){
-        //     spriteFrame.top = 0;
-        //     spriteFrame.left = 0;
-        //     move = 0;
-
-        // }
-
-
-    
+    }    
 }
