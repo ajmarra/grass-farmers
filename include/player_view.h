@@ -10,12 +10,15 @@
 #include "fred.h"
 #include "room.h"
 #include "exit.h"
+#include "music.h"
 
 class PlayerView : public View {
+
     private:
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<Fred> fred;
-        
+
+        Sounds cur_track;
         Graphics FredSprite;
         int keyPress = 0;
         std::shared_ptr<Room> curRoom;

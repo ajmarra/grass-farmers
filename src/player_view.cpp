@@ -12,6 +12,7 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
     : View(logic) {
     this->fred = fred;
     this->window = window;
+	cur_track.playDayTrack();
 
 	
 	
