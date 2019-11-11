@@ -6,20 +6,20 @@
 class MeleeWeapon : public Item {
 private:
 	//scaling factors for damage and time between each hit
-	int strength, speed;
+	int damage, speed;
 
 public:
-	MeleeWeapon(double x, double y, double height, double width, int strength, int speed);
+	MeleeWeapon(double x, double y, double height, double width, int damage, int speed);
 
-	int getStrength(void) { return strength; };
+	void setDamage(int damage) { this->damage = damage; };
+	
+	int getDamage(void) { return damage; };
+	
+	void setSpeed(int speed) { this->speed = speed; };
+
 	int getSpeed(void) { return speed; };
-
-	void setStrength(int strength);
-	void setSpeed(int speed);
-
-	//swings melee weapon and returns a double for damage precentage based on strength value
-	//The speed value dictates the wait time between each attack
-	double swingWeapon(void);
+	
+	void use(int x, int y) override;
 
 };
 

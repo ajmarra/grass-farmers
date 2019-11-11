@@ -15,8 +15,15 @@ public:
 	bool isStackable(void) { return stackable; };
 
 	int getQuantity(void) { return quantity; };
+
 	void increaseQuantity(void);
+
 	void decreaseQuantity(void);
+
+	/**
+	 * Perform whatever is the main function of the item
+	 */
+	virtual void use(int x, int y) = 0;
 
 	//void collectItem(Item toCollect);
 };
