@@ -10,7 +10,7 @@ Graphics::Graphics(){}
 void Graphics::update(float delta){
     elapsedTime += delta;
 
-    std::cout << delta << std::endl;
+    //std::cout << delta << std::endl;
     //std::cout << direction << std::endl;
     
     
