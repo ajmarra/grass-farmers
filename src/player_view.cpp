@@ -17,6 +17,7 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
 	
 	
 	FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
+	room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
 	
 	FredSprite.spriteFrame.top = 64;//x
 	FredSprite.spriteFrame.left = 0;//y
@@ -67,7 +68,7 @@ void PlayerView::drawScreen(void) {
     sf::RectangleShape room;
     room.setSize(sf::Vector2f(curRoom->getWidth(), curRoom->getHeight()));
     room.setPosition(curRoom->getX(), curRoom->getY());
-    room.setFillColor(sf::Color::Magenta);
+    room.setTexture(&room_image.spriteMap);
     this->window->draw(room);
     
     sf::RectangleShape exit;
