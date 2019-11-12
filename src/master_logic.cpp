@@ -8,9 +8,9 @@ void MasterLogic::init(std::shared_ptr<MasterView> &view) {
 void MasterLogic::startDemo(void) {
     fred = std::make_shared<Fred>(50, 50);
     
-    currentRoom = std::make_shared<Room>(0, 0, 600, 600);
+    currentRoom = std::make_shared<Room>(0, 100, 1200, 800);
     std::shared_ptr<Room> farmhouse = std::make_shared<Room>(0, 0, 400, 400);
-    std::shared_ptr<Exit> fieldExit = std::make_shared<Exit>(500, 590, 40, 10, farmhouse);
+    std::shared_ptr<Exit> fieldExit = std::make_shared<Exit>(500, 890, farmhouse);
     currentExit = fieldExit;
     
     this->actorList.push_front(fred);

@@ -1,15 +1,27 @@
 #include "player_view.h"
+#include "graphics.h"
 
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <memory>
 #include <math.h>
+
 #define PI 3.14159265
 
 PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred> &fred, std::shared_ptr<sf::RenderWindow> &window)
     : View(logic) {
     this->fred = fred;
     this->window = window;
+
+	
+	
+	FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
+	
+	FredSprite.spriteFrame.top = 64;//x
+	FredSprite.spriteFrame.left = 0;//y
+	FredSprite.spriteFrame.width = 64;
+	FredSprite.spriteFrame.height = 64;
+
 }
 
 void PlayerView::pollInput() {
@@ -43,7 +55,7 @@ void PlayerView::pollInput() {
 }
 
 void PlayerView::drawScreen(void) {
-    window->clear(sf::Color::Black);
+    window->clear(sf::Color::Green);
     
     //Current room and exit
     sf::RectangleShape room;
@@ -59,9 +71,11 @@ void PlayerView::drawScreen(void) {
     this->window->draw(exit);
 
 	//Fred's Health Bar
-	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
-	healthBar.setPosition(10, 20);
-	healthBar.setFillColor(sf::Color::Green);
+	sf::RectangleShape maxHealthBar(sf::Vector2f(5*fred->getMaxHealth(), 20));
+	maxHealthBar.setPosition(10, 20);
+	maxHealthBar.setFillColor(sf::Color::Blue);
+
+	this->window->draw(maxHealthBar);
 
 	// Hard coded inventory blocks
 	sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
@@ -101,10 +115,13 @@ void PlayerView::drawScreen(void) {
             case ActorType::FRED:
 			{
 				sf::RectangleShape fredShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
-				fredShape.setFillColor(sf::Color::White);
+				fredShape.setTexture(&FredSprite.spriteMap);
+				fredShape.setTextureRect(FredSprite.spriteFrame);
+				//fredShape.setFillColor(sf::Color::White);
+				
+				//fredShape.setFillColor(sf::Color::White);
 				fredShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(fredShape);
-				this->window->draw(healthBar);
 			}
 				break;
 			case ActorType::WEAPON:
@@ -115,14 +132,6 @@ void PlayerView::drawScreen(void) {
 				this->window->draw(itemShape);
 			}
 				break;
-			case ActorType::ENEMY:
-			{
-				sf::RectangleShape enemyShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
-				enemyShape.setFillColor(sf::Color::Yellow);
-				enemyShape.setPosition((*it)->getX(), (*it)->getY());
-				this->window->draw(enemyShape);
-			}
-				break;
         }
     }
 
@@ -130,6 +139,8 @@ void PlayerView::drawScreen(void) {
 
 void PlayerView::update(float delta) {
     this->pollInput();
+	FredSprite.setSprite(fred->getDirection());
+	FredSprite.update(delta);
     this->drawScreen();
 }
 

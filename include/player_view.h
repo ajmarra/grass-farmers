@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <memory>
+#include "graphics.h"
 
 #include "view.h"
 #include "fred.h"
@@ -14,6 +15,9 @@ class PlayerView : public View {
     private:
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<Fred> fred;
+        
+        Graphics FredSprite;
+        int keyPress = 0;
         std::shared_ptr<Room> curRoom;
         std::shared_ptr<Exit> curExit;
 
