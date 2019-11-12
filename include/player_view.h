@@ -13,7 +13,6 @@
 #include "music.h"
 
 class PlayerView : public View {
-
     private:
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<Fred> fred;

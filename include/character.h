@@ -43,10 +43,10 @@ class Character : public Actor {
         /**
          * stops the character (desiredDirection of -1 stops the character)
          */
-        void stop() { this->desiredDirection = -1; };
+        void stop(void) { this->desiredDirection = -1; };
 
-		int getHealth() { return health; };
-		int getMaxHealth() { return maxHealth; };
+		int getHealth(void) { return health; };
+		int getMaxHealth(void) { return maxHealth; };
 
 		std::shared_ptr<Item> removeItemAtIndex(int index);
 
@@ -57,8 +57,8 @@ class Character : public Actor {
 			selectedIndex = toSelect;
 		};
 
-		int getSelectedIndex() { return selectedIndex; };
-		std::shared_ptr<Item> getSelectedItem() { return selectedItem; };
+		int getSelectedIndex(void) { return selectedIndex; };
+		std::shared_ptr<Item> getSelectedItem(void) { return selectedItem; };
 };
 
 #endif

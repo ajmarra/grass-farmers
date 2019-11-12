@@ -35,8 +35,13 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
 
 void PlayerView::pollInput() {
     sf::Event Event;
-    int x = 0, y = 0;
 
+	// Use Item
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			this->fred->useItem(sf::Mouse::getPosition().x, sf::Mouse::getPosition().x);
+
+    // Movement
+    int x = 0, y = 0;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) y -= 1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) x -= 1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) y += 1;
@@ -45,7 +50,7 @@ void PlayerView::pollInput() {
     if (x == 0 && y == 0) fred->stop();
     else fred->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
 
-	// Collecting an item
+	// Pick up an item
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
 		fred->addItem(this->logic->getItemList());
 	}
@@ -64,14 +69,13 @@ void PlayerView::pollInput() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) cur_track.stopCurrentTrack();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) cur_track.playNightTrack();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) cur_track.playDayTrack();
-
 }
 	
 
 void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Green);
     
-    //Current room and exit
+    // Current room and exit
     sf::RectangleShape room;
     room.setSize(sf::Vector2f(curRoom->getWidth(), curRoom->getHeight()));
     room.setPosition(curRoom->getX(), curRoom->getY());
@@ -84,7 +88,7 @@ void PlayerView::drawScreen(void) {
     exit.setFillColor(sf::Color::Cyan);
     this->window->draw(exit);
 
-	//Fred's Health Bar
+	// Fred's Health Bar
 	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
 	healthBar.setPosition(10, 20);
 	healthBar.setFillColor(sf::Color::Blue);
