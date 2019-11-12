@@ -13,6 +13,10 @@ void MasterView::setPlayer(std::shared_ptr<Fred> &fred) {
     player = std::make_shared<PlayerView>(this->logic, fred, this->window);
 }
 
+void MasterView::setMenu(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<sf::RenderWindow> &window) {
+    menu = std::make_shared<MenuView>(this->logic, this->window);
+}
+
 void MasterView::setRoom(std::shared_ptr<Room> room) {
     player->setCurrentRoom(room);
 }
@@ -24,3 +28,5 @@ void MasterView::setExit(std::shared_ptr<Exit> exit){
 void MasterView::update(float delta) {
     player->update(delta);
 }
+
+

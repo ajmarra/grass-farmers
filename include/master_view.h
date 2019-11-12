@@ -9,6 +9,7 @@
 #include "actor.h"
 #include "character.h"
 #include "fred.h"
+#include "menu_view.h"
 
 #include "view.h"
 #include "player_view.h"
@@ -19,12 +20,15 @@ class MasterView {
     private:
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<MasterLogic> logic;
-        std::shared_ptr<PlayerView> player;
+        std::shared_ptr<PlayerView> player; 
+        std::shared_ptr<MenuView> menu;
 
     public:
         MasterView(std::shared_ptr<sf::RenderWindow> &window);
 
         void init(std::shared_ptr<MasterLogic> &logic);
+
+        void setMenu(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<sf::RenderWindow> &window);
 
         void setPlayer(std::shared_ptr<Fred> &fred);
 

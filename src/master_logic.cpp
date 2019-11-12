@@ -5,6 +5,10 @@ void MasterLogic::init(std::shared_ptr<MasterView> &view) {
     this->view = view;
 }
 
+void MasterLogic::startMenu(void){
+    //pass
+}
+
 void MasterLogic::startDemo(void) {
     fred = std::make_shared<Fred>(50, 50);
     

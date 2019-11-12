@@ -29,6 +29,8 @@ class MasterLogic {
 
         void init(std::shared_ptr<MasterView> &mv);
 
+        void startMenu(void);
+
         void startDemo(void);
 
         void update(float delta);
