@@ -10,7 +10,7 @@ EnemyView::EnemyView(std::shared_ptr<Fred> &fred, std::shared_ptr<Enemy> &enemy)
 	this->enemy = enemy;
 }
 
-void EnemyView::findFred() {
+void EnemyView::findFred(float delta) {
 	int x = 0, y = 0;
 
 	if (fred->getCenterY() < enemy->getCenterY()) y -= 1;
@@ -18,7 +18,7 @@ void EnemyView::findFred() {
 	if (fred->getCenterY() > enemy->getCenterY()) y += 1;
 	if (fred->getCenterX() > enemy->getCenterX()) x += 1;
 
-	if (x == 0 && y == 0 || enemy->collidesSquare(*fred)) {
+	if (x == 0 && y == 0 || (enemy->collidesSquare(*fred) && fmod(delta, 10) > 0)) {
 		enemy->stop();
 		fred->damage(10); //temporarily hard coded.  Will change based on enemy type?
 	}
@@ -26,5 +26,5 @@ void EnemyView::findFred() {
 }
 
 void EnemyView::update(float delta) {
-	this->findFred();
+	this->findFred(delta);
 }

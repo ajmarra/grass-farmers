@@ -12,7 +12,7 @@ private:
 	std::shared_ptr<Fred> fred;
 	std::shared_ptr<Enemy> enemy;
 
-	void findFred(void);
+	void findFred(float delta);
 
 public:
 	EnemyView(std::shared_ptr<Fred> &fred, std::shared_ptr<Enemy> &enemy);
