@@ -13,18 +13,23 @@ class Graphics{
         Graphics();
         sf::Texture spriteMap;
         sf::IntRect spriteFrame;
-        void update (float delta);
-        void setSprite(double direction);
+        void updateFred(float delta);
+        void setFredSprite(double direction);
+        void updateEnemy (float delta);
+        void setEnemySprite(double direction);
+
 
     
 
     private:
+        int left = 0;
         sf::Vector2u totalSprite;
         sf::Vector2f cur_sprite;
         float frameRate = 0.3;
-        float elapsedTime;
+        float elapsedFredTime;
+        float elapsedEnemyTime;
         float currentFrame;
-        int move = 0; 
+        //int move = 0; 
 };
 
 #endif

@@ -15,10 +15,17 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
 	cur_track.playDayTrack();
 
 	
-	
+	EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
 	FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
 	room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
 	
+
+	EnemySprite.spriteFrame.top = 64;//x
+	EnemySprite.spriteFrame.left = 0;//y
+	EnemySprite.spriteFrame.width = 64;
+	EnemySprite.spriteFrame.height = 64;
+
+
 	FredSprite.spriteFrame.top = 64;//x
 	FredSprite.spriteFrame.left = 0;//y
 	FredSprite.spriteFrame.width = 64;
@@ -124,8 +131,8 @@ void PlayerView::drawScreen(void) {
 				sf::RectangleShape fredShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
 				fredShape.setTexture(&FredSprite.spriteMap);
 				fredShape.setTextureRect(FredSprite.spriteFrame);
-				//fredShape.setFillColor(sf::Color::White);
 				fredShape.setPosition((*it)->getX(), (*it)->getY());
+				FredSprite.setFredSprite(fred->getDirection());
 				this->window->draw(fredShape);
 			}
 				break;
@@ -140,8 +147,10 @@ void PlayerView::drawScreen(void) {
 			case ActorType::ENEMY:
 			{
 				sf::RectangleShape enemyShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
-				enemyShape.setFillColor(sf::Color::Yellow);
+				enemyShape.setTexture(&EnemySprite.spriteMap);
+				enemyShape.setTextureRect(EnemySprite.spriteFrame);
 				enemyShape.setPosition((*it)->getX(), (*it)->getY());
+				EnemySprite.setEnemySprite((*it)->getDirection());
 				this->window->draw(enemyShape);
 			}
 			break;
@@ -152,8 +161,10 @@ void PlayerView::drawScreen(void) {
 
 void PlayerView::update(float delta) {
     this->pollInput();
-	FredSprite.setSprite(fred->getDirection());
-	FredSprite.update(delta);
+	
+	FredSprite.updateFred(delta);
+	
+	EnemySprite.updateEnemy(delta);
     this->drawScreen();
 }
 
