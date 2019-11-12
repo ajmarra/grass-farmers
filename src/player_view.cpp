@@ -12,11 +12,20 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
     : View(logic) {
     this->fred = fred;
     this->window = window;
+	cur_track.playDayTrack();
 
 	
-	
+	EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
 	FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
+	room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
 	
+
+	EnemySprite.spriteFrame.top = 64;//x
+	EnemySprite.spriteFrame.left = 0;//y
+	EnemySprite.spriteFrame.width = 64;
+	EnemySprite.spriteFrame.height = 64;
+
+
 	FredSprite.spriteFrame.top = 64;//x
 	FredSprite.spriteFrame.left = 0;//y
 	FredSprite.spriteFrame.width = 64;
@@ -52,7 +61,12 @@ void PlayerView::pollInput() {
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelected(2);
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelected(3);
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) cur_track.stopCurrentTrack();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) cur_track.playNightTrack();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) cur_track.playDayTrack();
+
 }
+	
 
 void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Green);
@@ -61,7 +75,7 @@ void PlayerView::drawScreen(void) {
     sf::RectangleShape room;
     room.setSize(sf::Vector2f(curRoom->getWidth(), curRoom->getHeight()));
     room.setPosition(curRoom->getX(), curRoom->getY());
-    room.setFillColor(sf::Color::Magenta);
+    room.setTexture(&room_image.spriteMap);
     this->window->draw(room);
     
     sf::RectangleShape exit;
@@ -71,11 +85,11 @@ void PlayerView::drawScreen(void) {
     this->window->draw(exit);
 
 	//Fred's Health Bar
-	sf::RectangleShape maxHealthBar(sf::Vector2f(5*fred->getMaxHealth(), 20));
-	maxHealthBar.setPosition(10, 20);
-	maxHealthBar.setFillColor(sf::Color::Blue);
+	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
+	healthBar.setPosition(10, 20);
+	healthBar.setFillColor(sf::Color::Blue);
 
-	this->window->draw(maxHealthBar);
+	this->window->draw(healthBar);
 
 	// Hard coded inventory blocks
 	sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
@@ -83,24 +97,24 @@ void PlayerView::drawScreen(void) {
 	sf::RectangleShape inventoryBlock3(sf::Vector2f(75, 75));
 	sf::RectangleShape inventoryBlock4(sf::Vector2f(75, 75));
 
-	if (fred->getSelectedIndex() == 0) inventoryBlock1.setOutlineColor(sf::Color::Green); 
+	if (fred->getSelectedIndex() == 0) inventoryBlock1.setOutlineColor(sf::Color::Red); 
 	else inventoryBlock1.setOutlineColor(sf::Color::White); 
-	inventoryBlock1.setPosition(800, 20);
+	inventoryBlock1.setPosition(800, 12);
 	inventoryBlock1.setOutlineThickness(5);
 	inventoryBlock1.setFillColor(sf::Color::Black);
-	if (fred->getSelectedIndex() == 1) inventoryBlock2.setOutlineColor(sf::Color::Green);
+	if (fred->getSelectedIndex() == 1) inventoryBlock2.setOutlineColor(sf::Color::Red);
 	else inventoryBlock2.setOutlineColor(sf::Color::White);
-	inventoryBlock2.setPosition(900, 20);
+	inventoryBlock2.setPosition(900, 12);
 	inventoryBlock2.setOutlineThickness(5);
 	inventoryBlock2.setFillColor(sf::Color::Black);
-	if (fred->getSelectedIndex() == 2) inventoryBlock3.setOutlineColor(sf::Color::Green);
+	if (fred->getSelectedIndex() == 2) inventoryBlock3.setOutlineColor(sf::Color::Red);
 	else inventoryBlock3.setOutlineColor(sf::Color::White);
-	inventoryBlock3.setPosition(1000, 20);
+	inventoryBlock3.setPosition(1000, 12);
 	inventoryBlock3.setOutlineThickness(5);
 	inventoryBlock3.setFillColor(sf::Color::Black);
-	if (fred->getSelectedIndex() == 3) inventoryBlock4.setOutlineColor(sf::Color::Green);
+	if (fred->getSelectedIndex() == 3) inventoryBlock4.setOutlineColor(sf::Color::Red);
 	else inventoryBlock4.setOutlineColor(sf::Color::White);
-	inventoryBlock4.setPosition(1100, 20);
+	inventoryBlock4.setPosition(1100, 12);
 	inventoryBlock4.setOutlineThickness(5);
 	inventoryBlock4.setFillColor(sf::Color::Black);
 
@@ -117,21 +131,29 @@ void PlayerView::drawScreen(void) {
 				sf::RectangleShape fredShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
 				fredShape.setTexture(&FredSprite.spriteMap);
 				fredShape.setTextureRect(FredSprite.spriteFrame);
-				//fredShape.setFillColor(sf::Color::White);
-				
-				//fredShape.setFillColor(sf::Color::White);
 				fredShape.setPosition((*it)->getX(), (*it)->getY());
+				FredSprite.setFredSprite(fred->getDirection());
 				this->window->draw(fredShape);
 			}
 				break;
 			case ActorType::WEAPON:
 			{
 				sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
-				itemShape.setFillColor(sf::Color::Red);
+				itemShape.setFillColor(sf::Color::White);
 				itemShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(itemShape);
 			}
 				break;
+			case ActorType::ENEMY:
+			{
+				sf::RectangleShape enemyShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+				enemyShape.setTexture(&EnemySprite.spriteMap);
+				enemyShape.setTextureRect(EnemySprite.spriteFrame);
+				enemyShape.setPosition((*it)->getX(), (*it)->getY());
+				EnemySprite.setEnemySprite((*it)->getDirection());
+				this->window->draw(enemyShape);
+			}
+			break;
         }
     }
 
@@ -139,8 +161,10 @@ void PlayerView::drawScreen(void) {
 
 void PlayerView::update(float delta) {
     this->pollInput();
-	FredSprite.setSprite(fred->getDirection());
-	FredSprite.update(delta);
+	
+	FredSprite.updateFred(delta);
+	
+	EnemySprite.updateEnemy(delta);
     this->drawScreen();
 }
 
