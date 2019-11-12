@@ -14,7 +14,7 @@ Character::Character(ActorType type, double x, double y, double width, double he
 	this->mass = mass;
 	this->maxSpeed = maxSpeed;
 	this->health =
-		this->maxHealth = maxHealth;
+	this->maxHealth = maxHealth;
 }
 
 void Character::damage(int d) {

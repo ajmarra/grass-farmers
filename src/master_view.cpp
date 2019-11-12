@@ -23,4 +23,8 @@ void MasterView::setExit(std::shared_ptr<Exit> exit){
 
 void MasterView::update(float delta) {
     player->update(delta);
+	for (std::list<std::shared_ptr<EnemyView>>::iterator it = this->enemies.begin(); it != enemies.end(); it++) {
+		std::shared_ptr<EnemyView> curActor = (*it);
+		curActor->update(delta);
+	}
 }
