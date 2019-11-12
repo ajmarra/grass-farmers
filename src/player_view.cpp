@@ -12,11 +12,20 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
     : View(logic) {
     this->fred = fred;
     this->window = window;
+	cur_track.playDayTrack();
 
 	
-	
+	EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
 	FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
+	room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
 	
+
+	EnemySprite.spriteFrame.top = 64;//x
+	EnemySprite.spriteFrame.left = 0;//y
+	EnemySprite.spriteFrame.width = 64;
+	EnemySprite.spriteFrame.height = 64;
+
+
 	FredSprite.spriteFrame.top = 64;//x
 	FredSprite.spriteFrame.left = 0;//y
 	FredSprite.spriteFrame.width = 64;
@@ -52,7 +61,12 @@ void PlayerView::pollInput() {
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelected(2);
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelected(3);
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) cur_track.stopCurrentTrack();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) cur_track.playNightTrack();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) cur_track.playDayTrack();
+
 }
+	
 
 void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Green);
@@ -61,7 +75,7 @@ void PlayerView::drawScreen(void) {
     sf::RectangleShape room;
     room.setSize(sf::Vector2f(curRoom->getWidth(), curRoom->getHeight()));
     room.setPosition(curRoom->getX(), curRoom->getY());
-    room.setFillColor(sf::Color::Magenta);
+    room.setTexture(&room_image.spriteMap);
     this->window->draw(room);
     
     sf::RectangleShape exit;
@@ -117,8 +131,8 @@ void PlayerView::drawScreen(void) {
 				sf::RectangleShape fredShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
 				fredShape.setTexture(&FredSprite.spriteMap);
 				fredShape.setTextureRect(FredSprite.spriteFrame);
-				//fredShape.setFillColor(sf::Color::White);
 				fredShape.setPosition((*it)->getX(), (*it)->getY());
+				FredSprite.setFredSprite(fred->getDirection());
 				this->window->draw(fredShape);
 			}
 				break;
@@ -133,8 +147,10 @@ void PlayerView::drawScreen(void) {
 			case ActorType::ENEMY:
 			{
 				sf::RectangleShape enemyShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
-				enemyShape.setFillColor(sf::Color::Yellow);
+				enemyShape.setTexture(&EnemySprite.spriteMap);
+				enemyShape.setTextureRect(EnemySprite.spriteFrame);
 				enemyShape.setPosition((*it)->getX(), (*it)->getY());
+				EnemySprite.setEnemySprite((*it)->getDirection());
 				this->window->draw(enemyShape);
 			}
 			break;
@@ -145,8 +161,10 @@ void PlayerView::drawScreen(void) {
 
 void PlayerView::update(float delta) {
     this->pollInput();
-	FredSprite.setSprite(fred->getDirection());
-	FredSprite.update(delta);
+	
+	FredSprite.updateFred(delta);
+	
+	EnemySprite.updateEnemy(delta);
     this->drawScreen();
 }
 
