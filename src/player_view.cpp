@@ -125,7 +125,7 @@ void PlayerView::drawScreen(void) {
 			case ActorType::WEAPON:
 			{
 				sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
-				itemShape.setFillColor(sf::Color::Red);
+				itemShape.setFillColor(sf::Color::White);
 				itemShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(itemShape);
 			}
