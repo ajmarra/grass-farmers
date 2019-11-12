@@ -8,7 +8,7 @@
  */
 class Item : public Actor {
 	private:
-		int quantity;
+		int quantity; //Do we still need this and its associated methods?
 		bool stackable;
 
 	public:

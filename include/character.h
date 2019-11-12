@@ -20,7 +20,6 @@ class Character : public Actor {
         int desiredDirection = -1;
 
 		std::shared_ptr<Item> inventory[4];
-		std::shared_ptr<Item> selectedItem;
 		int selectedIndex = 0;
     
     public:
@@ -45,20 +44,20 @@ class Character : public Actor {
          */
         void stop(void) { this->desiredDirection = -1; };
 
-		int getHealth(void) { return health; };
-		int getMaxHealth(void) { return maxHealth; };
+        int getHealth(void) { return health; };
+        int getMaxHealth(void) { return maxHealth; };
 
-		std::shared_ptr<Item> removeItemAtIndex(int index);
+        std::shared_ptr<Item> popItemAtIndex(int index);
 
-		void dropItem(void);
+        void dropItem(void);
 
-		void setSelected(int toSelect) {
-			selectedItem = inventory[toSelect];
-			selectedIndex = toSelect;
-		};
+        void setSelected(int n) { selectedIndex = n; };
 
-		int getSelectedIndex(void) { return selectedIndex; };
-		std::shared_ptr<Item> getSelectedItem(void) { return selectedItem; };
+        int getSelectedIndex(void) { return selectedIndex; };
+
+        std::shared_ptr<Item> &getSelectedItem(void) { return this->inventory[this->selectedIndex]; };
+
+        void useItem(int x, int y) { if (this->getSelectedItem()) this->getSelectedItem()->use(x, y); };
 };
 
 #endif

@@ -50,13 +50,13 @@ void Character::update(float delta) {
 	Character::move();
 }
 
-std::shared_ptr<Item> Character::removeItemAtIndex(int index) {
+std::shared_ptr<Item> Character::popItemAtIndex(int index) {
 	std::shared_ptr<Item> toReturn = inventory[index];
 	inventory[index] = nullptr;
 	return (toReturn);
 }
 
-void Character::dropItem() {
-	std::shared_ptr<Item> toDrop = this->removeItemAtIndex(selectedIndex);
+void Character::dropItem(void) {
+	std::shared_ptr<Item> toDrop = this->popItemAtIndex(selectedIndex);
 	if (toDrop != nullptr) toDrop->setXY(this->getCenterX(), this->getCenterY());
 }

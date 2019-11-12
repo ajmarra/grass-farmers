@@ -1,15 +1,19 @@
 #ifndef RANGE_H
 #define RANGE_H
 
+#include "actor.h"
 #include "item.h"
+#include "bullet.h"
+#include "master_logic.h"
 
 class RangeWeapon : public Item {
 	private:
+		std::shared_ptr<MasterLogic> logic;
 		//scaling factors for damage and time between each hit and type of gun
 		int damage, fireRate;
 
 	public:
-		RangeWeapon(double x, double y, double width, double height, int damage, int fireRate);
+		RangeWeapon(std::shared_ptr<MasterLogic> &logic, double x, double y, double width, double height, int damage, int fireRate);
 
 		void setdamage(int damage) { this->damage = damage; };
 		
