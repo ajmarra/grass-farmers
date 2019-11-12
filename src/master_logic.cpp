@@ -26,23 +26,25 @@ void MasterLogic::startDemo(void) {
 	this->view->setEnemies(enemyViewList);
 
 	// Creating items to test
-	std::shared_ptr<RangeWeapon> testItem = std::make_shared<RangeWeapon>(shared_from_this(), 150, 150, 40, 20, 10, 2);
+	std::shared_ptr<RangeWeapon> testItem = std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 150, 150, 40, 20, 10, 2);
 	this->actorList.push_back(testItem);
 	this->itemList.push_front(testItem);
-	std::shared_ptr<RangeWeapon> testItem1 = std::make_shared<RangeWeapon>(shared_from_this(), 250, 250, 40, 20, 10, 2);
+	std::shared_ptr<RangeWeapon> testItem1 = std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 250, 250, 40, 20, 10, 2);
 	this->actorList.push_back(testItem1);
 	this->itemList.push_back(testItem1);
-	std::shared_ptr<RangeWeapon> testItem2 = std::make_shared<RangeWeapon>(shared_from_this(), 350, 350, 20, 50, 10, 2);
+	std::shared_ptr<RangeWeapon> testItem2 = std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 350, 350, 20, 50, 10, 2);
 	this->actorList.push_back(testItem2);
 	this->itemList.push_back(testItem2);
-	std::shared_ptr<RangeWeapon> testItem3 = std::make_shared<RangeWeapon>(shared_from_this(), 350, 250, 20, 50, 10, 2);
+	std::shared_ptr<RangeWeapon> testItem3 = std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 350, 250, 20, 50, 10, 2);
 	this->actorList.push_back(testItem3);
 	this->itemList.push_back(testItem3);
-	std::shared_ptr<RangeWeapon> testItem4 = std::make_shared<RangeWeapon>(shared_from_this(), 450, 550, 40, 20, 10, 2);
+	std::shared_ptr<RangeWeapon> testItem4 = std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 450, 550, 40, 20, 10, 2);
 	this->actorList.push_back(testItem4);
 	this->itemList.push_back(testItem4);
     
+
     currentRoom->setActorList(this->actorList);
+    currentRoom->getActorList().emplace_back(std::make_shared<Bullet>(20, 20, 2, 4, 50, 20));
     
     this->view->setRoom(currentRoom);
     this->view->setExit(currentExit);

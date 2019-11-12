@@ -164,6 +164,7 @@ void PlayerView::drawScreen(void) {
                 bulletShape.setFillColor(sf::Color::White);
                 bulletShape.setPosition((*it)->getX(), (*it)->getY());
                 this->window->draw(bulletShape);
+                std::cout << "shoot";
             }
                 break;
         }

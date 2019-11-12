@@ -15,7 +15,7 @@
 
 class MasterView;
 
-class MasterLogic : public std::enable_shared_from_this<MasterLogic> {
+class MasterLogic {
     private:
         std::shared_ptr<MasterView> view;
         std::list<std::shared_ptr<Actor>> actorList;
