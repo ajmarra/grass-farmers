@@ -9,13 +9,21 @@ void MasterLogic::startDemo(void) {
     fred = std::make_shared<Fred>(50, 50);
     
     currentRoom = std::make_shared<Room>(0, 100, 1200, 800);
-    std::shared_ptr<Room> farmhouse = std::make_shared<Room>(0, 0, 400, 400);
+    std::shared_ptr<Room> farmhouse = std::make_shared<Room>(0, 100, 400, 400);
     std::shared_ptr<Exit> fieldExit = std::make_shared<Exit>(500, 890, farmhouse);
     currentExit = fieldExit;
     
     this->actorList.push_front(fred);
+
+	// Creating test enemy
+	std::shared_ptr<Enemy> testEnemy1 = std::make_shared<Enemy>(200, 200, 40, 100, 100);
+	this->actorList.push_back(testEnemy1);
+	std::shared_ptr<EnemyView> testEnemyView1 = std::make_shared<EnemyView>(fred, testEnemy1);
+	this->enemyViewList.push_back(testEnemyView1);
+
     
     this->view->setPlayer(fred);
+	this->view->setEnemies(enemyViewList);
 
 	// Creating items to test
 	std::shared_ptr<Item> testItem = std::make_shared<Item>(ActorType::WEAPON, 150, 150, 20, 20, 1, false);

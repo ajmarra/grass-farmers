@@ -78,11 +78,11 @@ void PlayerView::drawScreen(void) {
     this->window->draw(exit);
 
 	//Fred's Health Bar
-	sf::RectangleShape maxHealthBar(sf::Vector2f(5*fred->getMaxHealth(), 20));
-	maxHealthBar.setPosition(10, 20);
-	maxHealthBar.setFillColor(sf::Color::Blue);
+	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
+	healthBar.setPosition(10, 20);
+	healthBar.setFillColor(sf::Color::Blue);
 
-	this->window->draw(maxHealthBar);
+	this->window->draw(healthBar);
 
 	// Hard coded inventory blocks
 	sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
@@ -90,24 +90,24 @@ void PlayerView::drawScreen(void) {
 	sf::RectangleShape inventoryBlock3(sf::Vector2f(75, 75));
 	sf::RectangleShape inventoryBlock4(sf::Vector2f(75, 75));
 
-	if (fred->getSelectedIndex() == 0) inventoryBlock1.setOutlineColor(sf::Color::Green); 
+	if (fred->getSelectedIndex() == 0) inventoryBlock1.setOutlineColor(sf::Color::Red); 
 	else inventoryBlock1.setOutlineColor(sf::Color::White); 
-	inventoryBlock1.setPosition(800, 20);
+	inventoryBlock1.setPosition(800, 12);
 	inventoryBlock1.setOutlineThickness(5);
 	inventoryBlock1.setFillColor(sf::Color::Black);
-	if (fred->getSelectedIndex() == 1) inventoryBlock2.setOutlineColor(sf::Color::Green);
+	if (fred->getSelectedIndex() == 1) inventoryBlock2.setOutlineColor(sf::Color::Red);
 	else inventoryBlock2.setOutlineColor(sf::Color::White);
-	inventoryBlock2.setPosition(900, 20);
+	inventoryBlock2.setPosition(900, 12);
 	inventoryBlock2.setOutlineThickness(5);
 	inventoryBlock2.setFillColor(sf::Color::Black);
-	if (fred->getSelectedIndex() == 2) inventoryBlock3.setOutlineColor(sf::Color::Green);
+	if (fred->getSelectedIndex() == 2) inventoryBlock3.setOutlineColor(sf::Color::Red);
 	else inventoryBlock3.setOutlineColor(sf::Color::White);
-	inventoryBlock3.setPosition(1000, 20);
+	inventoryBlock3.setPosition(1000, 12);
 	inventoryBlock3.setOutlineThickness(5);
 	inventoryBlock3.setFillColor(sf::Color::Black);
-	if (fred->getSelectedIndex() == 3) inventoryBlock4.setOutlineColor(sf::Color::Green);
+	if (fred->getSelectedIndex() == 3) inventoryBlock4.setOutlineColor(sf::Color::Red);
 	else inventoryBlock4.setOutlineColor(sf::Color::White);
-	inventoryBlock4.setPosition(1100, 20);
+	inventoryBlock4.setPosition(1100, 12);
 	inventoryBlock4.setOutlineThickness(5);
 	inventoryBlock4.setFillColor(sf::Color::Black);
 
@@ -125,8 +125,6 @@ void PlayerView::drawScreen(void) {
 				fredShape.setTexture(&FredSprite.spriteMap);
 				fredShape.setTextureRect(FredSprite.spriteFrame);
 				//fredShape.setFillColor(sf::Color::White);
-				
-				//fredShape.setFillColor(sf::Color::White);
 				fredShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(fredShape);
 			}
@@ -134,11 +132,19 @@ void PlayerView::drawScreen(void) {
 			case ActorType::WEAPON:
 			{
 				sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
-				itemShape.setFillColor(sf::Color::Red);
+				itemShape.setFillColor(sf::Color::White);
 				itemShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(itemShape);
 			}
 				break;
+			case ActorType::ENEMY:
+			{
+				sf::RectangleShape enemyShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+				enemyShape.setFillColor(sf::Color::Yellow);
+				enemyShape.setPosition((*it)->getX(), (*it)->getY());
+				this->window->draw(enemyShape);
+			}
+			break;
         }
     }
 
