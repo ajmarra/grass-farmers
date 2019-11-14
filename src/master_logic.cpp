@@ -44,6 +44,8 @@ void MasterLogic::startDemo(void) {
     
     currentRoom->setActorList(this->actorList);
     
+	fred->setCurrentRoom(currentRoom);
+
     this->view->setRoom(currentRoom);
     this->view->setExit(currentExit);
 }
@@ -104,6 +106,8 @@ void MasterLogic::update(float delta) {
                     curFred->setSelected(prevSelectedIndex);
                     currentRoom->setActorList(curList);
                     
+					curFred->setCurrentRoom(currentRoom);
+
                     view->setRoom(currentRoom);
                     view->setExit(currentExit);
                 }

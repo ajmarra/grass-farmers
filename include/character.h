@@ -3,6 +3,7 @@
 
 #include "actor.h"
 #include "item.h"
+#include "room.h"
 
 #include <memory>
 #include <iostream>
@@ -18,6 +19,8 @@ class Character : public Actor {
         int mass;
         double maxSpeed;
         int desiredDirection = -1;
+
+		std::shared_ptr<Room> curRoom;
 
 		std::shared_ptr<Item> inventory[4];
 		std::shared_ptr<Item> selectedItem;
@@ -59,6 +62,9 @@ class Character : public Actor {
 
 		int getSelectedIndex() { return selectedIndex; };
 		std::shared_ptr<Item> getSelectedItem() { return selectedItem; };
+
+		void setCurrentRoom(std::shared_ptr<Room> room) { curRoom = room; };
+		std::shared_ptr<Room> getCurrentRoom(void) { return curRoom; };
 };
 
 #endif
