@@ -84,6 +84,25 @@ void PlayerView::drawScreen(void) {
     exit.setFillColor(sf::Color::Cyan);
     this->window->draw(exit);
 
+	//Enemy spawn points/portals
+	sf::RectangleShape sp1(sf::Vector2f(75, 75));
+	sp1.setPosition(70, 150);
+	sp1.setFillColor(sf::Color::Cyan);
+	sf::RectangleShape sp2(sf::Vector2f(75, 75));
+	sp2.setPosition(20, 350);
+	sp2.setFillColor(sf::Color::Cyan);
+	sf::RectangleShape sp3(sf::Vector2f(75, 75));
+	sp3.setPosition(20, 550);
+	sp3.setFillColor(sf::Color::Cyan);
+	sf::RectangleShape sp4(sf::Vector2f(75, 75));
+	sp4.setPosition(70, 750);
+	sp4.setFillColor(sf::Color::Cyan);
+
+	this->window->draw(sp1);
+	this->window->draw(sp2);
+	this->window->draw(sp3);
+	this->window->draw(sp4);
+
 	//Fred's Health Bar
 	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
 	healthBar.setPosition(10, 20);

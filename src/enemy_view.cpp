@@ -20,7 +20,7 @@ void EnemyView::findFred(float delta) {
 		if (fred->getCenterX() > enemy->getCenterX()) x += 1;
 
 
-		if (x == 0 && y == 0 || (enemy->collidesSquare(*fred) && delta * 1000 > 3)) {
+		if (x == 0 && y == 0 || (enemy->collidesSquare(*fred) && delta * 1000 > 2.6)) {
 			enemy->stop();
 			fred->damage(2); //temporarily hard coded.  Will change based on enemy type?
 		}
