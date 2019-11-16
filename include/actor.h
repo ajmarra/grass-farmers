@@ -11,26 +11,21 @@ class Actor {
 		 * speed -- magnitude of the speed of the actor
          */ 
         double x, y, width, height, xSpeed, ySpeed;
-		int orientation; //orientation of the actor
-        ActorType type;
+		int orientation; // orientation of the actor
+        ActorType type; // type of actor
 
     public:
-		Actor() { }; //Do not use default constructor. Left here because Item class currently uses it.
-        
         Actor(ActorType type, double x, double y, double width, double height);
         
         virtual void update(float delta);
 
-        ActorType getType() { return this->type; };
+        ActorType getType(void) { return this->type; };
         
         double getX(void) { return this->x; };
         
         double getY(void) { return this->y; };
 
-		void setXY(double x, double y) {
-			this->x = x;
-			this->y = y;
-		};
+		void setPos(double x, double y) { this->x = x; this->y = y; };
 
         double getCenterX(void) { return (this->x + this->width / 2); };
 
@@ -46,13 +41,15 @@ class Actor {
 
 		double getSpeed(void);
 
+        void hardStop(void) { this->xSpeed = this->ySpeed = 0; };
+
 		double getDirection(void);
 
 		/**
-				 * Sets the orientation of the actor.
-				 *
-				 * d -- direction to face
-				 */
+		 * Sets the orientation of the actor.
+		 *
+		 * d -- direction to face
+		 */
 		void setOrientation(int d) { this->orientation = d; };
 
 		/**
@@ -92,8 +89,6 @@ class Actor {
 		bool collidesCircle(Actor a);
 
 		bool liesInsideSquare(Actor a);
-    
-        void hardStop() { this->xSpeed = 0; this->ySpeed = 0; };
 };
 
 #endif

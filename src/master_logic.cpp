@@ -91,8 +91,8 @@ void MasterLogic::update(float delta) {
                     
                     currentRoom = currentExit->getDestination();
                     currentExit->setDestination(temp);
-                    currentExit->setXY((currentRoom->getX() + currentRoom->getWidth())/2, currentRoom->getY() + currentRoom->getHeight() - 10);
-                    curActor->setXY(currentExit->getX(), currentExit->getY() - currentExit->getHeight() - 100);
+                    currentExit->setPos((currentRoom->getX() + currentRoom->getWidth())/2, currentRoom->getY() + currentRoom->getHeight() - 10);
+                    curActor->setPos(currentExit->getX(), currentExit->getY() - currentExit->getHeight() - 100);
                     
                     curList = currentRoom->getActorList();
                     curList.push_back(curActor);
@@ -118,23 +118,23 @@ void MasterLogic::update(float delta) {
             else if (!curActor->liesInsideSquare((*currentRoom))) {
                 if (curActor->getY() < currentRoom->getY()) {
                     curActor->hardStop();
-                    curActor->setXY(curActor->getX(), curActor->getY() + 1);
+                    curActor->setPos(curActor->getX(), curActor->getY() + 1);
                 }
                 else if (curActor->getY() + curActor->getHeight() > currentRoom->getY() + currentRoom->getHeight()) {
                     curActor->hardStop();
-                    curActor->setXY(curActor->getX(), curActor->getY() - 1);
+                    curActor->setPos(curActor->getX(), curActor->getY() - 1);
                 }
                 else if (curActor->getX() < currentRoom->getX()) {
                     curActor->hardStop();
-                    curActor->setXY(curActor->getX() + 1, curActor->getY());
+                    curActor->setPos(curActor->getX() + 1, curActor->getY());
                 }
                 else if (curActor->getX() + curActor->getWidth() > currentRoom->getX() + currentRoom->getWidth()) {
                     curActor->hardStop();
-                    curActor->setXY(curActor->getX() - 1, curActor->getY());
+                    curActor->setPos(curActor->getX() - 1, curActor->getY());
                 }
                 else {
                     curActor->hardStop();
-                    curActor->setXY(curActor->getX() - 1, curActor->getY() - 1);
+                    curActor->setPos(curActor->getX() - 1, curActor->getY() - 1);
                 }
             }
         }

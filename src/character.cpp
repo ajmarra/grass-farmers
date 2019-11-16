@@ -58,5 +58,5 @@ std::shared_ptr<Item> Character::popItemAtIndex(int index) {
 
 void Character::dropItem(void) {
 	std::shared_ptr<Item> toDrop = this->popItemAtIndex(selectedIndex);
-	if (toDrop != nullptr) toDrop->setXY(this->getCenterX(), this->getCenterY());
+	if (toDrop != nullptr) toDrop->setPos(this->getCenterX(), this->getCenterY());
 }
