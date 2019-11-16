@@ -12,35 +12,33 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
     : View(logic) {
     this->fred = fred;
     this->window = window;
+
+    // Play music
     cur_track.playDayTrack();
 
-    
-    EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
-    FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
+    // Load sprites    
     room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
-    
 
+    EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
     EnemySprite.spriteFrame.top = 64;//x
     EnemySprite.spriteFrame.left = 0;//y
     EnemySprite.spriteFrame.width = 64;
     EnemySprite.spriteFrame.height = 64;
 
-
+    FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
     FredSprite.spriteFrame.top = 64;//x
     FredSprite.spriteFrame.left = 0;//y
     FredSprite.spriteFrame.width = 64;
     FredSprite.spriteFrame.height = 64;
-
 }
 
 void PlayerView::pollInput() {
     sf::Event Event;
 
     // Use Item
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-            this->fred->useItem(sf::Mouse::getPosition().x, sf::Mouse::getPosition().x);
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) this->fred->useItem(sf::Mouse::getPosition().x, sf::Mouse::getPosition().x);
 
-    // Movement
+    // Move
     int x = 0, y = 0;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) y -= 1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) x -= 1;
@@ -70,7 +68,6 @@ void PlayerView::pollInput() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) cur_track.playNightTrack();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) cur_track.playDayTrack();
 }
-    
 
 void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Green);
@@ -164,7 +161,6 @@ void PlayerView::drawScreen(void) {
                 bulletShape.setFillColor(sf::Color::White);
                 bulletShape.setPosition((*it)->getX(), (*it)->getY());
                 this->window->draw(bulletShape);
-                std::cout << "shoot";
             }
                 break;
         }
