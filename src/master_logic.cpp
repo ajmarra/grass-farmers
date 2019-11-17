@@ -1,8 +1,33 @@
 #include "master_logic.h"
 #include "master_view.h"
+#include <iostream>
+#include <iomanip>
+#include <fstream>
 
 void MasterLogic::init(std::shared_ptr<MasterView> &view) {
     this->view = view;
+}
+
+void MasterLogic::loadInEnemies(void) {
+	std::ifstream inFile;
+	double x, y, mass, maxSpeed, maxHealth;
+
+	inFile.open("../resources/enemies.txt");
+	if (!inFile) {
+		std::cout << "Unable to open enemies.txt";
+		exit(1);
+	}
+
+	while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
+		std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
+		this->actorList.push_back(testEnemy);
+		this->enemyList.push_back(testEnemy);
+		std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), testEnemy);
+		this->enemyViewList.push_back(testEnemyView);
+
+	}
+
+	inFile.close();
 }
 
 void MasterLogic::startDemo(void) {
@@ -15,11 +40,13 @@ void MasterLogic::startDemo(void) {
     
     this->actorList.push_front(fred);
 
-	// Creating test enemy
+	this->loadInEnemies();
+
+	/* Creating test enemy
 	std::shared_ptr<Enemy> testEnemy1 = std::make_shared<Enemy>(200, 200, 40, 100, 100);
 	this->actorList.push_back(testEnemy1);
 	std::shared_ptr<EnemyView> testEnemyView1 = std::make_shared<EnemyView>(fred, testEnemy1);
-	this->enemyViewList.push_back(testEnemyView1);
+	this->enemyViewList.push_back(testEnemyView1); */
 
     
     this->view->setPlayer(fred);
