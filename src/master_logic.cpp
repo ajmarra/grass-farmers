@@ -4,6 +4,9 @@
 #include <iomanip>
 #include <fstream>
 
+#include <chrono>
+#include <thread>
+
 void MasterLogic::init(std::shared_ptr<MasterView> &view) {
     this->view = view;
 }
@@ -21,17 +24,16 @@ void MasterLogic::loadInEnemies(void) {
 	while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
 		std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
 		this->actorList.push_back(testEnemy);
-		this->enemyList.push_back(testEnemy);
+		//this->enemyList.push_back(testEnemy);
 		std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), testEnemy);
-		this->enemyViewList.push_back(testEnemyView);
-
+		this->enemyViewList.push_back(testEnemyView);		
 	}
 
 	inFile.close();
 }
 
 void MasterLogic::startDemo(void) {
-    fred = std::make_shared<Fred>(50, 50);
+    fred = std::make_shared<Fred>(700, 500);
     
     currentRoom = std::make_shared<Room>(0, 100, 1200, 800);
     std::shared_ptr<Room> farmhouse = std::make_shared<Room>(0, 100, 400, 400);
@@ -78,6 +80,7 @@ void MasterLogic::startDemo(void) {
 }
 
 void MasterLogic::update(float delta) {
+	this->delta = delta;
     if (!paused) {
         for (std::list<std::shared_ptr<Actor>>::iterator it = actorList.begin(); it != actorList.end(); it++) {
             std::shared_ptr<Actor> curActor = (*it);
