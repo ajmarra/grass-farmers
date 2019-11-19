@@ -8,7 +8,7 @@
 #include "actor.h"
 #include "fred.h"
 #include "enemy_view.h"
-
+//#include "options_view.h"
 class MasterView;
 #include "room.h"
 #include "exit.h"
@@ -28,6 +28,7 @@ class MasterLogic {
     public:
         bool paused = true;
         bool playing = false;
+        bool options = false;
         MasterLogic(void) { };
 
         void init(std::shared_ptr<MasterView> &mv);

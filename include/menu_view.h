@@ -14,6 +14,7 @@ class MenuView : public View {
 
     private:
         std::shared_ptr<sf::RenderWindow> window;
+        std::shared_ptr<MasterView> view;
         void pollInput(void);
 
         //void drawScreen(void);

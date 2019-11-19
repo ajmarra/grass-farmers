@@ -18,6 +18,11 @@ void MasterView::setMenu(){
     menu = std::make_shared<MenuView>(this->logic, this->window);
 }
 
+void MasterView::setOptions(){
+    //std::cout << "HI" << std::endl;
+    options = std::make_shared<OptionsView>(this->logic, this->window);
+}
+
 void MasterView::setRoom(std::shared_ptr<Room> room) {
     player->setCurrentRoom(room);
 }
@@ -27,11 +32,15 @@ void MasterView::setExit(std::shared_ptr<Exit> exit){
 }
 
 void MasterView::update(float delta) {
-    if( (logic->paused == true) && (logic->playing == false)){
-        std::cout << "HI" << std::endl;
+    if( (logic->paused == true) && (logic->playing == false) && (logic ->options == false)){
+        //std::cout << "HI" << std::endl;
     
         menu->update(delta);
      }
+    else if ( (logic->paused == true) && (logic->playing == false) && (logic ->options == true)){
+        //std::cout << "HULLO" << std::endl;
+        options->update(delta);
+    }
     else if ( (logic->paused == false) && (logic->playing == true))
             player->update(delta);
 	    for (std::list<std::shared_ptr<EnemyView>>::iterator it = this->enemies.begin(); it != enemies.end(); it++) {

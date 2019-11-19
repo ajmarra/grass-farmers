@@ -6,14 +6,12 @@ Graphics::Graphics(){}
 void Graphics::updateFred(float delta){
     elapsedFredTime += delta;
 
-    //std::cout << delta << std::endl;
-    //std::cout << direction << std::endl;
     
     
     if ((elapsedFredTime >= frameRate)){
 
-
-        elapsedFredTime -= frameRate;
+        elapsedFredTime  = 0;
+        //elapsedFredTime -= frameRate;
 
         spriteFrame.left += 64;
         //in case it goes off array map
@@ -52,7 +50,9 @@ void Graphics::updateEnemy(float delta){
             if (spriteFrame.left >= 128) {
                 spriteFrame.left = 0;
             }}
-        elapsedEnemyTime -= frameRate;
+
+        elapsedEnemyTime = 0;
+        //elapsedEnemyTime -= frameRate;
         
     }}
     // else if ((elapsedEnemyTime >= frameRate) && (left == 1)){

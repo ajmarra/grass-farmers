@@ -9,8 +9,13 @@ void MasterLogic::startMenu(void){
     this->view->setMenu();
 }
 
+void MasterLogic::startOptions(void){
+    //std::cout << "HOI" << std::endl;
+    this->view->setOptions();
+}
+
 void MasterLogic::startDemo(void) {
-    std::cout << "HOI" << std::endl;
+    //std::cout << "HOI" << std::endl;
     fred = std::make_shared<Fred>(50, 50);
     
     currentRoom = std::make_shared<Room>(0, 100, 1200, 800);
@@ -54,12 +59,17 @@ void MasterLogic::startDemo(void) {
 }
 
 void MasterLogic::update(float delta) {
-    if ((paused == true) && (playing == false)){
-        std::cout << "HELLO" << std::endl;
+    if ((paused == true) && (playing == false) && (options == false)){
+        //std::cout << "HELLO" << std::endl;
+    }
+
+    else if ((paused == true) && (playing == false) && (options == true)){
+        //std::cout << "HELLO" << std::endl;
     }
     
     
-    if ((paused == false) && (playing == true)) {
+    
+    else if ((paused == false) && (playing == true) && (options == false)) {
         for (std::list<std::shared_ptr<Actor>>::iterator it = actorList.begin(); it != actorList.end(); it++) {
             std::shared_ptr<Actor> curActor = (*it);
             if (curActor != fred) {

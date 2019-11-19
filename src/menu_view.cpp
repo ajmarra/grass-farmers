@@ -22,15 +22,17 @@ void MenuView::pollInput() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         this->logic->paused = false;
         this->logic->playing = true;
+        this->logic->options = false;
         this->logic->startDemo();
 
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
-        std::cout << "HOI HOI" << std::endl;
-        // this->logic->paused = false;
-        // this->logic->playing = true;
-        this->logic->startDemo();
+        this->logic->paused = true;
+        this->logic->playing = false;
+        this->logic->options = true;
+        this->logic->startOptions();
+        //this->view->setOptions();
 
     }
 
