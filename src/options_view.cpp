@@ -32,8 +32,8 @@ void OptionsView::pollInput() {
     // }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
-        this->logic->paused = false;
-        this->logic->playing = true;
+        this->logic->paused = true;
+        this->logic->playing = false;
         this->logic->options = false;
     }
     else{
