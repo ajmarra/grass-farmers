@@ -55,6 +55,10 @@ void PlayerView::pollInput() {
 		fred->dropItem();
 	}
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+		fred->useSelectedItem();
+	}
+
 	// Inventory selection
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelected(0);
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelected(1);
@@ -173,6 +177,13 @@ void PlayerView::drawScreen(void) {
 				this->window->draw(enemyShape);
 			}
 			break;
+			case ActorType::HEALTH:
+			{
+				sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+				itemShape.setFillColor(sf::Color::Magenta);
+				itemShape.setPosition((*it)->getX(), (*it)->getY());
+				this->window->draw(itemShape);
+			}
         }
     }
 

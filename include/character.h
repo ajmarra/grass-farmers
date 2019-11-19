@@ -51,6 +51,10 @@ class Character : public Actor {
 		int getHealth() { return health; };
 		int getMaxHealth() { return maxHealth; };
 
+		void heal(int healAmount);
+
+		void addItem(std::list<std::shared_ptr<Item>> itemList);
+
 		std::shared_ptr<Item> removeItemAtIndex(int index);
 
 		void dropItem(void);

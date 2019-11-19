@@ -5,12 +5,12 @@
 
 class HealthItem : public Item {
 private:
-	int healQuantity;
+	//int healQuantity = 10;
 
 public:
 	HealthItem(double x, double y, double width, double height);
 
-	int getHealQuantity(void) { return healQuantity; };
+	//int getHealQuantity(void) { return healQuantity; };
 
 };
 
