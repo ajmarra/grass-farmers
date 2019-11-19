@@ -77,6 +77,7 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 					else if (i == 1) toAdd->setXY(925, 40);
 					else if (i == 2) toAdd->setXY(1025, 40);
 					else if (i == 3) toAdd->setXY(1125, 40);
+					if (selectedIndex == i) this->setSelected(i);
 				}
 				i++;
 			}

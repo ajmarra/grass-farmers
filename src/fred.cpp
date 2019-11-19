@@ -9,11 +9,10 @@ Fred::Fred(double x, double y) : Character(ActorType::FRED, x, y, 64, 64, 10, 20
 
 void Fred::useSelectedItem(void) {
 	if (this->getSelectedItem() != nullptr) {
-		std::cout << "Hello";
 		switch (this->getSelectedItem()->getType()) {
 		case ActorType::HEALTH:
 		{
-			this->heal(10);
+			this->heal(5);
 		}
 		break;
 		}
