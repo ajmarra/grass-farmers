@@ -20,10 +20,10 @@ void Fred::addItem(std::list<std::shared_ptr<Item>> itemList) {
 				else if (inventory[i] == nullptr) {
 					inventory[i] = toAdd;
 					notAdded = false;
-					if (i == 0) toAdd->setXY(825, 50);
-					else if (i == 1) toAdd->setXY(925, 50);
-					else if (i == 2) toAdd->setXY(1025, 50);
-					else if (i == 3) toAdd->setXY(1125, 50);
+					if (i == 0) toAdd->setXY(825, 40);
+					else if (i == 1) toAdd->setXY(925, 40);
+					else if (i == 2) toAdd->setXY(1025, 40);
+					else if (i == 3) toAdd->setXY(1125, 40);
 				}
 				else if (toAdd->isStackable() && inventory[i]->getType() == this->getType()) {
 					inventory[i]->increaseQuantity();
@@ -37,15 +37,3 @@ void Fred::addItem(std::list<std::shared_ptr<Item>> itemList) {
 	}
 	
 }
-
-/*std::shared_ptr<Item> Fred::removeItemAtIndex(int index) {
-	std::shared_ptr<Item> toReturn = inventory[index];
-	inventory[index] = nullptr;
-	return (toReturn);
-}
-
-void Fred::dropItem() {
-	std::shared_ptr<Item> toDrop = this->removeItemAtIndex(selectedIndex);
-	if(toDrop != nullptr) toDrop->setXY(this->getCenterX(), this->getCenterY());
-}*/
-

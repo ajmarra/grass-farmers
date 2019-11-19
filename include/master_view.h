@@ -12,6 +12,7 @@
 #include "menu_view.h"
 
 #include "view.h"
+#include "enemy_view.h"
 #include "player_view.h"
 #include "room.h"
 #include "exit.h"
@@ -20,17 +21,22 @@ class MasterView {
     private:
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<MasterLogic> logic;
+
         std::shared_ptr<PlayerView> player; 
         std::shared_ptr<MenuView> menu;
+		std::list<std::shared_ptr<EnemyView>> enemies;
+
 
     public:
         MasterView(std::shared_ptr<sf::RenderWindow> &window);
 
         void init(std::shared_ptr<MasterLogic> &logic);
 
-        void setMenu(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<sf::RenderWindow> &window);
+        void setMenu();
 
         void setPlayer(std::shared_ptr<Fred> &fred);
+
+		void setEnemies(std::list<std::shared_ptr<EnemyView>> enemyList) { this->enemies = enemyList; };
 
         void setRoom(std::shared_ptr<Room> room);
     

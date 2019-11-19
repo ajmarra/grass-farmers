@@ -20,6 +20,8 @@ class PlayerView : public View {
 
         Sounds cur_track;
         Graphics FredSprite;
+        Graphics EnemySprite;
+        Graphics room_image;
         int keyPress = 0;
         std::shared_ptr<Room> curRoom;
         std::shared_ptr<Exit> curExit;
