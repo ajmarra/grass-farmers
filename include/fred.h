@@ -14,7 +14,7 @@ class Fred : public Character {
     public:
         Fred(double x, double y);
 		
-		std::shared_ptr<Item> getItemAtIndex(int index) { return this->inventory[index]; };
+		//std::shared_ptr<Item> getItemAtIndex(int index) { return this->inventory[index]; };
 
 		void useSelectedItem(void);
 

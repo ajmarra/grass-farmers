@@ -4,7 +4,6 @@
 #include <list>
 #include <memory>
 
-
 #include "actor.h"
 #include "fred.h"
 #include "enemy_view.h"
@@ -12,6 +11,7 @@
 class MasterView;
 #include "room.h"
 #include "exit.h"
+#include "health_item.h"
 
 class MasterLogic {
     private:

@@ -7,7 +7,7 @@ Item::Item(ActorType type, double x, double y, double width, double height, int 
 	this->x = x;
 	this->y = y;
     this->quantity = quantity;
-    this->stackable = true;
+    this->stackable = stackable;
 }
 
 void Item::increaseQuantity(void) {
