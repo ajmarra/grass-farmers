@@ -3,6 +3,10 @@
 
 #include "actor.h"
 
+class Character;
+
+#include <iostream>
+#include <memory>
 /**
  * Initial item logic header.  Any items that could be in the inventory or on the ground will inherit from here.
  */
@@ -11,10 +15,13 @@ class Item : public Actor {
 		int quantity; //Do we still need this and its associated methods?
 		bool stackable;
 
+	protected:
+		Character* character;
+
 	public:
 		Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable);
 
-		bool isStackable(void) { return stackable; };
+			bool isStackable(void) { return stackable; };
 
 		int getQuantity(void) { return quantity; };
 
@@ -22,12 +29,14 @@ class Item : public Actor {
 
 		void decreaseQuantity(void);
 
-		/**
-		 * Perform whatever is the main function of the item
-		 */
-		virtual void use(int x, int y) = 0;
+		void setCharacter(Character* character) { this->character = character; };
 
-		//void collectItem(Item toCollect);
+		Character* getCharacter(void) { return character; };
+
+		/**
+		* Perform whatever is the main function of the item
+		*/
+		virtual void use(int x, int y) = 0;
 };
 
 #endif

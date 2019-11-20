@@ -12,6 +12,12 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
     : View(logic) {
     this->fred = fred;
     this->window = window;
+	cur_track.playDayTrack();
+	
+	EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
+	FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
+	room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
+	
 
     // Play music
     cur_track.playDayTrack();
@@ -35,7 +41,7 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
 void PlayerView::pollInput() {
     sf::Event Event;
 
-    // Use Item
+    // Use Item (mouse)
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) this->fred->useItem(sf::Mouse::getPosition().x, sf::Mouse::getPosition().x);
 
     // Move
@@ -48,21 +54,26 @@ void PlayerView::pollInput() {
     if (x == 0 && y == 0) fred->stop();
     else fred->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
 
-    // Pick up an item
+    // Pick up item
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
         fred->addItem(this->logic->getItemList());
     }
     
-    // Drop an item
+    // Drop item
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
         fred->dropItem();
     }
+	// Use item (spacebar)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && elapsedTime > 0.5) {
+		elapsedTime = 0;
+		fred->useItem(fred->getCenterX(), fred->getCenterY());
+	}
 
     // Inventory selection
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelected(0);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelected(1);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelected(2);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelected(3);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelectedIndex(0);
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelectedIndex(1);
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelectedIndex(2);
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelectedIndex(3);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) cur_track.stopCurrentTrack();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) cur_track.playNightTrack();
@@ -85,44 +96,63 @@ void PlayerView::drawScreen(void) {
     exit.setFillColor(sf::Color::Cyan);
     this->window->draw(exit);
 
-    // Fred's Health Bar
-    sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
-    healthBar.setPosition(10, 20);
-    healthBar.setFillColor(sf::Color::Blue);
+	//Enemy spawn points/portals
+	sf::RectangleShape sp1(sf::Vector2f(75, 75));
+	sp1.setPosition(70, 150);
+	sp1.setFillColor(sf::Color::Cyan);
+	sf::RectangleShape sp2(sf::Vector2f(75, 75));
+	sp2.setPosition(20, 350);
+	sp2.setFillColor(sf::Color::Cyan);
+	sf::RectangleShape sp3(sf::Vector2f(75, 75));
+	sp3.setPosition(20, 550);
+	sp3.setFillColor(sf::Color::Cyan);
+	sf::RectangleShape sp4(sf::Vector2f(75, 75));
+	sp4.setPosition(70, 750);
+	sp4.setFillColor(sf::Color::Cyan);
 
-    this->window->draw(healthBar);
+	this->window->draw(sp1);
+	this->window->draw(sp2);
+	this->window->draw(sp3);
+	this->window->draw(sp4);
 
-    // Hard coded inventory blocks
-    sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
-    sf::RectangleShape inventoryBlock2(sf::Vector2f(75, 75));
-    sf::RectangleShape inventoryBlock3(sf::Vector2f(75, 75));
-    sf::RectangleShape inventoryBlock4(sf::Vector2f(75, 75));
+	//Fred's Health Bar
+	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
+	healthBar.setPosition(10, 20);
+	healthBar.setFillColor(sf::Color::Blue);
 
-    if (fred->getSelectedIndex() == 0) inventoryBlock1.setOutlineColor(sf::Color::Red); 
-    else inventoryBlock1.setOutlineColor(sf::Color::White); 
-    inventoryBlock1.setPosition(800, 12);
-    inventoryBlock1.setOutlineThickness(5);
-    inventoryBlock1.setFillColor(sf::Color::Black);
-    if (fred->getSelectedIndex() == 1) inventoryBlock2.setOutlineColor(sf::Color::Red);
-    else inventoryBlock2.setOutlineColor(sf::Color::White);
-    inventoryBlock2.setPosition(900, 12);
-    inventoryBlock2.setOutlineThickness(5);
-    inventoryBlock2.setFillColor(sf::Color::Black);
-    if (fred->getSelectedIndex() == 2) inventoryBlock3.setOutlineColor(sf::Color::Red);
-    else inventoryBlock3.setOutlineColor(sf::Color::White);
-    inventoryBlock3.setPosition(1000, 12);
-    inventoryBlock3.setOutlineThickness(5);
-    inventoryBlock3.setFillColor(sf::Color::Black);
-    if (fred->getSelectedIndex() == 3) inventoryBlock4.setOutlineColor(sf::Color::Red);
-    else inventoryBlock4.setOutlineColor(sf::Color::White);
-    inventoryBlock4.setPosition(1100, 12);
-    inventoryBlock4.setOutlineThickness(5);
-    inventoryBlock4.setFillColor(sf::Color::Black);
+	this->window->draw(healthBar);
 
-    this->window->draw(inventoryBlock1);
-    this->window->draw(inventoryBlock2);
-    this->window->draw(inventoryBlock3);
-    this->window->draw(inventoryBlock4);
+	// Hard coded inventory blocks
+	sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
+	sf::RectangleShape inventoryBlock2(sf::Vector2f(75, 75));
+	sf::RectangleShape inventoryBlock3(sf::Vector2f(75, 75));
+	sf::RectangleShape inventoryBlock4(sf::Vector2f(75, 75));
+
+	if (fred->getSelectedIndex() == 0) inventoryBlock1.setOutlineColor(sf::Color::Red); 
+	else inventoryBlock1.setOutlineColor(sf::Color::White); 
+	inventoryBlock1.setPosition(800, 12);
+	inventoryBlock1.setOutlineThickness(5);
+	inventoryBlock1.setFillColor(sf::Color::Black);
+	if (fred->getSelectedIndex() == 1) inventoryBlock2.setOutlineColor(sf::Color::Red);
+	else inventoryBlock2.setOutlineColor(sf::Color::White);
+	inventoryBlock2.setPosition(900, 12);
+	inventoryBlock2.setOutlineThickness(5);
+	inventoryBlock2.setFillColor(sf::Color::Black);
+	if (fred->getSelectedIndex() == 2) inventoryBlock3.setOutlineColor(sf::Color::Red);
+	else inventoryBlock3.setOutlineColor(sf::Color::White);
+	inventoryBlock3.setPosition(1000, 12);
+	inventoryBlock3.setOutlineThickness(5);
+	inventoryBlock3.setFillColor(sf::Color::Black);
+	if (fred->getSelectedIndex() == 3) inventoryBlock4.setOutlineColor(sf::Color::Red);
+	else inventoryBlock4.setOutlineColor(sf::Color::White);
+	inventoryBlock4.setPosition(1100, 12);
+	inventoryBlock4.setOutlineThickness(5);
+	inventoryBlock4.setFillColor(sf::Color::Black);
+
+	this->window->draw(inventoryBlock1);
+	this->window->draw(inventoryBlock2);
+	this->window->draw(inventoryBlock3);
+	this->window->draw(inventoryBlock4);
 
     for (std::list<std::shared_ptr<Actor>>::iterator it = this->curRoom->getActorList().begin();
         it != this->curRoom->getActorList().end(); ++it) {
@@ -163,12 +193,21 @@ void PlayerView::drawScreen(void) {
                 this->window->draw(bulletShape);
             }
                 break;
+			case ActorType::HEALTH:
+			{
+				sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+				itemShape.setFillColor(sf::Color::Magenta);
+				itemShape.setPosition((*it)->getX(), (*it)->getY());
+				this->window->draw(itemShape);
+			}
         }
     }
-
 }
 
 void PlayerView::update(float delta) {
+
+	elapsedTime += delta;
+	
     this->pollInput();
     
     FredSprite.updateFred(delta);

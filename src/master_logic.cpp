@@ -1,5 +1,11 @@
 #include "master_logic.h"
 #include "master_view.h"
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+
+#include <chrono>
+#include <thread>
 
 void MasterLogic::init(std::shared_ptr<MasterView> &view) {
     this->view = view;
@@ -8,6 +14,46 @@ void MasterLogic::init(std::shared_ptr<MasterView> &view) {
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   //battlefield
     this->roomList.push_back(std::make_shared<Room>(0, 100, 400, 400));     //farmhouse
     this->currentRoom = roomList.begin();
+}
+
+void MasterLogic::loadInEnemies(void) {
+	std::ifstream inFile;
+	double x, y, mass, maxSpeed, maxHealth;
+
+	inFile.open("../resources/enemies.txt");
+	if (!inFile) {
+		std::cout << "Unable to open enemies.txt";
+		exit(1);
+	}
+
+	while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
+		std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
+		this->actorList.push_back(testEnemy);
+		//this->enemyList.push_back(testEnemy);
+		std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), testEnemy);
+		this->enemyViewList.push_back(testEnemyView);		
+	}
+
+	inFile.close();
+}
+
+void MasterLogic::startDemo(void) {
+    fred = std::make_shared<Fred>(700, 500);
+    
+    currentRoom = std::make_shared<Room>(0, 100, 1200, 800);
+    std::shared_ptr<Room> farmhouse = std::make_shared<Room>(0, 100, 400, 400);
+    std::shared_ptr<Exit> fieldExit = std::make_shared<Exit>(500, 890, farmhouse);
+    currentExit = fieldExit;
+    
+    this->actorList.push_front(fred);
+
+	this->loadInEnemies();
+
+	/* Creating test enemy
+	std::shared_ptr<Enemy> testEnemy1 = std::make_shared<Enemy>(200, 200, 40, 100, 100);
+	this->actorList.push_back(testEnemy1);
+	std::shared_ptr<EnemyView> testEnemyView1 = std::make_shared<EnemyView>(fred, testEnemy1);
+	this->enemyViewList.push_back(testEnemyView1); */
 
     // Add exits
     this->roomList.front()->getActorList().push_back(std::make_shared<Exit>(0, 430, this->roomList.back()));
@@ -25,32 +71,39 @@ void MasterLogic::startDemo(void) {
 	this->roomList.front->getActorList().push_back(testEnemy);
 	this->view->addEnemy(testEnemy);
 
-	// Add test items
-	std::shared_ptr<RangeWeapon> testItem = std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 150, 150, 40, 20, 10, 2);
-	this->actorList.push_back(testItem);
-	this->itemList.push_front(testItem);
-	std::shared_ptr<RangeWeapon> testItem1 = std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 250, 250, 40, 20, 10, 2);
+	// Add test weapon
+	std::shared_ptr<RangeWeapon> testWeapon = std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 150, 150, 40, 20, 10, 2);
+	this->actorList.push_back(testWeapon);
+	this->itemList.push_front(testWeapon);
+	// Creating items to test
+	//std::shared_ptr<Item> testItem = std::make_shared<Item>(ActorType::WEAPON, 150, 150, 20, 20, 1, false);
+	//this->actorList.push_back(testItem);
+	//this->itemList.push_front(testItem);
+	std::shared_ptr<HealthItem> testItem1 = std::make_shared<HealthItem>(250, 250, 20, 20);
 	this->actorList.push_back(testItem1);
 	this->itemList.push_back(testItem1);
-	std::shared_ptr<RangeWeapon> testItem2 = std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 350, 350, 20, 50, 10, 2);
-	this->actorList.push_back(testItem2);
-	this->itemList.push_back(testItem2);
-	std::shared_ptr<RangeWeapon> testItem3 = std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 350, 250, 20, 50, 10, 2);
+	//std::shared_ptr<Item> testItem2 = std::make_shared<Item>(ActorType::WEAPON, 350, 350, 20, 20, 1, false);
+	//this->actorList.push_back(testItem2);
+	//this->itemList.push_back(testItem2);
+	std::shared_ptr<HealthItem> testItem3 = std::make_shared<HealthItem>(350, 250, 20, 20);
 	this->actorList.push_back(testItem3);
 	this->itemList.push_back(testItem3);
-	std::shared_ptr<RangeWeapon> testItem4 = std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 450, 550, 40, 20, 10, 2);
-	this->actorList.push_back(testItem4);
-	this->itemList.push_back(testItem4);
+	//std::shared_ptr<Item> testItem4 = std::make_shared<Item>(ActorType::WEAPON, 450, 550, 20, 20, 1, false);
+	//this->actorList.push_back(testItem4);
+	//this->itemList.push_back(testItem4);
     
 
     currentRoom->setActorList(this->actorList);
     currentRoom->getActorList().emplace_back(std::make_shared<Bullet>(20, 20, 2, 4, 50, 20));
     
+	fred->setCurrentRoom(currentRoom);
+
     this->view->setRoom(currentRoom);
     this->view->setExit(currentExit);
 }
 
 void MasterLogic::update(float delta) {
+	this->delta = delta;
     if (!paused) {
         for (std::list<std::shared_ptr<Actor>>::iterator it = actorList.begin(); it != actorList.end(); it++) {
             std::shared_ptr<Actor> curActor = *it;
@@ -72,7 +125,7 @@ void MasterLogic::update(float delta) {
                     std::list<std::shared_ptr<Actor>> curList = currentRoom->getActorList();
                     
                     for (int i = 0; i < 4; i++) {
-                        curFred->setSelected(i);
+                        curFred->setSelectedIndex(i);
                         if (curFred->getSelectedItem() != nullptr) {
                             tempInventory[i] = curFred->getSelectedItem();
 //                            for (std::list<std::shared_ptr<Actor>>::iterator newIt = curList.begin(); newIt != actorList.end(); newIt++) {
@@ -87,7 +140,7 @@ void MasterLogic::update(float delta) {
                     
                     currentRoom->setActorList(curList);
                     
-                    curFred->setSelected(prevSelectedIndex);
+                    curFred->setSelectedIndex(prevSelectedIndex);
                     
                     currentRoom = currentExit->getDestination();
                     currentExit->setDestination(temp);
@@ -103,9 +156,11 @@ void MasterLogic::update(float delta) {
                         }
                     }
 
-                    curFred->setSelected(prevSelectedIndex);
+                    curFred->setSelectedIndex(prevSelectedIndex);
                     currentRoom->setActorList(curList);
                     
+					curFred->setCurrentRoom(currentRoom);
+
                     view->setRoom(currentRoom);
                     view->setExit(currentExit);
                 }

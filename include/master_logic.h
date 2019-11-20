@@ -4,14 +4,14 @@
 #include <list>
 #include <memory>
 
-#include "enemy_view.h"
-
 #include "actor.h"
+#include "item.h"
 #include "fred.h"
 #include "range_weapon.h"
 #include "melee_weapon.h"
 #include "room.h"
 #include "exit.h"
+#include "health_item.h"
 
 class MasterView;
 
@@ -22,8 +22,9 @@ class MasterLogic {
         std::list<std::shared_ptr<Room>>::iterator currentRoom;
         std::list<std::shared_ptr<Actor>> actorList;
 		std::list<std::shared_ptr<Item>> itemList;
-
+		std::list<std::shared_ptr<Enemy>> enemyList;
         bool paused = false;
+		float delta;
 
     public:
         MasterLogic(void) { };
@@ -34,13 +35,13 @@ class MasterLogic {
 
         void update(float delta);
 
+		void loadInEnemies(void);
+
         std::list<std::shared_ptr<Actor>> &getActorList(void) { return actorList; };
     
         std::shared_ptr<Room> &getCurrentRoom(void) { return *(this->currentRoom); };
 
 		std::list<std::shared_ptr<Item>> &getItemList(void) { return itemList; };
-
-		std::list<std::shared_ptr<EnemyView>> &getEnemyViewList(void) { return enemyViewList; };
 };
 
 #endif
