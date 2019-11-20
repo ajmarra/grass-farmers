@@ -11,7 +11,7 @@ class EnemyView {
 private:
 	std::shared_ptr<Fred> fred;
 	std::shared_ptr<Enemy> enemy;
-	float elapsedTime;
+	float elapsedTime = 0;
 
 	void findFred(float delta);
 

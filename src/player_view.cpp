@@ -13,7 +13,6 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
     this->fred = fred;
     this->window = window;
 	cur_track.playDayTrack();
-
 	
 	EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
 	FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
@@ -55,6 +54,12 @@ void PlayerView::pollInput() {
 		fred->dropItem();
 	}
 
+	// Using an item
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && elapsedTime > 0.5) {
+		elapsedTime = 0;
+		fred->useItem(fred->getCenterX(), fred->getCenterY());
+	}
+
 	// Inventory selection
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelected(0);
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelected(1);
@@ -83,6 +88,25 @@ void PlayerView::drawScreen(void) {
     exit.setPosition(curExit->getX(), curExit->getY());
     exit.setFillColor(sf::Color::Cyan);
     this->window->draw(exit);
+
+	//Enemy spawn points/portals
+	sf::RectangleShape sp1(sf::Vector2f(75, 75));
+	sp1.setPosition(70, 150);
+	sp1.setFillColor(sf::Color::Cyan);
+	sf::RectangleShape sp2(sf::Vector2f(75, 75));
+	sp2.setPosition(20, 350);
+	sp2.setFillColor(sf::Color::Cyan);
+	sf::RectangleShape sp3(sf::Vector2f(75, 75));
+	sp3.setPosition(20, 550);
+	sp3.setFillColor(sf::Color::Cyan);
+	sf::RectangleShape sp4(sf::Vector2f(75, 75));
+	sp4.setPosition(70, 750);
+	sp4.setFillColor(sf::Color::Cyan);
+
+	this->window->draw(sp1);
+	this->window->draw(sp2);
+	this->window->draw(sp3);
+	this->window->draw(sp4);
 
 	//Fred's Health Bar
 	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
@@ -154,12 +178,22 @@ void PlayerView::drawScreen(void) {
 				this->window->draw(enemyShape);
 			}
 			break;
+			case ActorType::HEALTH:
+			{
+				sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+				itemShape.setFillColor(sf::Color::Magenta);
+				itemShape.setPosition((*it)->getX(), (*it)->getY());
+				this->window->draw(itemShape);
+			}
         }
     }
 
 }
 
 void PlayerView::update(float delta) {
+
+	elapsedTime += delta;
+	
     this->pollInput();
 	
 	FredSprite.updateFred(delta);
