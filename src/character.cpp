@@ -73,7 +73,10 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 				else if (inventory[i] == nullptr) {
 					inventory[i] = toAdd;
 					notAdded = false;
-					if (i == 0) toAdd->setXY(825, 40);
+					if (i == 0) {
+						toAdd->setXY(825, 40);
+						toAdd->setCharacter(this);
+					}
 					else if (i == 1) toAdd->setXY(925, 40);
 					else if (i == 2) toAdd->setXY(1025, 40);
 					else if (i == 3) toAdd->setXY(1125, 40);

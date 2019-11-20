@@ -57,7 +57,7 @@ void PlayerView::pollInput() {
 	// Using an item
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && elapsedTime > 0.5) {
 		elapsedTime = 0;
-		fred->useSelectedItem();
+		fred->useItem(fred->getCenterX(), fred->getCenterY());
 	}
 
 	// Inventory selection

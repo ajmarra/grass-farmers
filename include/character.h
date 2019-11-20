@@ -69,6 +69,8 @@ class Character : public Actor {
 
 		void setCurrentRoom(std::shared_ptr<Room> room) { curRoom = room; };
 		std::shared_ptr<Room> getCurrentRoom(void) { return curRoom; };
+
+		void useItem(int x, int y) { if (this->getSelectedItem()) this->getSelectedItem()->use(x, y); };
 };
 
 #endif
