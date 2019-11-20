@@ -12,6 +12,7 @@ void Fred::useSelectedItem(void) {
 		switch (this->getSelectedItem()->getType()) {
 		case ActorType::HEALTH:
 		{
+			std::cout << this->health;
 			this->heal(5);
 		}
 		break;

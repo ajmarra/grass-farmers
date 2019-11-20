@@ -13,7 +13,6 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
     this->fred = fred;
     this->window = window;
 	cur_track.playDayTrack();
-
 	
 	EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
 	FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
@@ -55,7 +54,9 @@ void PlayerView::pollInput() {
 		fred->dropItem();
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+	// Using an item
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && elapsedTime > 0.5) {
+		elapsedTime = 0;
 		fred->useSelectedItem();
 	}
 
@@ -190,6 +191,9 @@ void PlayerView::drawScreen(void) {
 }
 
 void PlayerView::update(float delta) {
+
+	elapsedTime += delta;
+	
     this->pollInput();
 	
 	FredSprite.updateFred(delta);
