@@ -14,6 +14,7 @@
 #include "view.h"
 #include "enemy_view.h"
 #include "player_view.h"
+#include "tutorial_view.h"
 #include "options_view.h"
 #include "room.h"
 #include "exit.h"
@@ -25,7 +26,7 @@ class MasterView {
 
         std::shared_ptr<PlayerView> player; 
         std::shared_ptr<MenuView> menu;
-        std::shared_ptr<OptionsView> options;
+        std::shared_ptr<TutorialView> tutorial;
 		std::list<std::shared_ptr<EnemyView>> enemies;
 
 
@@ -36,7 +37,7 @@ class MasterView {
 
         void setMenu();
 
-        void setOptions();
+        void setTutorial();
 
         void setPlayer(std::shared_ptr<Fred> &fred);
 

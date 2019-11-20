@@ -9,9 +9,9 @@ void MasterLogic::startMenu(void){
     this->view->setMenu();
 }
 
-void MasterLogic::startOptions(void){
+void MasterLogic::startTutorial(void){
     //std::cout << "HOI" << std::endl;
-    this->view->setOptions();
+    this->view->setTutorial();
 }
 
 void MasterLogic::startDemo(void) {

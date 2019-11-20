@@ -27,11 +27,11 @@ void MenuView::pollInput() {
 
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
         this->logic->paused = true;
         this->logic->playing = false;
         this->logic->options = true;
-        this->logic->startOptions();
+        this->logic->startTutorial();
         //this->view->setOptions();
 
     }
@@ -58,7 +58,7 @@ void MenuView::drawScreen(){
 
     sf::Text menu_message;
     menu_message.setFont(font);
-    menu_message.setString("WELCOME TO FRED THE FARMER SAVES THE WORLD   \n                  PRESS O TO GO TO OPTIONS \n                  OR PRESS SPACE TO BEGIN");
+    menu_message.setString("WELCOME TO FRED THE FARMER SAVES THE WORLD   \n                      PRESS T FOR TUTORIAL \n                  OR PRESS SPACE TO BEGIN");
     menu_message.setCharacterSize(80); // in pixels, not points!
     menu_message.setFillColor(sf::Color::White);
     menu_message.setStyle(sf::Text::Bold);

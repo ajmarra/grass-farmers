@@ -18,7 +18,7 @@ void Graphics::updateFred(float delta){
         if (spriteFrame.left >= 128) {
             spriteFrame.left = 0;
         }
-        elapsedFredTime  = 0;
+    elapsedFredTime  = 0;
         
     }
     

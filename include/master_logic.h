@@ -35,7 +35,7 @@ class MasterLogic {
 
         void startMenu(void);
 
-        void startOptions(void);
+        void startTutorial(void);
 
         void startDemo(void);
 
