@@ -46,10 +46,20 @@ void MasterLogic::startDemo(void) {
     
     this->view->setRoom(currentRoom);
     this->view->setExit(currentExit);
+    
+    // Create timer object that keeps track of day/night cycle
+    this->timer = std::make_shared<Timer>();
 }
 
 void MasterLogic::update(float delta) {
+    
+    // create separate clock class with draw/update method
+    // check current elapsed time (delta) and add it to total elapsed time
+    // if total elapsed time passed whatever value you want, then set increment clock by certain value and reset total elapsed time
+    
     if (!paused) {
+        timer->update(delta);
+        
         for (std::list<std::shared_ptr<Actor>>::iterator it = actorList.begin(); it != actorList.end(); it++) {
             std::shared_ptr<Actor> curActor = (*it);
             if (curActor != fred) {
@@ -73,12 +83,6 @@ void MasterLogic::update(float delta) {
                         curFred->setSelected(i);
                         if (curFred->getSelectedItem() != nullptr) {
                             tempInventory[i] = curFred->getSelectedItem();
-//                            for (std::list<std::shared_ptr<Actor>>::iterator newIt = curList.begin(); newIt != actorList.end(); newIt++) {
-//                                std::shared_ptr<Actor> curListActor = (*newIt);
-//                                if (curListActor == tempInventory[i]) {
-//
-//                                }
-//                            }
                             curList.remove(tempInventory[i]);
                         }
                     }
