@@ -30,11 +30,10 @@ class MasterView {
 
         void setPlayer(std::shared_ptr<Fred> &fred);
 
-		void setEnemies(std::list<std::shared_ptr<EnemyView>> enemyList) { this->enemies = enemyList; };
-
-        void setRoom(std::shared_ptr<Room> room);
-    
-        void setExit(std::shared_ptr<Exit> exit);
+        /**
+         * Create a view for the new enemy from logic and add the view to the enemyview list
+         */
+		void addEnemy(std::shared_ptr<Enemy> &enemy) { this->enemies.emplace_back(std::make_shared<EnemyView>(this->player, enemy)); };
 
         void update(float delta);
 };

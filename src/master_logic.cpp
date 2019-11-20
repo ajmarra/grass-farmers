@@ -3,29 +3,29 @@
 
 void MasterLogic::init(std::shared_ptr<MasterView> &view) {
     this->view = view;
+    
+    // Create rooms
+    this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   //battlefield
+    this->roomList.push_back(std::make_shared<Room>(0, 100, 400, 400));     //farmhouse
+    this->currentRoom = roomList.begin();
+
+    // Add exits
+    this->roomList.front()->getActorList().push_back(std::make_shared<Exit>(0, 430, this->roomList.back()));
+    this->roomList.back()->getActorList().push_back(std::make_shared<Exit>(500, 500, this->roomList.front()));
+    
+    //Add fred
+    std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
+    this->roomList.front->getActorList().push_back(fred);
+    this->view->setPlayer(fred);
 }
 
 void MasterLogic::startDemo(void) {
-    fred = std::make_shared<Fred>(50, 50);
-    
-    currentRoom = std::make_shared<Room>(0, 100, 1200, 800);
-    std::shared_ptr<Room> farmhouse = std::make_shared<Room>(0, 100, 400, 400);
-    std::shared_ptr<Exit> fieldExit = std::make_shared<Exit>(500, 890, farmhouse);
-    currentExit = fieldExit;
-    
-    this->actorList.push_front(fred);
+	// Add test enemy
+	std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(200, 200, 40, 100, 100);
+	this->roomList.front->getActorList().push_back(testEnemy);
+	this->view->addEnemy(testEnemy);
 
-	// Creating test enemy
-	std::shared_ptr<Enemy> testEnemy1 = std::make_shared<Enemy>(200, 200, 40, 100, 100);
-	this->actorList.push_back(testEnemy1);
-	std::shared_ptr<EnemyView> testEnemyView1 = std::make_shared<EnemyView>(fred, testEnemy1);
-	this->enemyViewList.push_back(testEnemyView1);
-
-    
-    this->view->setPlayer(fred);
-	this->view->setEnemies(enemyViewList);
-
-	// Creating items to test
+	// Add test items
 	std::shared_ptr<RangeWeapon> testItem = std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 150, 150, 40, 20, 10, 2);
 	this->actorList.push_back(testItem);
 	this->itemList.push_front(testItem);
@@ -53,7 +53,7 @@ void MasterLogic::startDemo(void) {
 void MasterLogic::update(float delta) {
     if (!paused) {
         for (std::list<std::shared_ptr<Actor>>::iterator it = actorList.begin(); it != actorList.end(); it++) {
-            std::shared_ptr<Actor> curActor = (*it);
+            std::shared_ptr<Actor> curActor = *it;
             if (curActor != fred) {
                 curActor->update(delta);
             }

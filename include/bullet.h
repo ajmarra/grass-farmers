@@ -6,6 +6,7 @@
 class Bullet : public Actor {
     protected:
         int damage;
+        float timer;
     public:
         Bullet(double x, double y, int size, double speed, double direction, int damage);
 

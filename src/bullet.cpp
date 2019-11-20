@@ -13,5 +13,6 @@ Bullet::Bullet(double x, double y, int size, double speed, double direction, int
 
 void Bullet::update(float dt) {
     Actor::update(dt);
-    //if it has existed for too long, delete
+    float timer -= dt;
+    if (timer <= 0) ; //if it has existed for too long, delete
 }

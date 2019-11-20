@@ -7,7 +7,7 @@
 /** 
  * header class for Paddles for Pong
  */
-class Graphics{
+class Graphics {
     private:
         int left = 0;
         sf::Vector2u totalSprite;
