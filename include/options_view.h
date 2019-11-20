@@ -15,8 +15,35 @@ class OptionsView : public View {
     private:
         std::shared_ptr<sf::RenderWindow> window;
         void pollInput(void);
-        sf::Keyboard *selected;
+        
         int level = 1;
+
+        sf::Text RightPress_message;
+        sf::Text UpPress_message;
+        sf::Text LefttPress_message;
+        sf::Text DownPress_message;
+
+        sf::String RightPress_string;
+        sf::String UpPress_string = "W";
+        sf::String DownPress_string;
+        sf::String LeftPress_string;
+        sf::Text options_message;
+        sf::RectangleShape options;
+
+
+        
+        
+
+        //void drawScreen(void);
+        Graphics options_image;
+        sf::Font font;
+
+    public:
+        
+        OptionsView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<sf::RenderWindow> &window);
+        void configureKeys(sf::Event &Event);
+        void update(float delta);
+        void drawScreen();
 
         sf::Keyboard::Key UpPress = sf::Keyboard::W;
         sf::Keyboard::Key RightPress = sf::Keyboard::D;
@@ -33,18 +60,8 @@ class OptionsView : public View {
         sf::Keyboard::Key AttackPress = sf::Keyboard::Space;
         sf::Keyboard::Key PausePress = sf::Keyboard::P;
         sf::Keyboard::Key OptionsPress = sf::Keyboard::O;
-        
 
-        //void drawScreen(void);
-        Graphics options_image;
-        sf::Font font;
-
-    public:
-        
-        OptionsView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<sf::RenderWindow> &window);
-        void configureKeys(sf::Event Event);
-        void update(float delta);
-        void drawScreen();
+        sf::Keyboard::Key *selected = &UpPress;
         
         
 
