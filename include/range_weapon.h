@@ -9,23 +9,23 @@
 #include "bullet.h"
 
 class RangeWeapon : public Item {
-	private:
-		std::list<std::shared_ptr<Actor>> list;
-		//scaling factors for damage and time between each hit and type of gun
-		int damage, fireRate;
+    private:
+        std::list<std::shared_ptr<Actor>> list;
+        //scaling factors for damage and time between each hit and type of gun
+        int damage, fireRate;
 
-	public:
-		RangeWeapon(std::list<std::shared_ptr<Actor>> &list, double x, double y, double width, double height, int damage, int fireRate);
+    public:
+        RangeWeapon(std::list<std::shared_ptr<Actor>> &list, double x, double y, double width, double height, int damage, int fireRate);
 
-		void setdamage(int damage) { this->damage = damage; };
-		
-		int getdamage(void) { return damage; };
+        void setdamage(int damage) { this->damage = damage; };
+        
+        int getdamage(void) { return damage; };
 
-		void setFireRate(int fireRate) { this->fireRate = fireRate; };
-		
-		int getFireRate(void) { return fireRate; };
+        void setFireRate(int fireRate) { this->fireRate = fireRate; };
+        
+        int getFireRate(void) { return fireRate; };
 
-		void use(int x, int y) override;
+        void use(int x, int y) override;
 };
 
 #endif

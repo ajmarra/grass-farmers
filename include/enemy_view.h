@@ -9,16 +9,16 @@
 
 class EnemyView {
 private:
-	std::shared_ptr<Fred> fred;
-	std::shared_ptr<Enemy> enemy;
-	float elapsedTime = 0;
+    std::shared_ptr<Fred> fred;
+    std::shared_ptr<Enemy> enemy;
+    float elapsedTime = 0;
 
-	void findFred(float delta);
+    void findFred(float delta);
 
 public:
-	EnemyView(std::shared_ptr<Fred> &fred, std::shared_ptr<Enemy> &enemy);
+    EnemyView(std::shared_ptr<Fred> &fred, std::shared_ptr<Enemy> &enemy);
 
-	void update(float delta);
+    void update(float delta);
 };
 
 #endif

@@ -11,7 +11,7 @@
 class Enemy : public Character {
 
 public:
-	Enemy(double x, double y, double mass, double maxSpeed, double maxHealth);
+    Enemy(double x, double y, double mass, double maxSpeed, double maxHealth);
 
 };
 

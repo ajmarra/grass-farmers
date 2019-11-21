@@ -4,11 +4,11 @@
 
 
 HealthItem::HealthItem(double x, double y, double width, double height) :
-	Item(ActorType::HEALTH, x, y, width, height, 1, true) {
-	this->x = x;
-	this->y = y;
+    Item(ActorType::HEALTH, x, y, width, height, 1, true) {
+    this->x = x;
+    this->y = y;
 }
 
 void HealthItem::use(int x, int y) {
-	this->getCharacter()->heal(healQuantity);
+    this->getCharacter()->heal(healQuantity);
 }
