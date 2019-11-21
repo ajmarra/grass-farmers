@@ -37,7 +37,7 @@ void MasterView::update(float delta) {
     
         menu->update(delta);
      }
-    else if ( (logic->paused == true) && (logic->playing == false) && (logic ->options == true)){
+    else if ((logic->paused == true) && (logic->playing == false) && (logic ->options == true)){
         //std::cout << "HULLO" << std::endl;
         tutorial->update(delta);
     }

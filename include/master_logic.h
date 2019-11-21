@@ -21,7 +21,7 @@ class MasterLogic {
 		std::list<std::shared_ptr<EnemyView>> enemyViewList;
         
 		std::list<std::shared_ptr<Enemy>> enemyList;
-        bool paused = false;
+        
 		float delta;
         std::shared_ptr<Room> currentRoom;
         std::shared_ptr<Exit> currentExit;
