@@ -21,7 +21,11 @@ class Actor {
 
         ActorType getType(void) { return this->type; };
         
+        void setX(double x) { this->x = x; };
+
         double getX(void) { return this->x; };
+
+        void setY(double y) { this->y = y; };
         
         double getY(void) { return this->y; };
 
