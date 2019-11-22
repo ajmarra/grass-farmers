@@ -185,6 +185,14 @@ void PlayerView::drawScreen(void) {
 				itemShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(itemShape);
 			}
+			break;
+			case ActorType::TRAP:
+			{
+				sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+				itemShape.setFillColor(sf::Color::Yellow);
+				itemShape.setPosition((*it)->getX(), (*it)->getY());
+				this->window->draw(itemShape);
+			}
         }
     }
 

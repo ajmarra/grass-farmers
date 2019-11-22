@@ -20,6 +20,8 @@ class Character : public Actor {
         double maxSpeed;
         int desiredDirection = -1;
 
+		bool canMove = true;
+
 		std::shared_ptr<Room> curRoom;
 
 		std::shared_ptr<Item> inventory[4];
@@ -71,6 +73,8 @@ class Character : public Actor {
 		std::shared_ptr<Room> getCurrentRoom(void) { return curRoom; };
 
 		void useItem(int x, int y) { if (this->getSelectedItem()) this->getSelectedItem()->use(x, y); };
+
+		void setCanMove(bool canMove) { this->canMove = canMove; };
 };
 
 #endif

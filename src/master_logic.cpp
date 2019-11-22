@@ -25,7 +25,7 @@ void MasterLogic::loadInEnemies(void) {
 		std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
 		this->actorList.push_back(testEnemy);
 		//this->enemyList.push_back(testEnemy);
-		std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), testEnemy);
+		std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), testEnemy, trapList);
 		this->enemyViewList.push_back(testEnemyView);		
 	}
 
@@ -42,7 +42,7 @@ void MasterLogic::startDemo(void) {
     
     this->actorList.push_front(fred);
 
-	this->loadInEnemies();
+	//this->loadInEnemies();
 
 	/* Creating test enemy
 	std::shared_ptr<Enemy> testEnemy1 = std::make_shared<Enemy>(200, 200, 40, 100, 100);
@@ -51,13 +51,14 @@ void MasterLogic::startDemo(void) {
 	this->enemyViewList.push_back(testEnemyView1); */
 
     
-    this->view->setPlayer(fred);
-	this->view->setEnemies(enemyViewList);
+    //this->view->setPlayer(fred);
+	//this->view->setEnemies(enemyViewList);
 
 	// Creating items to test
-	//std::shared_ptr<Item> testItem = std::make_shared<Item>(ActorType::WEAPON, 150, 150, 20, 20, 1, false);
-	//this->actorList.push_back(testItem);
-	//this->itemList.push_front(testItem);
+	std::shared_ptr<Trap> testItem = std::make_shared<Trap>(150, 150, 20, 20);
+	this->actorList.push_back(testItem);
+	this->itemList.push_front(testItem);
+    this->trapList.push_back(testItem);
 	std::shared_ptr<HealthItem> testItem1 = std::make_shared<HealthItem>(250, 250, 20, 20);
 	this->actorList.push_back(testItem1);
 	this->itemList.push_back(testItem1);
@@ -70,6 +71,10 @@ void MasterLogic::startDemo(void) {
 	//std::shared_ptr<Item> testItem4 = std::make_shared<Item>(ActorType::WEAPON, 450, 550, 20, 20, 1, false);
 	//this->actorList.push_back(testItem4);
 	//this->itemList.push_back(testItem4);
+
+    this->loadInEnemies();
+    this->view->setPlayer(fred);
+    this->view->setEnemies(enemyViewList);
     
     currentRoom->setActorList(this->actorList);
     

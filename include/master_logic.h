@@ -12,6 +12,7 @@ class MasterView;
 #include "room.h"
 #include "exit.h"
 #include "health_item.h"
+#include "trap.h"
 
 class MasterLogic {
     private:
@@ -19,7 +20,8 @@ class MasterLogic {
         std::list<std::shared_ptr<Actor>> actorList;
 		std::list<std::shared_ptr<Item>> itemList;
 		std::list<std::shared_ptr<EnemyView>> enemyViewList;
-		std::list<std::shared_ptr<Enemy>> enemyList;
+		//std::list<std::shared_ptr<Enemy>> enemyList;
+        std::list<std::shared_ptr<Trap>> trapList;
         bool paused = false;
 		float delta;
         std::shared_ptr<Room> currentRoom;
