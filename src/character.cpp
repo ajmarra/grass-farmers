@@ -52,10 +52,13 @@ void Character::move(void) {
 
 void Character::update(float delta) {
 	Actor::update(delta);
-	if (this->canMove) {
+	if (this->canMove && sleepTime <= 0) {
 		Character::move();
 	}
-	else this->hardStop();
+    else {
+        this->hardStop();
+        sleepTime -= delta;
+    }
 }
 
 void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
@@ -113,4 +116,8 @@ std::shared_ptr<Item> Character::removeItemAtIndex(int index) {
 void Character::dropItem() {
 	std::shared_ptr<Item> toDrop = this->removeItemAtIndex(selectedIndex);
 	if (toDrop != nullptr) toDrop->setXY(this->getCenterX(), this->getCenterY());
+}
+
+void Character::sleep(float time) {
+    sleepTime = time;
 }
