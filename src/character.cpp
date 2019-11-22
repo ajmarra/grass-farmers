@@ -69,6 +69,7 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 			while (notAdded) {
 				if (toAdd->isStackable() && inventory[i] != nullptr && inventory[i]->getType() == toAdd->getType()) {
 					inventory[i]->increaseQuantity();
+                    toAdd->setXY(inventory[i]->getCenterX()-10, inventory[i]->getCenterY()-10);
 					notAdded = false;
 					// TODO: need to figure out what to do with old/used items.
 				}
