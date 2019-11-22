@@ -15,7 +15,7 @@ private:
     bool isSet = false;
 
 public:
-    Trap(double x, double y, double width, double height);
+    Trap(double x, double y, double width, double height, std::shared_ptr<Character> fred);
 
     bool getIsSet(void) { return isSet; };
 

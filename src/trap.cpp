@@ -3,8 +3,8 @@
 #include "character.h"
 #include <iostream>
 
-Trap::Trap(double x, double y, double width, double height) :
-    Item(ActorType::TRAP, x, y, width, height, 1, true) {
+Trap::Trap(double x, double y, double width, double height, std::shared_ptr<Character> fred) :
+    Item(ActorType::TRAP, x, y, width, height, 1, true, fred) {
     this->x = x;
     this->y = y;
 }

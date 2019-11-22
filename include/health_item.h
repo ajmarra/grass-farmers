@@ -13,7 +13,7 @@ private:
 	int healQuantity = 5;
 
 public:
-	HealthItem(double x, double y, double width, double height);
+	HealthItem(double x, double y, double width, double height, std::shared_ptr<Character> fred);
 
 	/*
 	* Heals the character that uses the item

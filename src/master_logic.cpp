@@ -55,25 +55,25 @@ void MasterLogic::startDemo(void) {
 	//this->view->setEnemies(enemyViewList);
 
 	// Creating items to test
-	std::shared_ptr<Trap> testItem = std::make_shared<Trap>(150, 150, 20, 20);
+	std::shared_ptr<Trap> testItem = std::make_shared<Trap>(150, 150, 20, 20, fred);
 	this->actorList.push_back(testItem);
 	this->itemList.push_front(testItem);
     this->trapList.push_back(testItem);
-	std::shared_ptr<HealthItem> testItem1 = std::make_shared<HealthItem>(250, 250, 20, 20);
+	std::shared_ptr<HealthItem> testItem1 = std::make_shared<HealthItem>(250, 250, 20, 20, fred);
 	this->actorList.push_back(testItem1);
 	this->itemList.push_back(testItem1);
 	//std::shared_ptr<Item> testItem2 = std::make_shared<Item>(ActorType::WEAPON, 350, 350, 20, 20, 1, false);
 	//this->actorList.push_back(testItem2);
 	//this->itemList.push_back(testItem2);
-	std::shared_ptr<HealthItem> testItem3 = std::make_shared<HealthItem>(350, 250, 20, 20);
+	std::shared_ptr<HealthItem> testItem3 = std::make_shared<HealthItem>(350, 250, 20, 20, fred);
 	this->actorList.push_back(testItem3);
 	this->itemList.push_back(testItem3);
 	//std::shared_ptr<Item> testItem4 = std::make_shared<Item>(ActorType::WEAPON, 450, 550, 20, 20, 1, false);
 	//this->actorList.push_back(testItem4);
 	//this->itemList.push_back(testItem4);
 
-    this->loadInEnemies();
     this->view->setPlayer(fred);
+    this->loadInEnemies();
     this->view->setEnemies(enemyViewList);
     
     currentRoom->setActorList(this->actorList);
