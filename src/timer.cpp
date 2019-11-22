@@ -2,12 +2,29 @@
 
 Timer::Timer() {
     this->curTimeElapsed = 0;
+    this->deltaLimit = dayDeltaLimit;
 }
 
-void Timer::update(float delta) {
+bool Timer::update(float delta) {
     curTimeElapsed += delta;
     if (curTimeElapsed >= deltaLimit) {
-        curTime++;
+        curTime += 2;
         curTimeElapsed = 0;
+    }
+    if (curTime == totalTimeLimit) {
+        curTime = 0;
+        switchCycle();
+        return true;
+    }
+    
+    return false;
+}
+
+void Timer::switchCycle() {
+    if (deltaLimit == nightDeltaLimit) {
+        deltaLimit = dayDeltaLimit;
+    }
+    else {
+        deltaLimit = nightDeltaLimit;
     }
 }

@@ -58,7 +58,23 @@ void MasterLogic::update(float delta) {
     // if total elapsed time passed whatever value you want, then set increment clock by certain value and reset total elapsed time
     
     if (!paused) {
-        timer->update(delta);
+        if (timer->update(delta)) {
+            day = !day;
+            
+            if (day) {
+                //Remove enemies from actor list
+                
+                //Switch to day theme
+                this->view->switchToDay();
+            }
+            
+            else {
+                //Start spawning enemies
+                
+                //Switch to night theme
+                this->view->switchToNight();
+            }
+        }
         
         for (std::list<std::shared_ptr<Actor>>::iterator it = actorList.begin(); it != actorList.end(); it++) {
             std::shared_ptr<Actor> curActor = (*it);

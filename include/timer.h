@@ -4,12 +4,17 @@
 class Timer {
 public:
     Timer();
-    void update(float delta);
+    bool update(float delta);
+    float getCurTime() { return curTime; }
+    void switchCycle();
     
 private:
     float curTimeElapsed;
     float curTime;
-    const float deltaLimit = 15;
+    float deltaLimit;
+    float const dayDeltaLimit = 0.5;
+    float const nightDeltaLimit = 1;
+    float const totalTimeLimit = 360;
 };
 
 #endif

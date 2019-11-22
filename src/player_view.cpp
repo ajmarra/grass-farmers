@@ -84,7 +84,7 @@ void PlayerView::drawScreen(void) {
     this->window->draw(clockMarker);
     
     sf::Transform transform;
-    transform.rotate(90, {645, 50});
+    transform.rotate(this->logic->getTimer()->getCurTime(), {645, 50});
     sf::RectangleShape clockHand(sf::Vector2f(5, 42.5));
     clockHand.setPosition(642.5, 10);
     clockHand.setFillColor(sf::Color::Black);
@@ -176,6 +176,16 @@ void PlayerView::drawScreen(void) {
         }
     }
 
+}
+
+void PlayerView::switchToDay() {
+    cur_track.stopCurrentTrack();
+    cur_track.playDayTrack();
+}
+
+void PlayerView::switchToNight() {
+    cur_track.stopCurrentTrack();
+    cur_track.playNightTrack();
 }
 
 void PlayerView::update(float delta) {

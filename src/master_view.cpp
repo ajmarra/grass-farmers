@@ -21,6 +21,14 @@ void MasterView::setExit(std::shared_ptr<Exit> exit){
     player->setCurrentExit(exit);
 }
 
+void MasterView::switchToDay() {
+    player->switchToDay();
+}
+
+void MasterView::switchToNight() {
+    player->switchToNight();
+}
+
 void MasterView::update(float delta) {
     player->update(delta);
 	for (std::list<std::shared_ptr<EnemyView>>::iterator it = this->enemies.begin(); it != enemies.end(); it++) {
