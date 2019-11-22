@@ -22,7 +22,9 @@ class PlayerView : public View {
         Graphics FredSprite;
         Graphics EnemySprite;
         Graphics room_image;
-        int keyPress = 0;
+        
+		float elapsedTime = 0;
+
         std::shared_ptr<Room> curRoom;
         std::shared_ptr<Exit> curExit;
 

@@ -4,7 +4,6 @@
 #include <list>
 #include <memory>
 
-
 #include "actor.h"
 #include "fred.h"
 #include "enemy_view.h"
@@ -13,6 +12,7 @@
 class MasterView;
 #include "room.h"
 #include "exit.h"
+#include "health_item.h"
 
 class MasterLogic {
     private:
@@ -20,8 +20,13 @@ class MasterLogic {
         std::list<std::shared_ptr<Actor>> actorList;
 		std::list<std::shared_ptr<Item>> itemList;
 		std::list<std::shared_ptr<EnemyView>> enemyViewList;
+		std::list<std::shared_ptr<Enemy>> enemyList;
         bool paused = false;
+    
         bool day = true;
+    
+		float delta;
+    
         std::shared_ptr<Room> currentRoom;
         std::shared_ptr<Exit> currentExit;
     
@@ -37,6 +42,10 @@ class MasterLogic {
         void startDemo(void);
 
         void update(float delta);
+
+		void loadInEnemies(void);
+
+		std::shared_ptr<Fred> &getFred(void) { return fred; };
 
         std::list<std::shared_ptr<Actor>> &getActorList(void) { return actorList; };
     
