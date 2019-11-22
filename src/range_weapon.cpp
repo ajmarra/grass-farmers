@@ -1,8 +1,8 @@
 #include "item.h"
 #include "range_weapon.h"
 
-RangeWeapon::RangeWeapon(double x, double y, double width, double height, int strength, int fireRate, int type) :
-	Item(ActorType::WEAPON, x, y, width, height, 1, false) {
+RangeWeapon::RangeWeapon(double x, double y, double width, double height, int strength, int fireRate, int type, std::shared_ptr<Character> fred) :
+	Item(ActorType::WEAPON, x, y, width, height, 1, false, fred) {
 	this->x = x;
 	this->y = y;
 	this->strength = strength;

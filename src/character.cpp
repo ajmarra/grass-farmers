@@ -52,7 +52,13 @@ void Character::move(void) {
 
 void Character::update(float delta) {
 	Actor::update(delta);
-	Character::move();
+	if (this->canMove && sleepTime <= 0) {
+		Character::move();
+	}
+    else {
+        this->hardStop();
+        sleepTime -= delta;
+    }
 }
 
 void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
@@ -66,6 +72,7 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 			while (notAdded) {
 				if (toAdd->isStackable() && inventory[i] != nullptr && inventory[i]->getType() == toAdd->getType()) {
 					inventory[i]->increaseQuantity();
+                    toAdd->setXY(inventory[i]->getCenterX()-10, inventory[i]->getCenterY()-10);
 					notAdded = false;
 					// TODO: need to figure out what to do with old/used items.
 				}
@@ -75,11 +82,20 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 					notAdded = false;
 					if (i == 0) {
 						toAdd->setXY(825, 40);
-						toAdd->setCharacter(this);
+						//toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
-					else if (i == 1) toAdd->setXY(925, 40);
-					else if (i == 2) toAdd->setXY(1025, 40);
-					else if (i == 3) toAdd->setXY(1125, 40);
+					else if (i == 1) {
+						toAdd->setXY(925, 40);
+                        //toAdd->setCharacter(std::make_shared<Character>(*this));
+					}
+					else if (i == 2) {
+						toAdd->setXY(1025, 40);
+                        //toAdd->setCharacter(std::make_shared<Character>(*this));
+					}
+					else if (i == 3) {
+						toAdd->setXY(1125, 40);
+                        //toAdd->setCharacter(std::make_shared<Character>(*this));
+					}
 					if (selectedIndex == i) this->setSelected(i);
 				}
 				i++;
@@ -100,4 +116,8 @@ std::shared_ptr<Item> Character::removeItemAtIndex(int index) {
 void Character::dropItem() {
 	std::shared_ptr<Item> toDrop = this->removeItemAtIndex(selectedIndex);
 	if (toDrop != nullptr) toDrop->setXY(this->getCenterX(), this->getCenterY());
+}
+
+void Character::sleep(float time) {
+    sleepTime = time;
 }

@@ -16,10 +16,10 @@ private:
 	bool stackable;
 
 protected:
-	Character* character;
+	std::shared_ptr<Character> fred;
 
 public:
-	Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable);
+	Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable, std::shared_ptr<Character> fred);
 
 	bool isStackable(void) { return stackable; };
 
@@ -29,9 +29,9 @@ public:
 
 	void decreaseQuantity(void);
 
-	void setCharacter(Character* character) { this->character = character; };
+	void setCharacter(std::shared_ptr<Character> character) { fred = character; };
 
-	Character* getCharacter(void) { return character; };
+	std::shared_ptr<Character> getCharacter(void) { return fred; };
 
 
 	/**
