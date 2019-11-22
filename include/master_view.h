@@ -35,6 +35,10 @@ class MasterView {
         void setRoom(std::shared_ptr<Room> room);
     
         void setExit(std::shared_ptr<Exit> exit);
+    
+        void switchToDay();
+    
+        void switchToNight();
 
         void update(float delta);
 };

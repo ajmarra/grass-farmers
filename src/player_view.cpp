@@ -76,6 +76,25 @@ void PlayerView::pollInput() {
 void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Green);
     
+    //Timer
+    sf::CircleShape clock;
+    clock.setRadius(45);
+    clock.setPosition(600, 5);
+    clock.setFillColor(sf::Color::White);
+    this->window->draw(clock);
+    
+    sf::RectangleShape clockMarker(sf::Vector2f(5, 10));
+    clockMarker.setPosition(642.5, 7);
+    clockMarker.setFillColor(sf::Color::Red);
+    this->window->draw(clockMarker);
+    
+    sf::Transform transform;
+    transform.rotate(this->logic->getTimer()->getCurTime(), {645, 50});
+    sf::RectangleShape clockHand(sf::Vector2f(5, 42.5));
+    clockHand.setPosition(642.5, 10);
+    clockHand.setFillColor(sf::Color::Black);
+    this->window->draw(clockHand, transform);
+    
     //Current room and exit
     sf::RectangleShape room;
     room.setSize(sf::Vector2f(curRoom->getWidth(), curRoom->getHeight()));
@@ -196,6 +215,16 @@ void PlayerView::drawScreen(void) {
         }
     }
 
+}
+
+void PlayerView::switchToDay() {
+    cur_track.stopCurrentTrack();
+    cur_track.playDayTrack();
+}
+
+void PlayerView::switchToNight() {
+    cur_track.stopCurrentTrack();
+    cur_track.playNightTrack();
 }
 
 void PlayerView::update(float delta) {
