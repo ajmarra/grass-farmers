@@ -95,6 +95,7 @@ void MasterLogic::update(float delta) {
             
             else {
                 //Start spawning enemies
+                spawnRate = 5;
                 std::shared_ptr<Enemy> toSpawn;
                 toSpawn = this->enemyList.back();
                 this->actorList.push_back(toSpawn);
@@ -107,6 +108,24 @@ void MasterLogic::update(float delta) {
                                
                 //Switch to night theme
                 this->view->switchToNight();
+            }
+        }
+
+        if (!day) {
+            if (spawnRate <= 0 && enemyList.size() > 0) {
+                spawnRate = 5;
+                std::shared_ptr<Enemy> toSpawn;
+                toSpawn = this->enemyList.back();
+                this->actorList.push_back(toSpawn);
+                this->enemyList.remove(toSpawn);
+                std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), toSpawn, this->trapList);
+                this->enemyViewList.push_back(testEnemyView);
+
+                this->view->setEnemies(enemyViewList);
+                currentRoom->setActorList(this->actorList);
+            }
+            else {
+                spawnRate -= delta;
             }
         }
         
