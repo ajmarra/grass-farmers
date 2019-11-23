@@ -23,10 +23,10 @@ void MasterLogic::loadInEnemies(void) {
 
 	while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
 		std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
-		this->actorList.push_back(testEnemy);
-		//this->enemyList.push_back(testEnemy);
-		std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), testEnemy, trapList);
-		this->enemyViewList.push_back(testEnemyView);		
+		//this->actorList.push_back(testEnemy);
+		this->enemyList.push_front(testEnemy);
+		//std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), testEnemy, trapList);
+		//this->enemyViewList.push_back(testEnemyView);		
 	}
 
 	inFile.close();
@@ -41,15 +41,6 @@ void MasterLogic::startDemo(void) {
     currentExit = fieldExit;
     
     this->actorList.push_front(fred);
-
-	//this->loadInEnemies();
-
-	/* Creating test enemy
-	std::shared_ptr<Enemy> testEnemy1 = std::make_shared<Enemy>(200, 200, 40, 100, 100);
-	this->actorList.push_back(testEnemy1);
-	std::shared_ptr<EnemyView> testEnemyView1 = std::make_shared<EnemyView>(fred, testEnemy1);
-	this->enemyViewList.push_back(testEnemyView1); */
-
     
     //this->view->setPlayer(fred);
 	//this->view->setEnemies(enemyViewList);
@@ -91,6 +82,7 @@ void MasterLogic::update(float delta) {
 	this->delta = delta;
     
     if (!paused) {
+        
         if (timer->update(delta)) {
             day = !day;
             
@@ -103,7 +95,16 @@ void MasterLogic::update(float delta) {
             
             else {
                 //Start spawning enemies
-                
+                std::shared_ptr<Enemy> toSpawn;
+                toSpawn = this->enemyList.back();
+                this->actorList.push_back(toSpawn);
+                this->enemyList.remove(toSpawn);
+                std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), toSpawn, this->trapList);
+                this->enemyViewList.push_back(testEnemyView);
+
+                this->view->setEnemies(enemyViewList);
+                currentRoom->setActorList(this->actorList);
+                               
                 //Switch to night theme
                 this->view->switchToNight();
             }

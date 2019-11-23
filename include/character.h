@@ -78,6 +78,10 @@ class Character : public Actor {
 
 		void setCanMove(bool canMove) { this->canMove = canMove; };
 
+        /**
+        * Sets a sleep timer and decreases the time on the timer every time it is called.
+        * Used for halting Fred while traps are being set and when he sleeps in the bed.
+        */
         void sleep(float time);
         float getSleepTime(void) { return sleepTime; };
 };

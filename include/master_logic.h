@@ -21,11 +21,13 @@ class MasterLogic {
         std::list<std::shared_ptr<Actor>> actorList;
 		std::list<std::shared_ptr<Item>> itemList;
 		std::list<std::shared_ptr<EnemyView>> enemyViewList;
-		//std::list<std::shared_ptr<Enemy>> enemyList;
+		std::list<std::shared_ptr<Enemy>> enemyList;
         std::list<std::shared_ptr<Trap>> trapList;
         bool paused = false;
     
         bool day = true;
+
+        float spawnRate = 0;
     
 		float delta;
     
