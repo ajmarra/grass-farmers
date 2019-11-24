@@ -85,7 +85,8 @@ void MasterLogic::update(float delta) {
                     curActor->setX(curActor->getX() - 1);
                 }
             }
-                // Check if Fred uses the exit
+            
+            // Check if Fred uses the exit
             if (curActor->collidesSquare((*currentExit))) {
                 std::shared_ptr<Room> temp = currentRoom;
                 

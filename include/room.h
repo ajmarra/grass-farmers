@@ -12,20 +12,30 @@
 
 class Room : public Actor {
     private:
+        // Actor list
         std::list<std::shared_ptr<Actor>> actorList;
-        std::list<std::shared_ptr<Item>> itemList;
-        std::list<std::shared_ptr<Enemy>> enemyList;
-        std::list<std::shared_ptr<Exit>> exitList;
-        std::list<std::list<std::shared_ptr<Actor>>::iterator> actorListSections; // List of iterators pointing to sections of each type of actor within the actor list
+        // List of iterators pointing to sections of each type of actor within the actor list
+        std::list<std::list<std::shared_ptr<Actor>>::iterator> actorListSections;
         
     public:
         Room(double x, double y, double width, double height);
         
         void setActorList(std::list<std::shared_ptr<Actor>> newActorList) { this->actorList = newActorList; };
         
+        /**
+         * Adds an actor to the actor list in the proper section for actors of its type.
+         */
+        void addActor(std::shared_ptr<Actor> &actor);
+
+        /**
+         * Return the list of actors.
+         */
         std::list<std::shared_ptr<Actor>> &getActorList(void) { return actorList; };
 
-        void addActor(std::shared_ptr<Actor> actor);
+        /**
+         * Return a list of actors of type t.
+         */
+        std::list<std::shared_ptr<Actor>> &getActorList(ActorType t);
 };
 
 #endif

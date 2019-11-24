@@ -4,18 +4,19 @@
 #include <list>
 #include <memory>
 
+#include "room.h"
 #include "actor.h"
 #include "item.h"
 #include "bullet.h"
 
 class RangeWeapon : public Item {
     private:
-        std::list<std::shared_ptr<Actor>> list;
+        std::shared_ptr<Room> room;
         //scaling factors for damage and time between each hit and type of gun
         int damage, fireRate;
 
     public:
-        RangeWeapon(std::list<std::shared_ptr<Actor>> &list, double x, double y, double width, double height, int damage, int fireRate);
+        RangeWeapon(std::shared_ptr<Room> &room, double x, double y, double width, double height, int damage, int fireRate);
 
         void setdamage(int damage) { this->damage = damage; };
         
