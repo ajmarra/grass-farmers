@@ -16,12 +16,12 @@ void MasterLogic::init(std::shared_ptr<MasterView> &view) {
     this->currentRoom = roomList.begin();
 
     // Add exits
-    this->roomList.front()->getActorList().push_back(std::make_shared<Exit>(0, 430, this->roomList.back()));
-    this->roomList.back()->getActorList().push_back(std::make_shared<Exit>(500, 500, this->roomList.front()));
+    this->roomList.front()->addActor(std::make_shared<Exit>(0, 430, this->roomList.back()));
+    this->roomList.back()->addActor(std::make_shared<Exit>(500, 500, this->roomList.front()));
 
     // Add fred
     std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
-    this->roomList.front->getActorList().push_back(fred);
+    this->roomList.front->addActor(fred);
     this->view->setPlayer(fred);
 }
 
@@ -37,7 +37,7 @@ void MasterLogic::loadInEnemies(void) {
 
 	while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
 		std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
-		this->roomList.front()->getActorList().push_back(testEnemy);
+		this->roomList.front()->addActor(testEnemy);
 		this->view->addEnemy(testEnemy);
 	}
 
@@ -48,15 +48,15 @@ void MasterLogic::startDemo(void) {
 	this->loadInEnemies();
 	// Add test enemy
 	std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(200, 200, 40, 100, 100);
-	this->roomList.front()->getActorList().push_back(testEnemy);
+	this->roomList.front()->addActor(testEnemy);
 	this->view->addEnemy(testEnemy);
 
 	// Add test weapon
-	this->roomList.front()->getActorList().push_back(std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 150, 150, 40, 20, 10, 2));
+	this->roomList.front()->addActor(std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 150, 150, 40, 20, 10, 2));
 	std::shared_ptr<HealthItem> testItem1 = std::make_shared<HealthItem>(250, 250, 20, 20);
-	this->roomList.front()->getActorList().push_back(testItem1);
+	this->roomList.front()->addActor(testItem1);
 	std::shared_ptr<HealthItem> testItem3 = std::make_shared<HealthItem>(350, 250, 20, 20);
-	this->roomList.front()->getActorList().push_back(testItem3);
+	this->roomList.front()->addActor(testItem3);
 }
 
 void MasterLogic::update(float delta) {

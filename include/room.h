@@ -25,7 +25,7 @@ class Room : public Actor {
         /**
          * Adds an actor to the actor list in the proper section for actors of its type.
          */
-        void addActor(std::shared_ptr<Actor> &actor);
+        void addActor(std::shared_ptr<Actor> actor);
 
         /**
          * Return the list of actors.

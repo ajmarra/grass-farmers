@@ -3,7 +3,7 @@
 
 Room::Room(double x, double y, double width, double height) : Actor(ActorType::ROOM, x, y, width, height) { }
 
-void Room::addActor(std::shared_ptr<Actor> &actor) {
+void Room::addActor(std::shared_ptr<Actor> actor) {
     actorList.unique(); //If all actors of one type are removed, removes the duplicate pointer
 
     // put the actor in the appropriate section of actors
