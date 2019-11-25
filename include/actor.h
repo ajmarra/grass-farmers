@@ -69,7 +69,7 @@ class Actor {
          *
          * a -- the actor to face towards
          */
-        void setOrientation(Actor a);
+        void setOrientation(Actor &a);
 
         /**
          * Returns the orientation of the actor.
@@ -82,7 +82,7 @@ class Actor {
          *
          * a -- the actor for comparison
          */
-        bool collidesSquare(Actor a);
+        bool collidesSquare(Actor &a);
 
         /**
          * Calculates if circular Actor a is touching this circular actor.
@@ -90,9 +90,9 @@ class Actor {
          *
          * a -- the actor for comparison
          */
-        bool collidesCircle(Actor a);
+        bool collidesCircle(Actor &a);
 
-        bool liesInsideSquare(Actor a);
+        bool liesInsideSquare(Actor &a);
 };
 
 #endif

@@ -3,10 +3,11 @@
 
 #include "actor.h"
 
-class Character;
-
 #include <iostream>
 #include <memory>
+
+class Character;
+
 /**
  * Initial item logic header.  Any items that could be in the inventory or on the ground will inherit from here.
  */

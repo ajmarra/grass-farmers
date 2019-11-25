@@ -48,6 +48,7 @@ class Character : public Actor {
         void stop(void) { this->desiredDirection = -1; };
 
         int getHealth(void) { return health; };
+        
         int getMaxHealth(void) { return maxHealth; };
 
 		void heal(int healAmount);

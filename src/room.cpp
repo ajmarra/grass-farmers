@@ -3,33 +3,27 @@
 
 Room::Room(double x, double y, double width, double height) : Actor(ActorType::ROOM, x, y, width, height) { }
 
-void Room::addActor(std::shared_ptr<Actor> actor) {
-    actorList.unique(); //If all actors of one type are removed, removes the duplicate pointer
-
-    // put the actor in the appropriate section of actors
-    for (std::list<std::shared_ptr<Actor>>::iterator &section : this->actorListSections) {
-        if ((*section)->getType() == actor->getType()) {
-            this->actorList.insert(section--, actor);
-            return;
-        }
-    }
-
-    // If section not found, add a new section of actor type actor.getType()
-    this->actorList.push_back(actor);
-    this->actorListSections.push_back(--actorList.end());
+void Room::addActor(std::shared_ptr<Fred> fred) {
+    this->actorList.emplace_back(fred);
+    this->exitList.emplace_back(fred);
 }
 
-std::list<std::shared_ptr<Actor>> &Room::getActorList(ActorType t) {
-    std::list<std::shared_ptr<Actor>> returnList { };
+void Room::addActor(std::shared_ptr<Exit> exit) {
+    this->actorList.emplace_back(exit);
+    this->exitList.emplace_back(exit);
+}
 
-    // Search for the proper list section
-    for (std::list<std::shared_ptr<Actor>>::iterator &section : this->actorListSections) {
-        if ((*section)->getType() == t) {
-            returnList.splice(returnList.begin(), this->actorList, section, ++section);
-            return (returnList);
-        }
-    }
+void Room::addActor(std::shared_ptr<Enemy> enemy) {
+    this->actorList.emplace_back(enemy);
+    this->exitList.emplace_back(enemy);
+}
 
-    // Return empty list if none of type t are found
-    return (returnList);
+void Room::addActor(std::shared_ptr<Item> item) {
+    this->actorList.emplace_back(item);
+    this->exitList.emplace_back(item);
+}
+
+void Room::addActor(std::shared_ptr<Bullet> bullet) {
+    this->actorList.emplace_back(bullet);
+    this->exitList.emplace_back(bullet);
 }
