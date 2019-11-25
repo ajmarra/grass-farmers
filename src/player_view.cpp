@@ -203,6 +203,17 @@ void PlayerView::drawScreen(void) {
 				itemShape.setFillColor(sf::Color::Magenta);
 				itemShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(itemShape);
+                
+                /*if ((*it)->getQuantity() > 1) {
+                    sf::Text numText;
+                    numText.setFont(font);
+                    numText.setString(std::to_string((*it)->getQuantity());
+                    numText.setCharacterSize(40); // in pixels, not points!
+                    numText.setFillColor(sf::Color::White);
+                    numText.setStyle(sf::Text::Bold);
+                    numText.setPosition((*it)->getCenterX(),(*it)->getCenterY());
+                    this->window->draw(numText);
+                }*/
 			}
 			break;
 			case ActorType::TRAP:

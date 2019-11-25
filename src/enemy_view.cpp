@@ -24,7 +24,8 @@ void EnemyView::findFred(float delta) {
         for (std::list<std::shared_ptr<Trap>>::iterator it = trapList.begin(); it != trapList.end(); ++it) {
             if (enemy->collidesCircle(*(*it)) && (*it)->getIsSet()) {
                 enemy->damage((*it)->getDamage());
-                enemy->setCanMove(false);
+                trapList.remove((*it));
+                //enemy->setCanMove(false);
             }
         }
 
@@ -35,6 +36,9 @@ void EnemyView::findFred(float delta) {
 		}
 		else enemy->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
 	}
+    if (enemy->getHealth() <= 0) {
+        enemy->setCanMove(false);
+    }
 }
 
 void EnemyView::update(float delta) {

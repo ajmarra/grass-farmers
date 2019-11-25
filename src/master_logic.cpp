@@ -49,7 +49,7 @@ void MasterLogic::startDemo(void) {
 	std::shared_ptr<Trap> testItem = std::make_shared<Trap>(150, 150, 20, 20, fred);
 	this->actorList.push_back(testItem);
 	this->itemList.push_front(testItem);
-    this->trapList.push_back(testItem);
+    //this->trapList.push_back(testItem);
 	std::shared_ptr<HealthItem> testItem1 = std::make_shared<HealthItem>(250, 250, 20, 20, fred);
 	this->actorList.push_back(testItem1);
 	this->itemList.push_back(testItem1);
@@ -95,23 +95,25 @@ void MasterLogic::update(float delta) {
             
             else {
                 //Start spawning enemies
-                spawnRate = 5;
-                std::shared_ptr<Enemy> toSpawn;
-                toSpawn = this->enemyList.back();
-                this->actorList.push_back(toSpawn);
-                this->enemyList.remove(toSpawn);
-                std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), toSpawn, this->trapList);
-                this->enemyViewList.push_back(testEnemyView);
+                if (enemyList.size() > 0) {
+                    spawnRate = 5;
+                    std::shared_ptr<Enemy> toSpawn;
+                    toSpawn = this->enemyList.back();
+                    this->actorList.push_back(toSpawn);
+                    this->enemyList.remove(toSpawn);
+                    std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), toSpawn, this->trapList);
+                    this->enemyViewList.push_back(testEnemyView);
 
-                this->view->setEnemies(enemyViewList);
-                currentRoom->setActorList(this->actorList);
+                    this->view->setEnemies(enemyViewList);
+                    currentRoom->setActorList(this->actorList);
+                }
                                
                 //Switch to night theme
                 this->view->switchToNight();
             }
         }
 
-        if (!day) {
+        if (!day && enemyList.size() > 0) {
             if (spawnRate <= 0 && enemyList.size() > 0) {
                 spawnRate = 5;
                 std::shared_ptr<Enemy> toSpawn;

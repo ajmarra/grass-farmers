@@ -14,6 +14,7 @@ class Item : public Actor {
 private:
 	int quantity;
 	bool stackable;
+    bool canPickUp = true;
 
 protected:
 	std::shared_ptr<Character> fred;
@@ -24,6 +25,10 @@ public:
 	bool isStackable(void) { return stackable; };
 
 	int getQuantity(void) { return quantity; };
+
+    bool getCanPickUp(void) { return canPickUp; };
+
+    void setCanPickUp(bool toSet) { canPickUp = toSet; };
 
 	void increaseQuantity(void);
 

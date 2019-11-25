@@ -14,6 +14,7 @@ void Trap::use(int x, int y) {
     this->getCharacter()->sleep(5);
     this->getCharacter()->dropItem();
     this->isSet = true;
+    this->setCanPickUp(false);
 }
 
 void Trap::update(float delta) {
