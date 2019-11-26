@@ -33,9 +33,9 @@ public:
 
 	    void decreaseQuantity(void);
         
-        void setCharacter(std::shared_ptr<Character> character) { this->character = character; };
+        void setCharacter(std::shared_ptr<Character> character);
 
-        std::shared_ptr<Character> getCharacter(void) { return this->character; };
+        std::shared_ptr<Character> getCharacter(void);
 
         /**
         * Perform whatever is the main function of the item

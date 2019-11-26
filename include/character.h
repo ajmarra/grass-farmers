@@ -3,11 +3,12 @@
 
 #include "actor.h"
 #include "item.h"
-#include "room.h"
 
 #include <memory>
 #include <iostream>
 #include <list>
+
+class Room;
 
 class Character : public Actor {
     private:
@@ -63,17 +64,18 @@ class Character : public Actor {
 
 		int getSelectedIndex(void) { return selectedIndex; };
 
-		std::shared_ptr<Item> &getSelectedItem() { return this->inventory[this->selectedIndex]; };
+		std::shared_ptr<Item> getSelectedItem();
 
 		void setCurrentRoom(std::shared_ptr<Room> room) { curRoom = room; };
 
 		std::shared_ptr<Room> getCurrentRoom(void) { return curRoom; };
 
-		void useItem(int x, int y) { if (this->getSelectedItem()) this->getSelectedItem()->use(x, y); };
+		void useItem(int x, int y);
 
 		void setCanMove(bool canMove) { this->canMove = canMove; };
 
         void sleep(float time);
+        
         float getSleepTime(void) { return sleepTime; };
 };
 

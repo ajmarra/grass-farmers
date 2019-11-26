@@ -6,12 +6,14 @@
 
 #include "actor.h"
 #include "character.h"
-#include "fred.h"
+//#include "fred.h"
 #include "item.h"
-#include "enemy.h"
+//#include "enemy.h"
 #include "bullet.h"
 
 class Exit;
+class Fred;
+class Enemy;
 
 class Room : public Actor {
     private:

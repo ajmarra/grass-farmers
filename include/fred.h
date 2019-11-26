@@ -2,8 +2,8 @@
 #define FRED_H
 
 #include "actor.h"
-#include "item.h"
 #include "character.h"
+#include "item.h"
 
 class Fred : public Character {
 

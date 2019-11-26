@@ -2,6 +2,9 @@
 #include <memory>
 #include <math.h>
 #include "enemy_view.h"
+#include "fred.h"
+#include "enemy.h"
+#include "room.h"
 #define PI 3.14159265
 
 EnemyView::EnemyView(std::shared_ptr<Fred> fred, std::shared_ptr<Enemy> enemy, std::list<std::shared_ptr<Trap>> traps) {
@@ -11,7 +14,7 @@ EnemyView::EnemyView(std::shared_ptr<Fred> fred, std::shared_ptr<Enemy> enemy, s
 }
 
 void EnemyView::findFred(float delta) {
-    if (fred->getCurrentRoom()->getWidth() == 1200) {
+    if (this->fred->getCurrentRoom()->getWidth() == 1200) {
         int x = 0, y = 0;
 
         if (fred->getCenterY() < enemy->getCenterY()) y -= 1;

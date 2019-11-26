@@ -106,6 +106,14 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
     }
 }
 
+std::shared_ptr<Item> Character::getSelectedItem() {
+    return this->inventory[this->selectedIndex];
+}
+
+void Character::useItem(int x, int y) {
+    if (this->getSelectedItem()) this->getSelectedItem()->use(x, y);
+}
+
 std::shared_ptr<Item> Character::popItemAtIndex(int index) {
     std::shared_ptr<Item> toReturn = inventory[index];
     inventory[index] = nullptr;

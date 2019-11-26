@@ -21,3 +21,11 @@ void Item::decreaseQuantity(void) {
         this->quantity -= 1;
     }
 }
+
+void Item::setCharacter(std::shared_ptr<Character> character) {
+    this->character = character;
+}
+
+std::shared_ptr<Character> Item::getCharacter(void) {
+    return this->character;
+}
