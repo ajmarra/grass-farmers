@@ -76,7 +76,8 @@ void MasterLogic::checkCollisions(float delta) {
             fred->damage(2); //temporarily hard coded.  Will change based on enemy type?
         }
         if ((*enemy)->getHealth() <= 0) {
-            (*enemy)->setCanMove(false);
+            enemyList.remove((*enemy));
+            actorList.remove((*enemy));
         }
     }
 }
@@ -161,7 +162,7 @@ void MasterLogic::update(float delta) {
                     this->actorList.push_back(toSpawn);
                     this->enemyList.push_back(toSpawn);
                     this->enemyQueueList.remove(toSpawn);
-                    std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), toSpawn, this->trapList);
+                    std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), toSpawn);
                     this->enemyViewList.push_back(testEnemyView);
 
                     this->view->setEnemies(enemyViewList);
@@ -182,7 +183,7 @@ void MasterLogic::update(float delta) {
                 this->actorList.push_back(toSpawn);
                 this->enemyList.push_back(toSpawn);
                 this->enemyQueueList.remove(toSpawn);
-                std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), toSpawn, this->trapList);
+                std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), toSpawn);
                 this->enemyViewList.push_back(testEnemyView);
 
                 this->view->setEnemies(enemyViewList);
