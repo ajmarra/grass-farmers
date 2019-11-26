@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
+#include "actor.h"
 #include "item.h"
 #include "character.h"
-#include "actor.h"
 
 Item::Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable) :
     Actor(type, x, y, width, height) {

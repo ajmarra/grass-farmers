@@ -9,8 +9,9 @@
 #include "fred.h"
 #include "item.h"
 #include "enemy.h"
-#include "exit.h"
 #include "bullet.h"
+
+class Exit;
 
 class Room : public Actor {
     private:

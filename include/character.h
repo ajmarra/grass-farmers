@@ -19,9 +19,7 @@ class Character : public Actor {
         int mass;
         double maxSpeed;
         int desiredDirection = -1;
-
 		std::shared_ptr<Room> curRoom;
-
 		std::shared_ptr<Item> inventory[4];
 		int selectedIndex = 0;
     

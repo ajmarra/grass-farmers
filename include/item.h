@@ -9,7 +9,7 @@
 class Character;
 
 /**
- * Initial item logic header.  Any items that could be in the inventory or on the ground will inherit from here.
+ * Initial item logic header. Any items that could be in the inventory or on the ground will inherit from here.
  */
 class Item : public Actor {
     private:
@@ -17,7 +17,7 @@ class Item : public Actor {
         bool stackable;
 
     protected:
-        Character* character;
+        std::shared_ptr<Character> character;
 
     public:
         Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable);
@@ -30,9 +30,9 @@ class Item : public Actor {
 
         void decreaseQuantity(void);
 
-        void setCharacter(Character* character) { this->character = character; };
+        void setCharacter(std::shared_ptr<Character> character) { this->character = character; };
 
-        Character* getCharacter(void) { return character; };
+        std::shared_ptr<Character> getCharacter(void) { return this->character; };
 
         /**
         * Perform whatever is the main function of the item

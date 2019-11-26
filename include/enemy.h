@@ -2,6 +2,7 @@
 #define ENEMY_H
 
 #include "actor.h"
+#include "item.h"
 #include "character.h"
 
 #include <memory>
