@@ -19,6 +19,8 @@ class Character : public Actor {
         int mass;
         double maxSpeed;
         int desiredDirection = -1;
+		bool canMove = true;
+        float sleepTime = 0;
 		std::shared_ptr<Room> curRoom;
 		std::shared_ptr<Item> inventory[4];
 		int selectedIndex = 0;
@@ -68,6 +70,11 @@ class Character : public Actor {
 		std::shared_ptr<Room> getCurrentRoom(void) { return curRoom; };
 
 		void useItem(int x, int y) { if (this->getSelectedItem()) this->getSelectedItem()->use(x, y); };
+
+		void setCanMove(bool canMove) { this->canMove = canMove; };
+
+        void sleep(float time);
+        float getSleepTime(void) { return sleepTime; };
 };
 
 #endif

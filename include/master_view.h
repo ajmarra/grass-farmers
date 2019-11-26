@@ -35,6 +35,10 @@ class MasterView {
          */
 		void addEnemy(std::shared_ptr<Enemy> &enemy) { this->enemies.emplace_back(std::make_shared<EnemyView>(this->player, enemy)); };
 
+        void switchToDay();
+    
+        void switchToNight();
+
         void update(float delta);
 };
 

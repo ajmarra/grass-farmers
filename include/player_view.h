@@ -39,7 +39,10 @@ class PlayerView : public View {
         void setCurrentRoom(std::shared_ptr<Room> currentRoom);
     
         void setCurrentExit(std::shared_ptr<Exit> currentExit);
-
+    
+        void switchToDay();
+    
+        void switchToNight();
 };
 
 #endif

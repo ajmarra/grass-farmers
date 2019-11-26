@@ -9,7 +9,7 @@ private:
     int damage, speed;
 
 public:
-    MeleeWeapon(double x, double y, double height, double width, int damage, int speed);
+	MeleeWeapon(double x, double y, double height, double width, int damage, int speed, std::shared_ptr<Character> character);
 
     void setDamage(int damage) { this->damage = damage; };
     

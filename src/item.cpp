@@ -3,12 +3,13 @@
 #include "item.h"
 #include "character.h"
 
-Item::Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable) :
-    Actor(type, x, y, width, height) {
-    this->x = x;
-    this->y = y;
+Item::Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable, std::shared_ptr<Character> character) :
+	Actor(type, x, y, width, height) {
+	this->x = x;
+	this->y = y;
     this->quantity = quantity;
     this->stackable = stackable;
+    this->character = character;
 }
 
 void Item::increaseQuantity(void) {

@@ -83,7 +83,30 @@ void PlayerView::pollInput() {
 void PlayerView::drawScreen(void) {
     window->clear(sf::Color::Green);
     
+<<<<<<< HEAD
     // Current room and exit
+=======
+    //Timer
+    sf::CircleShape clock;
+    clock.setRadius(45);
+    clock.setPosition(600, 5);
+    clock.setFillColor(sf::Color::White);
+    this->window->draw(clock);
+    
+    sf::RectangleShape clockMarker(sf::Vector2f(5, 10));
+    clockMarker.setPosition(642.5, 7);
+    clockMarker.setFillColor(sf::Color::Red);
+    this->window->draw(clockMarker);
+    
+    sf::Transform transform;
+    transform.rotate(this->logic->getTimer()->getCurTime(), {645, 50});
+    sf::RectangleShape clockHand(sf::Vector2f(5, 42.5));
+    clockHand.setPosition(642.5, 10);
+    clockHand.setFillColor(sf::Color::Black);
+    this->window->draw(clockHand, transform);
+    
+    //Current room and exit
+>>>>>>> 225a55cbc99a38c38f73089855436423f89d0daa
     sf::RectangleShape room;
     room.setSize(sf::Vector2f(curRoom->getWidth(), curRoom->getHeight()));
     room.setPosition(curRoom->getX(), curRoom->getY());
@@ -200,8 +223,26 @@ void PlayerView::drawScreen(void) {
 				itemShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(itemShape);
 			}
+			break;
+			case ActorType::TRAP:
+			{
+				sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+				itemShape.setFillColor(sf::Color::Yellow);
+				itemShape.setPosition((*it)->getX(), (*it)->getY());
+				this->window->draw(itemShape);
+			}
         }
     }
+}
+
+void PlayerView::switchToDay() {
+    cur_track.stopCurrentTrack();
+    cur_track.playDayTrack();
+}
+
+void PlayerView::switchToNight() {
+    cur_track.stopCurrentTrack();
+    cur_track.playNightTrack();
 }
 
 void PlayerView::update(float delta) {

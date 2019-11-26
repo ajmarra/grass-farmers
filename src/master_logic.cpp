@@ -56,10 +56,14 @@ void MasterLogic::startDemo(void) {
 	this->roomList.front()->addActor(std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 150, 150, 40, 20, 10, 2));
 	this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 20, 20));
 	this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 20, 20));
+
+    // Create timer object that keeps track of day/night cycle
+    this->timer = std::make_shared<Timer>();
 }
 
 void MasterLogic::update(float delta) {
 	this->delta = delta;
+    
     if (!paused) {
 
         // Loop throught the actor list
@@ -94,6 +98,23 @@ void MasterLogic::update(float delta) {
             }
         }
 
+        if (timer->update(delta)) {
+            day = !day;
+            
+            if (day) {
+                //Remove enemies from actor list
+                
+                //Switch to day theme
+                this->view->switchToDay();
+            }
+            
+            else {
+                //Start spawning enemies
+                
+                //Switch to night theme
+                this->view->switchToNight();
+            }
+        }
         /**
         if (curActor->collidesSquare((*currentExit))) {
             std::shared_ptr<Room> temp = currentRoom;

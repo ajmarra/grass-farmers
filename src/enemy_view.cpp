@@ -1,13 +1,13 @@
-#include <SFML/Graphics.hpp>
 #include <list>
 #include <memory>
 #include <math.h>
 #include "enemy_view.h"
 #define PI 3.14159265
 
-EnemyView::EnemyView(std::shared_ptr<Fred> &fred, std::shared_ptr<Enemy> &enemy) {
-    this->fred = fred;
-    this->enemy = enemy;
+EnemyView::EnemyView(std::shared_ptr<Fred> fred, std::shared_ptr<Enemy> enemy, std::list<std::shared_ptr<Trap>> traps) {
+	this->fred = fred;
+	this->enemy = enemy;
+    this->trapList = traps;
 }
 
 void EnemyView::findFred(float delta) {
@@ -21,13 +21,20 @@ void EnemyView::findFred(float delta) {
 
         elapsedTime += delta;
 
-        if (x == 0 && y == 0 || (enemy->collidesSquare(*fred) && elapsedTime >= 2)) {
-            elapsedTime = 0;
-            //enemy->stop();
-            fred->damage(2); //temporarily hard coded.  Will change based on enemy type?
+        for (std::list<std::shared_ptr<Trap>>::iterator it = trapList.begin(); it != trapList.end(); ++it) {
+            if (enemy->collidesCircle(*(*it)) && (*it)->getIsSet()) {
+                enemy->damage((*it)->getDamage());
+                enemy->setCanMove(false);
+            }
         }
-        else enemy->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
-    }
+
+		if (x == 0 && y == 0 || (enemy->collidesCircle(*fred) && elapsedTime >= 2)) {
+			elapsedTime = 0;
+			//enemy->stop();
+			fred->damage(2); //temporarily hard coded.  Will change based on enemy type?
+		}
+		else enemy->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
+	}
 }
 
 void EnemyView::update(float delta) {
