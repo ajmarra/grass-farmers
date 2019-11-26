@@ -26,9 +26,11 @@ class MasterLogic {
         std::list<std::shared_ptr<Trap>> trapList;
         bool paused = false;
     
-        bool day = true;
+        bool day = false;
 
         float spawnRate = 0;
+
+        int nightCount = 1;
     
 		float delta;
     

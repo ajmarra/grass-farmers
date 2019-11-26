@@ -15,21 +15,48 @@ void MasterLogic::loadInEnemies(void) {
 	std::ifstream inFile;
 	double x, y, mass, maxSpeed, maxHealth;
 
-	inFile.open("../resources/enemies.txt");
-	if (!inFile) {
-		std::cout << "Unable to open enemies.txt";
-		exit(1);
-	}
+    if (nightCount == 1) {
+        inFile.open("../resources/enemies1.txt");
+        if (!inFile) {
+            std::cout << "Unable to open enemies.txt";
+            exit(1);
+        }
 
-	while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
-		std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
-		//this->actorList.push_back(testEnemy);
-		this->enemyList.push_front(testEnemy);
-		//std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), testEnemy, trapList);
-		//this->enemyViewList.push_back(testEnemyView);		
-	}
+        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
+            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
+            this->enemyList.push_front(testEnemy);	
+        }
 
-	inFile.close();
+        inFile.close();
+    }
+    else if (nightCount == 2) {
+        inFile.open("../resources/enemies2.txt");
+        if (!inFile) {
+            std::cout << "Unable to open enemies2.txt";
+            exit(1);
+        }
+
+        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
+            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
+            this->enemyList.push_front(testEnemy);
+        }
+
+        inFile.close();
+    }
+    else if (nightCount == 3) {
+        inFile.open("../resources/enemies3.txt");
+        if (!inFile) {
+            std::cout << "Unable to open enemies3.txt";
+            exit(1);
+        }
+
+        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
+            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
+            this->enemyList.push_front(testEnemy);
+        }
+
+        inFile.close();
+    }
 }
 
 void MasterLogic::startDemo(void) {
@@ -42,6 +69,7 @@ void MasterLogic::startDemo(void) {
     
     this->actorList.push_front(fred);
 
+    // Creating the portals
     std::shared_ptr<Portal> portal1 = std::make_shared<Portal>(70, 150, 75, 75);
     this->actorList.push_front(portal1);
     std::shared_ptr<Portal> portal2 = std::make_shared<Portal>(20, 350, 75, 75);
@@ -101,6 +129,7 @@ void MasterLogic::update(float delta) {
             
             else {
                 //Start spawning enemies
+                this->loadInEnemies();
                 if (enemyList.size() > 0) {
                     spawnRate = 5;
                     std::shared_ptr<Enemy> toSpawn;
@@ -112,6 +141,7 @@ void MasterLogic::update(float delta) {
 
                     this->view->setEnemies(enemyViewList);
                     currentRoom->setActorList(this->actorList);
+                    nightCount++;
                 }
                                
                 //Switch to night theme
