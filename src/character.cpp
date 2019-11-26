@@ -106,12 +106,14 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 std::shared_ptr<Item> Character::removeItemAtIndex(int index) {
 	std::shared_ptr<Item> toReturn = inventory[index];
 	inventory[index] = nullptr;
+    this->setSelected(index);
 	return (toReturn);
 }
 
 void Character::dropItem() {
 	std::shared_ptr<Item> toDrop = this->removeItemAtIndex(selectedIndex);
 	if (toDrop != nullptr) toDrop->setXY(this->getCenterX(), this->getCenterY());
+    
 }
 
 void Character::sleep(float time) {
