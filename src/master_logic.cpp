@@ -41,15 +41,21 @@ void MasterLogic::startDemo(void) {
     currentExit = fieldExit;
     
     this->actorList.push_front(fred);
-    
-    //this->view->setPlayer(fred);
-	//this->view->setEnemies(enemyViewList);
+
+    std::shared_ptr<Portal> portal1 = std::make_shared<Portal>(70, 150, 75, 75);
+    this->actorList.push_front(portal1);
+    std::shared_ptr<Portal> portal2 = std::make_shared<Portal>(20, 350, 75, 75);
+    this->actorList.push_front(portal2);
+    std::shared_ptr<Portal> portal3 = std::make_shared<Portal>(20, 550, 75, 75);
+    this->actorList.push_front(portal3);
+    std::shared_ptr<Portal> portal4 = std::make_shared<Portal>(70, 750, 75, 75);
+    this->actorList.push_front(portal4);
 
 	// Creating items to test
 	std::shared_ptr<Trap> testItem = std::make_shared<Trap>(150, 150, 20, 20, fred);
 	this->actorList.push_back(testItem);
 	this->itemList.push_front(testItem);
-    //this->trapList.push_back(testItem);
+    this->trapList.push_back(testItem);
 	std::shared_ptr<HealthItem> testItem1 = std::make_shared<HealthItem>(250, 250, 20, 20, fred);
 	this->actorList.push_back(testItem1);
 	this->itemList.push_back(testItem1);

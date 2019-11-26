@@ -14,6 +14,7 @@ class MasterView;
 #include "exit.h"
 #include "health_item.h"
 #include "trap.h"
+#include "portal.h"
 
 class MasterLogic {
     private:

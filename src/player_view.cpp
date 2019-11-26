@@ -108,8 +108,8 @@ void PlayerView::drawScreen(void) {
     exit.setFillColor(sf::Color::Cyan);
     this->window->draw(exit);
 
-	//Enemy spawn points/portals
-	sf::RectangleShape sp1(sf::Vector2f(75, 75));
+	// Hard-coded enemy spawn points/portals
+	/*sf::RectangleShape sp1(sf::Vector2f(75, 75));
 	sp1.setPosition(70, 150);
 	sp1.setFillColor(sf::Color::Cyan);
 	sf::RectangleShape sp2(sf::Vector2f(75, 75));
@@ -125,7 +125,7 @@ void PlayerView::drawScreen(void) {
 	this->window->draw(sp1);
 	this->window->draw(sp2);
 	this->window->draw(sp3);
-	this->window->draw(sp4);
+	this->window->draw(sp4);*/
 
 	//Fred's Health Bar
 	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
@@ -223,6 +223,14 @@ void PlayerView::drawScreen(void) {
 				itemShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(itemShape);
 			}
+            break;
+            case ActorType::PORTAL:
+            {
+                sf::RectangleShape sp1(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+                sp1.setPosition((*it)->getX(), (*it)->getY());
+                sp1.setFillColor(sf::Color::Cyan);
+                this->window->draw(sp1);
+            }
         }
     }
 

@@ -9,7 +9,7 @@
 */
 class Trap : public Item {
 private:
-    int damage = 50;
+    int damage = 100;
     float elapsedTime = 0;
     float delta;
     bool isSet = false;

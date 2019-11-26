@@ -11,7 +11,7 @@ Trap::Trap(double x, double y, double width, double height, std::shared_ptr<Char
 
 void Trap::use(int x, int y) {
     this->elapsedTime = 0;
-    this->getCharacter()->sleep(5);
+    this->getCharacter()->sleep(3);
     this->getCharacter()->dropItem();
     this->isSet = true;
     this->setCanPickUp(false);
