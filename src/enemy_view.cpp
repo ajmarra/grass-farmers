@@ -19,21 +19,12 @@ void EnemyView::findFred(float delta) {
 		if (fred->getCenterY() > enemy->getCenterY()) y += 1;
 		if (fred->getCenterX() > enemy->getCenterX()) x += 1;
 
-		elapsedTime += delta;
-
-        for (std::list<std::shared_ptr<Trap>>::iterator it = trapList.begin(); it != trapList.end(); ++it) {
-            if (enemy->collidesSquare(*(*it)) && (*it)->getIsSet()) {
-                enemy->damage((*it)->getDamage());
-                //trapList.remove((*it));
-            }
-        }
-
-		if (x == 0 && y == 0 || (enemy->collidesSquare(*fred) && elapsedTime >= 2)) {
+		/*if (x == 0 && y == 0 || (enemy->collidesSquare(*fred) && elapsedTime >= 2)) {
 			elapsedTime = 0;
 			//enemy->stop();
 			fred->damage(2); //temporarily hard coded.  Will change based on enemy type?
-		}
-		else enemy->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
+		}*/
+		enemy->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
 	}
     else if (enemy->getHealth() <= 0) {
         enemy->setCanMove(false);

@@ -57,6 +57,8 @@ class Character : public Actor {
 
 		void heal(int healAmount);
 
+        //std::shared_ptr<Item> getInventory(void) { return inventory; };
+
 		void addItem(std::list<std::shared_ptr<Item>> itemList);
 
 		std::shared_ptr<Item> removeItemAtIndex(int index);

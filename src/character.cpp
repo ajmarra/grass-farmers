@@ -82,19 +82,15 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 					notAdded = false;
 					if (i == 0) {
 						toAdd->setXY(825, 40);
-						//toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					else if (i == 1) {
 						toAdd->setXY(925, 40);
-                        //toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					else if (i == 2) {
 						toAdd->setXY(1025, 40);
-                        //toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					else if (i == 3) {
 						toAdd->setXY(1125, 40);
-                        //toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					if (selectedIndex == i) this->setSelected(i);
 				}

@@ -22,13 +22,16 @@ class MasterLogic {
         std::list<std::shared_ptr<Actor>> actorList;
 		std::list<std::shared_ptr<Item>> itemList;
 		std::list<std::shared_ptr<EnemyView>> enemyViewList;
-		std::list<std::shared_ptr<Enemy>> enemyList;
+		std::list<std::shared_ptr<Enemy>> enemyQueueList;
+        std::list<std::shared_ptr<Enemy>> enemyList;
         std::list<std::shared_ptr<Trap>> trapList;
         bool paused = false;
     
         bool day = false;
 
         float spawnRate = 0;
+
+        float elapsedTime = 0;
 
         int nightCount = 1;
     
@@ -51,6 +54,8 @@ class MasterLogic {
         void update(float delta);
 
 		void loadInEnemies(void);
+
+        void checkCollisions(float delta);
 
 		std::shared_ptr<Fred> &getFred(void) { return fred; };
 

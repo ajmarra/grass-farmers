@@ -24,7 +24,7 @@ void MasterLogic::loadInEnemies(void) {
 
         while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
             std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
-            this->enemyList.push_front(testEnemy);	
+            this->enemyQueueList.push_front(testEnemy);	
         }
 
         inFile.close();
@@ -38,7 +38,7 @@ void MasterLogic::loadInEnemies(void) {
 
         while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
             std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
-            this->enemyList.push_front(testEnemy);
+            this->enemyQueueList.push_front(testEnemy);
         }
 
         inFile.close();
@@ -52,10 +52,32 @@ void MasterLogic::loadInEnemies(void) {
 
         while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
             std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
-            this->enemyList.push_front(testEnemy);
+            this->enemyQueueList.push_front(testEnemy);
         }
 
         inFile.close();
+    }
+}
+
+void MasterLogic::checkCollisions(float delta) {
+    this->elapsedTime += delta;
+    for (std::list<std::shared_ptr<Enemy>>::iterator enemy = enemyList.begin(); enemy != enemyList.end(); ++enemy) {
+        for (std::list<std::shared_ptr<Trap>>::iterator it = trapList.begin(); it != trapList.end(); ++it) {
+            if ((*enemy)->collidesSquare(*(*it)) && (*it)->getIsSet()) {
+                (*enemy)->damage((*it)->getDamage());
+                trapList.remove((*it));
+                actorList.remove((*it));
+                itemList.remove((*it));
+            }
+        }
+
+        if ((*enemy)->collidesSquare(*fred) && this->elapsedTime >= 2) {
+            elapsedTime = 0;
+            fred->damage(2); //temporarily hard coded.  Will change based on enemy type?
+        }
+        if ((*enemy)->getHealth() <= 0) {
+            (*enemy)->setCanMove(false);
+        }
     }
 }
 
@@ -114,6 +136,8 @@ void MasterLogic::startDemo(void) {
 
 void MasterLogic::update(float delta) {
 	this->delta = delta;
+
+    this->checkCollisions(delta);
     
     if (!paused) {
         
@@ -130,12 +154,13 @@ void MasterLogic::update(float delta) {
             else {
                 //Start spawning enemies
                 this->loadInEnemies();
-                if (enemyList.size() > 0) {
+                if (enemyQueueList.size() > 0) {
                     spawnRate = 5;
                     std::shared_ptr<Enemy> toSpawn;
-                    toSpawn = this->enemyList.back();
+                    toSpawn = this->enemyQueueList.back();
                     this->actorList.push_back(toSpawn);
-                    this->enemyList.remove(toSpawn);
+                    this->enemyList.push_back(toSpawn);
+                    this->enemyQueueList.remove(toSpawn);
                     std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), toSpawn, this->trapList);
                     this->enemyViewList.push_back(testEnemyView);
 
@@ -149,13 +174,14 @@ void MasterLogic::update(float delta) {
             }
         }
 
-        if (!day && enemyList.size() > 0) {
-            if (spawnRate <= 0 && enemyList.size() > 0) {
+        if (!day && enemyQueueList.size() > 0) {
+            if (spawnRate <= 0 && enemyQueueList.size() > 0) {
                 spawnRate = 5;
                 std::shared_ptr<Enemy> toSpawn;
-                toSpawn = this->enemyList.back();
+                toSpawn = this->enemyQueueList.back();
                 this->actorList.push_back(toSpawn);
-                this->enemyList.remove(toSpawn);
+                this->enemyList.push_back(toSpawn);
+                this->enemyQueueList.remove(toSpawn);
                 std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), toSpawn, this->trapList);
                 this->enemyViewList.push_back(testEnemyView);
 
