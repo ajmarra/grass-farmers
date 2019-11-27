@@ -20,8 +20,6 @@ class RangeWeapon : public Item {
 
         int getStrength(void) { return damage; };
 
-        int getFireRate(void) { return fireRate; };
-
         void setdamage(int damage) { this->damage = damage; };
         
         int getdamage(void) { return damage; };

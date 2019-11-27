@@ -7,6 +7,7 @@
 
 #include <math.h>
 #define PI 3.14159265
+
 RangeWeapon::RangeWeapon(std::shared_ptr<Room> room, double x, double y, double width, double height, int damage, int fireRate, std::shared_ptr<Character> character) :
 	Item(ActorType::WEAPON, x, y, width, height, 1, false, character) {
 	this->x = x;

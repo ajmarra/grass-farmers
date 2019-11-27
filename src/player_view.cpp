@@ -8,8 +8,8 @@
 #include <math.h>
 #define PI 3.14159265
 
-PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred> &fred, std::shared_ptr<sf::RenderWindow> &window)
-    : View(logic) {
+PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred> fred, std::shared_ptr<sf::RenderWindow> window)
+        : View(logic) {
     this->fred = fred;
     this->window = window;
 	cur_track.playDayTrack();
@@ -81,11 +81,8 @@ void PlayerView::pollInput() {
 }
 
 void PlayerView::drawScreen(void) {
-    window->clear(sf::Color::Green);
+    this->window->clear(sf::Color::Green);
     
-<<<<<<< HEAD
-    // Current room and exit
-=======
     //Timer
     sf::CircleShape clock;
     clock.setRadius(45);
@@ -106,18 +103,11 @@ void PlayerView::drawScreen(void) {
     this->window->draw(clockHand, transform);
     
     //Current room and exit
->>>>>>> 225a55cbc99a38c38f73089855436423f89d0daa
     sf::RectangleShape room;
-    room.setSize(sf::Vector2f(curRoom->getWidth(), curRoom->getHeight()));
-    room.setPosition(curRoom->getX(), curRoom->getY());
+    room.setSize(sf::Vector2f(logic->getCurrentRoom()->getWidth(), logic->getCurrentRoom()->getHeight()));
+    room.setPosition(logic->getCurrentRoom()->getX(), logic->getCurrentRoom()->getY());
     room.setTexture(&room_image.spriteMap);
     this->window->draw(room);
-    
-    sf::RectangleShape exit;
-    exit.setSize(sf::Vector2f(curExit->getWidth(), curExit->getHeight()));
-    exit.setPosition(curExit->getX(), curExit->getY());
-    exit.setFillColor(sf::Color::Cyan);
-    this->window->draw(exit);
 
 	//Enemy spawn points/portals
 	sf::RectangleShape sp1(sf::Vector2f(75, 75));
@@ -177,60 +167,67 @@ void PlayerView::drawScreen(void) {
 	this->window->draw(inventoryBlock3);
 	this->window->draw(inventoryBlock4);
 
-    for (std::list<std::shared_ptr<Actor>>::iterator it = this->curRoom->getActorList().begin();
-        it != this->curRoom->getActorList().end(); ++it) {
-        switch ((*it)->getType()) {
+    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getActorList()) {
+        switch (actor->getType()) {
             case ActorType::FRED:
             {
-                sf::RectangleShape fredShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+                sf::RectangleShape fredShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
                 fredShape.setTexture(&FredSprite.spriteMap);
                 fredShape.setTextureRect(FredSprite.spriteFrame);
-                fredShape.setPosition((*it)->getX(), (*it)->getY());
+                fredShape.setPosition(actor->getX(), actor->getY());
                 FredSprite.setFredSprite(fred->getDirection());
                 this->window->draw(fredShape);
             }
                 break;
             case ActorType::WEAPON:
             {
-                sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+                sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
                 itemShape.setFillColor(sf::Color::White);
-                itemShape.setPosition((*it)->getX(), (*it)->getY());
+                itemShape.setPosition(actor->getX(), actor->getY());
                 this->window->draw(itemShape);
             }
                 break;
             case ActorType::ENEMY:
             {
-                sf::RectangleShape enemyShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+                sf::RectangleShape enemyShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
                 enemyShape.setTexture(&EnemySprite.spriteMap);
                 enemyShape.setTextureRect(EnemySprite.spriteFrame);
-                enemyShape.setPosition((*it)->getX(), (*it)->getY());
-                EnemySprite.setEnemySprite((*it)->getDirection());
+                enemyShape.setPosition(actor->getX(), actor->getY());
+                EnemySprite.setEnemySprite(actor->getDirection());
                 this->window->draw(enemyShape);
             }
                 break;
             case ActorType::BULLET:
             {
-                sf::CircleShape bulletShape((*it)->getWidth());
+                sf::CircleShape bulletShape(actor->getWidth());
                 bulletShape.setFillColor(sf::Color::White);
-                bulletShape.setPosition((*it)->getX(), (*it)->getY());
+                bulletShape.setPosition(actor->getX(), actor->getY());
                 this->window->draw(bulletShape);
             }
                 break;
 			case ActorType::HEALTH:
 			{
-				sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+				sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
 				itemShape.setFillColor(sf::Color::Magenta);
-				itemShape.setPosition((*it)->getX(), (*it)->getY());
+				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
 			}
-			break;
+			    break;
 			case ActorType::TRAP:
 			{
-				sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+				sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
 				itemShape.setFillColor(sf::Color::Yellow);
-				itemShape.setPosition((*it)->getX(), (*it)->getY());
+				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
 			}
+            case ActorType::EXIT:
+            {
+                sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
+				itemShape.setFillColor(sf::Color::Cyan);
+				itemShape.setPosition(actor->getX(), actor->getY());
+				this->window->draw(itemShape);
+            }
+                break;
         }
     }
 }
@@ -255,12 +252,4 @@ void PlayerView::update(float delta) {
     
     EnemySprite.updateEnemy(delta);
     this->drawScreen();
-}
-
-void PlayerView::setCurrentRoom(std::shared_ptr<Room> currentRoom) {
-    this->curRoom = currentRoom;
-}
-
-void PlayerView::setCurrentExit(std::shared_ptr<Exit> currentExit) {
-    this->curExit = currentExit;
 }

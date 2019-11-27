@@ -39,9 +39,9 @@ class Actor {
 
         double getHeight(void) { return this->height; };
 
-        double getXSpeed(void) { return xSpeed; };
+        double getXSpeed(void) { return this->xSpeed; };
 
-        double getYSpeed(void) { return ySpeed; };
+        double getYSpeed(void) { return this->ySpeed; };
 
         double getSpeed(void);
 

@@ -7,7 +7,7 @@
 #include <chrono>
 #include <thread>
 
-void MasterLogic::init(std::shared_ptr<MasterView> &view) {
+void MasterLogic::init(std::shared_ptr<MasterView> view) {
     this->view = view;
     
     // Create rooms
@@ -22,7 +22,7 @@ void MasterLogic::init(std::shared_ptr<MasterView> &view) {
 
     // Add fred
     std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
-    this->roomList.front->addActor(fred);
+    this->roomList.front()->addActor(fred);
     this->view->setPlayer(fred);
 }
 
@@ -53,9 +53,9 @@ void MasterLogic::startDemo(void) {
 	this->view->addEnemy(testEnemy);
 
 	// Add test items
-	this->roomList.front()->addActor(std::make_shared<RangeWeapon>(this->getCurrentRoom()->getActorList(), 150, 150, 40, 20, 10, 2));
-	this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 20, 20));
-	this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 20, 20));
+	this->roomList.front()->addActor(std::make_shared<RangeWeapon>(this->getCurrentRoom(), 150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
+	this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 20, 20, this->getCurrentRoom()->getFred()));
+	this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 20, 20, this->getCurrentRoom()->getFred()));
 
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();
