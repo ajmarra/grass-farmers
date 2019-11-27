@@ -17,10 +17,6 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 	EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
 	FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
 	room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
-	
-
-    // Play music
-    cur_track.playDayTrack();
 
     // Load sprites    
     room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
@@ -63,7 +59,7 @@ void PlayerView::pollInput() {
 
     // Pick up item
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
-        fred->addItem(this->logic->getItemList());
+        fred->addItem(this->logic->getCurrentRoom()->getItemList());
     }
     
     // Drop item
@@ -116,11 +112,6 @@ void PlayerView::drawScreen(void) {
     room.setTexture(&room_image.spriteMap);
     this->window->draw(room);
     
-    sf::RectangleShape exit;
-    exit.setSize(sf::Vector2f(curExit->getWidth(), curExit->getHeight()));
-    exit.setPosition(curExit->getX(), curExit->getY());
-    exit.setFillColor(sf::Color::Cyan);
-    this->window->draw(exit);
 
 	//Fred's Health Bar
 	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
@@ -224,8 +215,8 @@ void PlayerView::drawScreen(void) {
             break;
             case ActorType::PORTAL:
             {
-                sf::RectangleShape sp1(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
-                sp1.setPosition((*it)->getX(), (*it)->getY());
+                sf::RectangleShape sp1(sf::Vector2f(actor->getWidth(), actor->getHeight()));
+                sp1.setPosition(actor->getX(), actor->getY());
                 sp1.setFillColor(sf::Color::Cyan);
                 this->window->draw(sp1);
             }

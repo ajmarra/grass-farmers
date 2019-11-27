@@ -32,3 +32,8 @@ void Room::addActor(std::shared_ptr<Bullet> bullet) {
     this->actorList.emplace_back(bullet);
     this->bulletList.emplace_back(bullet);
 }
+
+void Room::addActor(std::shared_ptr<Portal> portal) {
+    this->actorList.emplace_back(portal);
+    this->portalList.emplace_back(portal);
+}

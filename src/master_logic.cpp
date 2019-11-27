@@ -1,5 +1,6 @@
 #include "master_logic.h"
 #include "master_view.h"
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -75,7 +76,7 @@ void MasterLogic::loadInEnemies(void) {
 
 void MasterLogic::checkCollisions(float delta) {
     this->elapsedTime += delta;
-    for (std::list<std::shared_ptr<Enemy>>::iterator enemy = enemyList.begin(); enemy != enemyList.end(); ++enemy) {
+    /*for (std::list<std::shared_ptr<Enemy>>::iterator enemy = enemyList.begin(); enemy != enemyList.end(); ++enemy) {
         for (std::list<std::shared_ptr<Trap>>::iterator it = trapList.begin(); it != trapList.end(); ++it) {
             if ((*enemy)->collidesSquare(*(*it)) && (*it)->getIsSet()) {
                 (*enemy)->damage((*it)->getDamage());
@@ -93,7 +94,7 @@ void MasterLogic::checkCollisions(float delta) {
             enemyList.remove((*enemy));
             actorList.remove((*enemy));
         }
-    }
+    }*/
 }
 
 void MasterLogic::removeUsedItems(void) {
@@ -107,10 +108,16 @@ void MasterLogic::removeUsedItems(void) {
 
 void MasterLogic::startDemo(void) {
 	this->loadInEnemies();
-	// Add test enemy
-	std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(200, 200, 40, 100, 100);
-	this->roomList.front()->addActor(testEnemy);
-	this->view->addEnemy(testEnemy);
+
+    // Creating the portals
+    std::shared_ptr<Portal> portal1 = std::make_shared<Portal>(70, 150, 75, 75);
+    this->roomList.front()->addActor(portal1);
+    std::shared_ptr<Portal> portal2 = std::make_shared<Portal>(20, 350, 75, 75);
+    this->roomList.front()->addActor(portal2);
+    std::shared_ptr<Portal> portal3 = std::make_shared<Portal>(20, 550, 75, 75);
+    this->roomList.front()->addActor(portal3);
+    std::shared_ptr<Portal> portal4 = std::make_shared<Portal>(70, 750, 75, 75);
+    this->roomList.front()->addActor(portal4);
 
 	// Add test items
 	this->roomList.front()->addActor(std::make_shared<RangeWeapon>(this->getCurrentRoom(), 150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
@@ -167,7 +174,6 @@ void MasterLogic::update(float delta) {
 
         if (timer->update(delta)) {
             day = !day;
-            
             if (day) {
                 //Remove enemies from actor list
                 
@@ -178,23 +184,37 @@ void MasterLogic::update(float delta) {
             else {
                 //Start spawning enemies
                 this->loadInEnemies();
+                
                 if (enemyQueueList.size() > 0) {
+                    
                     spawnRate = 5;
                     std::shared_ptr<Enemy> toSpawn;
                     toSpawn = this->enemyQueueList.back();
                     this->actorList.push_back(toSpawn);
-                    this->enemyList.push_back(toSpawn);
                     this->enemyQueueList.remove(toSpawn);
-                    std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), toSpawn);
-                    this->enemyViewList.push_back(testEnemyView);
-
-                    this->view->setEnemies(enemyViewList);
-                    currentRoom->setActorList(this->actorList);
+                    this->view->addEnemy(toSpawn);
+                    this->roomList.front()->addActor(toSpawn);
                     nightCount++;
                 }
                                
                 //Switch to night theme
                 this->view->switchToNight();
+            }
+        }
+
+        if (!day && enemyQueueList.size() > 0) {
+            if (spawnRate <= 0 && enemyQueueList.size() > 0) {
+                spawnRate = 5;
+                std::shared_ptr<Enemy> toSpawn;
+                toSpawn = this->enemyQueueList.back();
+                this->enemyList.push_back(toSpawn);
+                this->enemyQueueList.remove(toSpawn);
+                this->view->addEnemy(toSpawn);
+                this->roomList.front()->addActor(toSpawn);
+
+            }
+            else {
+                spawnRate -= delta;
             }
         }
         /**

@@ -13,7 +13,7 @@ EnemyView::EnemyView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Enemy> 
 }
 
 void EnemyView::findFred(float delta) {
-	if (fred->getCurrentRoom()->getWidth() == 1200 && enemy->getHealth() > 0) {
+	if (this->logic->getCurrentRoom()->getFred() && this->logic->getCurrentRoom()->getWidth() == 1200 && this->enemy->getHealth() > 0) {
 		int x = 0, y = 0;
 
         if (this->logic->getCurrentRoom()->getFred()->getCenterY() < this->enemy->getCenterY()) y--;

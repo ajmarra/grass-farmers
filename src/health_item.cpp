@@ -12,6 +12,6 @@ void HealthItem::use(int x, int y) {
     this->getCharacter()->heal(healQuantity);
     if (this->getQuantity() <= 1) {
         this->setUsedItem(true);
-        this->getCharacter()->removeItemAtIndex(this->getCharacter()->getSelectedIndex());
+        this->getCharacter()->popItemAtIndex(this->getCharacter()->getSelectedIndex());
     }
 }

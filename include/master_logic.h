@@ -15,6 +15,7 @@
 #include "melee_weapon.h"
 #include "range_weapon.h"
 #include "health_item.h"
+class EnemyView;
 #include "portal.h"
 
 class MasterView;
@@ -41,6 +42,9 @@ class MasterLogic {
         int nightCount = 1;
     
 		float delta;
+
+        std::shared_ptr<Fred> fred;
+
         std::shared_ptr<Timer> timer;
 
     public:
@@ -61,13 +65,7 @@ class MasterLogic {
 
         void removeUsedItems(void);
 
-		std::shared_ptr<Fred> &getFred(void) { return fred; };
-
-        std::list<std::shared_ptr<Actor>> &getActorList(void) { return actorList; };
-    
-        std::shared_ptr<Room> getCurrentRoom();
-
-		std::list<std::shared_ptr<Item>> &getItemList(void) { return itemList; };
+		std::shared_ptr<Fred> getFred(void) { return fred; };
 
 		std::list<std::shared_ptr<Item>> getItemList(void) { return itemList; };
     

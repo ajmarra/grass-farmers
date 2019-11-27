@@ -10,6 +10,7 @@
 #include "item.h"
 //#include "enemy.h"
 #include "bullet.h"
+#include "portal.h"
 
 class Exit;
 class Fred;
@@ -25,11 +26,13 @@ class Room : public Actor {
         std::list<std::shared_ptr<Enemy>> enemyList;
         std::list<std::shared_ptr<Item>> itemList;
         std::list<std::shared_ptr<Bullet>> bulletList;
+        std::list<std::shared_ptr<Portal>> portalList;
         
     public:
         Room(double x, double y, double width, double height);
         
         void setActorList(std::list<std::shared_ptr<Actor>> newActorList) { this->actorList = newActorList; };
+        void setItemList(std::list<std::shared_ptr<Item>> newItemList) { this->itemList = newItemList; };
 
         /**
          * Adds an actor to the actor list in the proper section for actors of its type.
@@ -43,6 +46,8 @@ class Room : public Actor {
         void addActor(std::shared_ptr<Item> item);
 
         void addActor(std::shared_ptr<Bullet> bullet);
+        
+        void addActor(std::shared_ptr<Portal> portal);
 
         std::shared_ptr<Fred> getFred(void) { return this->fred; };
         
@@ -60,20 +65,7 @@ class Room : public Actor {
         std::list<std::shared_ptr<Actor>> getActorList(void) { return this->actorList; };
 
         std::shared_ptr<Fred> getFred(ActorType t) { return this->fred; };
-private:
-    std::list<std::shared_ptr<Actor>> actorList;
-    std::list<std::shared_ptr<Item>> itemList;
-    
-public:
-    Room(double x, double y, double width, double height);
-    
-    void setActorList(std::list<std::shared_ptr<Actor>> newActorList) { this->actorList = newActorList; };
 
-    void setItemList(std::list<std::shared_ptr<Item>> newItemList) { this->itemList = newItemList; };
-    
-    std::list<std::shared_ptr<Actor>> &getActorList(void) { return actorList; };
-
-    std::list<std::shared_ptr<Item>> &getItemList(void) { return itemList; };
 };
 
 #endif

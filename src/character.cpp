@@ -111,11 +111,7 @@ std::shared_ptr<Item> Character::getSelectedItem() {
     return this->inventory[this->selectedIndex];
 }
 
-std::shared_ptr<Item> Character::removeItemAtIndex(int index) {
-	std::shared_ptr<Item> toReturn = inventory[index];
-	inventory[index] = nullptr;
-    this->setSelected(index);
-	return (toReturn);
+
 void Character::useItem(int x, int y) {
     if (this->getSelectedItem()) this->getSelectedItem()->use(x, y);
 }
@@ -127,8 +123,8 @@ std::shared_ptr<Item> Character::popItemAtIndex(int index) {
 }
 
 void Character::dropItem() {
-	std::shared_ptr<Item> toDrop = this->removeItemAtIndex(selectedIndex);
-	if (toDrop != nullptr) toDrop->setXY(this->getCenterX(), this->getCenterY());
+	std::shared_ptr<Item> toDrop = this->popItemAtIndex(selectedIndex);
+	if (toDrop != nullptr) toDrop->setPos(this->getCenterX(), this->getCenterY());
     
 }
 
