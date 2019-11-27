@@ -120,7 +120,7 @@ void MasterLogic::update(float delta) {
                 
                 // Check if Fred uses the bed
                 if (curActor->collidesSquare((*bed))) {
-                    fred->heal(bed->getHealAmount());
+                    fred->heal(bed->getHealAmount(), delta);
                 }
                 
                 // Check if Fred uses the exit

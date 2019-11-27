@@ -27,6 +27,16 @@ void Character::heal(int healAmount) {
 	if (health > maxHealth) health = maxHealth;
 }
 
+void Character::heal(int healAmount, float delta) {
+    curDelta += delta;
+    if (curDelta >= deltaLimit) {
+        health += healAmount;
+        curDelta = 0;
+        
+        if (health > maxHealth) health = maxHealth;
+    }
+}
+
 void Character::move(void) {
 	if (this->desiredDirection >= 0) {
 		this->xSpeed += (10.0 / this->mass) * cos(this->desiredDirection * (PI / 180));

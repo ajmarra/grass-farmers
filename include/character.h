@@ -26,6 +26,9 @@ class Character : public Actor {
 		std::shared_ptr<Item> selectedItem;
 		int selectedIndex = 0;
     
+        float curDelta = 0;
+        const float deltaLimit = 0.5;
+    
     public:
         Character(ActorType type, double x, double y, double width, double height, double mass, double maxSpeed, int maxHealth);
 
@@ -52,6 +55,7 @@ class Character : public Actor {
 		int getMaxHealth() { return maxHealth; };
 
 		void heal(int healAmount);
+        void heal(int healAmount, float delta);
 
 		void addItem(std::list<std::shared_ptr<Item>> itemList);
 
