@@ -7,6 +7,7 @@ Trap::Trap(double x, double y, double width, double height, std::shared_ptr<Char
     Item(ActorType::TRAP, x, y, width, height, 1, true, fred) {
     this->x = x;
     this->y = y;
+    this->setUsedItem(false);
 }
 
 void Trap::use(int x, int y) {

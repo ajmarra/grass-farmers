@@ -22,6 +22,8 @@ class PlayerView : public View {
         Graphics FredSprite;
         Graphics EnemySprite;
         Graphics room_image;
+
+        sf::Font font;
         
 		float elapsedTime = 0;
 

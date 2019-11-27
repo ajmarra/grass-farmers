@@ -71,7 +71,7 @@ void MasterLogic::checkCollisions(float delta) {
             }
         }
 
-        if ((*enemy)->collidesSquare(*fred) && this->elapsedTime >= 2) {
+        if ((*enemy)->collidesSquare(*fred) && this->elapsedTime >= 1) {
             elapsedTime = 0;
             fred->damage(2); //temporarily hard coded.  Will change based on enemy type?
         }
@@ -128,6 +128,7 @@ void MasterLogic::startDemo(void) {
     this->view->setEnemies(enemyViewList);
     
     currentRoom->setActorList(this->actorList);
+    currentRoom->setItemList(this->itemList);
     
 	fred->setCurrentRoom(currentRoom);
 

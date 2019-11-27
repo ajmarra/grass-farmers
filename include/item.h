@@ -15,11 +15,11 @@ private:
 	int quantity;
 	bool stackable;
     bool canPickUp = true; // Prevents traps from being picked up after being set
+    bool usedItem = false; // Marks item for removal after used.
     
 
 protected:
 	std::shared_ptr<Character> fred;
-    bool usedItem = false; // Marks item for removal after used.
 
 public:
 	Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable, std::shared_ptr<Character> fred);
@@ -29,6 +29,8 @@ public:
 	int getQuantity(void) { return quantity; };
 
     bool getUsedItem(void) { return usedItem; };
+    
+    void setUsedItem(bool isUsed) { usedItem = isUsed; };
 
     bool getCanPickUp(void) { return canPickUp; };
 

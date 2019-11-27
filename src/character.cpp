@@ -25,7 +25,7 @@ void Character::damage(int d) {
 void Character::heal(int healAmount) {
 	health += healAmount;
 	if (health > maxHealth) health = maxHealth;
-    this->removeItemAtIndex(selectedIndex);
+    //this->removeItemAtIndex(selectedIndex);
 }
 
 void Character::move(void) {
@@ -73,9 +73,9 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 			while (notAdded) {
 				if (toAdd->isStackable() && inventory[i] != nullptr && inventory[i]->getType() == toAdd->getType()) {
 					inventory[i]->increaseQuantity();
-                    toAdd->setXY(inventory[i]->getCenterX()-10, inventory[i]->getCenterY()-10);
+                    toAdd->setUsedItem(true);
+                    //toAdd->setXY(inventory[i]->getCenterX()-10, inventory[i]->getCenterY()-10);
 					notAdded = false;
-					// TODO: need to figure out what to do with old/used items.
 				}
 				else if (i == 4) notAdded = false;
 				else if (inventory[i] == nullptr) {

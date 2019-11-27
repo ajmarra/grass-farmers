@@ -30,6 +30,12 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred
 	FredSprite.spriteFrame.width = 64;
 	FredSprite.spriteFrame.height = 64;
 
+    if (!font.loadFromFile("../resources/bit5x3.ttf"))
+    {
+        // error...
+        std::cout << "ERROR LOADING FONT FROM FILE" << std::endl;
+    }
+
 }
 
 void PlayerView::pollInput() {
@@ -184,18 +190,7 @@ void PlayerView::drawScreen(void) {
 				itemShape.setFillColor(sf::Color::Magenta);
 				itemShape.setPosition((*it)->getX(), (*it)->getY());
 				this->window->draw(itemShape);
-                
-                /*if ((*it)->getQuantity() > 1) {
-                    sf::Text numText;
-                    numText.setFont(font);
-                    numText.setString(std::to_string((*it)->getQuantity());
-                    numText.setCharacterSize(40); // in pixels, not points!
-                    numText.setFillColor(sf::Color::White);
-                    numText.setStyle(sf::Text::Bold);
-                    numText.setPosition((*it)->getCenterX(),(*it)->getCenterY());
-                    this->window->draw(numText);
-                }*/
-			}
+            }
 			break;
 			case ActorType::TRAP:
 			{
@@ -214,6 +209,20 @@ void PlayerView::drawScreen(void) {
             }
         }
     }
+
+    /*for (std::list<std::shared_ptr<Item>>::iterator it = this->curRoom->getItemList().begin();
+        it != this->curRoom->getItemList().end(); ++it) {
+        if ((*it)->getQuantity() > 1) {
+            sf::Text numText;
+            numText.setFont(font);
+            numText.setString(std::to_string((*it)->getQuantity()));
+            numText.setCharacterSize(25); // in pixels, not points!
+            numText.setFillColor(sf::Color::White);
+            numText.setStyle(sf::Text::Bold);
+            numText.setPosition((*it)->getCenterX() - 3, (*it)->getCenterY() + 5);
+            this->window->draw(numText);
+        }
+    }*/
 
 }
 
