@@ -66,9 +66,13 @@ void PlayerView::pollInput() {
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelected(2);
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelected(3);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) cur_track.stopCurrentTrack();
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) cur_track.playNightTrack();
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) cur_track.playDayTrack();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)){
+		cur_track.stopCurrentTrack();
+		this->logic->paused = true;
+		this->logic->startPaused();
+		
+	} 
+
 
 }
 	

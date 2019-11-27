@@ -20,6 +20,11 @@ void MasterLogic::startTutorial(void){
     this->view->setTutorial();
 }
 
+void MasterLogic::startPaused(void){
+    //std::cout << "HOI" << std::endl;
+    this->view->setPaused();
+}
+
 
 void MasterLogic::loadInEnemies(void) {
 	std::ifstream inFile;
@@ -99,6 +104,9 @@ void MasterLogic::update(float delta) {
         //std::cout << "HELLO" << std::endl;
     }
     
+    else if ((paused == true) && (playing == true) && (options == false)){
+        //std::cout << "HELLO" << std::endl;
+    }
     
     
     else if ((paused == false) && (playing == true) && (options == false)) {

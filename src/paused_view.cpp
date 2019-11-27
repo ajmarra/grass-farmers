@@ -41,12 +41,12 @@ void PausedView::update(float delta){
 
 void PausedView::drawScreen(){
 
-    //this->window->clear(sf::Color::Black);
+    //this->windolear(sf::Color::Black);
     
     sf::RectangleShape paused;
     
     paused.setSize(sf::Vector2f(1200, 900));
-    paused.setFillColor(sf::Color(75,119,190,10));
+    paused.setFillColor(sf::Color(75,119,190));
 
 
     
@@ -55,8 +55,17 @@ void PausedView::drawScreen(){
     paused_message.setCharacterSize(80); // in pixels, not points!
     paused_message.setFillColor(sf::Color::White);
     paused_message.setStyle(sf::Text::Bold);
-    paused_message.setPosition(580, 300);
+    paused_message.setPosition(500, 300);
+
+    paused_message_2.setFont(font);
+    paused_message_2.setString("PRESS U TO CONTINUE");
+    paused_message_2.setCharacterSize(80); // in pixels, not points!
+    paused_message_2.setFillColor(sf::Color::White);
+    paused_message_2.setStyle(sf::Text::Bold);
+    paused_message_2.setPosition(370, 400);
+
     this->window->draw(paused);
     this->window->draw(paused_message);
+    this->window->draw(paused_message_2);
     this->window->display();
 }

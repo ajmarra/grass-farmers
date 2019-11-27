@@ -18,6 +18,10 @@ void MasterView::setMenu(){
     menu = std::make_shared<MenuView>(this->logic, this->window);
 }
 
+void MasterView::setPaused(){
+    paused = std::make_shared<PausedView>(this->logic, this->window);
+}
+
 void MasterView::setTutorial(){
     //std::cout << "HI" << std::endl;
     tutorial = std::make_shared<TutorialView>(this->logic, this->window);
@@ -42,13 +46,13 @@ void MasterView::update(float delta) {
         tutorial->update(delta);
     }
 
-    // else if ( (logic->paused == true) && (logic->playing == true) && (logic ->options == false)){
-    //     //std::cout << "HULLO" << std::endl;
-    //     tutorial->update(delta);
-    // }
+    else if ( (logic->paused == true) && (logic->playing == true) && (logic ->options == false)){
+        
+        paused->update(delta);
+    }
 
-    else if ( (logic->paused == false) && (logic->playing == true)){
-        //delete &menu;
+    else if ( (logic->paused == false) && (logic->playing == true) && (logic->options == false)){
+        std::cout << "HULLO" << std::endl;
         player->update(delta);
 	    for (std::list<std::shared_ptr<EnemyView>>::iterator it = this->enemies.begin(); it != enemies.end(); it++) {
 		std::shared_ptr<EnemyView> curActor = (*it);

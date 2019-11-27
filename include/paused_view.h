@@ -18,6 +18,7 @@ class PausedView : public View {
         void pollInput(void);
 
         sf::Text paused_message;
+        sf::Text paused_message_2;
 
         sf::Font font;
 
