@@ -11,7 +11,7 @@ bool Timer::update(float delta) {
         curTime += 2;
         curTimeElapsed = 0;
     }
-    if (curTime == totalTimeLimit) {
+    if (curTime >= totalTimeLimit) {
         curTime = 0;
         switchCycle();
         return true;

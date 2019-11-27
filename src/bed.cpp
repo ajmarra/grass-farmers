@@ -1,6 +1,6 @@
 #include "bed.h"
 
-Bed::Bed(ActorType type, double x, double y, double width, double height, int healAmt) {
+Bed::Bed(ActorType type, double x, double y, double width, double height, int healAmt) : Actor(type, x, y, width, height) {
     this->x = x;
     this->y = y;
     this->width = width;
