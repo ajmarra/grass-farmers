@@ -16,9 +16,8 @@ void MasterLogic::init(std::shared_ptr<MasterView> view) {
     this->currentRoom = roomList.begin();
 
     // Add exits
-    this->roomList.front()->addActor(std::make_shared<Exit>(0, 430, this->roomList.begin()));
-    std::list<std::shared_ptr<Room>>::iterator temp = this->roomList.end();
-    this->roomList.back()->addActor(std::make_shared<Exit>(500, 500, --temp));
+    this->roomList.front()->addActor(std::make_shared<Exit>(0, 430, 1));
+    this->roomList.back()->addActor(std::make_shared<Exit>(500, 500, 0));
 
     // Add fred
     std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
@@ -94,7 +93,10 @@ void MasterLogic::update(float delta) {
         // Check if Fred uses an exit
         for (std::shared_ptr<Exit> exit : this->getCurrentRoom()->getExitList()) {
             if (this->getCurrentRoom()->getFred()->collidesSquare(*exit)) {
-                this->currentRoom = exit->getDestination();
+                std::list<std::shared_ptr<Room>>::iterator newRoom = this->roomList.begin();
+                advance(newRoom, exit->getDestination());
+                (*newRoom)->addActor(this->getCurrentRoom()->getFred());
+                this->currentRoom = newRoom;
             }
         }
 

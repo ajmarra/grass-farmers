@@ -8,14 +8,14 @@
 
 class Exit : public Actor {
     protected:
-        std::list<std::shared_ptr<Room>>::iterator destination;
+        int destination;
         
     public:
-        Exit(double x, double y, std::list<std::shared_ptr<Room>>::iterator destination);
+        Exit(double x, double y, int destination);
 
-        std::list<std::shared_ptr<Room>>::iterator getDestination(void) { return this->destination; };
+        int getDestination(void) { return this->destination; };
 
-        void setDestination(std::list<std::shared_ptr<Room>>::iterator destination) { this->destination = destination; };
+        void setDestination(int destination) { this->destination = destination; };
 };
 
 #endif
