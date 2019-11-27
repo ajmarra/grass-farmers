@@ -10,44 +10,44 @@
 #include <list>
 
 Character::Character(ActorType type, double x, double y, double width, double height, double mass, double maxSpeed, int maxHealth)
-	: Actor(type, x, y, width, height) {
-	this->mass = mass;
-	this->maxSpeed = maxSpeed;
-	this->health =
-	this->maxHealth = maxHealth;
+    : Actor(type, x, y, width, height) {
+    this->mass = mass;
+    this->maxSpeed = maxSpeed;
+    this->health =
+    this->maxHealth = maxHealth;
 }
 
 void Character::damage(int d) {
-	health -= d;
-	if (health > maxHealth) health = maxHealth;
+    health -= d;
+    if (health > maxHealth) health = maxHealth;
 }
 
 void Character::heal(int healAmount) {
-	health += healAmount;
-	if (health > maxHealth) health = maxHealth;
+    health += healAmount;
+    if (health > maxHealth) health = maxHealth;
 }
 
 void Character::move(void) {
-	if (this->desiredDirection >= 0) {
-		this->xSpeed += (10.0 / this->mass) * cos(this->desiredDirection * (PI / 180));
-		this->ySpeed += (10.0 / this->mass) * sin(this->desiredDirection * (PI / 180));
+    if (this->desiredDirection >= 0) {
+        this->xSpeed += (10.0 / this->mass) * cos(this->desiredDirection * (PI / 180));
+        this->ySpeed += (10.0 / this->mass) * sin(this->desiredDirection * (PI / 180));
 
-		if (this->getSpeed() > this->maxSpeed) {
-			this->xSpeed = maxSpeed * cos(this->getDirection() * (PI / 180));
-			this->ySpeed = maxSpeed * sin(this->getDirection() * (PI / 180));
-		}
-		return;
-	}
+        if (this->getSpeed() > this->maxSpeed) {
+            this->xSpeed = maxSpeed * cos(this->getDirection() * (PI / 180));
+            this->ySpeed = maxSpeed * sin(this->getDirection() * (PI / 180));
+        }
+        return;
+    }
 
-	if (fabs(this->ySpeed) >= 10.0 / this->mass) {
-		this->ySpeed -= (10.0 / this->mass) * sin(this->getDirection() * PI / 180);
-	}
-	else ySpeed = 0;
+    if (fabs(this->ySpeed) >= 10.0 / this->mass) {
+        this->ySpeed -= (10.0 / this->mass) * sin(this->getDirection() * PI / 180);
+    }
+    else ySpeed = 0;
 
-	if (fabs(this->xSpeed) >= 10.0 / this->mass) {
-		this->xSpeed -= (10.0 / this->mass) * cos(this->getDirection() * PI / 180);
-	}
-	else xSpeed = 0;
+    if (fabs(this->xSpeed) >= 10.0 / this->mass) {
+        this->xSpeed -= (10.0 / this->mass) * cos(this->getDirection() * PI / 180);
+    }
+    else xSpeed = 0;
 }
 
 void Character::update(float delta) {
@@ -72,7 +72,7 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 			while (notAdded) {
 				if (toAdd->isStackable() && inventory[i] != nullptr && inventory[i]->getType() == toAdd->getType()) {
 					inventory[i]->increaseQuantity();
-                    toAdd->setXY(inventory[i]->getCenterX()-10, inventory[i]->getCenterY()-10);
+                    toAdd->setPos(inventory[i]->getCenterX()-10, inventory[i]->getCenterY()-10);
 					notAdded = false;
 					// TODO: need to figure out what to do with old/used items.
 				}
@@ -81,41 +81,48 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 					inventory[i] = toAdd;
 					notAdded = false;
 					if (i == 0) {
-						toAdd->setXY(825, 40);
+						toAdd->setPos(825, 40);
 						//toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					else if (i == 1) {
-						toAdd->setXY(925, 40);
+						toAdd->setPos(925, 40);
                         //toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					else if (i == 2) {
-						toAdd->setXY(1025, 40);
+						toAdd->setPos(1025, 40);
                         //toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					else if (i == 3) {
-						toAdd->setXY(1125, 40);
+						toAdd->setPos(1125, 40);
                         //toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
-					if (selectedIndex == i) this->setSelected(i);
+					if (selectedIndex == i) this->setSelectedIndex(i);
 				}
 				i++;
 			}
 
-			break;
-		}
-	}
-
+            break;
+        }
+    }
 }
 
-std::shared_ptr<Item> Character::removeItemAtIndex(int index) {
-	std::shared_ptr<Item> toReturn = inventory[index];
-	inventory[index] = nullptr;
-	return (toReturn);
+std::shared_ptr<Item> Character::getSelectedItem() {
+    return this->inventory[this->selectedIndex];
+}
+
+void Character::useItem(int x, int y) {
+    if (this->getSelectedItem()) this->getSelectedItem()->use(x, y);
+}
+
+std::shared_ptr<Item> Character::popItemAtIndex(int index) {
+    std::shared_ptr<Item> toReturn = inventory[index];
+    inventory[index] = nullptr;
+    return (toReturn);
 }
 
 void Character::dropItem() {
-	std::shared_ptr<Item> toDrop = this->removeItemAtIndex(selectedIndex);
-	if (toDrop != nullptr) toDrop->setXY(this->getCenterX(), this->getCenterY());
+	std::shared_ptr<Item> toDrop = this->popItemAtIndex(selectedIndex);
+	if (toDrop != nullptr) toDrop->setPos(this->getCenterX(), this->getCenterY());
 }
 
 void Character::sleep(float time) {

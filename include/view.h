@@ -5,7 +5,6 @@
 #include <memory>
 
 #include "actor.h"
-
 #include "master_logic.h"
 
 class View {
@@ -13,7 +12,7 @@ class View {
         std::shared_ptr<MasterLogic> logic;
 
     public:
-        View(std::shared_ptr<MasterLogic> &logic);
+        View(std::shared_ptr<MasterLogic> logic);
 
         void update(float delta);
 };

@@ -3,12 +3,13 @@
 
 #include "actor.h"
 
-class Character;
-
 #include <iostream>
 #include <memory>
+
+class Character;
+
 /**
- * Initial item logic header.  Any items that could be in the inventory or on the ground will inherit from here.
+ * Initial item logic header. Any items that could be in the inventory or on the ground will inherit from here.
  */
 class Item : public Actor {
 private:
@@ -16,28 +17,30 @@ private:
 	bool stackable;
 
 protected:
-	std::shared_ptr<Character> fred;
+	std::shared_ptr<Character> character;
 
 public:
-	Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable, std::shared_ptr<Character> fred);
+	Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable, std::shared_ptr<Character> character);
 
-	bool isStackable(void) { return stackable; };
+    public:
+        Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable);
 
-	int getQuantity(void) { return quantity; };
+        bool isStackable(void) { return stackable; };
 
-	void increaseQuantity(void);
+        int getQuantity(void) { return quantity; };
 
-	void decreaseQuantity(void);
+        void increaseQuantity(void);
 
-	void setCharacter(std::shared_ptr<Character> character) { fred = character; };
+	    void decreaseQuantity(void);
+        
+        void setCharacter(std::shared_ptr<Character> character);
 
-	std::shared_ptr<Character> getCharacter(void) { return fred; };
+        std::shared_ptr<Character> getCharacter(void);
 
-
-	/**
-	* Perform whatever is the main function of the item
-	*/
-	virtual void use(int x, int y) = 0;
+        /**
+        * Perform whatever is the main function of the item
+        */
+        virtual void use(int x, int y) = 0;
 };
 
-#endif //ITEM_H
+#endif

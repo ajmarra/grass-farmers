@@ -32,13 +32,13 @@ void Actor::setOrientation(int x, int y) {
     this->orientation = atan(yDiff / xDiff) * 180 / PI;
 }
 
-void Actor::setOrientation(Actor a) {
+void Actor::setOrientation(Actor &a) {
     float xDiff = this->getCenterX() - a.getCenterX();
     float yDiff = this->getCenterY() - a.getCenterY();
     this->orientation = atan(yDiff / xDiff) * 180 / PI;
 }
 
-bool Actor::collidesSquare(Actor a) {
+bool Actor::collidesSquare(Actor &a) {
     return (
         a.getX() <= this->x + this->width &&
         a.getX() + a.getWidth() >= this->x &&
@@ -47,7 +47,7 @@ bool Actor::collidesSquare(Actor a) {
     );
 }
 
-bool Actor::collidesCircle(Actor a) {
+bool Actor::collidesCircle(Actor &a) {
     return (
         sqrt(pow(this->getCenterX() - a.getCenterX(), 2) +
         pow(this->getCenterY() - a.getCenterY(), 2)) <
@@ -55,7 +55,7 @@ bool Actor::collidesCircle(Actor a) {
     );
 }
 
-bool Actor::liesInsideSquare(Actor a) {
+bool Actor::liesInsideSquare(Actor &a) {
     return (
         a.getX() <= this->x &&
         a.getX() + a.getWidth() >= this->x + this->width &&
