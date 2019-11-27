@@ -57,6 +57,8 @@ class MasterLogic {
 
         void checkCollisions(float delta);
 
+        void removeUsedItems(void);
+
 		std::shared_ptr<Fred> &getFred(void) { return fred; };
 
         std::list<std::shared_ptr<Actor>> &getActorList(void) { return actorList; };

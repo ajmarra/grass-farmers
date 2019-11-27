@@ -82,6 +82,15 @@ void MasterLogic::checkCollisions(float delta) {
     }
 }
 
+void MasterLogic::removeUsedItems(void) {
+    for (std::list<std::shared_ptr<Item>>::iterator it = itemList.begin(); it != itemList.end(); ++it) {
+        if ((*it)->getUsedItem()) {
+            itemList.remove((*it));
+            actorList.remove((*it));
+        }
+    }
+}
+
 void MasterLogic::startDemo(void) {
     fred = std::make_shared<Fred>(700, 500);
     
@@ -110,15 +119,9 @@ void MasterLogic::startDemo(void) {
 	std::shared_ptr<HealthItem> testItem1 = std::make_shared<HealthItem>(250, 250, 20, 20, fred);
 	this->actorList.push_back(testItem1);
 	this->itemList.push_back(testItem1);
-	//std::shared_ptr<Item> testItem2 = std::make_shared<Item>(ActorType::WEAPON, 350, 350, 20, 20, 1, false);
-	//this->actorList.push_back(testItem2);
-	//this->itemList.push_back(testItem2);
 	std::shared_ptr<HealthItem> testItem3 = std::make_shared<HealthItem>(350, 250, 20, 20, fred);
 	this->actorList.push_back(testItem3);
 	this->itemList.push_back(testItem3);
-	//std::shared_ptr<Item> testItem4 = std::make_shared<Item>(ActorType::WEAPON, 450, 550, 20, 20, 1, false);
-	//this->actorList.push_back(testItem4);
-	//this->itemList.push_back(testItem4);
 
     this->view->setPlayer(fred);
     this->loadInEnemies();
@@ -139,7 +142,9 @@ void MasterLogic::update(float delta) {
 	this->delta = delta;
 
     this->checkCollisions(delta);
-    
+
+    this->removeUsedItems();
+
     if (!paused) {
         
         if (timer->update(delta)) {
