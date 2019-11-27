@@ -6,7 +6,7 @@ void Graphics::updateFred(float delta) {
 
     
     
-    if ((elapsedFredTime >= frameRate)){
+    if ((elapsedFredTime >= frameRateFred)){
 
         
         //elapsedFredTime -= frameRate;
@@ -30,7 +30,7 @@ void Graphics::updateEnemy(float delta) {
     //std::cout << direction << std::endl;
     
     
-    if ((elapsedEnemyTime >= frameRate)){
+    if ((elapsedEnemyTime >= frameRateEnemy)){
         
         //for left
         if (left == true){
@@ -52,21 +52,30 @@ void Graphics::updateEnemy(float delta) {
             }}
 
         elapsedEnemyTime = 0;
-        //elapsedEnemyTime -= frameRate;
+        
         
     }}
-    // else if ((elapsedEnemyTime >= frameRate) && (left == 1)){
+
+void Graphics::updatePortal(float delta) {
+    elapsedPortalTime += delta;
+
+    
+    
+    if ((elapsedPortalTime >= frameRatePortal)){
 
 
-    //     elapsedEnemyTime -= frameRate;
-
-    //     spriteFrame.top += 64;
-    //     std::cout << left << std::endl;
-    //     //in case it goes off array map
-    //     if (spriteFrame.top >= 128) {
-    //         spriteFrame.top = 0;
-    //     }
+        spriteFrame.left += 128;
+        //in case it goes off array map
+        if (spriteFrame.left >= 256) {
+            spriteFrame.left = 0;
+        }
+    elapsedPortalTime  = 0;
         
+    }
+    
+    }
+
+
     
     
       

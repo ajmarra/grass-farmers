@@ -21,6 +21,7 @@ class PlayerView : public View {
         Graphics FredSprite;
         Graphics EnemySprite;
         Graphics room_image;
+        Graphics portalSprite;
         
 		float elapsedTime = 0;
 

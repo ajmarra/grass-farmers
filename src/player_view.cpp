@@ -12,11 +12,14 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
         : View(logic) {
     this->fred = fred;
     this->window = window;
-	cur_track.playDayTrack();
 	
-	EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
-	FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
-	room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
+	
+
+    portalSprite.spriteMap.loadFromFile("../resources/portalanim.png");
+    portalSprite.spriteFrame.top = 0;//x
+    portalSprite.spriteFrame.left = 0;//y
+    portalSprite.spriteFrame.width = 128;
+    portalSprite.spriteFrame.height = 128;
 	
 
     // Play music
@@ -25,6 +28,7 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     // Load sprites    
     room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
 
+    
     EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
     EnemySprite.spriteFrame.top = 64;//x
     EnemySprite.spriteFrame.left = 0;//y
@@ -81,11 +85,6 @@ void PlayerView::pollInput() {
 		this->logic->startPaused();
 		
 	} 
-
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) cur_track.stopCurrentTrack();
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) cur_track.playNightTrack();
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) cur_track.playDayTrack();
 }
 
 void PlayerView::drawScreen(void) {
@@ -119,18 +118,23 @@ void PlayerView::drawScreen(void) {
     this->window->draw(room);
 
 	//Enemy spawn points/portals
-	sf::RectangleShape sp1(sf::Vector2f(75, 75));
+	sf::RectangleShape sp1(sf::Vector2f(128, 128));
+    sp1.setTexture(&portalSprite.spriteMap);
+    sp1.setTextureRect(portalSprite.spriteFrame);
 	sp1.setPosition(70, 150);
-	sp1.setFillColor(sf::Color::Cyan);
-	sf::RectangleShape sp2(sf::Vector2f(75, 75));
+	
+	sf::RectangleShape sp2(sf::Vector2f(128, 128));
 	sp2.setPosition(20, 350);
-	sp2.setFillColor(sf::Color::Cyan);
-	sf::RectangleShape sp3(sf::Vector2f(75, 75));
+	sp2.setTexture(&portalSprite.spriteMap);
+    sp2.setTextureRect(portalSprite.spriteFrame);
+	sf::RectangleShape sp3(sf::Vector2f(128, 128));
 	sp3.setPosition(20, 550);
-	sp3.setFillColor(sf::Color::Cyan);
-	sf::RectangleShape sp4(sf::Vector2f(75, 75));
+	sp3.setTexture(&portalSprite.spriteMap);
+    sp3.setTextureRect(portalSprite.spriteFrame);
+	sf::RectangleShape sp4(sf::Vector2f(128, 128));
 	sp4.setPosition(70, 750);
-	sp4.setFillColor(sf::Color::Cyan);
+	sp4.setTexture(&portalSprite.spriteMap);
+    sp4.setTextureRect(portalSprite.spriteFrame);
 
 	this->window->draw(sp1);
 	this->window->draw(sp2);
@@ -258,6 +262,7 @@ void PlayerView::update(float delta) {
     this->pollInput();
     
     FredSprite.updateFred(delta);
+    portalSprite.updatePortal(delta);
     
     EnemySprite.updateEnemy(delta);
     this->drawScreen();
