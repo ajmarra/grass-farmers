@@ -11,6 +11,7 @@
 
 class MasterView;
 #include "room.h"
+#include "bed.h"
 #include "exit.h"
 #include "health_item.h"
 
@@ -29,6 +30,8 @@ class MasterLogic {
     
         std::shared_ptr<Room> currentRoom;
         std::shared_ptr<Exit> currentExit;
+    
+        std::shared_ptr<Bed> bed;
     
         std::shared_ptr<Fred> fred;
     

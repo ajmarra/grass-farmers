@@ -196,7 +196,15 @@ void PlayerView::drawScreen(void) {
 				EnemySprite.setEnemySprite((*it)->getDirection());
 				this->window->draw(enemyShape);
 			}
-			break;
+                break;
+            case ActorType::BED:
+            {
+                sf::RectangleShape bedShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));
+                bedShape.setFillColor(sf::Color::Magenta);
+                bedShape.setPosition((*it)->getX(), (*it)->getY());
+                this->window->draw(bedShape);
+            }
+                break;
 			case ActorType::HEALTH:
 			{
 				sf::RectangleShape itemShape(sf::Vector2f((*it)->getWidth(), (*it)->getHeight()));

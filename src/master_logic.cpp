@@ -40,6 +40,10 @@ void MasterLogic::startDemo(void) {
     std::shared_ptr<Exit> fieldExit = std::make_shared<Exit>(500, 890, farmhouse);
     currentExit = fieldExit;
     
+    // Creating bed for testing
+    bed = std::make_shared<Bed>(ActorType::BED, 500, 250, 100, 50, 1);
+    this->actorList.push_back(bed);
+    
     this->actorList.push_front(fred);
 
 	this->loadInEnemies();
@@ -106,12 +110,18 @@ void MasterLogic::update(float delta) {
         
         for (std::list<std::shared_ptr<Actor>>::iterator it = actorList.begin(); it != actorList.end(); it++) {
             std::shared_ptr<Actor> curActor = (*it);
+   
             if (curActor != fred) {
                 curActor->update(delta);
             }
             
             // Check to make sure Fred is still within the current room
             else if (curActor->liesInsideSquare((*currentRoom))) {
+                
+                // Check if Fred uses the bed
+                if (curActor->collidesSquare((*bed))) {
+                    fred->heal(bed->getHealAmount());
+                }
                 
                 // Check if Fred uses the exit
                 if (curActor->collidesSquare((*currentExit))) {
