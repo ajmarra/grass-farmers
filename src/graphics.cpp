@@ -1,9 +1,7 @@
 #include "graphics.h"
 #include <iostream>
 
-Graphics::Graphics(){}
-
-void Graphics::updateFred(float delta){
+void Graphics::updateFred(float delta) {
     elapsedFredTime += delta;
 
     
@@ -24,7 +22,8 @@ void Graphics::updateFred(float delta){
     
     }
 
-void Graphics::updateEnemy(float delta){
+
+void Graphics::updateEnemy(float delta) {
     elapsedEnemyTime += delta;
 
     //std::cout << delta << std::endl;
@@ -71,44 +70,23 @@ void Graphics::updateEnemy(float delta){
     
     
       
-void Graphics::setFredSprite(double direction){
+void Graphics::setFredSprite(double direction) {
     //up 1
-    if ((direction >= -135.0) && (direction < -45.0)){
-        spriteFrame.top = 196;
+    if (direction >= -135.0 && direction < -45.0) spriteFrame.top = 196;
 
-
-    }
-
-    // //left1
-    else if ((((direction < -135.0) && (direction >= -180.0)) || 
-    ((direction <= 180.0) && (direction > 135.0)))){
-        spriteFrame.top = 128;
-
-
-    }
+    //left1
+    else if (direction < -135.0 && direction >= -180.0 || direction <= 180.0 && direction > 135.0) spriteFrame.top = 128;
 
     //down 1
-    else if ((direction <= 135.0) && (direction > 45.0)){
-        spriteFrame.top = 64;
+    else if (direction <= 135.0 && direction > 45.0) spriteFrame.top = 64;
 
-
-    }
-
-
-    // //right1
-    else if ((((direction < 45.0) && (direction > 0.0)) || 
-    ((direction >= -45.0) && (direction <0.0))))
-        {
-        spriteFrame.top = 0;
-
-
-    }    
+    //right1
+    else if (direction < 45.0 && direction > 0.0 || direction >= -45.0 && direction < 0.0) spriteFrame.top = 0;
 }
 
-void Graphics::setEnemySprite(double direction){
-    
+void Graphics::setEnemySprite(double direction) {
     //up 1
-    if ((direction >= -135.0) && (direction < -45.0)){
+    if (direction >= -135.0 && direction < -45.0) {
         spriteFrame.top = 0;
         left = false;
 
@@ -127,18 +105,15 @@ void Graphics::setEnemySprite(double direction){
     }
 
     //down 1
-    else if ((direction <= 135.0) && (direction > 45.0)){
+    else if (direction <= 135.0 && direction > 45.0) {
         spriteFrame.top = 64;
         left = false;
 
 
     }
 
-
-    // //right1
-    else if ((((direction < 45.0) && (direction > 0.0)) || 
-    ((direction >= -45.0) && (direction <0.0))))
-        {
+    //right1
+    else if (direction < 45.0 && direction > 0.0 || direction >= -45.0 && direction <0.0) {
         spriteFrame.top = 128;
         left = false;
 

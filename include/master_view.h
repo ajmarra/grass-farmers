@@ -20,6 +20,7 @@
 #include "room.h"
 #include "exit.h"
 
+
 class MasterView {
     private:
         std::shared_ptr<sf::RenderWindow> window;
@@ -32,9 +33,9 @@ class MasterView {
 
 
     public:
-        MasterView(std::shared_ptr<sf::RenderWindow> &window);
+        MasterView(std::shared_ptr<sf::RenderWindow> window);
 
-        void init(std::shared_ptr<MasterLogic> &logic);
+        void init(std::shared_ptr<MasterLogic> logic);
 
         void setMenu();
 
@@ -42,13 +43,16 @@ class MasterView {
 
         void setTutorial();
 
-        void setPlayer(std::shared_ptr<Fred> &fred);
+        void setPlayer(std::shared_ptr<Fred> fred);
 
-		void setEnemies(std::list<std::shared_ptr<EnemyView>> enemyList) { this->enemies = enemyList; };
+        /**
+         * Create a view for the new enemy from logic and add the view to the enemyview list
+         */
+		void addEnemy(std::shared_ptr<Enemy> enemy) { this->enemies.emplace_back(std::make_shared<EnemyView>(this->logic, enemy)); };
 
-        void setRoom(std::shared_ptr<Room> room);
+        void switchToDay();
     
-        void setExit(std::shared_ptr<Exit> exit);
+        void switchToNight();
 
         void update(float delta);
 };

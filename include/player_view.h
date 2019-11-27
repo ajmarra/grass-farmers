@@ -13,7 +13,6 @@
 #include "music.h"
 
 class PlayerView : public View {
-
     private:
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<Fred> fred;
@@ -25,22 +24,22 @@ class PlayerView : public View {
         
 		float elapsedTime = 0;
 
-        std::shared_ptr<Room> curRoom;
-        std::shared_ptr<Exit> curExit;
-
         void pollInput(void);
 
         void drawScreen(void);
 
     public:
-        PlayerView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<Fred> &fred, std::shared_ptr<sf::RenderWindow> &window);
+        PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred> fred, std::shared_ptr<sf::RenderWindow> window);
 
         void update(float delta);
     
         void setCurrentRoom(std::shared_ptr<Room> currentRoom);
     
         void setCurrentExit(std::shared_ptr<Exit> currentExit);
-
+    
+        void switchToDay();
+    
+        void switchToNight();
 };
 
 #endif

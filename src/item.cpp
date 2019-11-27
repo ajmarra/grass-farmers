@@ -1,23 +1,31 @@
 #include <SFML/Graphics.hpp>
-#include "item.h"
 #include "actor.h"
+#include "item.h"
+#include "character.h"
 
-Item::Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable) :
+Item::Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable, std::shared_ptr<Character> character) :
 	Actor(type, x, y, width, height) {
 	this->x = x;
 	this->y = y;
     this->quantity = quantity;
     this->stackable = stackable;
+    this->character = character;
 }
 
 void Item::increaseQuantity(void) {
-	this->quantity += 1;
+    this->quantity += 1;
 }
 
 void Item::decreaseQuantity(void) {
-	if (this->quantity > 0) {
-		this->quantity -= 1;
-	}
+    if (this->quantity > 0) {
+        this->quantity -= 1;
+    }
 }
 
+void Item::setCharacter(std::shared_ptr<Character> character) {
+    this->character = character;
+}
 
+std::shared_ptr<Character> Item::getCharacter(void) {
+    return this->character;
+}
