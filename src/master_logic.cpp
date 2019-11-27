@@ -25,6 +25,21 @@ void MasterLogic::init(std::shared_ptr<MasterView> view) {
     this->view->setPlayer(fred);
 }
 
+void MasterLogic::startMenu(void){
+    this->view->setMenu();
+}
+
+void MasterLogic::startTutorial(void){
+    //std::cout << "HOI" << std::endl;
+    this->view->setTutorial();
+}
+
+void MasterLogic::startPaused(void){
+    //std::cout << "HOI" << std::endl;
+    this->view->setPaused();
+}
+
+
 void MasterLogic::loadInEnemies(void) {
 	std::ifstream inFile;
 	double x, y, mass, maxSpeed, maxHealth;
@@ -46,6 +61,8 @@ void MasterLogic::loadInEnemies(void) {
 
 void MasterLogic::startDemo(void) {
 	this->loadInEnemies();
+
+
 	// Add test enemy
 	std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(200, 200, 40, 100, 100);
 	this->roomList.front()->addActor(testEnemy);
@@ -61,13 +78,24 @@ void MasterLogic::startDemo(void) {
 }
 
 void MasterLogic::update(float delta) {
-	this->delta = delta;
-    
-    if (!paused) {
+    this->delta = delta;
+    if ((paused == true) && (playing == false) && (options == false)){
+        //std::cout << "HELLO" << std::endl;
+    }
 
-        // Loop throught the actor list
-        for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
+    else if ((paused == true) && (playing == false) && (options == true)){
+        //std::cout << "HELLO" << std::endl;
+    }
+    
+    else if ((paused == true) && (playing == true) && (options == false)){
+        //std::cout << "HELLO" << std::endl;
+    }
+    
+    
+    else if ((paused == false) && (playing == true) && (options == false)) {
+    for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
             curActor->update(delta);
+
             
             // Keep actors inside the room
             if (!curActor->liesInsideSquare(*(this->getCurrentRoom()))) {
@@ -117,50 +145,6 @@ void MasterLogic::update(float delta) {
                 this->view->switchToNight();
             }
         }
-        /**
-        if (curActor->collidesSquare((*currentExit))) {
-            std::shared_ptr<Room> temp = currentRoom;
-            
-            std::shared_ptr<Character> curFred = std::dynamic_pointer_cast<Character>(curActor);
-            int prevSelectedIndex = curFred->getSelectedIndex();
-            std::shared_ptr<Item> tempInventory[4];
-            
-            std::list<std::shared_ptr<Actor>> curList = this->getCurrentRoom()->getActorList();
-            
-            for (int i = 0; i < 4; i++) {
-                curFred->setSelectedIndex(i);
-                if (curFred->getSelectedItem() != nullptr) {
-                    tempInventory[i] = curFred->getSelectedItem();
-                    curList.remove(tempInventory[i]);
-                }
-            }
-            
-            currentRoom->setActorList(curList);
-            
-            curFred->setSelectedIndex(prevSelectedIndex);
-            
-            currentRoom = currentExit->getDestination();
-            currentExit->setDestination(temp);
-            currentExit->setPos((currentRoom->getX() + currentRoom->getWidth())/2, currentRoom->getY() + currentRoom->getHeight() - 10);
-            curActor->setPos(currentExit->getX(), currentExit->getY() - currentExit->getHeight() - 100);
-            
-            curList = currentRoom->getActorList();
-            curList.push_back(curActor);
-            
-            for (int i = 0; i < 4; i++) {
-                if (tempInventory[i] != nullptr) {
-                    curList.push_back(tempInventory[i]);
-                }
-            }
 
-            curFred->setSelectedIndex(prevSelectedIndex);
-            currentRoom->setActorList(curList);
-            
-            curFred->setCurrentRoom(currentRoom);
-
-            view->setRoom(currentRoom);
-            view->setExit(currentExit);
-        }
-        */
     }
 }

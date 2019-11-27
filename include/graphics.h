@@ -9,7 +9,7 @@
  */
 class Graphics {
     private:
-        int left = 0;
+        bool left = false;
         sf::Vector2u totalSprite;
         sf::Vector2f cur_sprite;
         float frameRate = 0.3;

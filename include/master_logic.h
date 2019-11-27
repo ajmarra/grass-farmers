@@ -25,18 +25,29 @@ class MasterLogic {
         std::list<std::shared_ptr<Room>>::iterator currentRoom;
         std::list<std::shared_ptr<Actor>> actorList;
 		std::list<std::shared_ptr<Item>> itemList;
+
+		float delta;
+
         std::list<std::shared_ptr<Trap>> trapList;
-        bool paused = false;
     
         bool day = true;
     
-		float delta;
+		//float delta;
         std::shared_ptr<Timer> timer;
 
     public:
+        bool paused = true;
+        bool playing = false;
+        bool options = false;
         MasterLogic(void) { };
 
         void init(std::shared_ptr<MasterView> mv);
+
+        void startMenu(void);
+
+        void startTutorial(void);
+
+        void startPaused(void);
 
         void startDemo(void);
 

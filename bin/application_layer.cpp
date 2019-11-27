@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     std::shared_ptr<MasterView> view = std::make_shared<MasterView>(window);
     view->init(logic);
     logic->init(view);
-    logic->startDemo();
+    logic->startMenu();
 
     //game loop
     while (window->isOpen()) {
