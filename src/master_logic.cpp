@@ -76,25 +76,27 @@ void MasterLogic::loadInEnemies(void) {
 
 void MasterLogic::checkCollisions(float delta) {
     this->elapsedTime += delta;
-    /*for (std::list<std::shared_ptr<Enemy>>::iterator enemy = enemyList.begin(); enemy != enemyList.end(); ++enemy) {
-        for (std::list<std::shared_ptr<Trap>>::iterator it = trapList.begin(); it != trapList.end(); ++it) {
-            if ((*enemy)->collidesSquare(*(*it)) && (*it)->getIsSet()) {
-                (*enemy)->damage((*it)->getDamage());
-                trapList.remove((*it));
-                actorList.remove((*it));
-                itemList.remove((*it));
+    if (this->getCurrentRoom()->getEnemyList().size() > 0) {
+        //for (std::list<std::shared_ptr<Enemy>>::iterator enemy = this->getCurrentRoom()->getEnemyList().begin(); enemy != this->getCurrentRoom()->getEnemyList().end(); ++enemy) {
+        for (std::shared_ptr<Enemy> enemy : this->getCurrentRoom()->getEnemyList()) {
+            /*for (std::list<std::shared_ptr<Trap>>::iterator it = trapList.begin(); it != trapList.end(); ++it) {
+                if ((*enemy)->collidesSquare(*(*it)) && (*it)->getIsSet()) {
+                    (*enemy)->damage((*it)->getDamage());
+                    trapList.remove((*it));
+                    actorList.remove((*it));
+                    itemList.remove((*it));
+                }
+            }*/
+
+            if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->elapsedTime >= 1) {
+                elapsedTime = 0;
+                this->getCurrentRoom()->getFred()->damage(2); //temporarily hard coded.  Will change based on enemy type?
+            }
+            if (enemy->getHealth() <= 0) {
+                this->getCurrentRoom()->removeActor(enemy);
             }
         }
-
-        if ((*enemy)->collidesSquare(*fred) && this->elapsedTime >= 1) {
-            elapsedTime = 0;
-            fred->damage(2); //temporarily hard coded.  Will change based on enemy type?
-        }
-        if ((*enemy)->getHealth() <= 0) {
-            enemyList.remove((*enemy));
-            actorList.remove((*enemy));
-        }
-    }*/
+    }
 }
 
 void MasterLogic::removeUsedItems(void) {
@@ -133,9 +135,10 @@ void MasterLogic::update(float delta) {
 
     this->checkCollisions(delta);
 
-    this->removeUsedItems();
+    //this->removeUsedItems();
 
     if (!paused) {
+        
 
         // Loop throught the actor list
         for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
@@ -190,7 +193,7 @@ void MasterLogic::update(float delta) {
                     spawnRate = 5;
                     std::shared_ptr<Enemy> toSpawn;
                     toSpawn = this->enemyQueueList.back();
-                    this->actorList.push_back(toSpawn);
+                    //this->actorList.push_back(toSpawn);
                     this->enemyQueueList.remove(toSpawn);
                     this->view->addEnemy(toSpawn);
                     this->roomList.front()->addActor(toSpawn);
@@ -216,7 +219,8 @@ void MasterLogic::update(float delta) {
             else {
                 spawnRate -= delta;
             }
-        }
+        } 
+
         /**
         if (curActor->collidesSquare((*currentExit))) {
             std::shared_ptr<Room> temp = currentRoom;

@@ -23,9 +23,9 @@ void EnemyView::findFred(float delta) {
 
 		enemy->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
 	}
-    else if (enemy->getHealth() <= 0) {
+    /*else if (enemy->getHealth() <= 0) {
         enemy->setCanMove(false);
-    }
+    }*/
     
 }
 

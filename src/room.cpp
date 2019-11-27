@@ -37,3 +37,15 @@ void Room::addActor(std::shared_ptr<Portal> portal) {
     this->actorList.emplace_back(portal);
     this->portalList.emplace_back(portal);
 }
+
+void Room::removeActor(std::shared_ptr<Enemy> toRemove) {
+    this->actorList.remove(toRemove);
+    this->enemyList.remove(toRemove);
+}
+
+void Room::removeActor(std::shared_ptr<Item> toRemove) {
+    this->actorList.remove(toRemove);
+    if (toRemove->getType() == ActorType::HEALTH || toRemove->getType() == ActorType::TRAP) {
+        this->itemList.remove(toRemove);
+    }
+}

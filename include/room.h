@@ -49,6 +49,10 @@ class Room : public Actor {
         
         void addActor(std::shared_ptr<Portal> portal);
 
+        void removeActor(std::shared_ptr<Enemy> toRemove);
+
+        void removeActor(std::shared_ptr<Item> toRemove);
+
         std::shared_ptr<Fred> getFred(void) { return this->fred; };
         
         std::list<std::shared_ptr<Exit>> getExitList(void) { return this->exitList; };

@@ -7,6 +7,7 @@
 
 #include "actor.h"
 #include "item.h"
+class MasterLogic;
 class Room;
 
 class Character : public Actor {

@@ -83,19 +83,15 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 					notAdded = false;
 					if (i == 0) {
 						toAdd->setPos(825, 40);
-						//toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					else if (i == 1) {
 						toAdd->setPos(925, 40);
-                        //toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					else if (i == 2) {
 						toAdd->setPos(1025, 40);
-                        //toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					else if (i == 3) {
 						toAdd->setPos(1125, 40);
-                        //toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					if (selectedIndex == i) this->setSelectedIndex(i);
 				}
