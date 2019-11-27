@@ -8,29 +8,28 @@ class Actor {
         /**
          * x and y -- the coordinates of the top left pixel
          * width and height -- the number of pixels on the sides
-		 * speed -- magnitude of the speed of the actor
+         * speed -- magnitude of the speed of the actor
          */ 
         double x, y, width, height, xSpeed, ySpeed;
-		int orientation; //orientation of the actor
-        ActorType type;
+        int orientation; // orientation of the actor
+        ActorType type; // type of actor
 
     public:
-		Actor() { }; //Do not use default constructor. Left here because Item class currently uses it.
-        
         Actor(ActorType type, double x, double y, double width, double height);
         
         virtual void update(float delta);
 
-        ActorType getType() { return this->type; };
+        ActorType getType(void) { return this->type; };
         
+        void setX(double x) { this->x = x; };
+
         double getX(void) { return this->x; };
+
+        void setY(double y) { this->y = y; };
         
         double getY(void) { return this->y; };
 
-		void setXY(double x, double y) {
-			this->x = x;
-			this->y = y;
-		};
+        void setPos(double x, double y) { this->x = x; this->y = y; };
 
         double getCenterX(void) { return (this->x + this->width / 2); };
 
@@ -40,60 +39,60 @@ class Actor {
 
         double getHeight(void) { return this->height; };
 
-        double getXSpeed(void) { return xSpeed; };
+        double getXSpeed(void) { return this->xSpeed; };
 
-		double getYSpeed(void) { return ySpeed; };
+        double getYSpeed(void) { return this->ySpeed; };
 
-		double getSpeed(void);
+        double getSpeed(void);
 
-		double getDirection(void);
+        void hardStop(void) { this->xSpeed = this->ySpeed = 0; };
 
-		/**
-				 * Sets the orientation of the actor.
-				 *
-				 * d -- direction to face
-				 */
-		void setOrientation(int d) { this->orientation = d; };
+        double getDirection(void);
 
-		/**
-		 * Sets the orientation of the actor.
-		 *
-		 * x -- x coordinate to face
-		 * y -- y coordinate to face
-		 */
-		void setOrientation(int x, int y);
+        /**
+         * Sets the orientation of the actor.
+         *
+         * d -- direction to face
+         */
+        void setOrientation(int d) { this->orientation = d; };
 
-		/**
-		 * Sets the orientation of the actor.
-		 *
-		 * a -- the actor to face towards
-		 */
-		void setOrientation(Actor a);
+        /**
+         * Sets the orientation of the actor.
+         *
+         * x -- x coordinate to face
+         * y -- y coordinate to face
+         */
+        void setOrientation(int x, int y);
 
-		/**
-		 * Returns the orientation of the actor.
-		 */
-		int getOrientation() { return this->orientation; };
+        /**
+         * Sets the orientation of the actor.
+         *
+         * a -- the actor to face towards
+         */
+        void setOrientation(Actor &a);
 
-		/**
-		 * Calculates if square Actor a is touching this square actor.
-		 * (the outer pixels are next to eachother, or the actors are overlapping).
-		 *
-		 * a -- the actor for comparison
-		 */
-		bool collidesSquare(Actor a);
+        /**
+         * Returns the orientation of the actor.
+         */
+        int getOrientation() { return this->orientation; };
 
-		/**
-		 * Calculates if circular Actor a is touching this circular actor.
-		 * (the outer pixels are next to eachother, or the actors are overlapping).
-		 *
-		 * a -- the actor for comparison
-		 */
-		bool collidesCircle(Actor a);
+        /**
+         * Calculates if square Actor a is touching this square actor.
+         * (the outer pixels are next to eachother, or the actors are overlapping).
+         *
+         * a -- the actor for comparison
+         */
+        bool collidesSquare(Actor &a);
 
-		bool liesInsideSquare(Actor a);
-    
-        void hardStop() { this->xSpeed = 0; this->ySpeed = 0; };
+        /**
+         * Calculates if circular Actor a is touching this circular actor.
+         * (the outer pixels are next to eachother, or the actors are overlapping).
+         *
+         * a -- the actor for comparison
+         */
+        bool collidesCircle(Actor &a);
+
+        bool liesInsideSquare(Actor &a);
 };
 
 #endif

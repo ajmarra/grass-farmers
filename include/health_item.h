@@ -9,19 +9,18 @@
 * per health item instance.
 */
 class HealthItem : public Item {
-private:
-	int healQuantity = 5;
+    private:
+        int healQuantity = 5;
 
-public:
-	HealthItem(double x, double y, double width, double height, std::shared_ptr<Character> fred);
+    public:
+        HealthItem(double x, double y, double width, double height, std::shared_ptr<Character> character);
 
-	/*
-	* Heals the character that uses the item
-	*/
-	void use(int x, int y) override;
+        /*
+        * Heals the character that uses the item
+        */
+        void use(int x, int y) override;
 
-	int getHealQuantity(void) { return healQuantity; };
-
+        int getHealQuantity(void) { return healQuantity; };
 };
 
-#endif //HEALT_ITEM_H
+#endif //HEALTH_ITEM_H

@@ -5,21 +5,21 @@
 
 class MeleeWeapon : public Item {
 private:
-	//scaling factors for damage and time between each hit
-	int strength, speed;
+    //scaling factors for damage and time between each hit
+    int damage, speed;
 
 public:
-	MeleeWeapon(double x, double y, double height, double width, int strength, int speed, std::shared_ptr<Character> fred);
+	MeleeWeapon(double x, double y, double height, double width, int damage, int speed, std::shared_ptr<Character> character);
 
-	int getStrength(void) { return strength; };
-	int getSpeed(void) { return speed; };
+    void setDamage(int damage) { this->damage = damage; };
+    
+    int getDamage(void) { return damage; };
+    
+    void setSpeed(int speed) { this->speed = speed; };
 
-	void setStrength(int strength);
-	void setSpeed(int speed);
-
-	//swings melee weapon and returns a double for damage precentage based on strength value
-	//The speed value dictates the wait time between each attack
-	double swingWeapon(void);
+    int getSpeed(void) { return speed; };
+    
+    void use(int x, int y) override;
 
 };
 

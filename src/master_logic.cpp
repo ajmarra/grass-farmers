@@ -7,8 +7,22 @@
 #include <chrono>
 #include <thread>
 
-void MasterLogic::init(std::shared_ptr<MasterView> &view) {
+void MasterLogic::init(std::shared_ptr<MasterView> view) {
     this->view = view;
+    
+    // Create rooms
+    this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
+    this->roomList.push_back(std::make_shared<Room>(0, 100, 400, 400));     // farmhouse
+    this->currentRoom = roomList.begin();
+
+    // Add exits
+    this->roomList.front()->addActor(std::make_shared<Exit>(0, 430, 1));
+    this->roomList.back()->addActor(std::make_shared<Exit>(500, 500, 0));
+
+    // Add fred
+    std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
+    this->roomList.front()->addActor(fred);
+    this->view->setPlayer(fred);
 }
 
 void MasterLogic::loadInEnemies(void) {
@@ -92,49 +106,17 @@ void MasterLogic::removeUsedItems(void) {
 }
 
 void MasterLogic::startDemo(void) {
-    fred = std::make_shared<Fred>(700, 500);
-    
-    currentRoom = std::make_shared<Room>(0, 100, 1200, 800);
-    std::shared_ptr<Room> farmhouse = std::make_shared<Room>(0, 100, 400, 400);
-    std::shared_ptr<Exit> fieldExit = std::make_shared<Exit>(500, 890, farmhouse);
-    currentExit = fieldExit;
-    
-    this->actorList.push_front(fred);
+	this->loadInEnemies();
+	// Add test enemy
+	std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(200, 200, 40, 100, 100);
+	this->roomList.front()->addActor(testEnemy);
+	this->view->addEnemy(testEnemy);
 
-    // Creating the portals
-    std::shared_ptr<Portal> portal1 = std::make_shared<Portal>(70, 150, 75, 75);
-    this->actorList.push_front(portal1);
-    std::shared_ptr<Portal> portal2 = std::make_shared<Portal>(20, 350, 75, 75);
-    this->actorList.push_front(portal2);
-    std::shared_ptr<Portal> portal3 = std::make_shared<Portal>(20, 550, 75, 75);
-    this->actorList.push_front(portal3);
-    std::shared_ptr<Portal> portal4 = std::make_shared<Portal>(70, 750, 75, 75);
-    this->actorList.push_front(portal4);
+	// Add test items
+	this->roomList.front()->addActor(std::make_shared<RangeWeapon>(this->getCurrentRoom(), 150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
+	this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 20, 20, this->getCurrentRoom()->getFred()));
+	this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 20, 20, this->getCurrentRoom()->getFred()));
 
-	// Creating items to test
-	std::shared_ptr<Trap> testItem = std::make_shared<Trap>(150, 150, 20, 20, fred);
-	this->actorList.push_back(testItem);
-	this->itemList.push_front(testItem);
-    this->trapList.push_back(testItem);
-	std::shared_ptr<HealthItem> testItem1 = std::make_shared<HealthItem>(250, 250, 20, 20, fred);
-	this->actorList.push_back(testItem1);
-	this->itemList.push_back(testItem1);
-	std::shared_ptr<HealthItem> testItem3 = std::make_shared<HealthItem>(350, 250, 20, 20, fred);
-	this->actorList.push_back(testItem3);
-	this->itemList.push_back(testItem3);
-
-    this->view->setPlayer(fred);
-    this->loadInEnemies();
-    this->view->setEnemies(enemyViewList);
-    
-    currentRoom->setActorList(this->actorList);
-    currentRoom->setItemList(this->itemList);
-    
-	fred->setCurrentRoom(currentRoom);
-
-    this->view->setRoom(currentRoom);
-    this->view->setExit(currentExit);
-    
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();
 }
@@ -147,7 +129,42 @@ void MasterLogic::update(float delta) {
     this->removeUsedItems();
 
     if (!paused) {
-        
+
+        // Loop throught the actor list
+        for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
+            curActor->update(delta);
+            
+            // Keep actors inside the room
+            if (!curActor->liesInsideSquare(*(this->getCurrentRoom()))) {
+                if (curActor->getY() < this->getCurrentRoom()->getY()) {
+                    curActor->hardStop();
+                    curActor->setY(curActor->getY() + 1);
+                }
+                if (curActor->getY() + curActor->getHeight() > this->getCurrentRoom()->getY() + this->getCurrentRoom()->getHeight()) {
+                    curActor->hardStop();
+                    curActor->setY(curActor->getY() - 1);
+                }
+                if (curActor->getX() < this->getCurrentRoom()->getX()) {
+                    curActor->hardStop();
+                    curActor->setX(curActor->getX() + 1);
+                }
+                if (curActor->getX() + curActor->getWidth() > this->getCurrentRoom()->getX() + this->getCurrentRoom()->getWidth()) {
+                    curActor->hardStop();
+                    curActor->setX(curActor->getX() - 1);
+                }
+            }
+        }
+
+        // Check if Fred uses an exit
+        for (std::shared_ptr<Exit> exit : this->getCurrentRoom()->getExitList()) {
+            if (this->getCurrentRoom()->getFred()->collidesSquare(*exit)) {
+                std::list<std::shared_ptr<Room>>::iterator newRoom = this->roomList.begin();
+                advance(newRoom, exit->getDestination());
+                (*newRoom)->addActor(this->getCurrentRoom()->getFred());
+                this->currentRoom = newRoom;
+            }
+        }
+
         if (timer->update(delta)) {
             day = !day;
             
@@ -180,111 +197,50 @@ void MasterLogic::update(float delta) {
                 this->view->switchToNight();
             }
         }
-
-        if (!day && enemyQueueList.size() > 0) {
-            if (spawnRate <= 0 && enemyQueueList.size() > 0) {
-                spawnRate = 5;
-                std::shared_ptr<Enemy> toSpawn;
-                toSpawn = this->enemyQueueList.back();
-                this->actorList.push_back(toSpawn);
-                this->enemyList.push_back(toSpawn);
-                this->enemyQueueList.remove(toSpawn);
-                std::shared_ptr<EnemyView> testEnemyView = std::make_shared<EnemyView>(this->getFred(), toSpawn);
-                this->enemyViewList.push_back(testEnemyView);
-
-                this->view->setEnemies(enemyViewList);
-                currentRoom->setActorList(this->actorList);
-            }
-            else {
-                spawnRate -= delta;
-            }
-        }
-        
-        for (std::list<std::shared_ptr<Actor>>::iterator it = actorList.begin(); it != actorList.end(); it++) {
-            std::shared_ptr<Actor> curActor = (*it);
-            if (curActor != fred) {
-                curActor->update(delta);
-            }
+        /**
+        if (curActor->collidesSquare((*currentExit))) {
+            std::shared_ptr<Room> temp = currentRoom;
             
-            // Check to make sure Fred is still within the current room
-            else if (curActor->liesInsideSquare((*currentRoom))) {
-                
-                // Check if Fred uses the exit
-                if (curActor->collidesSquare((*currentExit))) {
-                    std::shared_ptr<Room> temp = currentRoom;
-                    
-                    std::shared_ptr<Character> curFred = std::dynamic_pointer_cast<Character>(curActor);
-                    int prevSelectedIndex = curFred->getSelectedIndex();
-                    std::shared_ptr<Item> tempInventory[4];
-                    
-                    std::list<std::shared_ptr<Actor>> curList = currentRoom->getActorList();
-                    
-                    for (int i = 0; i < 4; i++) {
-                        curFred->setSelected(i);
-                        if (curFred->getSelectedItem() != nullptr) {
-                            tempInventory[i] = curFred->getSelectedItem();
-                            curList.remove(tempInventory[i]);
-                        }
-                    }
-                    
-                    currentRoom->setActorList(curList);
-                    
-                    curFred->setSelected(prevSelectedIndex);
-                    
-                    currentRoom = currentExit->getDestination();
-                    currentExit->setDestination(temp);
-                    currentExit->setXY((currentRoom->getX() + currentRoom->getWidth())/2, currentRoom->getY() + currentRoom->getHeight() - 10);
-                    curActor->setXY(currentExit->getX(), currentExit->getY() - currentExit->getHeight() - 100);
-                    
-                    curList = currentRoom->getActorList();
-                    curList.push_back(curActor);
-                    
-                    for (int i = 0; i < 4; i++) {
-                        if (tempInventory[i] != nullptr) {
-                            curList.push_back(tempInventory[i]);
-                        }
-                    }
-
-                    curFred->setSelected(prevSelectedIndex);
-                    currentRoom->setActorList(curList);
-                    
-					curFred->setCurrentRoom(currentRoom);
-
-                    view->setRoom(currentRoom);
-                    view->setExit(currentExit);
-                }
-                else {
-                    curActor->update(delta);
+            std::shared_ptr<Character> curFred = std::dynamic_pointer_cast<Character>(curActor);
+            int prevSelectedIndex = curFred->getSelectedIndex();
+            std::shared_ptr<Item> tempInventory[4];
+            
+            std::list<std::shared_ptr<Actor>> curList = this->getCurrentRoom()->getActorList();
+            
+            for (int i = 0; i < 4; i++) {
+                curFred->setSelectedIndex(i);
+                if (curFred->getSelectedItem() != nullptr) {
+                    tempInventory[i] = curFred->getSelectedItem();
+                    curList.remove(tempInventory[i]);
                 }
             }
             
-            // If Fred reaches the outside of the room, push him back inside
-            else if (!curActor->liesInsideSquare((*currentRoom))) {
-                if (curActor->getY() < currentRoom->getY()) {
-                    curActor->hardStop();
-                    curActor->setXY(curActor->getX(), curActor->getY() + 1);
-                }
-                else if (curActor->getY() + curActor->getHeight() > currentRoom->getY() + currentRoom->getHeight()) {
-                    curActor->hardStop();
-                    curActor->setXY(curActor->getX(), curActor->getY() - 1);
-                }
-                else if (curActor->getX() < currentRoom->getX()) {
-                    curActor->hardStop();
-                    curActor->setXY(curActor->getX() + 1, curActor->getY());
-                }
-                else if (curActor->getX() + curActor->getWidth() > currentRoom->getX() + currentRoom->getWidth()) {
-                    curActor->hardStop();
-                    curActor->setXY(curActor->getX() - 1, curActor->getY());
-                }
-                else {
-                    curActor->hardStop();
-                    curActor->setXY(curActor->getX() - 1, curActor->getY() - 1);
+            currentRoom->setActorList(curList);
+            
+            curFred->setSelectedIndex(prevSelectedIndex);
+            
+            currentRoom = currentExit->getDestination();
+            currentExit->setDestination(temp);
+            currentExit->setPos((currentRoom->getX() + currentRoom->getWidth())/2, currentRoom->getY() + currentRoom->getHeight() - 10);
+            curActor->setPos(currentExit->getX(), currentExit->getY() - currentExit->getHeight() - 100);
+            
+            curList = currentRoom->getActorList();
+            curList.push_back(curActor);
+            
+            for (int i = 0; i < 4; i++) {
+                if (tempInventory[i] != nullptr) {
+                    curList.push_back(tempInventory[i]);
                 }
             }
+
+            curFred->setSelectedIndex(prevSelectedIndex);
+            currentRoom->setActorList(curList);
+            
+            curFred->setCurrentRoom(currentRoom);
+
+            view->setRoom(currentRoom);
+            view->setExit(currentExit);
         }
+        */
     }
-}
-
-std::shared_ptr<Room> MasterLogic::getCurrentRoom() {
-    return currentRoom;
 }

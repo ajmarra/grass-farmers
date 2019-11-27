@@ -3,6 +3,7 @@
 
 #include "actor.h"
 #include "character.h"
+#include "item.h"
 
 class Fred : public Character {
 
