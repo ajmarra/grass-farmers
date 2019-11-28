@@ -72,11 +72,19 @@ void PlayerView::pollInput() {
 		fred->useItem(fred->getCenterX(), fred->getCenterY());
 	}
 
-    // Inventory selection
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelectedIndex(0);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelectedIndex(1);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelectedIndex(2);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelectedIndex(3);
+	// Inventory selection
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelectedIndex(0);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelectedIndex(1);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelectedIndex(2);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelectedIndex(3);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)){
+		cur_track.stopCurrentTrack();
+		this->logic->paused = true;
+		this->logic->startPaused();
+		
+	} 
+
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) cur_track.stopCurrentTrack();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) cur_track.playNightTrack();
@@ -84,7 +92,8 @@ void PlayerView::pollInput() {
 }
 
 void PlayerView::drawScreen(void) {
-    this->window->clear(sf::Color::Green);
+    this->window->clear(sf::Color::Black);
+    
     
     //Timer
     sf::CircleShape clock;

@@ -30,8 +30,10 @@ class MasterLogic {
 		std::list<std::shared_ptr<EnemyView>> enemyViewList;
 		std::list<std::shared_ptr<Enemy>> enemyQueueList;
         std::list<std::shared_ptr<Enemy>> enemyList;
+
+		float delta;
+
         std::list<std::shared_ptr<Trap>> trapList;
-        bool paused = false;
     
         bool day = false;
 
@@ -42,15 +44,21 @@ class MasterLogic {
         int nightCount = 1;
     
 		float delta;
-
-        std::shared_ptr<Fred> fred;
-
         std::shared_ptr<Timer> timer;
 
     public:
+        bool paused = true;
+        bool playing = false;
+        bool options = false;
         MasterLogic(void) { };
 
         void init(std::shared_ptr<MasterView> mv);
+
+        void startMenu(void);
+
+        void startTutorial(void);
+
+        void startPaused(void);
 
         void startDemo(void);
 

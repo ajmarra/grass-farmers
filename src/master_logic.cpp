@@ -26,6 +26,21 @@ void MasterLogic::init(std::shared_ptr<MasterView> view) {
     this->view->setPlayer(fred);
 }
 
+void MasterLogic::startMenu(void){
+    this->view->setMenu();
+}
+
+void MasterLogic::startTutorial(void){
+    //std::cout << "HOI" << std::endl;
+    this->view->setTutorial();
+}
+
+void MasterLogic::startPaused(void){
+    //std::cout << "HOI" << std::endl;
+    this->view->setPaused();
+}
+
+
 void MasterLogic::loadInEnemies(void) {
 	std::ifstream inFile;
 	double x, y, mass, maxSpeed, maxHealth;
@@ -128,6 +143,22 @@ void MasterLogic::startDemo(void) {
 }
 
 void MasterLogic::update(float delta) {
+    this->delta = delta;
+    if ((paused == true) && (playing == false) && (options == false)){
+        //std::cout << "HELLO" << std::endl;
+    }
+
+    else if ((paused == true) && (playing == false) && (options == true)){
+        //std::cout << "HELLO" << std::endl;
+    }
+    
+    else if ((paused == true) && (playing == true) && (options == false)){
+        //std::cout << "HELLO" << std::endl;
+    }
+    
+    
+    else if ((paused == false) && (playing == true) && (options == false)) {
+    for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
 	this->delta = delta;
 
     this->checkCollisions(delta);
@@ -140,6 +171,7 @@ void MasterLogic::update(float delta) {
         // Loop throught the actor list
         for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
             curActor->update(delta);
+
             
             // Keep actors inside the room
             if (!curActor->liesInsideSquare(*(this->getCurrentRoom()))) {
@@ -254,14 +286,5 @@ void MasterLogic::update(float delta) {
                 }
             }
 
-            curFred->setSelectedIndex(prevSelectedIndex);
-            currentRoom->setActorList(curList);
-            
-            curFred->setCurrentRoom(currentRoom);
-
-            view->setRoom(currentRoom);
-            view->setExit(currentExit);
-        }
-        */
     }
 }
