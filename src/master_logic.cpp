@@ -93,10 +93,10 @@ void MasterLogic::update(float delta) {
     
     
     else if ((paused == false) && (playing == true) && (options == false)) {
-        for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
+    for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
             curActor->update(delta);
 
-
+            
             // Keep actors inside the room
             if (!curActor->liesInsideSquare(*(this->getCurrentRoom()))) {
                 if (curActor->getY() < this->getCurrentRoom()->getY()) {
@@ -130,48 +130,21 @@ void MasterLogic::update(float delta) {
 
         if (timer->update(delta)) {
             day = !day;
+            
             if (day) {
                 //Remove enemies from actor list
-
+                
                 //Switch to day theme
                 this->view->switchToDay();
             }
-
+            
             else {
                 //Start spawning enemies
-                this->loadInEnemies();
-
-                if (enemyQueueList.size() > 0) {
-
-                    spawnRate = 5;
-                    std::shared_ptr<Enemy> toSpawn;
-                    toSpawn = this->enemyQueueList.back();
-                    //this->actorList.push_back(toSpawn);
-                    this->enemyQueueList.remove(toSpawn);
-                    this->view->addEnemy(toSpawn);
-                    this->roomList.front()->addActor(toSpawn);
-                    nightCount++;
-                }
-
+                
                 //Switch to night theme
                 this->view->switchToNight();
             }
         }
 
-        if (!day && enemyQueueList.size() > 0) {
-            if (spawnRate <= 0 && enemyQueueList.size() > 0) {
-                spawnRate = 5;
-                std::shared_ptr<Enemy> toSpawn;
-                toSpawn = this->enemyQueueList.back();
-                this->enemyList.push_back(toSpawn);
-                this->enemyQueueList.remove(toSpawn);
-                this->view->addEnemy(toSpawn);
-                this->roomList.front()->addActor(toSpawn);
-
-            }
-            else {
-                spawnRate -= delta;
-            }
-        }
     }
 }
