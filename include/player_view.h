@@ -17,6 +17,10 @@ class PlayerView : public View {
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<Fred> fred;
 
+        sf::RectangleShape sky;
+        sf::RectangleShape darkness;
+        bool night = false;
+
         Sounds cur_track;
         Graphics FredSprite;
         Graphics EnemySprite;

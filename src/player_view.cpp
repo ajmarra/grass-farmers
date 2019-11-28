@@ -12,6 +12,13 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
         : View(logic) {
     this->fred = fred;
     this->window = window;
+
+    sky.setSize(sf::Vector2f(1200, 100));
+    sky.setFillColor(sf::Color (0, 191, 255));
+
+    darkness.setSize(sf::Vector2f(1200, 800));
+    darkness.setPosition(0,100);
+    darkness.setFillColor(sf::Color (0, 0, 0, 150));
 	
 	
 
@@ -84,7 +91,7 @@ void PlayerView::pollInput() {
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelectedIndex(3);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)){
-		cur_track.stopCurrentTrack();
+		//cur_track.stopCurrentTrack();
 		this->logic->paused = true;
 		this->logic->startPaused();
 		
@@ -94,6 +101,7 @@ void PlayerView::pollInput() {
 void PlayerView::drawScreen(void) {
     this->window->clear(sf::Color::Black);
     
+    this->window->draw(sky);
     
     //Timer
     sf::CircleShape clock;
@@ -120,6 +128,10 @@ void PlayerView::drawScreen(void) {
     room.setPosition(logic->getCurrentRoom()->getX(), logic->getCurrentRoom()->getY());
     room.setTexture(&room_image.spriteMap);
     this->window->draw(room);
+
+    if (night == true){
+        this->window->draw(darkness);
+    }
 
 	//Enemy spawn points/portals
 	sf::RectangleShape sp1(sf::Vector2f(128, 128));
@@ -178,6 +190,8 @@ void PlayerView::drawScreen(void) {
 	inventoryBlock4.setPosition(1100, 12);
 	inventoryBlock4.setOutlineThickness(5);
 	inventoryBlock4.setFillColor(sf::Color::Black);
+
+    
 
 	this->window->draw(inventoryBlock1);
 	this->window->draw(inventoryBlock2);
@@ -252,11 +266,16 @@ void PlayerView::drawScreen(void) {
 void PlayerView::switchToDay() {
     cur_track.stopCurrentTrack();
     cur_track.playDayTrack();
+    sky.setFillColor(sf::Color (0, 191, 255));
+    night = false;
 }
 
 void PlayerView::switchToNight() {
     cur_track.stopCurrentTrack();
     cur_track.playNightTrack();
+    sky.setFillColor(sf::Color (25, 25, 112));
+    night = true;
+    
 }
 
 void PlayerView::update(float delta) {
