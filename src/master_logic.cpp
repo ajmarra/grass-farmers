@@ -132,7 +132,7 @@ void MasterLogic::update(float delta) {
 
     this->checkCollisions(delta);
 
-    //this->removeUsedItems();
+    this->removeUsedItems();
 
     if (!paused) {
         
