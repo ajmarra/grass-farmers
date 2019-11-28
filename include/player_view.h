@@ -39,9 +39,9 @@ class PlayerView : public View {
 
         void update(float delta);
     
-        void setCurrentRoom(std::shared_ptr<Room> currentRoom);
+        //void setCurrentRoom(std::shared_ptr<Room> currentRoom);
     
-        void setCurrentExit(std::shared_ptr<Exit> currentExit);
+        //void setCurrentExit(std::shared_ptr<Exit> currentExit);
     
         void switchToDay();
     

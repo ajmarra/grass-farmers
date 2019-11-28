@@ -1,6 +1,6 @@
 #include "actor.h"
 #include "portal.h"
 
-Portal::Portal(double x, double y, double width, double height) :
-    Actor(ActorType::PORTAL, x, y, width, height) {
+Portal::Portal(double x, double y) :
+    Actor(ActorType::PORTAL, x, y, 128, 128) {
 }

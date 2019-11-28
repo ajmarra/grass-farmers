@@ -27,9 +27,7 @@ class MasterLogic {
         std::list<std::shared_ptr<Room>>::iterator currentRoom;
         std::list<std::shared_ptr<Actor>> actorList;
 		std::list<std::shared_ptr<Item>> itemList;
-		std::list<std::shared_ptr<EnemyView>> enemyViewList;
 		std::list<std::shared_ptr<Enemy>> enemyQueueList;
-        std::list<std::shared_ptr<Enemy>> enemyList;
 
 		float delta;
 

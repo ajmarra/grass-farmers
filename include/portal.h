@@ -10,7 +10,7 @@
 class Portal : public Actor {
 
 public:
-    Portal(double x, double y, double width, double height);
+    Portal(double x, double y);
 
 
 };

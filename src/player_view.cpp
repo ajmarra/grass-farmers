@@ -13,8 +13,6 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     this->fred = fred;
     this->window = window;
 	
-	
-
     portalSprite.spriteMap.loadFromFile("../resources/portalanim.png");
     portalSprite.spriteFrame.top = 0;//x
     portalSprite.spriteFrame.left = 0;//y
@@ -39,7 +37,7 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     EnemySprite.spriteFrame.width = 64;
     EnemySprite.spriteFrame.height = 64;
 
-
+    FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
 	FredSprite.spriteFrame.top = 64;//x
 	FredSprite.spriteFrame.left = 0;//y
 	FredSprite.spriteFrame.width = 64;
@@ -127,30 +125,6 @@ void PlayerView::drawScreen(void) {
     room.setPosition(logic->getCurrentRoom()->getX(), logic->getCurrentRoom()->getY());
     room.setTexture(&room_image.spriteMap);
     this->window->draw(room);
-
-	//Enemy spawn points/portals
-	sf::RectangleShape sp1(sf::Vector2f(128, 128));
-    sp1.setTexture(&portalSprite.spriteMap);
-    sp1.setTextureRect(portalSprite.spriteFrame);
-	sp1.setPosition(70, 150);
-	
-	sf::RectangleShape sp2(sf::Vector2f(128, 128));
-	sp2.setPosition(20, 350);
-	sp2.setTexture(&portalSprite.spriteMap);
-    sp2.setTextureRect(portalSprite.spriteFrame);
-	sf::RectangleShape sp3(sf::Vector2f(128, 128));
-	sp3.setPosition(20, 550);
-	sp3.setTexture(&portalSprite.spriteMap);
-    sp3.setTextureRect(portalSprite.spriteFrame);
-	sf::RectangleShape sp4(sf::Vector2f(128, 128));
-	sp4.setPosition(70, 750);
-	sp4.setTexture(&portalSprite.spriteMap);
-    sp4.setTextureRect(portalSprite.spriteFrame);
-
-	this->window->draw(sp1);
-	this->window->draw(sp2);
-	this->window->draw(sp3);
-	this->window->draw(sp4);
 
 	//Fred's Health Bar
 	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
@@ -255,8 +229,9 @@ void PlayerView::drawScreen(void) {
             case ActorType::PORTAL:
             {
                 sf::RectangleShape sp1(sf::Vector2f(actor->getWidth(), actor->getHeight()));
+                sp1.setTexture(&portalSprite.spriteMap);
+                sp1.setTextureRect(portalSprite.spriteFrame);
                 sp1.setPosition(actor->getX(), actor->getY());
-                sp1.setFillColor(sf::Color::Cyan);
                 this->window->draw(sp1);
             }
         }
