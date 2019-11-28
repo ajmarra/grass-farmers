@@ -25,7 +25,6 @@ void Character::damage(int d) {
 void Character::heal(int healAmount) {
 	health += healAmount;
 	if (health > maxHealth) health = maxHealth;
-    //this->removeItemAtIndex(selectedIndex);
 }
 
 void Character::move(void) {

@@ -133,6 +133,13 @@ void PlayerView::drawScreen(void) {
 
 	this->window->draw(healthBar);
 
+    //Fred's Busy Bar
+    sf::RectangleShape busyBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getSleepTime()*50, 20));
+    busyBar.setPosition(10, 60);
+    busyBar.setFillColor(sf::Color::Yellow);
+
+    this->window->draw(busyBar);
+
 	// Hard coded inventory blocks
 	sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
 	sf::RectangleShape inventoryBlock2(sf::Vector2f(75, 75));
