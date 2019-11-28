@@ -11,6 +11,7 @@
 //#include "enemy.h"
 #include "bullet.h"
 #include "bed.h"
+#include "closet.h"
 
 class Exit;
 class Fred;
@@ -46,7 +47,9 @@ class Room : public Actor {
         void addActor(std::shared_ptr<Bullet> bullet);
     
         void addActor(std::shared_ptr<Bed> bed);
-
+    
+        void addActor(std::shared_ptr<Closet> closet);
+    
         std::shared_ptr<Fred> getFred(void) { return this->fred; };
         
         std::list<std::shared_ptr<Exit>> getExitList(void) { return this->exitList; };

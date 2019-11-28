@@ -36,3 +36,7 @@ void Room::addActor(std::shared_ptr<Bullet> bullet) {
 void Room::addActor(std::shared_ptr<Bed> bed) {
     this->actorList.emplace_back(bed);
 }
+
+void Room::addActor(std::shared_ptr<Closet> closet) {
+    this->actorList.emplace_back(closet);
+}

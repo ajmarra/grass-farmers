@@ -19,6 +19,7 @@ class MasterView;
 #include "melee_weapon.h"
 #include "range_weapon.h"
 #include "health_item.h"
+#include "closet.h"
 
 class MasterView;
 

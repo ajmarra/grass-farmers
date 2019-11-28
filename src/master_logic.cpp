@@ -82,6 +82,9 @@ void MasterLogic::startDemo(void) {
     
     // Add bed
     this->roomList.front()->addActor(std::make_shared<Bed>(ActorType::BED, 500, 250, 100, 50, 1));
+    
+    // Add closet
+    this->roomList.front()->addActor(std::make_shared<Closet>(ActorType::CLOSET, 600, 350, 100, 50));
 
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();

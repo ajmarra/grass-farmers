@@ -245,6 +245,14 @@ void PlayerView::drawScreen(void) {
                 this->window->draw(bedShape);
             }
                 break;
+            case ActorType::CLOSET:
+            {
+                sf::RectangleShape closetShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
+                closetShape.setFillColor(sf::Color::Red);
+                closetShape.setPosition(actor->getX(), actor->getY());
+                this->window->draw(closetShape);
+            }
+                break;
             case ActorType::ROOM:
                 break;
         }
