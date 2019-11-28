@@ -28,6 +28,10 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     // Load sprites    
     room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
 
+    health_image.spriteMap.loadFromFile("../resources/health_item.png");
+
+    trap_image.spriteMap.loadFromFile("../resources/trap.png");
+
     
     EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
     EnemySprite.spriteFrame.top = 64;//x
@@ -221,7 +225,7 @@ void PlayerView::drawScreen(void) {
 			case ActorType::HEALTH:
 			{
 				sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-				itemShape.setFillColor(sf::Color::Magenta);
+				itemShape.setTexture(&health_image.spriteMap);
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
 			}
@@ -229,7 +233,7 @@ void PlayerView::drawScreen(void) {
 			case ActorType::TRAP:
 			{
 				sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-				itemShape.setFillColor(sf::Color::Yellow);
+				itemShape.setTexture(&trap_image.spriteMap);
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
 			}

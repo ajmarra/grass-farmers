@@ -22,7 +22,9 @@ class PlayerView : public View {
         Graphics EnemySprite;
         Graphics room_image;
         Graphics portalSprite;
-        
+        Graphics health_image;
+        Graphics trap_image;
+
 		float elapsedTime = 0;
 
         void pollInput(void);
