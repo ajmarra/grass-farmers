@@ -223,19 +223,18 @@ void PlayerView::drawScreen(void) {
         }
     }
 
-    /*for (std::list<std::shared_ptr<Item>>::iterator it = this->curRoom->getItemList().begin();
-        it != this->curRoom->getItemList().end(); ++it) {
-        if ((*it)->getQuantity() > 1) {
+    for (std::shared_ptr<Item> it : this->logic->getCurrentRoom()->getItemList()) {
+        if (it->getQuantity() > 1) {
             sf::Text numText;
             numText.setFont(font);
-            numText.setString(std::to_string((*it)->getQuantity()));
+            numText.setString(std::to_string(it->getQuantity()));
             numText.setCharacterSize(25); // in pixels, not points!
             numText.setFillColor(sf::Color::White);
             numText.setStyle(sf::Text::Bold);
-            numText.setPosition((*it)->getCenterX() - 3, (*it)->getCenterY() + 5);
+            numText.setPosition(it->getCenterX() - 3, it->getCenterY() + 5);
             this->window->draw(numText);
         }
-    }*/
+    }
 
 }
 
