@@ -43,7 +43,6 @@ class MasterLogic {
 
         int nightCount = 1;
     
-		float delta;
         std::shared_ptr<Timer> timer;
 
     public:
@@ -72,9 +71,7 @@ class MasterLogic {
         void checkCollisions(float delta);
 
         void removeUsedItems(void);
-
-		std::shared_ptr<Fred> getFred(void) { return fred; };
-
+        
 		std::list<std::shared_ptr<Item>> getItemList(void) { return itemList; };
     
         std::shared_ptr<Timer> getTimer() { return timer; };
