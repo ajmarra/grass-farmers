@@ -9,20 +9,6 @@
 
 void MasterLogic::init(std::shared_ptr<MasterView> view) {
     this->view = view;
-    
-    // Create rooms
-    this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
-    this->roomList.push_back(std::make_shared<Room>(0, 100, 400, 400));     // farmhouse
-    this->currentRoom = roomList.begin();
-
-    // Add exits
-    this->roomList.front()->addActor(std::make_shared<Exit>(0, 430, 1));
-    this->roomList.back()->addActor(std::make_shared<Exit>(500, 500, 0));
-
-    // Add fred
-    std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
-    this->roomList.front()->addActor(fred);
-    this->view->setPlayer(fred);
 }
 
 void MasterLogic::startMenu(void){
@@ -60,6 +46,20 @@ void MasterLogic::loadInEnemies(void) {
 }
 
 void MasterLogic::startDemo(void) {
+     // Create rooms
+    this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
+    this->roomList.push_back(std::make_shared<Room>(0, 100, 400, 400));     // farmhouse
+    this->currentRoom = roomList.begin();
+
+    // Add exits
+    this->roomList.front()->addActor(std::make_shared<Exit>(0, 430, 1));
+    this->roomList.back()->addActor(std::make_shared<Exit>(500, 500, 0));
+
+    // Add fred
+    std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
+    this->roomList.front()->addActor(fred);
+    this->view->setPlayer(fred);
+
 	this->loadInEnemies();
 
 
@@ -70,8 +70,8 @@ void MasterLogic::startDemo(void) {
 
 	// Add test items
 	this->roomList.front()->addActor(std::make_shared<RangeWeapon>(this->getCurrentRoom(), 150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
-	this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 20, 20, this->getCurrentRoom()->getFred()));
-	this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 20, 20, this->getCurrentRoom()->getFred()));
+	this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 32, 32, this->getCurrentRoom()->getFred()));
+	this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 32, 32, this->getCurrentRoom()->getFred()));
 
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();
