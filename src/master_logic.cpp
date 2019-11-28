@@ -77,16 +77,13 @@ void MasterLogic::loadInEnemies(void) {
 void MasterLogic::checkCollisions(float delta) {
     this->elapsedTime += delta;
     if (this->getCurrentRoom()->getEnemyList().size() > 0) {
-        //for (std::list<std::shared_ptr<Enemy>>::iterator enemy = this->getCurrentRoom()->getEnemyList().begin(); enemy != this->getCurrentRoom()->getEnemyList().end(); ++enemy) {
         for (std::shared_ptr<Enemy> enemy : this->getCurrentRoom()->getEnemyList()) {
-            /*for (std::list<std::shared_ptr<Trap>>::iterator it = trapList.begin(); it != trapList.end(); ++it) {
-                if ((*enemy)->collidesSquare(*(*it)) && (*it)->getIsSet()) {
-                    (*enemy)->damage((*it)->getDamage());
-                    trapList.remove((*it));
-                    actorList.remove((*it));
-                    itemList.remove((*it));
+            for(std::shared_ptr<Trap> it : this->getCurrentRoom()->getTrapList()) {
+                if (enemy->collidesSquare(*it) && it->getIsSet()) {
+                    enemy->damage(it->getDamage());
+                    this->getCurrentRoom()->removeActor(it);
                 }
-            }*/
+            }
 
             if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->elapsedTime >= 1) {
                 elapsedTime = 0;
@@ -100,10 +97,9 @@ void MasterLogic::checkCollisions(float delta) {
 }
 
 void MasterLogic::removeUsedItems(void) {
-    for (std::list<std::shared_ptr<Item>>::iterator it = itemList.begin(); it != itemList.end(); ++it) {
-        if ((*it)->getUsedItem()) {
-            itemList.remove((*it));
-            actorList.remove((*it));
+    for (std::shared_ptr<Item> it : this->getCurrentRoom()->getItemList()) {
+        if (it->getUsedItem()) {
+            this->getCurrentRoom()->removeActor(it);
         }
     }
 }
@@ -123,6 +119,7 @@ void MasterLogic::startDemo(void) {
 
 	// Add test items
 	this->roomList.front()->addActor(std::make_shared<RangeWeapon>(this->getCurrentRoom(), 150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 20, 20, this->getCurrentRoom()->getFred()));
 	this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 20, 20, this->getCurrentRoom()->getFred()));
 	this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 20, 20, this->getCurrentRoom()->getFred()));
 

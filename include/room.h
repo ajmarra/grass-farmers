@@ -8,7 +8,7 @@
 #include "character.h"
 //#include "fred.h"
 #include "item.h"
-//#include "enemy.h"
+#include "trap.h"
 #include "bullet.h"
 #include "portal.h"
 
@@ -26,7 +26,7 @@ class Room : public Actor {
         std::list<std::shared_ptr<Enemy>> enemyList;
         std::list<std::shared_ptr<Item>> itemList;
         std::list<std::shared_ptr<Bullet>> bulletList;
-        std::list<std::shared_ptr<Portal>> portalList;
+        std::list<std::shared_ptr<Trap>> trapList;
         
     public:
         Room(double x, double y, double width, double height);
@@ -49,9 +49,13 @@ class Room : public Actor {
         
         void addActor(std::shared_ptr<Portal> portal);
 
+        void addActor(std::shared_ptr<Trap> trap);
+
         void removeActor(std::shared_ptr<Enemy> toRemove);
 
         void removeActor(std::shared_ptr<Item> toRemove);
+
+        void removeActor(std::shared_ptr<Trap> toRemove);
 
         std::shared_ptr<Fred> getFred(void) { return this->fred; };
         
@@ -62,6 +66,8 @@ class Room : public Actor {
         std::list<std::shared_ptr<Item>> getItemList(void) { return this->itemList; };
         
         std::list<std::shared_ptr<Bullet>> getBulletList(void) { return this->bulletList; };
+
+        std::list<std::shared_ptr<Trap>> getTrapList(void) { return this->trapList; };
 
         /**
          * Return the whole list of actors.

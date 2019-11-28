@@ -8,6 +8,7 @@ Trap::Trap(double x, double y, double width, double height, std::shared_ptr<Char
     this->x = x;
     this->y = y;
     this->setUsedItem(false);
+    this->setCanPickUp(true);
 }
 
 void Trap::use(int x, int y) {
