@@ -35,6 +35,8 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 
     health_image.spriteMap.loadFromFile("../resources/health_item.png");
 
+    trap_image.spriteMap.loadFromFile("../resources/unused_trap.png");
+
     trap_image.spriteMap.loadFromFile("../resources/trap.png");
 
     
@@ -235,7 +237,7 @@ void PlayerView::drawScreen(void) {
 			case ActorType::TRAP:
 			{
 				sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-				itemShape.setTexture(&trap_image.spriteMap);
+                itemShape.setTexture(&trap_image.spriteMap);
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
 			}

@@ -28,6 +28,8 @@ class PlayerView : public View {
         Graphics portalSprite;
         Graphics health_image;
         Graphics trap_image;
+        Graphics unused_trap_image;
+
 
 
         sf::Font font;
