@@ -25,6 +25,7 @@ class PlayerView : public View {
         Graphics FredSprite;
         Graphics EnemySprite;
         Graphics farm_image;
+        Graphics exit_image;
         Graphics barn_image;
         Graphics portalSprite;
         Graphics health_image;

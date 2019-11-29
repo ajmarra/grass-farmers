@@ -33,6 +33,8 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     // Load sprites    
     farm_image.spriteMap.loadFromFile("../resources/farmscreen.png");
 
+    exit_image.spriteMap.loadFromFile("../resources/exit.png");
+
     barn_image.spriteMap.loadFromFile("../resources/barn.png");
 
     health_image.spriteMap.loadFromFile("../resources/health_item.png");
@@ -253,7 +255,7 @@ void PlayerView::drawScreen(void) {
             case ActorType::EXIT:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-				itemShape.setFillColor(sf::Color::Cyan);
+				itemShape.setTexture(&exit_image.spriteMap);
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
 			}
