@@ -194,8 +194,16 @@ void MasterLogic::update(float delta) {
             if (this->getCurrentRoom()->getFred()->collidesSquare(*exit)) {
                 std::list<std::shared_ptr<Room>>::iterator newRoom = this->roomList.begin();
                 advance(newRoom, exit->getDestination());
-                this->currentRoom = newRoom;
-                this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX(), this->getCurrentRoom()->getExitList().front()->getCenterY()+50);
+                if (this->getCurrentRoom()->getFred()->getCenterX() < exit->getCenterX()) {
+                    this->currentRoom = newRoom;
+                    this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX()+50, this->getCurrentRoom()->getExitList().front()->getCenterY());
+                }
+                else if(this->getCurrentRoom()->getFred()->getCenterX() > exit->getCenterX()) {
+                    this->currentRoom = newRoom;
+                    this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX() - 100, this->getCurrentRoom()->getExitList().front()->getCenterY());
+                }
+
+                //this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX(), this->getCurrentRoom()->getExitList().front()->getCenterY()+50);
             }
         }
 
