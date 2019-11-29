@@ -99,6 +99,11 @@ void Graphics::setFredSprite(double direction) {
 void Graphics::setEnemySprite(double direction) {
     //up 1
     if (direction >= -135.0 && direction < -45.0) {
+
+        
+        if(spriteFrame.left >= 128){
+            spriteFrame.left = 0;
+        }
         spriteFrame.top = 0;
         left = false;
 
@@ -122,6 +127,10 @@ void Graphics::setEnemySprite(double direction) {
 
     //down 1
     else if (direction <= 135.0 && direction > 45.0) {
+        if(spriteFrame.left >= 128){
+            spriteFrame.left = 0;
+        }
+
         spriteFrame.top = 64;
         left = false;
 
@@ -130,6 +139,9 @@ void Graphics::setEnemySprite(double direction) {
 
     //right1
     else if (direction < 45.0 && direction > 0.0 || direction >= -45.0 && direction <0.0) {
+        if(spriteFrame.left >= 128){
+            spriteFrame.left = 0;
+        }
         spriteFrame.top = 128;
         left = false;
 

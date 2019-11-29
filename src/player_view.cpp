@@ -239,6 +239,7 @@ void PlayerView::drawScreen(void) {
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
 			}
+            break;
             case ActorType::EXIT:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
@@ -255,6 +256,7 @@ void PlayerView::drawScreen(void) {
                 sp1.setPosition(actor->getX(), actor->getY());
                 this->window->draw(sp1);
             }
+            break;
         }
     }
 
