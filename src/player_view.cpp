@@ -12,6 +12,13 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
         : View(logic) {
     this->fred = fred;
     this->window = window;
+
+    sky.setSize(sf::Vector2f(1200, 100));
+    sky.setFillColor(sf::Color (0, 191, 255));
+
+    darkness.setSize(sf::Vector2f(1200, 800));
+    darkness.setPosition(0,100);
+    darkness.setFillColor(sf::Color (0, 0, 0, 150));
 	
     portalSprite.spriteMap.loadFromFile("../resources/portalanim.png");
     portalSprite.spriteFrame.top = 0;//x
@@ -24,9 +31,17 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     cur_track.playDayTrack();
 
     // Load sprites    
-    room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
+    farm_image.spriteMap.loadFromFile("../resources/farmscreen.png");
+
+    exit_image.spriteMap.loadFromFile("../resources/exit.png");
+
+    gun1_image.spriteMap.loadFromFile("../resources/gun1.png");
+
+    barn_image.spriteMap.loadFromFile("../resources/barn.png");
 
     health_image.spriteMap.loadFromFile("../resources/health_item.png");
+
+    trap_image.spriteMap.loadFromFile("../resources/unused_trap.png");
 
     trap_image.spriteMap.loadFromFile("../resources/trap.png");
 
@@ -89,7 +104,7 @@ void PlayerView::pollInput() {
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelectedIndex(3);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)){
-		cur_track.stopCurrentTrack();
+		//cur_track.stopCurrentTrack();
 		this->logic->paused = true;
 		this->logic->startPaused();
 		
@@ -99,6 +114,7 @@ void PlayerView::pollInput() {
 void PlayerView::drawScreen(void) {
     this->window->clear(sf::Color::Black);
     
+    this->window->draw(sky);
     
     //Timer
     sf::CircleShape clock;
@@ -123,8 +139,18 @@ void PlayerView::drawScreen(void) {
     sf::RectangleShape room;
     room.setSize(sf::Vector2f(logic->getCurrentRoom()->getWidth(), logic->getCurrentRoom()->getHeight()));
     room.setPosition(logic->getCurrentRoom()->getX(), logic->getCurrentRoom()->getY());
-    room.setTexture(&room_image.spriteMap);
+        if (logic->getCurrentRoom()->getHeight() >= 800){
+        
+            room.setTexture(&farm_image.spriteMap);
+        }
+        else{
+            room.setTexture(&barn_image.spriteMap);
+        }
     this->window->draw(room);
+    
+    if (night == true){
+        this->window->draw(darkness);
+    }
 
 	//Fred's Health Bar
 	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
@@ -167,6 +193,8 @@ void PlayerView::drawScreen(void) {
 	inventoryBlock4.setOutlineThickness(5);
 	inventoryBlock4.setFillColor(sf::Color::Black);
 
+    
+
 	this->window->draw(inventoryBlock1);
 	this->window->draw(inventoryBlock2);
 	this->window->draw(inventoryBlock3);
@@ -187,7 +215,7 @@ void PlayerView::drawScreen(void) {
             case ActorType::WEAPON:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-                itemShape.setFillColor(sf::Color::White);
+                itemShape.setTexture(&gun1_image.spriteMap);
                 itemShape.setPosition(actor->getX(), actor->getY());
                 this->window->draw(itemShape);
             }
@@ -221,14 +249,15 @@ void PlayerView::drawScreen(void) {
 			case ActorType::TRAP:
 			{
 				sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-				itemShape.setTexture(&trap_image.spriteMap);
+                itemShape.setTexture(&trap_image.spriteMap);
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
 			}
+            break;
             case ActorType::EXIT:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-				itemShape.setFillColor(sf::Color::Cyan);
+				itemShape.setTexture(&exit_image.spriteMap);
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
 			}
@@ -241,6 +270,7 @@ void PlayerView::drawScreen(void) {
                 sp1.setPosition(actor->getX(), actor->getY());
                 this->window->draw(sp1);
             }
+            break;
         }
     }
 
@@ -262,11 +292,16 @@ void PlayerView::drawScreen(void) {
 void PlayerView::switchToDay() {
     cur_track.stopCurrentTrack();
     cur_track.playDayTrack();
+    sky.setFillColor(sf::Color (0, 191, 255));
+    night = false;
 }
 
 void PlayerView::switchToNight() {
     cur_track.stopCurrentTrack();
     cur_track.playNightTrack();
+    sky.setFillColor(sf::Color (25, 25, 112));
+    night = true;
+    
 }
 
 void PlayerView::update(float delta) {
