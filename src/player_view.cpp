@@ -41,7 +41,7 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 
     health_image.spriteMap.loadFromFile("../resources/health_item.png");
 
-    trap_image.spriteMap.loadFromFile("../resources/unused_trap.png");
+    unused_trap_image.spriteMap.loadFromFile("../resources/unused_trap.png");
 
     trap_image.spriteMap.loadFromFile("../resources/trap.png");
 
@@ -200,6 +200,30 @@ void PlayerView::drawScreen(void) {
 	this->window->draw(inventoryBlock3);
 	this->window->draw(inventoryBlock4);
 
+    for (std::shared_ptr<Trap> trap : this->logic->getCurrentRoom()->getTrapList()) {
+        switch (trap->getIsSet()) {
+            case true:
+            {
+                sf::RectangleShape itemShape(sf::Vector2f(trap->getWidth(), trap->getHeight()));
+                    itemShape.setTexture(&trap_image.spriteMap);
+                    itemShape.setPosition(trap->getX(), trap->getY());
+                    this->window->draw(itemShape);
+            }
+            break;
+            case false:
+            {
+                sf::RectangleShape itemShape(sf::Vector2f(trap->getWidth(), trap->getHeight()));
+                    itemShape.setTexture(&unused_trap_image.spriteMap);
+                    itemShape.setPosition(trap->getX(), trap->getY());
+                    this->window->draw(itemShape);
+            }
+            break;
+
+
+        }
+
+    }
+
     for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getActorList()) {
         switch (actor->getType()) {
             case ActorType::FRED:
@@ -246,14 +270,14 @@ void PlayerView::drawScreen(void) {
 				this->window->draw(itemShape);
             }
 			break;
-			case ActorType::TRAP:
-			{
-				sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-                itemShape.setTexture(&trap_image.spriteMap);
-				itemShape.setPosition(actor->getX(), actor->getY());
-				this->window->draw(itemShape);
-			}
-            break;
+			// case ActorType::TRAP:
+			// {
+			// 	sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
+            //     itemShape.setTexture(&trap_image.spriteMap);
+			// 	itemShape.setPosition(actor->getX(), actor->getY());
+			// 	this->window->draw(itemShape);
+			// }
+            // break;
             case ActorType::EXIT:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
