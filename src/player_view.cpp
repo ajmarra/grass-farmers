@@ -56,7 +56,7 @@ void PlayerView::pollInput() {
 
     // Pick up item
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
-        fred->addItem(this->logic->getItemList());
+        fred->addItem(this->logic->getCurrentRoom()->getItemList());
     }
     
     // Drop item
@@ -200,7 +200,7 @@ void PlayerView::drawScreen(void) {
             case ActorType::BULLET:
             {
                 sf::CircleShape bulletShape(actor->getWidth());
-                bulletShape.setFillColor(sf::Color::White);
+                bulletShape.setFillColor(sf::Color::Green);
                 bulletShape.setPosition(actor->getX(), actor->getY());
                 this->window->draw(bulletShape);
             }
@@ -220,6 +220,7 @@ void PlayerView::drawScreen(void) {
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
 			}
+                break;
             case ActorType::EXIT:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));

@@ -42,7 +42,7 @@ class Room : public Actor {
 
         void addActor(std::shared_ptr<Item> item);
 
-        void addActor(std::shared_ptr<Bullet> bullet);
+        void addActor(std::shared_ptr<Bullet> &bullet);
 
         std::shared_ptr<Fred> getFred(void) { return this->fred; };
         

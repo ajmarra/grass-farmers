@@ -3,6 +3,7 @@
 
 #include "actor.h"
 #include "bullet.h"
+#include <iostream>
 
 Bullet::Bullet(double x, double y, int size, double speed, double direction, int damage)
     : Actor(ActorType::BULLET, x, y, 3 * size, size) {
@@ -13,6 +14,7 @@ Bullet::Bullet(double x, double y, int size, double speed, double direction, int
 
 void Bullet::update(float dt) {
     Actor::update(dt);
-    this->timer -= dt;
-    if (timer <= 0) ; //if it has existed for too long, delete
+    std::cout << this->xSpeed << " " << this->ySpeed;
+    //this->timer -= dt;
+    //if (timer <= 0) ; //if it has existed for too long, delete
 }
