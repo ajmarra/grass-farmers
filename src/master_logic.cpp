@@ -108,12 +108,12 @@ void MasterLogic::removeUsedItems(void) {
 void MasterLogic::startDemo(void) {
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
-    this->roomList.push_back(std::make_shared<Room>(0, 100, 400, 400));     // farmhouse
+    this->roomList.push_back(std::make_shared<Room>(450, 200, 400, 400));     // farmhouse
     this->currentRoom = roomList.begin();
 
     // Add exits
-    this->roomList.front()->addActor(std::make_shared<Exit>(0, 430, 1));
-    this->roomList.back()->addActor(std::make_shared<Exit>(500, 500, 0));
+    this->roomList.front()->addActor(std::make_shared<Exit>(1200, 430, 1));
+    this->roomList.back()->addActor(std::make_shared<Exit>(400, 400, 0));
 
     // Add fred
     std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
@@ -194,7 +194,16 @@ void MasterLogic::update(float delta) {
             if (this->getCurrentRoom()->getFred()->collidesSquare(*exit)) {
                 std::list<std::shared_ptr<Room>>::iterator newRoom = this->roomList.begin();
                 advance(newRoom, exit->getDestination());
-                this->currentRoom = newRoom;
+                if (this->getCurrentRoom()->getFred()->getCenterX() < exit->getCenterX()) {
+                    this->currentRoom = newRoom;
+                    this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX()+50, this->getCurrentRoom()->getExitList().front()->getCenterY());
+                }
+                else if(this->getCurrentRoom()->getFred()->getCenterX() > exit->getCenterX()) {
+                    this->currentRoom = newRoom;
+                    this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX() - 100, this->getCurrentRoom()->getExitList().front()->getCenterY());
+                }
+
+                //this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX(), this->getCurrentRoom()->getExitList().front()->getCenterY()+50);
             }
         }
 

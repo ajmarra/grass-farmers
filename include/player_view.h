@@ -19,7 +19,7 @@ class PlayerView : public View {
 
         sf::RectangleShape sky;
         sf::RectangleShape darkness;
-        bool night = false;
+        bool night = true;
 
         Sounds cur_track;
         Graphics FredSprite;

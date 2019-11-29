@@ -14,7 +14,7 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     this->window = window;
 
     sky.setSize(sf::Vector2f(1200, 100));
-    sky.setFillColor(sf::Color (0, 191, 255));
+    sky.setFillColor(sf::Color (25, 25, 112));
 
     darkness.setSize(sf::Vector2f(1200, 800));
     darkness.setPosition(0,100);
@@ -28,7 +28,7 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 	
 
     // Play music
-    cur_track.playDayTrack();
+    cur_track.playNightTrack();
 
     // Load sprites    
     farm_image.spriteMap.loadFromFile("../resources/farmscreen.png");
@@ -273,10 +273,21 @@ void PlayerView::drawScreen(void) {
 
             case ActorType::EXIT:
             {
-                sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-				itemShape.setTexture(&exit_image.spriteMap);
-				itemShape.setPosition(actor->getX(), actor->getY());
-				this->window->draw(itemShape);
+                if (this->logic->getCurrentRoom()->getFred()->getCenterX() < actor->getCenterX()) {
+                    sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
+                    itemShape.setTexture(&exit_image.spriteMap);
+                    itemShape.setPosition(actor->getX(), actor->getY());
+                    this->window->draw(itemShape);
+                }
+                else if (this->logic->getCurrentRoom()->getFred()->getCenterX() > actor->getCenterX()) {
+                    sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
+                    itemShape.setTexture(&exit_image.spriteMap);
+                    itemShape.setPosition(actor->getX(), actor->getY());
+
+                    sf::Transform transform;
+                    transform.rotate(180, actor->getCenterX(), actor->getCenterY());
+                    this->window->draw(itemShape, transform);
+                }
 			}
             break;
             case ActorType::PORTAL:
