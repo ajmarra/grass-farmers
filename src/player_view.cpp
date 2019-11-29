@@ -31,7 +31,9 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     cur_track.playDayTrack();
 
     // Load sprites    
-    room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
+    farm_image.spriteMap.loadFromFile("../resources/farmscreen.png");
+
+    barn_image.spriteMap.loadFromFile("../resources/barn.png");
 
     health_image.spriteMap.loadFromFile("../resources/health_item.png");
 
@@ -133,7 +135,13 @@ void PlayerView::drawScreen(void) {
     sf::RectangleShape room;
     room.setSize(sf::Vector2f(logic->getCurrentRoom()->getWidth(), logic->getCurrentRoom()->getHeight()));
     room.setPosition(logic->getCurrentRoom()->getX(), logic->getCurrentRoom()->getY());
-    room.setTexture(&room_image.spriteMap);
+        if (logic->getCurrentRoom()->getHeight() >= 800){
+        
+            room.setTexture(&farm_image.spriteMap);
+        }
+        else{
+            room.setTexture(&barn_image.spriteMap);
+        }
     this->window->draw(room);
     
     if (night == true){

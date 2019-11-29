@@ -24,7 +24,8 @@ class PlayerView : public View {
         Sounds cur_track;
         Graphics FredSprite;
         Graphics EnemySprite;
-        Graphics room_image;
+        Graphics farm_image;
+        Graphics barn_image;
         Graphics portalSprite;
         Graphics health_image;
         Graphics trap_image;
