@@ -117,7 +117,7 @@ void MasterLogic::startDemo(void) {
 
     // Add fred
     std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
-    this->roomList.front()->addActor(fred);
+    for (std::shared_ptr<Room> room :this->roomList) room->addActor(fred);
     this->view->setPlayer(fred);
 
     this->loadInEnemies();
@@ -133,7 +133,7 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(portal4);
 
     // Add test items
-    this->roomList.front()->addActor(std::make_shared<RangeWeapon>(this->getCurrentRoom(), 150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<RangeWeapon>(150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 32, 32, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 32, 32, this->getCurrentRoom()->getFred()));
@@ -194,7 +194,6 @@ void MasterLogic::update(float delta) {
             if (this->getCurrentRoom()->getFred()->collidesSquare(*exit)) {
                 std::list<std::shared_ptr<Room>>::iterator newRoom = this->roomList.begin();
                 advance(newRoom, exit->getDestination());
-                (*newRoom)->addActor(this->getCurrentRoom()->getFred());
                 this->currentRoom = newRoom;
             }
         }

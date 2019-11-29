@@ -257,7 +257,7 @@ void PlayerView::drawScreen(void) {
             case ActorType::BULLET:
             {
                 sf::CircleShape bulletShape(actor->getWidth());
-                bulletShape.setFillColor(sf::Color::White);
+                bulletShape.setFillColor(sf::Color::Green);
                 bulletShape.setPosition(actor->getX(), actor->getY());
                 this->window->draw(bulletShape);
             }
