@@ -270,14 +270,7 @@ void PlayerView::drawScreen(void) {
 				this->window->draw(itemShape);
             }
 			break;
-			// case ActorType::TRAP:
-			// {
-			// 	sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-            //     itemShape.setTexture(&trap_image.spriteMap);
-			// 	itemShape.setPosition(actor->getX(), actor->getY());
-			// 	this->window->draw(itemShape);
-			// }
-            // break;
+
             case ActorType::EXIT:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
