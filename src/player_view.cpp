@@ -139,18 +139,11 @@ void PlayerView::drawScreen(void) {
     sf::RectangleShape room;
     room.setSize(sf::Vector2f(logic->getCurrentRoom()->getWidth(), logic->getCurrentRoom()->getHeight()));
     room.setPosition(logic->getCurrentRoom()->getX(), logic->getCurrentRoom()->getY());
-        if (logic->getCurrentRoom()->getHeight() >= 800){
-        
-            room.setTexture(&farm_image.spriteMap);
-        }
-        else{
-            room.setTexture(&barn_image.spriteMap);
-        }
+    if (logic->getCurrentRoom()->getHeight() >= 800) room.setTexture(&farm_image.spriteMap);
+    else room.setTexture(&barn_image.spriteMap);
     this->window->draw(room);
     
-    if (night == true){
-        this->window->draw(darkness);
-    }
+    if (night) this->window->draw(darkness);
 
 	//Fred's Health Bar
 	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
@@ -193,8 +186,6 @@ void PlayerView::drawScreen(void) {
 	inventoryBlock4.setOutlineThickness(5);
 	inventoryBlock4.setFillColor(sf::Color::Black);
 
-    
-
 	this->window->draw(inventoryBlock1);
 	this->window->draw(inventoryBlock2);
 	this->window->draw(inventoryBlock3);
@@ -209,7 +200,7 @@ void PlayerView::drawScreen(void) {
                     itemShape.setPosition(trap->getX(), trap->getY());
                     this->window->draw(itemShape);
             }
-            break;
+                break;
             case false:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(trap->getWidth(), trap->getHeight()));
@@ -217,9 +208,7 @@ void PlayerView::drawScreen(void) {
                     itemShape.setPosition(trap->getX(), trap->getY());
                     this->window->draw(itemShape);
             }
-            break;
-
-
+                break;
         }
 
     }
@@ -269,8 +258,7 @@ void PlayerView::drawScreen(void) {
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
             }
-			break;
-
+			    break;
             case ActorType::EXIT:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
@@ -303,7 +291,6 @@ void PlayerView::drawScreen(void) {
             this->window->draw(numText);
         }
     }
-
 }
 
 void PlayerView::switchToDay() {

@@ -7,6 +7,7 @@
 
 #include "actor.h"
 #include "item.h"
+
 class MasterLogic;
 class Room;
 
@@ -54,6 +55,7 @@ class Character : public Actor {
         void stop() { this->desiredDirection = -1; };
 
 		int getHealth() { return health; };
+        
 		int getMaxHealth() { return maxHealth; };
 
 		void heal(int healAmount);
