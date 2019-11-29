@@ -35,6 +35,8 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 
     exit_image.spriteMap.loadFromFile("../resources/exit.png");
 
+    gun1_image.spriteMap.loadFromFile("../resources/gun1.png");
+
     barn_image.spriteMap.loadFromFile("../resources/barn.png");
 
     health_image.spriteMap.loadFromFile("../resources/health_item.png");
@@ -213,7 +215,7 @@ void PlayerView::drawScreen(void) {
             case ActorType::WEAPON:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-                itemShape.setFillColor(sf::Color::White);
+                itemShape.setTexture(&gun1_image.spriteMap);
                 itemShape.setPosition(actor->getX(), actor->getY());
                 this->window->draw(itemShape);
             }
