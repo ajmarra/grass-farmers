@@ -32,3 +32,29 @@ void Room::addActor(std::shared_ptr<Bullet> bullet) {
     this->actorList.emplace_back(bullet);
     this->bulletList.emplace_back(bullet);
 }
+
+void Room::addActor(std::shared_ptr<Portal> portal) {
+    this->actorList.emplace_back(portal);
+}
+
+void Room::addActor(std::shared_ptr<Trap> trap) {
+    this->actorList.emplace_back(trap);
+    this->trapList.emplace_back(trap);
+    this->itemList.emplace_back(trap);
+}
+
+void Room::removeActor(std::shared_ptr<Enemy> toRemove) {
+    this->actorList.remove(toRemove);
+    this->enemyList.remove(toRemove);
+}
+
+void Room::removeActor(std::shared_ptr<Item> toRemove) {
+    this->actorList.remove(toRemove);
+    this->itemList.remove(toRemove);
+}
+
+void Room::removeActor(std::shared_ptr<Trap> toRemove) {
+    this->actorList.remove(toRemove);
+    this->itemList.remove(toRemove);
+    this->trapList.remove(toRemove);
+}

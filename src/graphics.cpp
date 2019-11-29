@@ -28,6 +28,8 @@ void Graphics::updateEnemy(float delta) {
 
     //std::cout << delta << std::endl;
     //std::cout << direction << std::endl;
+
+    
     
     
     if ((elapsedEnemyTime >= frameRateEnemy)){
@@ -38,7 +40,8 @@ void Graphics::updateEnemy(float delta) {
             //in case it goes off array map
             if (spriteFrame.top >= 128) {
                 spriteFrame.top = 0;
-        }}
+        }
+        }
 
         //for all other directions
         else if (left == false){        
@@ -68,7 +71,7 @@ void Graphics::updatePortal(float delta) {
         //in case it goes off array map
         if (spriteFrame.left >= 256) {
             spriteFrame.left = 0;
-        }
+        } 
     elapsedPortalTime  = 0;
         
     }
@@ -106,6 +109,10 @@ void Graphics::setEnemySprite(double direction) {
     // //left1
     else if ((((direction < -135.0) && (direction >= -180.0)) || 
     ((direction <= 180.0) && (direction > 135.0)))){
+
+        if(spriteFrame.top >= 128){
+        spriteFrame.top = 0;
+        }
         //spriteFrame.top = 0;
         spriteFrame.left = 128;
         left = true;

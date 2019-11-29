@@ -8,7 +8,7 @@ Timer::Timer() {
 bool Timer::update(float delta) {
     curTimeElapsed += delta;
     if (curTimeElapsed >= deltaLimit) {
-        curTime += 2;
+        curTime += 5;
         curTimeElapsed = 0;
     }
     if (curTime >= totalTimeLimit) {

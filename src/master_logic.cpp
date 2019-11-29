@@ -1,5 +1,6 @@
 #include "master_logic.h"
 #include "master_view.h"
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -11,42 +12,101 @@ void MasterLogic::init(std::shared_ptr<MasterView> view) {
     this->view = view;
 }
 
-void MasterLogic::startMenu(void){
+void MasterLogic::startMenu(void) {
     this->view->setMenu();
 }
 
-void MasterLogic::startTutorial(void){
+void MasterLogic::startTutorial(void) {
     //std::cout << "HOI" << std::endl;
     this->view->setTutorial();
 }
 
-void MasterLogic::startPaused(void){
+void MasterLogic::startPaused(void) {
     //std::cout << "HOI" << std::endl;
     this->view->setPaused();
 }
 
 
 void MasterLogic::loadInEnemies(void) {
-	std::ifstream inFile;
-	double x, y, mass, maxSpeed, maxHealth;
+    std::ifstream inFile;
+    double x, y, mass, maxSpeed, maxHealth;
 
-	inFile.open("../resources/enemies.txt");
-	if (!inFile) {
-		std::cout << "Unable to open enemies.txt";
-		exit(1);
-	}
+    if (nightCount == 1) {
+        inFile.open("../resources/enemies1.txt");
+        if (!inFile) {
+            std::cout << "Unable to open enemies.txt";
+            exit(1);
+        }
 
-	while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
-		std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
-		this->roomList.front()->addActor(testEnemy);
-		this->view->addEnemy(testEnemy);
-	}
+        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
+            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
+            this->enemyQueueList.push_front(testEnemy);
+        }
 
-	inFile.close();
+        inFile.close();
+    }
+    else if (nightCount == 2) {
+        inFile.open("../resources/enemies2.txt");
+        if (!inFile) {
+            std::cout << "Unable to open enemies2.txt";
+            exit(1);
+        }
+
+        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
+            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
+            this->enemyQueueList.push_front(testEnemy);
+        }
+
+        inFile.close();
+    }
+    else if (nightCount == 3) {
+        inFile.open("../resources/enemies3.txt");
+        if (!inFile) {
+            std::cout << "Unable to open enemies3.txt";
+            exit(1);
+        }
+
+        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth) {
+            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth);
+            this->enemyQueueList.push_front(testEnemy);
+        }
+
+        inFile.close();
+    }
+}
+
+void MasterLogic::checkCollisions(float delta) {
+    this->elapsedTime += delta;
+    if (this->getCurrentRoom()->getEnemyList().size() > 0) {
+        for (std::shared_ptr<Enemy> enemy : this->getCurrentRoom()->getEnemyList()) {
+            for (std::shared_ptr<Trap> it : this->getCurrentRoom()->getTrapList()) {
+                if (enemy->collidesSquare(*it) && it->getIsSet()) {
+                    enemy->damage(it->getDamage());
+                    this->getCurrentRoom()->removeActor(it);
+                }
+            }
+
+            if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->elapsedTime >= 1) {
+                elapsedTime = 0;
+                this->getCurrentRoom()->getFred()->damage(2); //temporarily hard coded.  Will change based on enemy type?
+            }
+            if (enemy->getHealth() <= 0) {
+                this->getCurrentRoom()->removeActor(enemy);
+            }
+        }
+    }
+}
+
+void MasterLogic::removeUsedItems(void) {
+    for (std::shared_ptr<Item> it : this->getCurrentRoom()->getItemList()) {
+        if (it->getUsedItem()) {
+            this->getCurrentRoom()->removeActor(it);
+        }
+    }
 }
 
 void MasterLogic::startDemo(void) {
-     // Create rooms
+    // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
     this->roomList.push_back(std::make_shared<Room>(0, 100, 400, 400));     // farmhouse
     this->currentRoom = roomList.begin();
@@ -60,18 +120,23 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(fred);
     this->view->setPlayer(fred);
 
-	this->loadInEnemies();
+    this->loadInEnemies();
 
+    // Creating the portals
+    std::shared_ptr<Portal> portal1 = std::make_shared<Portal>(70, 150);
+    this->roomList.front()->addActor(portal1);
+    std::shared_ptr<Portal> portal2 = std::make_shared<Portal>(20, 350);
+    this->roomList.front()->addActor(portal2);
+    std::shared_ptr<Portal> portal3 = std::make_shared<Portal>(20, 550);
+    this->roomList.front()->addActor(portal3);
+    std::shared_ptr<Portal> portal4 = std::make_shared<Portal>(70, 750);
+    this->roomList.front()->addActor(portal4);
 
-	// Add test enemy
-	std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(200, 200, 40, 100, 100);
-	this->roomList.front()->addActor(testEnemy);
-	this->view->addEnemy(testEnemy);
-
-	// Add test items
-	this->roomList.front()->addActor(std::make_shared<RangeWeapon>(this->getCurrentRoom(), 150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
-	this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 32, 32, this->getCurrentRoom()->getFred()));
-	this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 32, 32, this->getCurrentRoom()->getFred()));
+    // Add test items
+    this->roomList.front()->addActor(std::make_shared<RangeWeapon>(this->getCurrentRoom(), 150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 20, 20, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 20, 20, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 20, 20, this->getCurrentRoom()->getFred()));
 
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();
@@ -79,24 +144,30 @@ void MasterLogic::startDemo(void) {
 
 void MasterLogic::update(float delta) {
     this->delta = delta;
-    if ((paused == true) && (playing == false) && (options == false)){
+    if ((paused == true) && (playing == false) && (options == false)) {
         //std::cout << "HELLO" << std::endl;
     }
 
-    else if ((paused == true) && (playing == false) && (options == true)){
+    else if ((paused == true) && (playing == false) && (options == true)) {
         //std::cout << "HELLO" << std::endl;
     }
-    
-    else if ((paused == true) && (playing == true) && (options == false)){
+
+    else if ((paused == true) && (playing == true) && (options == false)) {
         //std::cout << "HELLO" << std::endl;
     }
-    
-    
+
+
     else if ((paused == false) && (playing == true) && (options == false)) {
-    for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
+
+        this->checkCollisions(delta);
+
+        this->removeUsedItems();
+
+        // Loop throught the actor list
+        for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
             curActor->update(delta);
 
-            
+
             // Keep actors inside the room
             if (!curActor->liesInsideSquare(*(this->getCurrentRoom()))) {
                 if (curActor->getY() < this->getCurrentRoom()->getY()) {
@@ -130,21 +201,46 @@ void MasterLogic::update(float delta) {
 
         if (timer->update(delta)) {
             day = !day;
-            
             if (day) {
                 //Remove enemies from actor list
-                
+
                 //Switch to day theme
                 this->view->switchToDay();
             }
-            
+
             else {
                 //Start spawning enemies
-                
+                this->loadInEnemies();
+
+                if (enemyQueueList.size() > 0) {
+
+                    spawnRate = 5;
+                    std::shared_ptr<Enemy> toSpawn;
+                    toSpawn = this->enemyQueueList.back();
+                    this->enemyQueueList.remove(toSpawn);
+                    this->view->addEnemy(toSpawn);
+                    this->roomList.front()->addActor(toSpawn);
+                    nightCount++;
+                }
+
                 //Switch to night theme
                 this->view->switchToNight();
             }
         }
 
+        if (!day && enemyQueueList.size() > 0) {
+            if (spawnRate <= 0 && enemyQueueList.size() > 0) {
+                spawnRate = 5;
+                std::shared_ptr<Enemy> toSpawn;
+                toSpawn = this->enemyQueueList.back();
+                this->enemyQueueList.remove(toSpawn);
+                this->view->addEnemy(toSpawn);
+                this->roomList.front()->addActor(toSpawn);
+
+            }
+            else {
+                spawnRate -= delta;
+            }
+        }
     }
 }

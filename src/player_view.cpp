@@ -20,8 +20,6 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     darkness.setPosition(0,100);
     darkness.setFillColor(sf::Color (0, 0, 0, 150));
 	
-	
-
     portalSprite.spriteMap.loadFromFile("../resources/portalanim.png");
     portalSprite.spriteFrame.top = 0;//x
     portalSprite.spriteFrame.left = 0;//y
@@ -47,10 +45,17 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     EnemySprite.spriteFrame.height = 64;
 
     FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
-    FredSprite.spriteFrame.top = 64;//x
-    FredSprite.spriteFrame.left = 0;//y
-    FredSprite.spriteFrame.width = 64;
-    FredSprite.spriteFrame.height = 64;
+	FredSprite.spriteFrame.top = 64;//x
+	FredSprite.spriteFrame.left = 0;//y
+	FredSprite.spriteFrame.width = 64;
+	FredSprite.spriteFrame.height = 64;
+
+    if (!font.loadFromFile("../resources/bit5x3.ttf"))
+    {
+        // error...
+        std::cout << "ERROR LOADING FONT FROM FILE" << std::endl;
+    }
+
 }
 
 void PlayerView::pollInput() {
@@ -71,7 +76,7 @@ void PlayerView::pollInput() {
 
     // Pick up item
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
-        fred->addItem(this->logic->getItemList());
+        fred->addItem(this->logic->getCurrentRoom()->getItemList());
     }
     
     // Drop item
@@ -128,34 +133,10 @@ void PlayerView::drawScreen(void) {
     room.setPosition(logic->getCurrentRoom()->getX(), logic->getCurrentRoom()->getY());
     room.setTexture(&room_image.spriteMap);
     this->window->draw(room);
-
+    
     if (night == true){
         this->window->draw(darkness);
     }
-
-	//Enemy spawn points/portals
-	sf::RectangleShape sp1(sf::Vector2f(128, 128));
-    sp1.setTexture(&portalSprite.spriteMap);
-    sp1.setTextureRect(portalSprite.spriteFrame);
-	sp1.setPosition(70, 150);
-	
-	sf::RectangleShape sp2(sf::Vector2f(128, 128));
-	sp2.setPosition(20, 350);
-	sp2.setTexture(&portalSprite.spriteMap);
-    sp2.setTextureRect(portalSprite.spriteFrame);
-	sf::RectangleShape sp3(sf::Vector2f(128, 128));
-	sp3.setPosition(20, 550);
-	sp3.setTexture(&portalSprite.spriteMap);
-    sp3.setTextureRect(portalSprite.spriteFrame);
-	sf::RectangleShape sp4(sf::Vector2f(128, 128));
-	sp4.setPosition(70, 750);
-	sp4.setTexture(&portalSprite.spriteMap);
-    sp4.setTextureRect(portalSprite.spriteFrame);
-
-	this->window->draw(sp1);
-	this->window->draw(sp2);
-	this->window->draw(sp3);
-	this->window->draw(sp4);
 
 	//Fred's Health Bar
 	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
@@ -163,6 +144,13 @@ void PlayerView::drawScreen(void) {
 	healthBar.setFillColor(sf::Color::Blue);
 
 	this->window->draw(healthBar);
+
+    //Fred's Busy Bar
+    sf::RectangleShape busyBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getSleepTime()*50, 20));
+    busyBar.setPosition(10, 60);
+    busyBar.setFillColor(sf::Color::Yellow);
+
+    this->window->draw(busyBar);
 
 	// Hard coded inventory blocks
 	sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
@@ -242,8 +230,8 @@ void PlayerView::drawScreen(void) {
 				itemShape.setTexture(&health_image.spriteMap);
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
-			}
-			    break;
+            }
+			break;
 			case ActorType::TRAP:
 			{
 				sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
@@ -257,10 +245,32 @@ void PlayerView::drawScreen(void) {
 				itemShape.setFillColor(sf::Color::Cyan);
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
+			}
+            break;
+            case ActorType::PORTAL:
+            {
+                sf::RectangleShape sp1(sf::Vector2f(actor->getWidth(), actor->getHeight()));
+                sp1.setTexture(&portalSprite.spriteMap);
+                sp1.setTextureRect(portalSprite.spriteFrame);
+                sp1.setPosition(actor->getX(), actor->getY());
+                this->window->draw(sp1);
             }
-                break;
         }
     }
+
+    for (std::shared_ptr<Item> it : this->logic->getCurrentRoom()->getItemList()) {
+        if (it->getQuantity() > 1) {
+            sf::Text numText;
+            numText.setFont(font);
+            numText.setString(std::to_string(it->getQuantity()));
+            numText.setCharacterSize(25); // in pixels, not points!
+            numText.setFillColor(sf::Color::White);
+            numText.setStyle(sf::Text::Bold);
+            numText.setPosition(it->getCenterX() - 3, it->getCenterY() + 5);
+            this->window->draw(numText);
+        }
+    }
+
 }
 
 void PlayerView::switchToDay() {
