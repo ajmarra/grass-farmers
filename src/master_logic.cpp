@@ -108,15 +108,15 @@ void MasterLogic::removeUsedItems(void) {
 void MasterLogic::startDemo(void) {
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
-    this->roomList.push_back(std::make_shared<Room>(0, 100, 400, 400));     // farmhouse
+    this->roomList.push_back(std::make_shared<Room>(450, 200, 400, 400));     // farmhouse
     this->currentRoom = roomList.begin();
 
     // Add exits
-    this->roomList.front()->addActor(std::make_shared<Exit>(0, 430, 1));
-    this->roomList.back()->addActor(std::make_shared<Exit>(500, 500, 0));
+    this->roomList.front()->addActor(std::make_shared<Exit>(1200, 430, 1));
+    this->roomList.back()->addActor(std::make_shared<Exit>(400, 400, 0));
 
     // Add fred
-    std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
+    std::shared_ptr<Fred> fred = std::make_shared<Fred>(500, 500);
     this->roomList.front()->addActor(fred);
     this->view->setPlayer(fred);
 
@@ -192,10 +192,12 @@ void MasterLogic::update(float delta) {
         // Check if Fred uses an exit
         for (std::shared_ptr<Exit> exit : this->getCurrentRoom()->getExitList()) {
             if (this->getCurrentRoom()->getFred()->collidesSquare(*exit)) {
+                this->getCurrentRoom()->getFred()->hardStop();
                 std::list<std::shared_ptr<Room>>::iterator newRoom = this->roomList.begin();
                 advance(newRoom, exit->getDestination());
                 (*newRoom)->addActor(this->getCurrentRoom()->getFred());
                 this->currentRoom = newRoom;
+                this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX(), this->getCurrentRoom()->getExitList().front()->getCenterY()+50);
             }
         }
 

@@ -21,7 +21,7 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 	
 
     // Play music
-    cur_track.playDayTrack();
+    cur_track.playNightTrack();
 
     // Load sprites    
     room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
