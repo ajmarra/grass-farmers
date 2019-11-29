@@ -7,7 +7,7 @@
 #include "view.h"
 #include "enemy.h"
 #include "fred.h"
-#include "trap.h"
+#include "room.h"
 
 class EnemyView : View {
 	private:

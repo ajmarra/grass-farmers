@@ -15,6 +15,8 @@
 #include "melee_weapon.h"
 #include "range_weapon.h"
 #include "health_item.h"
+class EnemyView;
+#include "portal.h"
 
 class MasterView;
 
@@ -25,18 +27,35 @@ class MasterLogic {
         std::list<std::shared_ptr<Room>>::iterator currentRoom;
         std::list<std::shared_ptr<Actor>> actorList;
 		std::list<std::shared_ptr<Item>> itemList;
-        std::list<std::shared_ptr<Trap>> trapList;
-        bool paused = false;
-    
-        bool day = true;
-    
+		std::list<std::shared_ptr<Enemy>> enemyQueueList;
+
 		float delta;
+
+        std::list<std::shared_ptr<Trap>> trapList;
+    
+        bool day = false;
+
+        float spawnRate = 0;
+
+        float elapsedTime = 0;
+
+        int nightCount = 1;
+    
         std::shared_ptr<Timer> timer;
 
     public:
+        bool paused = true;
+        bool playing = false;
+        bool options = false;
         MasterLogic(void) { };
 
         void init(std::shared_ptr<MasterView> mv);
+
+        void startMenu(void);
+
+        void startTutorial(void);
+
+        void startPaused(void);
 
         void startDemo(void);
 
@@ -47,7 +66,11 @@ class MasterLogic {
         std::list<std::shared_ptr<Actor>> getActorList(void) { return actorList; };
     
         std::shared_ptr<Room> getCurrentRoom(void) { return *(this->currentRoom); };
+        
+        void checkCollisions(float delta);
 
+        void removeUsedItems(void);
+        
 		std::list<std::shared_ptr<Item>> getItemList(void) { return itemList; };
     
         std::shared_ptr<Timer> getTimer() { return timer; };

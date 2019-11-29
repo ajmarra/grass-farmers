@@ -15,6 +15,9 @@ class Item : public Actor {
 private:
 	int quantity;
 	bool stackable;
+    bool canPickUp = true; // Prevents traps from being picked up after being set
+    bool usedItem = false; // Marks item for removal after used.
+    
 
 protected:
 	std::shared_ptr<Character> character;
@@ -29,7 +32,15 @@ public:
 
         int getQuantity(void) { return quantity; };
 
-        void increaseQuantity(void);
+    bool getUsedItem(void) { return usedItem; };
+    
+    void setUsedItem(bool isUsed) { usedItem = isUsed; };
+
+    bool getCanPickUp(void) { return canPickUp; };
+
+    void setCanPickUp(bool toSet) { canPickUp = toSet; };
+
+	void increaseQuantity(void);
 
 	    void decreaseQuantity(void);
         

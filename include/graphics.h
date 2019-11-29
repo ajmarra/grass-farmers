@@ -9,12 +9,15 @@
  */
 class Graphics {
     private:
-        int left = 0;
+        bool left = false;
         sf::Vector2u totalSprite;
         sf::Vector2f cur_sprite;
-        float frameRate = 0.3;
+        float frameRateFred = 0.3;
+        float frameRateEnemy = 0.3;
+        float frameRatePortal = 0.5;
         float elapsedFredTime;
         float elapsedEnemyTime;
+        float elapsedPortalTime;
         float currentFrame;
         //int move = 0; 
 
@@ -30,6 +33,8 @@ class Graphics {
         void setFredSprite(double direction);
         
         void updateEnemy (float delta);
+
+        void updatePortal(float delta);
         
         void setEnemySprite(double direction);
 };

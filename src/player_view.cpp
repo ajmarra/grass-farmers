@@ -12,19 +12,40 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
         : View(logic) {
     this->fred = fred;
     this->window = window;
-	cur_track.playDayTrack();
+
+    sky.setSize(sf::Vector2f(1200, 100));
+    sky.setFillColor(sf::Color (0, 191, 255));
+
+    darkness.setSize(sf::Vector2f(1200, 800));
+    darkness.setPosition(0,100);
+    darkness.setFillColor(sf::Color (0, 0, 0, 150));
 	
-	EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
-	FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
-	room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
+    portalSprite.spriteMap.loadFromFile("../resources/portalanim.png");
+    portalSprite.spriteFrame.top = 0;//x
+    portalSprite.spriteFrame.left = 0;//y
+    portalSprite.spriteFrame.width = 128;
+    portalSprite.spriteFrame.height = 128;
 	
 
     // Play music
     cur_track.playDayTrack();
 
     // Load sprites    
-    room_image.spriteMap.loadFromFile("../resources/farmscreen.png");
+    farm_image.spriteMap.loadFromFile("../resources/farmscreen.png");
 
+    exit_image.spriteMap.loadFromFile("../resources/exit.png");
+
+    gun1_image.spriteMap.loadFromFile("../resources/gun1.png");
+
+    barn_image.spriteMap.loadFromFile("../resources/barn.png");
+
+    health_image.spriteMap.loadFromFile("../resources/health_item.png");
+
+    trap_image.spriteMap.loadFromFile("../resources/unused_trap.png");
+
+    trap_image.spriteMap.loadFromFile("../resources/trap.png");
+
+    
     EnemySprite.spriteMap.loadFromFile("../resources/alienwalk.png");
     EnemySprite.spriteFrame.top = 64;//x
     EnemySprite.spriteFrame.left = 0;//y
@@ -32,10 +53,17 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     EnemySprite.spriteFrame.height = 64;
 
     FredSprite.spriteMap.loadFromFile("../resources/fredWALK.png");
-    FredSprite.spriteFrame.top = 64;//x
-    FredSprite.spriteFrame.left = 0;//y
-    FredSprite.spriteFrame.width = 64;
-    FredSprite.spriteFrame.height = 64;
+	FredSprite.spriteFrame.top = 64;//x
+	FredSprite.spriteFrame.left = 0;//y
+	FredSprite.spriteFrame.width = 64;
+	FredSprite.spriteFrame.height = 64;
+
+    if (!font.loadFromFile("../resources/bit5x3.ttf"))
+    {
+        // error...
+        std::cout << "ERROR LOADING FONT FROM FILE" << std::endl;
+    }
+
 }
 
 void PlayerView::pollInput() {
@@ -69,19 +97,24 @@ void PlayerView::pollInput() {
 		fred->useItem(fred->getCenterX(), fred->getCenterY());
 	}
 
-    // Inventory selection
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelectedIndex(0);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelectedIndex(1);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelectedIndex(2);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelectedIndex(3);
+	// Inventory selection
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelectedIndex(0);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelectedIndex(1);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelectedIndex(2);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelectedIndex(3);
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) cur_track.stopCurrentTrack();
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) cur_track.playNightTrack();
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) cur_track.playDayTrack();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)){
+		//cur_track.stopCurrentTrack();
+		this->logic->paused = true;
+		this->logic->startPaused();
+		
+	} 
 }
 
 void PlayerView::drawScreen(void) {
-    this->window->clear(sf::Color::Green);
+    this->window->clear(sf::Color::Black);
+    
+    this->window->draw(sky);
     
     //Timer
     sf::CircleShape clock;
@@ -106,27 +139,18 @@ void PlayerView::drawScreen(void) {
     sf::RectangleShape room;
     room.setSize(sf::Vector2f(logic->getCurrentRoom()->getWidth(), logic->getCurrentRoom()->getHeight()));
     room.setPosition(logic->getCurrentRoom()->getX(), logic->getCurrentRoom()->getY());
-    room.setTexture(&room_image.spriteMap);
+        if (logic->getCurrentRoom()->getHeight() >= 800){
+        
+            room.setTexture(&farm_image.spriteMap);
+        }
+        else{
+            room.setTexture(&barn_image.spriteMap);
+        }
     this->window->draw(room);
-
-	//Enemy spawn points/portals
-	sf::RectangleShape sp1(sf::Vector2f(75, 75));
-	sp1.setPosition(70, 150);
-	sp1.setFillColor(sf::Color::Cyan);
-	sf::RectangleShape sp2(sf::Vector2f(75, 75));
-	sp2.setPosition(20, 350);
-	sp2.setFillColor(sf::Color::Cyan);
-	sf::RectangleShape sp3(sf::Vector2f(75, 75));
-	sp3.setPosition(20, 550);
-	sp3.setFillColor(sf::Color::Cyan);
-	sf::RectangleShape sp4(sf::Vector2f(75, 75));
-	sp4.setPosition(70, 750);
-	sp4.setFillColor(sf::Color::Cyan);
-
-	this->window->draw(sp1);
-	this->window->draw(sp2);
-	this->window->draw(sp3);
-	this->window->draw(sp4);
+    
+    if (night == true){
+        this->window->draw(darkness);
+    }
 
 	//Fred's Health Bar
 	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
@@ -134,6 +158,13 @@ void PlayerView::drawScreen(void) {
 	healthBar.setFillColor(sf::Color::Blue);
 
 	this->window->draw(healthBar);
+
+    //Fred's Busy Bar
+    sf::RectangleShape busyBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getSleepTime()*50, 20));
+    busyBar.setPosition(10, 60);
+    busyBar.setFillColor(sf::Color::Yellow);
+
+    this->window->draw(busyBar);
 
 	// Hard coded inventory blocks
 	sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
@@ -162,6 +193,8 @@ void PlayerView::drawScreen(void) {
 	inventoryBlock4.setOutlineThickness(5);
 	inventoryBlock4.setFillColor(sf::Color::Black);
 
+    
+
 	this->window->draw(inventoryBlock1);
 	this->window->draw(inventoryBlock2);
 	this->window->draw(inventoryBlock3);
@@ -182,7 +215,7 @@ void PlayerView::drawScreen(void) {
             case ActorType::WEAPON:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-                itemShape.setFillColor(sf::Color::White);
+                itemShape.setTexture(&gun1_image.spriteMap);
                 itemShape.setPosition(actor->getX(), actor->getY());
                 this->window->draw(itemShape);
             }
@@ -208,39 +241,67 @@ void PlayerView::drawScreen(void) {
 			case ActorType::HEALTH:
 			{
 				sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-				itemShape.setFillColor(sf::Color::Magenta);
-				itemShape.setPosition(actor->getX(), actor->getY());
-				this->window->draw(itemShape);
-			}
-			    break;
-			case ActorType::TRAP:
-			{
-				sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-				itemShape.setFillColor(sf::Color::Yellow);
-				itemShape.setPosition(actor->getX(), actor->getY());
-				this->window->draw(itemShape);
-			}
-                break;
-            case ActorType::EXIT:
-            {
-                sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-				itemShape.setFillColor(sf::Color::Cyan);
+				itemShape.setTexture(&health_image.spriteMap);
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
             }
-                break;
+			break;
+			case ActorType::TRAP:
+			{
+				sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
+                itemShape.setTexture(&trap_image.spriteMap);
+				itemShape.setPosition(actor->getX(), actor->getY());
+				this->window->draw(itemShape);
+			}
+            break;
+            case ActorType::EXIT:
+            {
+                sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
+				itemShape.setTexture(&exit_image.spriteMap);
+				itemShape.setPosition(actor->getX(), actor->getY());
+				this->window->draw(itemShape);
+			}
+            break;
+            case ActorType::PORTAL:
+            {
+                sf::RectangleShape sp1(sf::Vector2f(actor->getWidth(), actor->getHeight()));
+                sp1.setTexture(&portalSprite.spriteMap);
+                sp1.setTextureRect(portalSprite.spriteFrame);
+                sp1.setPosition(actor->getX(), actor->getY());
+                this->window->draw(sp1);
+            }
+            break;
         }
     }
+
+    for (std::shared_ptr<Item> it : this->logic->getCurrentRoom()->getItemList()) {
+        if (it->getQuantity() > 1) {
+            sf::Text numText;
+            numText.setFont(font);
+            numText.setString(std::to_string(it->getQuantity()));
+            numText.setCharacterSize(25); // in pixels, not points!
+            numText.setFillColor(sf::Color::White);
+            numText.setStyle(sf::Text::Bold);
+            numText.setPosition(it->getCenterX() - 3, it->getCenterY() + 5);
+            this->window->draw(numText);
+        }
+    }
+
 }
 
 void PlayerView::switchToDay() {
     cur_track.stopCurrentTrack();
     cur_track.playDayTrack();
+    sky.setFillColor(sf::Color (0, 191, 255));
+    night = false;
 }
 
 void PlayerView::switchToNight() {
     cur_track.stopCurrentTrack();
     cur_track.playNightTrack();
+    sky.setFillColor(sf::Color (25, 25, 112));
+    night = true;
+    
 }
 
 void PlayerView::update(float delta) {
@@ -250,6 +311,7 @@ void PlayerView::update(float delta) {
     this->pollInput();
     
     FredSprite.updateFred(delta);
+    portalSprite.updatePortal(delta);
     
     EnemySprite.updateEnemy(delta);
     this->drawScreen();

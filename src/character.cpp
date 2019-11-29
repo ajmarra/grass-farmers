@@ -23,8 +23,8 @@ void Character::damage(int d) {
 }
 
 void Character::heal(int healAmount) {
-    health += healAmount;
-    if (health > maxHealth) health = maxHealth;
+	health += healAmount;
+	if (health > maxHealth) health = maxHealth;
 }
 
 void Character::move(void) {
@@ -66,15 +66,15 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 	int i = 0;
 	std::shared_ptr<Item> toAdd;
 	for (std::list<std::shared_ptr<Item>>::iterator it = itemList.begin(); it != itemList.end(); ++it) {
-		if (this->collidesSquare(*(*it))) {
+		if (this->collidesSquare(*(*it)) && (*it)->getCanPickUp()) {
 			toAdd = (*it);
 			i = 0;
 			while (notAdded) {
 				if (toAdd->isStackable() && inventory[i] != nullptr && inventory[i]->getType() == toAdd->getType()) {
 					inventory[i]->increaseQuantity();
-                    toAdd->setPos(inventory[i]->getCenterX()-10, inventory[i]->getCenterY()-10);
+                    toAdd->setUsedItem(true);
+                    //toAdd->setXY(inventory[i]->getCenterX()-10, inventory[i]->getCenterY()-10);
 					notAdded = false;
-					// TODO: need to figure out what to do with old/used items.
 				}
 				else if (i == 4) notAdded = false;
 				else if (inventory[i] == nullptr) {
@@ -82,19 +82,15 @@ void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
 					notAdded = false;
 					if (i == 0) {
 						toAdd->setPos(825, 40);
-						//toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					else if (i == 1) {
 						toAdd->setPos(925, 40);
-                        //toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					else if (i == 2) {
 						toAdd->setPos(1025, 40);
-                        //toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					else if (i == 3) {
 						toAdd->setPos(1125, 40);
-                        //toAdd->setCharacter(std::make_shared<Character>(*this));
 					}
 					if (selectedIndex == i) this->setSelectedIndex(i);
 				}
@@ -110,6 +106,7 @@ std::shared_ptr<Item> Character::getSelectedItem() {
     return this->inventory[this->selectedIndex];
 }
 
+
 void Character::useItem(int x, int y) {
     if (this->getSelectedItem()) this->getSelectedItem()->use(x, y);
 }
@@ -123,6 +120,7 @@ std::shared_ptr<Item> Character::popItemAtIndex(int index) {
 void Character::dropItem() {
 	std::shared_ptr<Item> toDrop = this->popItemAtIndex(selectedIndex);
 	if (toDrop != nullptr) toDrop->setPos(this->getCenterX(), this->getCenterY());
+    
 }
 
 void Character::sleep(float time) {
