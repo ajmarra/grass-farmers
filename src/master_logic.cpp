@@ -116,8 +116,8 @@ void MasterLogic::startDemo(void) {
     this->roomList.back()->addActor(std::make_shared<Exit>(400, 400, 0));
 
     // Add fred
-    std::shared_ptr<Fred> fred = std::make_shared<Fred>(500, 500);
-    this->roomList.front()->addActor(fred);
+    std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
+    for (std::shared_ptr<Room> room :this->roomList) room->addActor(fred);
     this->view->setPlayer(fred);
 
     this->loadInEnemies();
@@ -133,10 +133,10 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(portal4);
 
     // Add test items
-    this->roomList.front()->addActor(std::make_shared<RangeWeapon>(this->getCurrentRoom(), 150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 20, 20, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 20, 20, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 20, 20, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<RangeWeapon>(150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 32, 32, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 32, 32, this->getCurrentRoom()->getFred()));
 
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();
@@ -192,10 +192,8 @@ void MasterLogic::update(float delta) {
         // Check if Fred uses an exit
         for (std::shared_ptr<Exit> exit : this->getCurrentRoom()->getExitList()) {
             if (this->getCurrentRoom()->getFred()->collidesSquare(*exit)) {
-                this->getCurrentRoom()->getFred()->hardStop();
                 std::list<std::shared_ptr<Room>>::iterator newRoom = this->roomList.begin();
                 advance(newRoom, exit->getDestination());
-                (*newRoom)->addActor(this->getCurrentRoom()->getFred());
                 this->currentRoom = newRoom;
                 this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX(), this->getCurrentRoom()->getExitList().front()->getCenterY()+50);
             }
