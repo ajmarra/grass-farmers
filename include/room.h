@@ -6,11 +6,14 @@
 
 #include "actor.h"
 #include "character.h"
-//#include "fred.h"
+#include "fred.h"
 #include "item.h"
 #include "trap.h"
 #include "bullet.h"
 #include "portal.h"
+#include "health_item.h"
+#include "range_weapon.h"
+#include "health_item.h"
 
 class Exit;
 class Fred;
@@ -19,14 +22,16 @@ class Enemy;
 class Room : public Actor {
     private:
         // Actor lists
-
         std::list<std::shared_ptr<Actor>> actorList;
-        std::shared_ptr<Fred> fred;
-        std::list<std::shared_ptr<Exit>> exitList;
-        std::list<std::shared_ptr<Enemy>> enemyList;
         std::list<std::shared_ptr<Item>> itemList;
-        std::list<std::shared_ptr<Bullet>> bulletList;
+        std::list<std::shared_ptr<Exit>> exitList;
+        std::shared_ptr<Fred> fred;
+        std::list<std::shared_ptr<Enemy>> enemyList;
+        std::list<std::shared_ptr<HealthItem>> healthItemList;
+        std::list<std::shared_ptr<RangeWeapon>> rangeWeaponList;
         std::list<std::shared_ptr<Trap>> trapList;
+        std::list<std::shared_ptr<Bullet>> bulletList;
+        std::list<std::shared_ptr<Portal>> portalList;
         
     public:
         Room(double x, double y, double width, double height);
@@ -35,39 +40,60 @@ class Room : public Actor {
         void setItemList(std::list<std::shared_ptr<Item>> newItemList) { this->itemList = newItemList; };
 
         /**
-         * Adds an actor to the actor list in the proper section for actors of its type.
+         * Add an actor to the actor lists for actors of its type.
          */
-        void addActor(std::shared_ptr<Fred> fred);
-
         void addActor(std::shared_ptr<Exit> exit);
+
+        void addActor(std::shared_ptr<Fred> fred);
 
         void addActor(std::shared_ptr<Enemy> enemy);
 
-        void addActor(std::shared_ptr<Item> item);
+        void addActor(std::shared_ptr<HealthItem> healthItem);
+
+        void addActor(std::shared_ptr<RangeWeapon> weapon);
 
         void addActor(std::shared_ptr<Bullet> bullet);
+
+        void addActor(std::shared_ptr<Trap> trap);
         
         void addActor(std::shared_ptr<Portal> portal);
 
-        void addActor(std::shared_ptr<Trap> trap);
+        /**
+         * Remove an actor from the actor lists for actors of its type.
+         */
+        void removeActor(std::shared_ptr<Exit> exit);
 
-        void removeActor(std::shared_ptr<Enemy> toRemove);
+        void removeActor(std::shared_ptr<Fred> fred);
 
-        void removeActor(std::shared_ptr<Item> toRemove);
+        void removeActor(std::shared_ptr<Enemy> enemy);
 
-        void removeActor(std::shared_ptr<Trap> toRemove);
+        void removeActor(std::shared_ptr<HealthItem> healthItem);
 
-        std::shared_ptr<Fred> getFred(void) { return this->fred; };
+        void removeActor(std::shared_ptr<RangeWeapon> rangeWeapon);
+
+        void removeActor(std::shared_ptr<Bullet> bullet);
+
+        void removeActor(std::shared_ptr<Trap> trap);
         
-        std::list<std::shared_ptr<Exit>> getExitList(void) { return this->exitList; };
-        
-        std::list<std::shared_ptr<Enemy>> getEnemyList(void) { return this->enemyList; };
+        void removeActor(std::shared_ptr<Portal> portal);
         
         std::list<std::shared_ptr<Item>> getItemList(void) { return this->itemList; };
+
+        std::list<std::shared_ptr<Exit>> getExitList(void) { return this->exitList; };
+        
+        std::shared_ptr<Fred> getFred(void) { return this->fred; };
+        
+        std::list<std::shared_ptr<Enemy>> getEnemyList(void) { return this->enemyList; };
+
+        std::list<std::shared_ptr<HealthItem>> getHealthItemList(void) { return this->healthItemList; };
+
+        std::list<std::shared_ptr<RangeWeapon>> getRangeWeaponList(void) { return this->rangeWeaponList; };
         
         std::list<std::shared_ptr<Bullet>> getBulletList(void) { return this->bulletList; };
 
         std::list<std::shared_ptr<Trap>> getTrapList(void) { return this->trapList; };
+
+        std::list<std::shared_ptr<Portal>> getportalList(void) { return this->portalList; };
 
         /**
          * Return the whole list of actors.

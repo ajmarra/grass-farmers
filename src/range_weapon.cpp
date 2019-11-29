@@ -4,6 +4,7 @@
 #include "item.h"
 #include "range_weapon.h"
 #include "bullet.h"
+#include "room.h"
 
 #include <math.h>
 #define PI 3.14159265
