@@ -289,10 +289,11 @@ void PlayerView::drawScreen(void) {
         }
     }
 
+    // draw portals
+    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getPortalList()) this->drawActor(*actor);
+
     // draw items
-    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getItemList()) {
-        this->drawActor(*actor);
-    }
+    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getItemList()) this->drawActor(*actor);
 
     // draw set traps
     for (std::shared_ptr<Item> item : this->logic->getCurrentRoom()->getItemList()) {
@@ -304,15 +305,14 @@ void PlayerView::drawScreen(void) {
         }
     }
 
+    // draw exits
+    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getExitList()) this->drawActor(*actor);
+
     // draw bullets
-    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getBulletList()) {
-        this->drawActor(*actor);
-    }
+    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getBulletList()) this->drawActor(*actor);
 
     // draw enemies
-    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getEnemyList()) {
-        this->drawActor(*actor);
-    }
+    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getEnemyList()) this->drawActor(*actor);
 
     // draw Fred
     this->drawActor(*this->logic->getCurrentRoom()->getFred());
