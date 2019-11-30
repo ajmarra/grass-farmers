@@ -280,11 +280,10 @@ void PlayerView::drawScreen(void) {
         this->drawActor(*actor);
     }
 
+    // draw fred's inventory
     for (int i = 0; i < 4; i++) {
         if (this->fred->getInventory()[i]) {
-            /**switch(this->fred->getInventory()[i]) {
-                case
-            }*/
+            this->drawActor(*this->fred->getInventory()[i]);
             if (this->fred->getInventory()[i] && this->fred->getInventory()[i]->getQuantity() > 1) {
                 sf::Text numText;
                 numText.setFont(font);
