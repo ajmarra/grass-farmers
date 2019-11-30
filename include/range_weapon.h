@@ -4,7 +4,6 @@
 #include <list>
 #include <memory>
 
-#include "room.h"
 #include "actor.h"
 #include "item.h"
 #include "bullet.h"
