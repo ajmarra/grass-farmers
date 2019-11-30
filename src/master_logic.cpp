@@ -79,9 +79,9 @@ void MasterLogic::checkCollisions(float delta) {
     this->elapsedTime += delta;
     if (this->getCurrentRoom()->getEnemyList().size() > 0) {
         for (std::shared_ptr<Enemy> enemy : this->getCurrentRoom()->getEnemyList()) {
-            for (std::shared_ptr<Trap> it : this->getCurrentRoom()->getTrapList()) {
-                if (enemy->collidesSquare(*it) && it->getIsSet()) {
-                    enemy->damage(it->getDamage());
+            for (std::shared_ptr<Item> it : this->getCurrentRoom()->getItemList()) {
+                if (it->getType() == ActorType::TRAP && enemy->collidesSquare(*it) && !it->getCanPickUp()) {
+                    enemy->damage(100);
                     this->getCurrentRoom()->removeActor(it);
                 }
             }
@@ -93,14 +93,6 @@ void MasterLogic::checkCollisions(float delta) {
             if (enemy->getHealth() <= 0) {
                 this->getCurrentRoom()->removeActor(enemy);
             }
-        }
-    }
-}
-
-void MasterLogic::removeUsedItems(void) {
-    for (std::shared_ptr<Item> it : this->getCurrentRoom()->getItemList()) {
-        if (it->getUsedItem()) {
-            this->getCurrentRoom()->removeActor(it);
         }
     }
 }
@@ -117,7 +109,8 @@ void MasterLogic::startDemo(void) {
 
     // Add fred
     std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
-    for (std::shared_ptr<Room> room :this->roomList) room->addActor(fred);
+    this->roomList.front()->addActor(fred);
+    //fred->setCurrentRoom(this->roomList.front());
     this->view->setPlayer(fred);
 
     this->loadInEnemies();
@@ -162,8 +155,6 @@ void MasterLogic::update(float delta) {
 
         this->checkCollisions(delta);
 
-        this->removeUsedItems();
-
         // Loop throught the actor list
         for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
             curActor->update(delta);
@@ -195,16 +186,18 @@ void MasterLogic::update(float delta) {
             if (this->getCurrentRoom()->getFred()->collidesSquare(*exit)) {
                 std::list<std::shared_ptr<Room>>::iterator newRoom = this->roomList.begin();
                 advance(newRoom, exit->getDestination());
+                std::shared_ptr<Fred> fred = this->getCurrentRoom()->getFred();
                 if (this->getCurrentRoom()->getFred()->getCenterX() < exit->getCenterX()) {
-                    this->currentRoom = newRoom;
-                    this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX()+50, this->getCurrentRoom()->getExitList().front()->getCenterY());
+                    fred->setPos((*newRoom)->getExitList().front()->getCenterX() + 50,
+                                 (*newRoom)->getExitList().front()->getCenterY() - 50);
                 }
-                else if(this->getCurrentRoom()->getFred()->getCenterX() > exit->getCenterX()) {
-                    this->currentRoom = newRoom;
-                    this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX() - 100, this->getCurrentRoom()->getExitList().front()->getCenterY());
+                else if (this->getCurrentRoom()->getFred()->getCenterX() > exit->getCenterX()) {
+                    fred->setPos((*newRoom)->getExitList().front()->getCenterX() - 100,
+                                 (*newRoom)->getExitList().front()->getCenterY() - 50);
                 }
-
-                //this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX(), this->getCurrentRoom()->getExitList().front()->getCenterY()+50);
+                this->getCurrentRoom()->removeActor(fred);
+                (*newRoom)->addActor(fred);
+                this->currentRoom = newRoom;
             }
         }
 

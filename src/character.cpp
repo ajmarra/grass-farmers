@@ -1,13 +1,14 @@
-#include "actor.h"
-#include "character.h"
-#include "item.h"
+#include <memory>
+#include <iostream>
+#include <list>
 
 #include "math.h"
 #define PI 3.14159265
 
-#include <memory>
-#include <iostream>
-#include <list>
+#include "actor.h"
+#include "item.h"
+#include "room.h"
+#include "character.h"
 
 Character::Character(ActorType type, double x, double y, double width, double height, double mass, double maxSpeed, int maxHealth)
     : Actor(type, x, y, width, height) {
@@ -23,8 +24,8 @@ void Character::damage(int d) {
 }
 
 void Character::heal(int healAmount) {
-	health += healAmount;
-	if (health > maxHealth) health = maxHealth;
+    health += healAmount;
+    if (health > maxHealth) health = maxHealth;
 }
 
 void Character::move(void) {
@@ -51,64 +52,51 @@ void Character::move(void) {
 }
 
 void Character::update(float delta) {
-	Actor::update(delta);
-	if (this->canMove && sleepTime <= 0) {
-		Character::move();
-	}
+    Actor::update(delta);
+    if (this->canMove && sleepTime <= 0) {
+        Character::move();
+    }
     else {
         this->hardStop();
         sleepTime -= delta;
     }
-}
 
-void Character::addItem(std::list<std::shared_ptr<Item>> itemList) {
-	bool notAdded = true;
-	int i = 0;
-	std::shared_ptr<Item> toAdd;
-	for (std::list<std::shared_ptr<Item>>::iterator it = itemList.begin(); it != itemList.end(); ++it) {
-		if (this->collidesSquare(*(*it)) && (*it)->getCanPickUp()) {
-			toAdd = (*it);
-			i = 0;
-			while (notAdded) {
-				if (toAdd->isStackable() && inventory[i] != nullptr && inventory[i]->getType() == toAdd->getType()) {
-					inventory[i]->increaseQuantity();
-                    toAdd->setUsedItem(true);
-                    //toAdd->setXY(inventory[i]->getCenterX()-10, inventory[i]->getCenterY()-10);
-					notAdded = false;
-				}
-				else if (i == 4) notAdded = false;
-				else if (inventory[i] == nullptr) {
-					inventory[i] = toAdd;
-					notAdded = false;
-					if (i == 0) {
-						toAdd->setPos(825, 40);
-					}
-					else if (i == 1) {
-						toAdd->setPos(925, 40);
-					}
-					else if (i == 2) {
-						toAdd->setPos(1025, 40);
-					}
-					else if (i == 3) {
-						toAdd->setPos(1125, 40);
-					}
-					if (selectedIndex == i) this->setSelectedIndex(i);
-				}
-				i++;
-			}
-
-            break;
+    //update items in inventory
+    for (std::shared_ptr<Item> &slot : this->inventory) {
+        if (slot) {
+            slot->update(delta);
         }
     }
 }
 
-std::shared_ptr<Item> Character::getSelectedItem() {
-    return this->inventory[this->selectedIndex];
-}
+void Character::addItem(void) {
+    for (std::shared_ptr<Item> item : this->curRoom->getItemList()) {
+        if (this->collidesSquare(*item) && item->getCanPickUp()) {
+            this->curRoom->removeActor(item); // remove from room
+            item->setCharacter(this->shared_from_this()); // set owned by this character
 
+            // if stackable, increment
+            if (item->isStackable()) {
+                for (std::shared_ptr<Item> &slot : this->inventory) {
+                    if (slot && item->getType() == slot->getType()) {
+                        slot->increaseQuantity();
+                        return;
+                    }
+                }
+            }
 
-void Character::useItem(int x, int y) {
-    if (this->getSelectedItem()) this->getSelectedItem()->use(x, y);
+            // add to next empty slot
+            int i = 0;
+            for (std::shared_ptr<Item> &slot : this->inventory) {
+                if (!slot) {
+                    item->setPos(837 - item->getWidth() / 2 + 100 * i, 50 - item->getHeight() / 2);
+                    slot = item;
+                    return;
+                }
+                i++;
+            }
+        }
+    }
 }
 
 std::shared_ptr<Item> Character::popItemAtIndex(int index) {
@@ -118,11 +106,8 @@ std::shared_ptr<Item> Character::popItemAtIndex(int index) {
 }
 
 void Character::dropItem() {
-	std::shared_ptr<Item> toDrop = this->popItemAtIndex(selectedIndex);
-	if (toDrop != nullptr) toDrop->setPos(this->getCenterX(), this->getCenterY());
-    
-}
-
-void Character::sleep(float time) {
-    sleepTime = time;
+    std::shared_ptr<Item> toDrop = this->popItemAtIndex(selectedIndex);
+    if (toDrop == nullptr) return;
+    toDrop->setPos(this->getCenterX(), this->getCenterY());
+    this->getCurrentRoom()->addActor(toDrop);
 }

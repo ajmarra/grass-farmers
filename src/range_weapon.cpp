@@ -4,6 +4,7 @@
 #include "item.h"
 #include "range_weapon.h"
 #include "bullet.h"
+#include "room.h"
 
 #include <math.h>
 #define PI 3.14159265
@@ -18,7 +19,17 @@ RangeWeapon::RangeWeapon(double x, double y, double width, double height, int da
 }
 
 void RangeWeapon::use(int x, int y) {
-    double direction = atan2(y - this->y, x - this->x) * 180 / PI;
-	std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(this->character->getX(), this->character->getY(), 2, 800, direction, this->damage);
-    this->character->getCurrentRoom()->addActor(bullet);
+	if (!this->loading) {
+		loading = this->fireRate;
+		double direction = atan2(y - this->character->getCenterY(), x - this->character->getCenterX()) * 180 / PI;
+		
+		this->character->getCurrentRoom()->addActor(
+			std::make_shared<Bullet>(this->character->getCenterX(),
+			this->character->getCenterY(), 2, 800, direction, this->damage));
+	}
+}
+
+void RangeWeapon::update(float dt) {
+	loading = loading < 0? 0 : loading - dt;
+	Actor::update(dt);
 }
