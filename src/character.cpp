@@ -116,6 +116,15 @@ void Character::addItem(void) {
     }
 }
 
+void Character::addItem(std::shared_ptr<Item> item) {
+    for (std::shared_ptr<Item>& slot : this->inventory) {
+        if (!slot) {
+            slot = item;
+            return;
+        }
+    }
+}
+
 std::shared_ptr<Item> Character::popItemAtIndex(int index) {
     std::shared_ptr<Item> toReturn = inventory[index];
     inventory[index] = nullptr;
