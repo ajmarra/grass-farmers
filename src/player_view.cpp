@@ -107,7 +107,7 @@ void PlayerView::pollInput() {
 	} 
 }
 
-void PlayerView::drawActor(Actor a) {
+void PlayerView::drawActor(Actor &a) {
     switch (a.getType()) {
             case ActorType::FRED:
             {
@@ -153,6 +153,14 @@ void PlayerView::drawActor(Actor a) {
 				this->window->draw(itemShape);
             }
 			    break;
+            case ActorType::TRAP:
+            {
+                sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                itemShape.setPosition(a.getX(), a.getY());
+                itemShape.setTexture(&unused_trap_image.spriteMap);
+                this->window->draw(itemShape);
+            }
+                break;
             case ActorType::EXIT:
             {
                 if (this->logic->getCurrentRoom()->getFred()->getCenterX() < a.getCenterX()) {
@@ -208,7 +216,7 @@ void PlayerView::drawScreen(void) {
     clockHand.setFillColor(sf::Color::Black);
     this->window->draw(clockHand, transform);
     
-    //Current room and exit
+    //Current room
     sf::RectangleShape room;
     room.setSize(sf::Vector2f(logic->getCurrentRoom()->getWidth(), logic->getCurrentRoom()->getHeight()));
     room.setPosition(logic->getCurrentRoom()->getX(), logic->getCurrentRoom()->getY());
@@ -264,22 +272,6 @@ void PlayerView::drawScreen(void) {
 	this->window->draw(inventoryBlock3);
 	this->window->draw(inventoryBlock4);
 
-    // draw traps
-    for (std::shared_ptr<Item> item : this->logic->getCurrentRoom()->getItemList()) {
-        if (item->getType() == ActorType::TRAP) {
-            sf::RectangleShape itemShape(sf::Vector2f(item->getWidth(), item->getHeight()));
-            itemShape.setPosition(item->getX(), item->getY());
-            if (item->getCanPickUp()) itemShape.setTexture(&unused_trap_image.spriteMap);
-            else itemShape.setTexture(&trap_image.spriteMap);
-            this->window->draw(itemShape);
-        }
-    }
-
-    // draw actors
-    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getActorList()) {
-        this->drawActor(*actor);
-    }
-
     // draw fred's inventory
     for (int i = 0; i < 4; i++) {
         if (this->fred->getInventory()[i]) {
@@ -296,6 +288,34 @@ void PlayerView::drawScreen(void) {
             }
         }
     }
+
+    // draw items
+    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getItemList()) {
+        this->drawActor(*actor);
+    }
+
+    // draw set traps
+    for (std::shared_ptr<Item> item : this->logic->getCurrentRoom()->getItemList()) {
+        if (item->getType() == ActorType::TRAP && !item->getCanPickUp()) {
+            sf::RectangleShape itemShape(sf::Vector2f(item->getWidth(), item->getHeight()));
+            itemShape.setPosition(item->getX(), item->getY());
+            itemShape.setTexture(&trap_image.spriteMap);
+            this->window->draw(itemShape);
+        }
+    }
+
+    // draw bullets
+    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getBulletList()) {
+        this->drawActor(*actor);
+    }
+
+    // draw enemies
+    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getEnemyList()) {
+        this->drawActor(*actor);
+    }
+
+    // draw Fred
+    this->drawActor(*this->logic->getCurrentRoom()->getFred());
 }
 
 void PlayerView::switchToDay() {

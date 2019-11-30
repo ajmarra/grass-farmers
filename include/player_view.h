@@ -4,13 +4,15 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <memory>
-#include "graphics.h"
 
+#include "graphics.h"
 #include "view.h"
 #include "fred.h"
 #include "room.h"
 #include "exit.h"
+#include "item.h"
 #include "music.h"
+#include "enemy.h"
 
 class PlayerView : public View {
     private:
@@ -41,7 +43,9 @@ class PlayerView : public View {
 
         void drawScreen(void);
 
-        void drawActor(Actor a);
+        void drawActor(Actor &a);
+
+        void drawEnemy(Enemy &e);
 
     public:
         PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred> fred, std::shared_ptr<sf::RenderWindow> window);
