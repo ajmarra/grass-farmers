@@ -24,6 +24,7 @@ void Room::addActor(std::shared_ptr<Fred> fred) {
 void Room::addActor(std::shared_ptr<Enemy> enemy) {
     this->actorList.emplace_back(enemy);
     this->enemyList.emplace_back(enemy);
+    enemy->setCurrentRoom(this->shared_from_this());
 }
 void Room::addActor(std::shared_ptr<Item> item) {
 

@@ -187,12 +187,12 @@ void MasterLogic::update(float delta) {
                 advance(newRoom, exit->getDestination());
                 std::shared_ptr<Fred> fred = this->getCurrentRoom()->getFred();
                 if (this->getCurrentRoom()->getFred()->getCenterX() < exit->getCenterX()) {
-                    fred->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX() + 50,
-                                 this->getCurrentRoom()->getExitList().front()->getCenterY() - 50);
+                    fred->setPos((*newRoom)->getExitList().front()->getCenterX() + 50,
+                                 (*newRoom)->getExitList().front()->getCenterY() - 50);
                 }
                 else if (this->getCurrentRoom()->getFred()->getCenterX() > exit->getCenterX()) {
-                    fred->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX() - 100,
-                                 this->getCurrentRoom()->getExitList().front()->getCenterY() - 50);
+                    fred->setPos((*newRoom)->getExitList().front()->getCenterX() - 100,
+                                 (*newRoom)->getExitList().front()->getCenterY() - 50);
                 }
                 this->getCurrentRoom()->removeActor(fred);
                 (*newRoom)->addActor(fred);
