@@ -60,12 +60,20 @@ void Character::update(float delta) {
         this->hardStop();
         sleepTime -= delta;
     }
+
+    //update items in inventory
+    for (std::shared_ptr<Item> &slot : this->inventory) {
+        if (slot) {
+            slot->update(delta);
+        }
+    }
 }
 
 void Character::addItem(void) {
     for (std::shared_ptr<Item> item : this->curRoom->getItemList()) {
         if (this->collidesSquare(*item) && item->getCanPickUp()) {
-            this->curRoom->removeActor(item); //remove from room
+            this->curRoom->removeActor(item); // remove from room
+            item->setCharacter(this->shared_from_this()); // set owned by this character
 
             // if stackable, increment
             if (item->isStackable()) {
