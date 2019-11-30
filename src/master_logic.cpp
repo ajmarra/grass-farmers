@@ -109,8 +109,8 @@ void MasterLogic::startDemo(void) {
 
     // Add fred
     std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
-    for (std::shared_ptr<Room> room : this->roomList) room->addActor(fred);
-    fred->setCurrentRoom(this->roomList.front());
+    this->roomList.front()->addActor(fred);
+    //fred->setCurrentRoom(this->roomList.front());
     this->view->setPlayer(fred);
 
     this->loadInEnemies();
@@ -185,16 +185,18 @@ void MasterLogic::update(float delta) {
             if (this->getCurrentRoom()->getFred()->collidesSquare(*exit)) {
                 std::list<std::shared_ptr<Room>>::iterator newRoom = this->roomList.begin();
                 advance(newRoom, exit->getDestination());
+                std::shared_ptr<Fred> fred = this->getCurrentRoom()->getFred();
                 if (this->getCurrentRoom()->getFred()->getCenterX() < exit->getCenterX()) {
-                    this->currentRoom = newRoom;
-                    this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX()+50, this->getCurrentRoom()->getExitList().front()->getCenterY());
+                    fred->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX() + 50,
+                                 this->getCurrentRoom()->getExitList().front()->getCenterY() - 50);
                 }
-                else if(this->getCurrentRoom()->getFred()->getCenterX() > exit->getCenterX()) {
-                    this->currentRoom = newRoom;
-                    this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX() - 100, this->getCurrentRoom()->getExitList().front()->getCenterY());
+                else if (this->getCurrentRoom()->getFred()->getCenterX() > exit->getCenterX()) {
+                    fred->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX() - 100,
+                                 this->getCurrentRoom()->getExitList().front()->getCenterY() - 50);
                 }
-
-                //this->getCurrentRoom()->getFred()->setPos(this->getCurrentRoom()->getExitList().front()->getCenterX(), this->getCurrentRoom()->getExitList().front()->getCenterY()+50);
+                this->getCurrentRoom()->removeActor(fred);
+                (*newRoom)->addActor(fred);
+                this->currentRoom = newRoom;
             }
         }
 

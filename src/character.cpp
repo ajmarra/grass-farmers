@@ -124,5 +124,7 @@ std::shared_ptr<Item> Character::popItemAtIndex(int index) {
 
 void Character::dropItem() {
     std::shared_ptr<Item> toDrop = this->popItemAtIndex(selectedIndex);
-    if (toDrop != nullptr) toDrop->setPos(this->getCenterX(), this->getCenterY());
+    if (toDrop == nullptr) return;
+    toDrop->setPos(this->getCenterX(), this->getCenterY());
+    this->getCurrentRoom()->addActor(toDrop);
 }
