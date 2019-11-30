@@ -33,8 +33,6 @@ class PlayerView : public View {
         Graphics trap_image;
         Graphics unused_trap_image;
 
-
-
         sf::Font font;
         
 		float elapsedTime = 0;
@@ -42,6 +40,8 @@ class PlayerView : public View {
         void pollInput(void);
 
         void drawScreen(void);
+
+        void drawActor(Actor a);
 
     public:
         PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred> fred, std::shared_ptr<sf::RenderWindow> window);

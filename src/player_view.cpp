@@ -86,9 +86,8 @@ void PlayerView::pollInput() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) fred->addItem();
     
     // Drop item
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
-        fred->dropItem();
-    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) fred->dropItem();
+
 	// Use item (spacebar)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && elapsedTime > 0.5) {
 		elapsedTime = 0;
@@ -106,6 +105,83 @@ void PlayerView::pollInput() {
 		this->logic->paused = true;
 		this->logic->startPaused();
 	} 
+}
+
+void PlayerView::drawActor(Actor a) {
+    switch (a.getType()) {
+            case ActorType::FRED:
+            {
+                sf::RectangleShape fredShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                fredShape.setTexture(&FredSprite.spriteMap);
+                fredShape.setTextureRect(FredSprite.spriteFrame);
+                fredShape.setPosition(a.getX(), a.getY());
+                FredSprite.setFredSprite(fred->getDirection());
+                this->window->draw(fredShape);
+            }
+                break;
+            case ActorType::WEAPON:
+            {
+                sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                itemShape.setTexture(&gun1_image.spriteMap);
+                itemShape.setPosition(a.getX(), a.getY());
+                this->window->draw(itemShape);
+            }
+                break;
+            case ActorType::ENEMY:
+            {
+                sf::RectangleShape enemyShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                enemyShape.setTexture(&EnemySprite.spriteMap);
+                enemyShape.setTextureRect(EnemySprite.spriteFrame);
+                enemyShape.setPosition(a.getX(), a.getY());
+                EnemySprite.setEnemySprite(a.getDirection());
+                this->window->draw(enemyShape);
+            }
+                break;
+            case ActorType::BULLET:
+            {
+                sf::CircleShape bulletShape(a.getWidth());
+                bulletShape.setFillColor(sf::Color::Green);
+                bulletShape.setPosition(a.getX(), a.getY());
+                this->window->draw(bulletShape);
+            }
+                break;
+			case ActorType::HEALTH:
+			{
+				sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+				itemShape.setTexture(&health_image.spriteMap);
+				itemShape.setPosition(a.getX(), a.getY());
+				this->window->draw(itemShape);
+            }
+			    break;
+            case ActorType::EXIT:
+            {
+                if (this->logic->getCurrentRoom()->getFred()->getCenterX() < a.getCenterX()) {
+                    sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                    itemShape.setTexture(&exit_image.spriteMap);
+                    itemShape.setPosition(a.getX(), a.getY());
+                    this->window->draw(itemShape);
+                }
+                else if (this->logic->getCurrentRoom()->getFred()->getCenterX() > a.getCenterX()) {
+                    sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                    itemShape.setTexture(&exit_image.spriteMap);
+                    itemShape.setPosition(a.getX(), a.getY());
+
+                    sf::Transform transform;
+                    transform.rotate(180, a.getCenterX(), a.getCenterY());
+                    this->window->draw(itemShape, transform);
+                }
+			}
+                break;
+            case ActorType::PORTAL:
+            {
+                sf::RectangleShape sp1(sf::Vector2f(a.getWidth(), a.getHeight()));
+                sp1.setTexture(&portalSprite.spriteMap);
+                sp1.setTextureRect(portalSprite.spriteFrame);
+                sp1.setPosition(a.getX(), a.getY());
+                this->window->draw(sp1);
+            }
+                break;
+        }
 }
 
 void PlayerView::drawScreen(void) {
@@ -188,6 +264,7 @@ void PlayerView::drawScreen(void) {
 	this->window->draw(inventoryBlock3);
 	this->window->draw(inventoryBlock4);
 
+    // draw traps
     for (std::shared_ptr<Item> item : this->logic->getCurrentRoom()->getItemList()) {
         if (item->getType() == ActorType::TRAP) {
             sf::RectangleShape itemShape(sf::Vector2f(item->getWidth(), item->getHeight()));
@@ -198,93 +275,26 @@ void PlayerView::drawScreen(void) {
         }
     }
 
+    // draw actors
     for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getActorList()) {
-        switch (actor->getType()) {
-            case ActorType::FRED:
-            {
-                sf::RectangleShape fredShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-                fredShape.setTexture(&FredSprite.spriteMap);
-                fredShape.setTextureRect(FredSprite.spriteFrame);
-                fredShape.setPosition(actor->getX(), actor->getY());
-                FredSprite.setFredSprite(fred->getDirection());
-                this->window->draw(fredShape);
-            }
-                break;
-            case ActorType::WEAPON:
-            {
-                sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-                itemShape.setTexture(&gun1_image.spriteMap);
-                itemShape.setPosition(actor->getX(), actor->getY());
-                this->window->draw(itemShape);
-            }
-                break;
-            case ActorType::ENEMY:
-            {
-                sf::RectangleShape enemyShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-                enemyShape.setTexture(&EnemySprite.spriteMap);
-                enemyShape.setTextureRect(EnemySprite.spriteFrame);
-                enemyShape.setPosition(actor->getX(), actor->getY());
-                EnemySprite.setEnemySprite(actor->getDirection());
-                this->window->draw(enemyShape);
-            }
-                break;
-            case ActorType::BULLET:
-            {
-                sf::CircleShape bulletShape(actor->getWidth());
-                bulletShape.setFillColor(sf::Color::Green);
-                bulletShape.setPosition(actor->getX(), actor->getY());
-                this->window->draw(bulletShape);
-            }
-                break;
-			case ActorType::HEALTH:
-			{
-				sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-				itemShape.setTexture(&health_image.spriteMap);
-				itemShape.setPosition(actor->getX(), actor->getY());
-				this->window->draw(itemShape);
-            }
-			    break;
-            case ActorType::EXIT:
-            {
-                if (this->logic->getCurrentRoom()->getFred()->getCenterX() < actor->getCenterX()) {
-                    sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-                    itemShape.setTexture(&exit_image.spriteMap);
-                    itemShape.setPosition(actor->getX(), actor->getY());
-                    this->window->draw(itemShape);
-                }
-                else if (this->logic->getCurrentRoom()->getFred()->getCenterX() > actor->getCenterX()) {
-                    sf::RectangleShape itemShape(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-                    itemShape.setTexture(&exit_image.spriteMap);
-                    itemShape.setPosition(actor->getX(), actor->getY());
-
-                    sf::Transform transform;
-                    transform.rotate(180, actor->getCenterX(), actor->getCenterY());
-                    this->window->draw(itemShape, transform);
-                }
-			}
-            break;
-            case ActorType::PORTAL:
-            {
-                sf::RectangleShape sp1(sf::Vector2f(actor->getWidth(), actor->getHeight()));
-                sp1.setTexture(&portalSprite.spriteMap);
-                sp1.setTextureRect(portalSprite.spriteFrame);
-                sp1.setPosition(actor->getX(), actor->getY());
-                this->window->draw(sp1);
-            }
-            break;
-        }
+        this->drawActor(*actor);
     }
 
-    for (std::shared_ptr<Item> it : this->logic->getCurrentRoom()->getItemList()) {
-        if (it->getQuantity() > 1) {
-            sf::Text numText;
-            numText.setFont(font);
-            numText.setString(std::to_string(it->getQuantity()));
-            numText.setCharacterSize(25); // in pixels, not points!
-            numText.setFillColor(sf::Color::White);
-            numText.setStyle(sf::Text::Bold);
-            numText.setPosition(it->getCenterX() - 3, it->getCenterY() + 5);
-            this->window->draw(numText);
+    for (int i = 0; i < 4; i++) {
+        if (this->fred->getInventory()[i]) {
+            /**switch(this->fred->getInventory()[i]) {
+                case
+            }*/
+            if (this->fred->getInventory()[i] && this->fred->getInventory()[i]->getQuantity() > 1) {
+                sf::Text numText;
+                numText.setFont(font);
+                numText.setString(std::to_string(this->fred->getInventory()[i]->getQuantity()));
+                numText.setCharacterSize(25); // in pixels, not points!
+                numText.setFillColor(sf::Color::White);
+                numText.setStyle(sf::Text::Bold);
+                numText.setPosition(this->fred->getInventory()[i]->getCenterX() - 3, this->fred->getInventory()[i]->getCenterY() + 5);
+                this->window->draw(numText);
+            }
         }
     }
 }
@@ -301,7 +311,6 @@ void PlayerView::switchToNight() {
     cur_track.playNightTrack();
     sky.setFillColor(sf::Color (25, 25, 112));
     night = true;
-    
 }
 
 void PlayerView::update(float delta) {
