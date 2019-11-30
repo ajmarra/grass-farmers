@@ -302,6 +302,7 @@ void PlayerView::drawScreen(void) {
         }
     }
 
+    // Draws the quantity of an item under its graphic
     for (std::shared_ptr<Item> it : this->logic->getCurrentRoom()->getItemList()) {
         if (it->getQuantity() > 1) {
             sf::Text numText;

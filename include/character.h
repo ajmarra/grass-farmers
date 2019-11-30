@@ -60,6 +60,9 @@ class Character : public Actor {
 
 		void addItem(std::list<std::shared_ptr<Item>> itemList);
 
+        // Used for enemy inventory
+        void addItem(std::shared_ptr<Item> item);
+
 		std::shared_ptr<Item> popItemAtIndex(int index);
 
 		void dropItem(void);

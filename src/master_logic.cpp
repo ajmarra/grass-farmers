@@ -221,13 +221,6 @@ void MasterLogic::update(float delta) {
                 this->loadInEnemies();
 
                 if (enemyQueueList.size() > 0) {
-
-                    spawnRate = 5;
-                    std::shared_ptr<Enemy> toSpawn;
-                    toSpawn = this->enemyQueueList.back();
-                    this->enemyQueueList.remove(toSpawn);
-                    this->view->addEnemy(toSpawn);
-                    this->roomList.front()->addActor(toSpawn);
                     nightCount++;
                 }
 
