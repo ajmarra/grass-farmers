@@ -118,7 +118,7 @@ void PlayerView::drawActor(Actor &a) {
                 this->window->draw(fredShape);
             }
                 break;
-            case ActorType::WEAPON:
+            case ActorType::RANGEWEAPON:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
                 itemShape.setTexture(&gun1_image.spriteMap);
@@ -126,6 +126,16 @@ void PlayerView::drawActor(Actor &a) {
                 this->window->draw(itemShape);
             }
                 break;
+
+            case ActorType::MELEEWEAPON:
+            {
+                sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                itemShape.setFillColor(sf::Color::Magenta);
+                itemShape.setPosition(a.getX(), a.getY());
+                this->window->draw(itemShape);
+            }
+                break;
+
             case ActorType::ENEMY:
             {
                 sf::RectangleShape enemyShape(sf::Vector2f(a.getWidth(), a.getHeight()));
