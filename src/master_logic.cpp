@@ -73,6 +73,11 @@ void MasterLogic::loadInEnemies(void) {
 
         inFile.close();
     }
+    else if (nightCount == 4) {
+        std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
+        this->getCurrentRoom()->addActor(cheryl);
+        this->view->addEnemy(cheryl);
+    }
 }
 
 void MasterLogic::checkCollisions(float delta) {
@@ -97,6 +102,12 @@ void MasterLogic::checkCollisions(float delta) {
     }
 }
 
+void MasterLogic::updateCheryl(void) {
+    if (this->getCurrentRoom()->getCheryl()->getHealth() == 300) {
+
+    }
+}
+
 void MasterLogic::startDemo(void) {
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
@@ -115,8 +126,10 @@ void MasterLogic::startDemo(void) {
 
     this->loadInEnemies();
 
-    std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 100, 100);
+    //Testing Cheryl
+    std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
     this->getCurrentRoom()->addActor(cheryl);
+    this->view->addEnemy(cheryl);
 
     // Creating the portals
     std::shared_ptr<Portal> portal1 = std::make_shared<Portal>(70, 150);

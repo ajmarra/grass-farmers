@@ -22,6 +22,9 @@ void Room::addActor(std::shared_ptr<Fred> fred) {
 }
 
 void Room::addActor(std::shared_ptr<Enemy> enemy) {
+    if (enemy->getType() == ActorType::CHERYL) {
+        this->cheryl = enemy;
+    }
     this->actorList.emplace_back(enemy);
     this->enemyList.emplace_back(enemy);
     enemy->setCurrentRoom(this->shared_from_this());
@@ -41,6 +44,7 @@ void Room::addActor(std::shared_ptr<Portal> portal) {
     this->actorList.emplace_back(portal);
     this->portalList.emplace_back(portal);
 }
+
 void Room::removeActor(std::shared_ptr<Exit> exit) {
     this->actorList.remove(exit);
     this->exitList.remove(exit);
@@ -56,6 +60,10 @@ void Room::removeActor(std::shared_ptr<Enemy> enemy) {
         this->addActor(enemy->getSelectedItem());
         enemy->dropItem();
     }
+    if (enemy->getType() == ActorType::CHERYL) {
+        this->cheryl = nullptr;
+    }
+
     this->actorList.remove(enemy);
     this->enemyList.remove(enemy);
 }

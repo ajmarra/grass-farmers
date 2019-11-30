@@ -66,6 +66,12 @@ class MasterLogic {
 		std::list<std::shared_ptr<Item>> getItemList(void) { return itemList; };
     
         std::shared_ptr<Timer> getTimer() { return timer; };
+
+        int getNightCount(void) { return nightCount; };
+        
+        void setNightCount(int num) { this->nightCount = num; };
+
+        void updateCheryl(void);
 };
 
 #endif
