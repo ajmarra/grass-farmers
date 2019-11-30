@@ -70,7 +70,7 @@ void PlayerView::pollInput() {
     sf::Event Event;
 
     // Use Item (mouse)
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) this->fred->useItem(sf::Mouse::getPosition().x, sf::Mouse::getPosition().x);
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) this->fred->useItem(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
 
     // Move
     int x = 0, y = 0;
@@ -83,9 +83,7 @@ void PlayerView::pollInput() {
     else fred->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
 
     // Pick up item
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
-        fred->addItem(this->logic->getCurrentRoom()->getItemList());
-    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) fred->addItem();
     
     // Drop item
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
@@ -107,7 +105,6 @@ void PlayerView::pollInput() {
 		//cur_track.stopCurrentTrack();
 		this->logic->paused = true;
 		this->logic->startPaused();
-		
 	} 
 }
 
@@ -139,18 +136,11 @@ void PlayerView::drawScreen(void) {
     sf::RectangleShape room;
     room.setSize(sf::Vector2f(logic->getCurrentRoom()->getWidth(), logic->getCurrentRoom()->getHeight()));
     room.setPosition(logic->getCurrentRoom()->getX(), logic->getCurrentRoom()->getY());
-        if (logic->getCurrentRoom()->getHeight() >= 800){
-        
-            room.setTexture(&farm_image.spriteMap);
-        }
-        else{
-            room.setTexture(&barn_image.spriteMap);
-        }
+    if (logic->getCurrentRoom()->getHeight() >= 800) room.setTexture(&farm_image.spriteMap);
+    else room.setTexture(&barn_image.spriteMap);
     this->window->draw(room);
     
-    if (night == true){
-        this->window->draw(darkness);
-    }
+    if (night) this->window->draw(darkness);
 
 	//Fred's Health Bar
 	sf::RectangleShape healthBar(sf::Vector2f(5*fred->getHealth(), 20));
@@ -193,35 +183,19 @@ void PlayerView::drawScreen(void) {
 	inventoryBlock4.setOutlineThickness(5);
 	inventoryBlock4.setFillColor(sf::Color::Black);
 
-    
-
 	this->window->draw(inventoryBlock1);
 	this->window->draw(inventoryBlock2);
 	this->window->draw(inventoryBlock3);
 	this->window->draw(inventoryBlock4);
 
-    for (std::shared_ptr<Trap> trap : this->logic->getCurrentRoom()->getTrapList()) {
-        switch (trap->getIsSet()) {
-            case true:
-            {
-                sf::RectangleShape itemShape(sf::Vector2f(trap->getWidth(), trap->getHeight()));
-                    itemShape.setTexture(&trap_image.spriteMap);
-                    itemShape.setPosition(trap->getX(), trap->getY());
-                    this->window->draw(itemShape);
-            }
-            break;
-            case false:
-            {
-                sf::RectangleShape itemShape(sf::Vector2f(trap->getWidth(), trap->getHeight()));
-                    itemShape.setTexture(&unused_trap_image.spriteMap);
-                    itemShape.setPosition(trap->getX(), trap->getY());
-                    this->window->draw(itemShape);
-            }
-            break;
-
-
+    for (std::shared_ptr<Item> item : this->logic->getCurrentRoom()->getItemList()) {
+        if (item->getType() == ActorType::TRAP) {
+            sf::RectangleShape itemShape(sf::Vector2f(item->getWidth(), item->getHeight()));
+            itemShape.setPosition(item->getX(), item->getY());
+            if (item->getCanPickUp()) itemShape.setTexture(&unused_trap_image.spriteMap);
+            else itemShape.setTexture(&trap_image.spriteMap);
+            this->window->draw(itemShape);
         }
-
     }
 
     for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getActorList()) {
@@ -269,8 +243,7 @@ void PlayerView::drawScreen(void) {
 				itemShape.setPosition(actor->getX(), actor->getY());
 				this->window->draw(itemShape);
             }
-			break;
-
+			    break;
             case ActorType::EXIT:
             {
                 if (this->logic->getCurrentRoom()->getFred()->getCenterX() < actor->getCenterX()) {
@@ -315,7 +288,6 @@ void PlayerView::drawScreen(void) {
             this->window->draw(numText);
         }
     }
-
 }
 
 void PlayerView::switchToDay() {

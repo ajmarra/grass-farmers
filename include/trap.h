@@ -8,26 +8,25 @@
 * They do not damage fred when he walks over them.
 */
 class Trap : public Item {
-private:
-    int damage = 100;
-    float elapsedTime = 0;
-    float delta;
-    bool isSet = false;
+    private:
+        int damage = 100;
+        float elapsedTime = 0;
+        float delta;
+        bool isSet = false;
 
-public:
-    Trap(double x, double y, double width, double height, std::shared_ptr<Character> fred);
+    public:
+        Trap(double x, double y, double width, double height, std::shared_ptr<Character> fred);
 
-    bool getIsSet(void) { return isSet; };
+        //bool getIsSet(void) { return isSet; };
 
-    int getDamage(void) { return damage; };
+        int getDamage(void) { return damage; };
 
-    /*
-    * Sets the trap
-    */
-    void use(int x, int y) override;
+        /*
+        * Sets the trap
+        */
+        void use(int x, int y) override;
 
-    void update(float delta) override;
-
+        void update(float delta) override;
 };
 
 #endif //Trap_H

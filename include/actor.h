@@ -1,7 +1,7 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 
-enum class ActorType { ROOM, EXIT, FRED, ENEMY, HEALTH, WEAPON, BULLET, TRAP, PORTAL };
+enum class ActorType { ROOM, EXIT, FRED, ENEMY, HEALTH, WEAPON, TRAP, BULLET, PORTAL };
 
 class Actor {
     protected:
