@@ -115,6 +115,9 @@ void MasterLogic::startDemo(void) {
 
     this->loadInEnemies();
 
+    std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 100, 100);
+    this->getCurrentRoom()->addActor(cheryl);
+
     // Creating the portals
     std::shared_ptr<Portal> portal1 = std::make_shared<Portal>(70, 150);
     this->roomList.front()->addActor(portal1);
@@ -238,7 +241,7 @@ void MasterLogic::update(float delta) {
                     toSpawn->addItem(item);
                 }
                 else if (randNum == 2) {
-                    std::shared_ptr<HealthItem> item = std::make_shared<HealthItem>(650, 550, 64, 64, this->getCurrentRoom()->getFred());
+                    std::shared_ptr<HealthItem> item = std::make_shared<HealthItem>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
                     toSpawn->addItem(item);
                 }
             }

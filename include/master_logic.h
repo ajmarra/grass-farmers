@@ -9,6 +9,7 @@
 #include "fred.h"
 #include "exit.h"
 #include "timer.h"
+#include "cheryl.h"
 
 #include "item.h"
 #include "trap.h"

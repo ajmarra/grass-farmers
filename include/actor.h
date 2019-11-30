@@ -39,6 +39,8 @@ class Actor {
 
         double getHeight(void) { return this->height; };
 
+        void setWidthHeight(double width, double height) { this->width = width; this->height = height; };
+
         double getXSpeed(void) { return this->xSpeed; };
 
         double getYSpeed(void) { return this->ySpeed; };
