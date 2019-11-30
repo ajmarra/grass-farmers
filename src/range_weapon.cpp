@@ -19,7 +19,7 @@ RangeWeapon::RangeWeapon(double x, double y, double width, double height, int da
 }
 
 void RangeWeapon::use(int x, int y) {
-    double direction = atan2(y - this->y, x - this->x) * 180 / PI;
-	std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(this->character->getX(), this->character->getY(), 2, 800, direction, this->damage);
+    double direction = atan2(y - this->character->getCenterY(), x - this->character->getCenterX()) * 180 / PI;
+	std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(this->character->getCenterX(), this->character->getCenterY(), 2, 800, direction, this->damage);
     this->character->getCurrentRoom()->addActor(bullet);
 }

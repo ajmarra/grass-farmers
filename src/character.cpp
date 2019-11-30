@@ -65,7 +65,8 @@ void Character::update(float delta) {
 void Character::addItem(void) {
     for (std::shared_ptr<Item> item : this->curRoom->getItemList()) {
         if (this->collidesSquare(*item) && item->getCanPickUp()) {
-            this->curRoom->removeActor(item); //remove from room
+            this->curRoom->removeActor(item); // remove from room
+            item->setCharacter(this->shared_from_this()); // set owned by this character
 
             // if stackable, increment
             if (item->isStackable()) {

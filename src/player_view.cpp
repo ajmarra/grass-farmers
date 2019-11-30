@@ -70,7 +70,7 @@ void PlayerView::pollInput() {
     sf::Event Event;
 
     // Use Item (mouse)
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) this->fred->useItem(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) this->fred->useItem(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
 
     // Move
     int x = 0, y = 0;
