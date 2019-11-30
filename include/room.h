@@ -27,9 +27,6 @@ class Room : public Actor, public std::enable_shared_from_this<Room> {
         std::shared_ptr<Fred> fred;
         std::list<std::shared_ptr<Enemy>> enemyList;
         std::list<std::shared_ptr<Item>> itemList;
-        //std::list<std::shared_ptr<HealthItem>> healthItemList;
-        //std::list<std::shared_ptr<RangeWeapon>> rangeWeaponList;
-        //std::list<std::shared_ptr<Trap>> trapList;
         std::list<std::shared_ptr<Bullet>> bulletList;
         std::list<std::shared_ptr<Portal>> portalList;
         
@@ -50,13 +47,7 @@ class Room : public Actor, public std::enable_shared_from_this<Room> {
 
         void addActor(std::shared_ptr<Item> item);
 
-        //void addActor(std::shared_ptr<HealthItem> healthItem);
-
-        //void addActor(std::shared_ptr<RangeWeapon> weapon);
-
         void addActor(std::shared_ptr<Bullet> bullet);
-
-        //void addActor(std::shared_ptr<Trap> trap);
         
         void addActor(std::shared_ptr<Portal> portal);
 
@@ -71,13 +62,7 @@ class Room : public Actor, public std::enable_shared_from_this<Room> {
 
         void removeActor(std::shared_ptr<Item> item);
 
-        //void removeActor(std::shared_ptr<HealthItem> healthItem);
-
-        //void removeActor(std::shared_ptr<RangeWeapon> rangeWeapon);
-
         void removeActor(std::shared_ptr<Bullet> bullet);
-
-        //void removeActor(std::shared_ptr<Trap> trap);
         
         void removeActor(std::shared_ptr<Portal> portal);
         
@@ -88,16 +73,10 @@ class Room : public Actor, public std::enable_shared_from_this<Room> {
         std::shared_ptr<Fred> getFred(void) { return this->fred; };
         
         std::list<std::shared_ptr<Enemy>> getEnemyList(void) { return this->enemyList; };
-
-        //std::list<std::shared_ptr<HealthItem>> getHealthItemList(void) { return this->healthItemList; };
-
-        //std::list<std::shared_ptr<RangeWeapon>> getRangeWeaponList(void) { return this->rangeWeaponList; };
         
         std::list<std::shared_ptr<Bullet>> getBulletList(void) { return this->bulletList; };
 
-        //std::list<std::shared_ptr<Trap>> getTrapList(void) { return this->trapList; };
-
-        std::list<std::shared_ptr<Portal>> getportalList(void) { return this->portalList; };
+        std::list<std::shared_ptr<Portal>> getPortalList(void) { return this->portalList; };
 
         /**
          * Return the whole list of actors.

@@ -31,25 +31,7 @@ void Room::addActor(std::shared_ptr<Item> item) {
     this->actorList.emplace_back(item);
     this->itemList.emplace_back(item);
 }
-/**
-void Room::addActor(std::shared_ptr<HealthItem> health) {
-    this->actorList.emplace_back(health);
-    this->itemList.emplace_back(health);
-    this->healthItemList.emplace_back(health);
-}
 
-void Room::addActor(std::shared_ptr<RangeWeapon> weapon) {
-    this->actorList.emplace_back(weapon);
-    this->itemList.emplace_back(weapon);
-    this->rangeWeaponList.emplace_back(weapon);
-}
-
-void Room::addActor(std::shared_ptr<Trap> trap) {
-    this->actorList.emplace_back(trap);
-    this->itemList.emplace_back(trap);
-    this->trapList.emplace_back(trap);
-}
-*/
 void Room::addActor(std::shared_ptr<Bullet> bullet) {
     this->actorList.emplace_back(bullet);
     this->bulletList.emplace_back(bullet);
@@ -82,25 +64,7 @@ void Room::removeActor(std::shared_ptr<Item> item) {
     this->actorList.remove(item);
     this->itemList.remove(item);
 }
-/**
-void Room::removeActor(std::shared_ptr<HealthItem> healthItem) {
-    this->actorList.remove(healthItem);
-    this->itemList.remove(healthItem);
-    this->healthItemList.remove(healthItem);
-}
 
-void Room::removeActor(std::shared_ptr<RangeWeapon> rangeWeapon) {
-    this->actorList.remove(rangeWeapon);
-    this->itemList.remove(rangeWeapon);
-    this->rangeWeaponList.remove(rangeWeapon);
-}
-
-void Room::removeActor(std::shared_ptrenemy<Trap> trap) {
-    this->actorList.remove(trap);
-    this->itemList.remove(trap);
-    this->trapList.remove(trap);
-}
-*/
 void Room::removeActor(std::shared_ptr<Bullet> bullet) {
     this->actorList.remove(bullet);
     this->bulletList.remove(bullet);

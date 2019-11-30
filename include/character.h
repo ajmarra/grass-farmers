@@ -11,7 +11,7 @@
 class MasterLogic;
 class Room;
 
-class Character : public Actor {
+class Character : public Actor, public std::enable_shared_from_this<Character> {
     private:
         void move(void);
 
@@ -55,9 +55,8 @@ class Character : public Actor {
 
 		void heal(int healAmount);
 
-        /**
-         * MUST ADD NEW ITEM TYPES TO THIS METHOD FOR THIS TO WORK
-         */
+        std::shared_ptr<Item> *getInventory(void) { return (this->inventory); };
+
 		void addItem(void);
 
 		void dropItem(void);
