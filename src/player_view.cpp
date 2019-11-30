@@ -78,7 +78,6 @@ void PlayerView::pollInput() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) x -= 1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) y += 1;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) x += 1;
-
     if (x == 0 && y == 0) fred->stop();
     else fred->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
 

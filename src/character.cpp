@@ -60,6 +60,13 @@ void Character::update(float delta) {
         this->hardStop();
         sleepTime -= delta;
     }
+
+    //update items in inventory
+    for (std::shared_ptr<Item> &slot : this->inventory) {
+        if (slot) {
+            slot->update(delta);
+        }
+    }
 }
 
 void Character::addItem(void) {
