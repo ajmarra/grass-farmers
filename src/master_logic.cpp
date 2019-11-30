@@ -126,6 +126,7 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(portal4);
 
     // Add test items
+    this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 20, 40, 10, 2, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<RangeWeapon>(150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Trap>(850, 550, 64, 64, this->getCurrentRoom()->getFred()));

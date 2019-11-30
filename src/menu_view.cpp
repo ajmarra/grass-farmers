@@ -48,7 +48,7 @@ void MenuView::update(float delta){
 }
 
 void MenuView::drawScreen(){
-    this->window->clear(sf::Color::Black);
+    //this->window->clear(sf::Color::Black);
 
     sf::RectangleShape menu;
     
