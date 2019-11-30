@@ -61,8 +61,6 @@ class MasterLogic {
         std::shared_ptr<Room> getCurrentRoom(void) { return *(this->currentRoom); };
         
         void checkCollisions(float delta);
-
-        void removeUsedTraps(void);
         
 		std::list<std::shared_ptr<Item>> getItemList(void) { return itemList; };
     

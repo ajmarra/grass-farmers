@@ -47,14 +47,17 @@ class Character : public Actor {
         /**
          * stops the character (desiredDirection of -1 stops the character)
          */
-        void stop() { this->desiredDirection = -1; };
+        void stop(void) { this->desiredDirection = -1; };
 
-		int getHealth() { return this->health; };
+		int getHealth(void) { return this->health; };
 
-		int getMaxHealth() { return this->maxHealth; };
+		int getMaxHealth(void) { return this->maxHealth; };
 
 		void heal(int healAmount);
 
+        /**
+         * MUST ADD NEW ITEM TYPES TO THIS METHOD FOR THIS TO WORK
+         */
 		void addItem(void);
 
 		void dropItem(void);

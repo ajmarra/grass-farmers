@@ -24,8 +24,8 @@ void Character::damage(int d) {
 }
 
 void Character::heal(int healAmount) {
-	health += healAmount;
-	if (health > maxHealth) health = maxHealth;
+    health += healAmount;
+    if (health > maxHealth) health = maxHealth;
 }
 
 void Character::move(void) {
@@ -52,10 +52,10 @@ void Character::move(void) {
 }
 
 void Character::update(float delta) {
-	Actor::update(delta);
-	if (this->canMove && sleepTime <= 0) {
-		Character::move();
-	}
+    Actor::update(delta);
+    if (this->canMove && sleepTime <= 0) {
+        Character::move();
+    }
     else {
         this->hardStop();
         sleepTime -= delta;
@@ -63,45 +63,55 @@ void Character::update(float delta) {
 }
 
 void Character::addItem(void) {
-	for (std::shared_ptr<Item> item : this->curRoom->getItemList()) {
-		if (this->collidesSquare(*item) && item->getCanPickUp()) {
-			if (item->isStackable()) {
-				for (std::shared_ptr<Item> &slot : this->inventory) {
-					//if (slot && item->getType() == slot->getType()) {
+    for (std::shared_ptr<Item> item : this->curRoom->getItemList()) {
+        if (this->collidesSquare(*item) && item->getCanPickUp()) {
+            this->curRoom->removeActor(item);
+            if (item->isStackable()) {
+                for (std::shared_ptr<Item> &slot : this->inventory) {
+                    if (slot && item->getType() == slot->getType()) {
+                        slot->increaseQuantity();
+                        return;
+                    }
+                }
+            }
+            for (std::shared_ptr<Item> &slot : this->inventory) {
+                if (!slot) {
+                    slot = item;
+                    return;
+                }
+            }
 
-					//}
-				}
-			}
-			/**
-			for (std::shared_ptr<Item> &item : this->inventory) {
-				if (item->isStackable() && inventory[i] != nullptr && inventory[i]->getType() == item->getType()) {
-					inventory[i]->increaseQuantity();
+
+            /**
+            for (std::shared_ptr<Item> &item : this->inventory) {
+                if (item->isStackable() && inventory[i] != nullptr && inventory[i]->getType() == item->getType()) {
+                    inventory[i]->increaseQuantity();
                     item->setUsedItem(true);
                     //item->setXY(inventory[i]->getCenterX()-10, inventory[i]->getCenterY()-10);
-					findSlot = false;
-				}
-				else if (i == 4) findSlot = false;
-				else if (inventory[i] == nullptr) {
-					inventory[i] = item;
-					findSlot = false;
-					if (i == 0) {
-						item->setPos(825, 40);
-					}
-					else if (i == 1) {
-						item->setPos(925, 40);
-					}
-					else if (i == 2) {
-						item->setPos(1025, 40);
-					}
-					else if (i == 3) {
-						item->setPos(1125, 40);
-					}
-					if (selectedIndex == i) this->setSelectedIndex(i);
-				}
-				i++;
-			}
+                    findSlot = false;
+                }
+                else if (i == 4) findSlot = false;
+                else if (inventory[i] == nullptr) {
+                    inventory[i] = item;
+                    findSlot = false;
+                    if (i == 0) {
+                        item->setPos(825, 40);
+                    }
+                    else if (i == 1) {
+                        item->setPos(925, 40);
+                    }
+                    else if (i == 2) {
+                        item->setPos(1025, 40);
+                    }
+                    else if (i == 3) {
+                        item->setPos(1125, 40);
+                    }
+                    if (selectedIndex == i) this->setSelectedIndex(i);
+                }
+                i++;
+            }
             break;
-			*/
+            */
         }
     }
 }
@@ -113,6 +123,6 @@ std::shared_ptr<Item> Character::popItemAtIndex(int index) {
 }
 
 void Character::dropItem() {
-	std::shared_ptr<Item> toDrop = this->popItemAtIndex(selectedIndex);
-	if (toDrop != nullptr) toDrop->setPos(this->getCenterX(), this->getCenterY());
+    std::shared_ptr<Item> toDrop = this->popItemAtIndex(selectedIndex);
+    if (toDrop != nullptr) toDrop->setPos(this->getCenterX(), this->getCenterY());
 }

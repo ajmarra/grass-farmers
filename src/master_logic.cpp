@@ -79,9 +79,9 @@ void MasterLogic::checkCollisions(float delta) {
     this->elapsedTime += delta;
     if (this->getCurrentRoom()->getEnemyList().size() > 0) {
         for (std::shared_ptr<Enemy> enemy : this->getCurrentRoom()->getEnemyList()) {
-            for (std::shared_ptr<Trap> it : this->getCurrentRoom()->getTrapList()) {
-                if (enemy->collidesSquare(*it) && it->getIsSet()) {
-                    enemy->damage(it->getDamage());
+            for (std::shared_ptr<Item> it : this->getCurrentRoom()->getItemList()) {
+                if (it->getType() == ActorType::TRAP && enemy->collidesSquare(*it) && !it->getCanPickUp()) {
+                    enemy->damage(100);
                     this->getCurrentRoom()->removeActor(it);
                 }
             }
@@ -97,12 +97,6 @@ void MasterLogic::checkCollisions(float delta) {
     }
 }
 
-void MasterLogic::removeUsedTraps(void) {
-    for (std::shared_ptr<HealthItem> it : this->getCurrentRoom()->getHealthItemList()) {
-        if (it->getUsedItem()) this->getCurrentRoom()->removeActor(it);
-    }
-}
-
 void MasterLogic::startDemo(void) {
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
@@ -115,7 +109,8 @@ void MasterLogic::startDemo(void) {
 
     // Add fred
     std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
-    for (std::shared_ptr<Room> room :this->roomList) room->addActor(fred);
+    for (std::shared_ptr<Room> room : this->roomList) room->addActor(fred);
+    fred->setCurrentRoom(this->roomList.front());
     this->view->setPlayer(fred);
 
     this->loadInEnemies();
@@ -158,8 +153,6 @@ void MasterLogic::update(float delta) {
     else if ((paused == false) && (playing == true) && (options == false)) {
 
         this->checkCollisions(delta);
-
-        this->removeUsedTraps();
 
         // Loop throught the actor list
         for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
