@@ -129,6 +129,7 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 20, 40, 10, 2, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<RangeWeapon>(150, 150, 40, 20, 10, 2, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<Trap>(850, 550, 64, 64, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 32, 32, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 32, 32, this->getCurrentRoom()->getFred()));
 
@@ -215,13 +216,6 @@ void MasterLogic::update(float delta) {
                 this->loadInEnemies();
 
                 if (enemyQueueList.size() > 0) {
-
-                    spawnRate = 5;
-                    std::shared_ptr<Enemy> toSpawn;
-                    toSpawn = this->enemyQueueList.back();
-                    this->enemyQueueList.remove(toSpawn);
-                    this->view->addEnemy(toSpawn);
-                    this->roomList.front()->addActor(toSpawn);
                     nightCount++;
                 }
 
@@ -238,7 +232,16 @@ void MasterLogic::update(float delta) {
                 this->enemyQueueList.remove(toSpawn);
                 this->view->addEnemy(toSpawn);
                 this->roomList.front()->addActor(toSpawn);
-
+                
+                int randNum = std::rand() % 4;
+                if (randNum == 1) {
+                    std::shared_ptr<Trap> item = std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred());
+                    toSpawn->addItem(item);
+                }
+                else if (randNum == 2) {
+                    std::shared_ptr<HealthItem> item = std::make_shared<HealthItem>(650, 550, 64, 64, this->getCurrentRoom()->getFred());
+                    toSpawn->addItem(item);
+                }
             }
             else {
                 spawnRate -= delta;

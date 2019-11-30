@@ -61,6 +61,9 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
 
 		void dropItem(void);
 
+        // Used for enemy inventory
+        void addItem(std::shared_ptr<Item> item);
+
 		std::shared_ptr<Item> popItemAtIndex(int index);
 
         void setSelectedIndex(int index) { this->selectedIndex = index; };

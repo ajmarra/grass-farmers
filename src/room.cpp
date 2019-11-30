@@ -52,6 +52,10 @@ void Room::removeActor(std::shared_ptr<Fred> fred) {
 }
 
 void Room::removeActor(std::shared_ptr<Enemy> enemy) {
+    if (enemy->getSelectedItem() != nullptr) {
+        this->addActor(enemy->getSelectedItem());
+        enemy->dropItem();
+    }
     this->actorList.remove(enemy);
     this->enemyList.remove(enemy);
 }
