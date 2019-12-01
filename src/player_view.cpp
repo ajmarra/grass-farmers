@@ -374,12 +374,32 @@ void PlayerView::drawScreen(void) {
     for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getBulletList()) this->drawActor(*actor);
 
     // draw enemies
-    for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getEnemyList()) this->drawActor(*actor);
+    for (std::shared_ptr<Enemy> actor : this->logic->getCurrentRoom()->getEnemyList()) {
+        this->drawActor(*actor);
+        
+        if (actor->getHealth() != actor->getMaxHealth()) {
+            // draw health bars
+            sf::RectangleShape healthBar(sf::Vector2f(float(actor->getHealth()) / float(actor->getMaxHealth()) * 30.0, 5));
+            healthBar.setPosition(actor->getCenterX() - 15, actor->getY() - 10);
+            healthBar.setFillColor(sf::Color::Red);
+            this->window->draw(healthBar);
+            
+            sf::RectangleShape fullHealthBar(sf::Vector2f(30, 5));
+            fullHealthBar.setPosition(actor->getCenterX() - 15, actor->getY() - 10);
+            fullHealthBar.setFillColor(sf::Color::Transparent);
+            fullHealthBar.setOutlineThickness(1.5);
+            fullHealthBar.setOutlineColor(sf::Color::Black);
+            
+            this->window->draw(fullHealthBar);
+        }
+    }
     
     // draw furniture
     for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getActorList()) {
         if (actor->getType() == ActorType::BED || actor->getType() == ActorType::CLOSET) {
             this->drawActor(*actor);
+
+            
         }
     }
 
