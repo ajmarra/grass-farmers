@@ -70,7 +70,10 @@ void PlayerView::pollInput() {
     sf::Event Event;
 
     // Use Item (mouse)
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) this->fred->useItem(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && elapsedTime > 0.5) {
+        this->fred->useItem(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
+        elapsedTime = 0;
+    }
 
     // Move
     int x = 0, y = 0;
@@ -87,10 +90,9 @@ void PlayerView::pollInput() {
     // Drop item
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) fred->dropItem();
 
-	// Use item (spacebar)
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && elapsedTime > 0.5) {
-		elapsedTime = 0;
-		fred->useItem(fred->getCenterX(), fred->getCenterY());
+	// 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+		
 	}
 
 	// Inventory selection
