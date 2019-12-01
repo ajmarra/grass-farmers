@@ -94,7 +94,7 @@ void MasterLogic::checkCollisions(float delta) {
 
             if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->elapsedTime >= 1) {
                 elapsedTime = 0;
-                this->getCurrentRoom()->getFred()->damage(2); //temporarily hard coded.  Will change based on enemy type?
+                this->getCurrentRoom()->getFred()->damage(enemy->getDamage()); //temporarily hard coded.  Will change based on enemy type?
             }
             if (enemy->getHealth() <= 0) {
                 this->getCurrentRoom()->removeActor(enemy);
@@ -108,14 +108,17 @@ void MasterLogic::updateCheryl(void) {
         if (this->getCurrentRoom()->getCheryl()->getHealth() <= 300) {
             this->getCurrentRoom()->getCheryl()->setMaxSpeed(140);
             this->getCurrentRoom()->getCheryl()->setMass(30);
+            this->getCurrentRoom()->getCheryl()->setDamage(12);
         }
         if (this->getCurrentRoom()->getCheryl()->getHealth() <= 200) {
             this->getCurrentRoom()->getCheryl()->setMaxSpeed(200);
             this->getCurrentRoom()->getCheryl()->setMass(20);
+            this->getCurrentRoom()->getCheryl()->setDamage(15);
         }
         if (this->getCurrentRoom()->getCheryl()->getHealth() <= 100) {
             this->getCurrentRoom()->getCheryl()->setMaxSpeed(250);
             this->getCurrentRoom()->getCheryl()->setMass(20);
+            this->getCurrentRoom()->getCheryl()->setDamage(20);
         }
     }
 }
