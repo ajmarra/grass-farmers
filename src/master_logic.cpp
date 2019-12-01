@@ -127,6 +127,12 @@ bool MasterLogic::isAtCloset() {
     return this->atCloset;
 }
 
+void MasterLogic::checkFred(void) {
+    if (this->getCurrentRoom()->getFred()->getHealth() <= 0) {
+        std::cout << "he ded." << std::endl;
+    }
+}
+
 void MasterLogic::startDemo(void) {
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
