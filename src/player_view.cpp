@@ -386,6 +386,8 @@ void PlayerView::drawScreen(void) {
 
     // draw Fred
     this->drawActor(*this->logic->getCurrentRoom()->getFred());
+
+    window->display();
 }
 
 void PlayerView::switchToDay() {

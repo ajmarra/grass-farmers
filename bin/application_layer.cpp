@@ -34,9 +34,11 @@ int main(int argc, char** argv) {
         delta = clock.getElapsedTime().asSeconds(); //can change to milliseconds if necessary
         clock.restart();
 
+        
         logic->update(delta);
         view->update(delta);
-        window->display();
+     
+        //window->display();
 
         //check for window closed event
         sf::Event Event;
