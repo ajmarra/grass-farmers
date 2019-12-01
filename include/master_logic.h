@@ -71,7 +71,7 @@ class MasterLogic {
 
 		void loadInEnemies(void);
     
-        bool isAtCloset();
+        bool isAtCloset(); // will be removed
 
         void setDay(bool day) { this->day = day; };
 
@@ -88,8 +88,6 @@ class MasterLogic {
         int getNightCount(void) { return nightCount; };
         
         void setNightCount(int num) { this->nightCount = num; };
-
-        void updateCheryl(void);
 
         void checkFred(void);
 };

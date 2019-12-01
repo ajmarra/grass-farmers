@@ -26,7 +26,6 @@ void MasterLogic::startPaused(void) {
     this->view->setPaused();
 }
 
-
 void MasterLogic::loadInEnemies(void) {
     std::ifstream inFile;
     double x, y, mass, maxSpeed, maxHealth;
@@ -99,26 +98,6 @@ void MasterLogic::checkCollisions(float delta) {
             if (enemy->getHealth() <= 0) {
                 this->getCurrentRoom()->removeActor(enemy);
             }
-        }
-    }
-}
-
-void MasterLogic::updateCheryl(void) {
-    if (this->getCurrentRoom()->getCheryl() != nullptr) {
-        if (this->getCurrentRoom()->getCheryl()->getHealth() <= 300) {
-            this->getCurrentRoom()->getCheryl()->setMaxSpeed(140);
-            this->getCurrentRoom()->getCheryl()->setMass(30);
-            this->getCurrentRoom()->getCheryl()->setDamage(12);
-        }
-        if (this->getCurrentRoom()->getCheryl()->getHealth() <= 200) {
-            this->getCurrentRoom()->getCheryl()->setMaxSpeed(200);
-            this->getCurrentRoom()->getCheryl()->setMass(20);
-            this->getCurrentRoom()->getCheryl()->setDamage(15);
-        }
-        if (this->getCurrentRoom()->getCheryl()->getHealth() <= 100) {
-            this->getCurrentRoom()->getCheryl()->setMaxSpeed(250);
-            this->getCurrentRoom()->getCheryl()->setMass(20);
-            this->getCurrentRoom()->getCheryl()->setDamage(20);
         }
     }
 }
@@ -201,8 +180,6 @@ void MasterLogic::update(float delta) {
 
     else if ((paused == false) && (playing == true) && (options == false)) {
         this->checkCollisions(delta);
-
-        this->updateCheryl();
 
         // Loop throught the actor list
         for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
