@@ -37,7 +37,7 @@ void LoserView::update(float delta) {
 }
 
 void LoserView::drawScreen() {
-    this->window->clear(sf::Color::Black);
+    // this->window->clear(sf::Color::Black);
 
     loser.setSize(sf::Vector2f(1200, 900));
     loser.setTexture(&loser_image.spriteMap);
@@ -70,5 +70,5 @@ void LoserView::drawScreen() {
     this->window->draw(tutorial_message);
     this->window->draw(info_message3);
     this->window->draw(info_message4);
-    this->window->display();
+    // this->window->display();
 }

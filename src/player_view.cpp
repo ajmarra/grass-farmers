@@ -239,7 +239,7 @@ void PlayerView::drawActor(Actor& a) {
 }
 
 void PlayerView::drawScreen(void) {
-    this->window->clear(sf::Color::Black);
+    // this->window->clear(sf::Color::Black);
 
     this->window->draw(sky);
 
@@ -490,7 +490,7 @@ void PlayerView::drawScreen(void) {
     // draw Fred
     this->drawActor(*this->logic->getCurrentRoom()->getFred());
 
-    window->display();
+    //window->display();
 }
 
 void PlayerView::switchToDay() {
