@@ -19,14 +19,9 @@ MeleeWeapon::MeleeWeapon(double x, double y, double width, double height, int da
 }
 
 void MeleeWeapon::use(int x, int y) {
-	double abso = 70;
-	this->inUse = true;
-	//std::cout << "HELLO"<< std::endl;
-	//if std::cout << "HELLO"<< std::endl;(!this->loading) {
-		//loading = this->fireRate;
-
+	
 	double direction = atan2(y - this->character->getCurrentRoom()->getFred()->getCenterY(), x - this->character->getCurrentRoom()->getFred()->getCenterX())*180/PI;
-		
+	if (!loading){			
 
 	if (this->character->getCurrentRoom()->getEnemyList().size() > 0) {
 		for (std::shared_ptr<Enemy> enemy : this->character->getCurrentRoom()->getEnemyList()) {
@@ -34,7 +29,7 @@ void MeleeWeapon::use(int x, int y) {
 			//up sweep
 			if (direction >= -135.0 && direction < -45.0){
 				if ((enemy->getCenterY() < this->character->getCurrentRoom()->getFred()->getCenterY()) ){
-					if (abs(enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= abso){
+					if (abs(enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= distance){
 						enemy->damage(20);
 
 			}}}
@@ -42,31 +37,36 @@ void MeleeWeapon::use(int x, int y) {
 			//left sweep
 			else if ((direction < -135.0 && direction >= -180.0 )||( direction <= 180.0 && direction > 135.0)) {
 				if (enemy->getCenterX() < this->character->getCurrentRoom()->getFred()->getCenterX()){
-					if (abs((enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX())) <= abso)
+					if (abs((enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX())) <= distance)
 					{
 						enemy->damage(20);
 
 			}}}
-			
 
 			// //down sweep
     		else if (direction <= 135.0 && direction > 45.0) {
 				if (enemy->getCenterY() > this->character->getCurrentRoom()->getFred()->getCenterY()){
-					if (abs( enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= abso){
+					if (abs( enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= distance){
 							enemy->damage(20);
 					}}}
 
 			//right sweep
    			else if ((direction < 45.0 && direction > 0.0) || (direction >= -45.0 && direction < 0.0)){
 				if (enemy->getCenterX() > this->character->getCurrentRoom()->getFred()->getCenterX()){
-					if (abs(enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX()) <= abso) 
+					if (abs(enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX()) <= distance) 
 					{
 							enemy->damage(20);
 				}}}
+			loading = true;
+			elapsedTime = 0;
+			std::cout << "GOODBYE" <<std::endl;
+}}}}
 
+void MeleeWeapon::update(float delta) {
+	elapsedTime = elapsedTime + delta;
+	if (elapsedTime >= reloadRate){
+		//std::cout << "HELLO" <<std::endl;
+		loading = false;
+	}
 
-			if (enemy->collidesSquare(*this->character->getCurrentRoom()->getFred())) {
-                    enemy->damage(40); //extra damage if alien is hitting fred for balance
-                }
-	
-}}}
+}

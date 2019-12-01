@@ -13,8 +13,12 @@ class MeleeWeapon : public Item {
         //scaling factors for damage and time between each hit and type of gun
         int damage = 20;
         int speed;
-        int loading = 3;
-        bool inUse = false;
+        int loading = true;
+        float elapsedTime = 0;
+        float reloadRate = 2;
+        double distance = 30;
+
+        
 
 
     public:
@@ -30,7 +34,7 @@ class MeleeWeapon : public Item {
 
         void use(int x, int y) override;
 
-        //void update(float delta) override;
+        void update(float delta) override;
 };
 
 #endif

@@ -34,6 +34,7 @@ class PlayerView : public View {
         Graphics health_image;
         Graphics trap_image;
         Graphics unused_trap_image;
+        Graphics hoe_image;
 
         sf::Font font;
         

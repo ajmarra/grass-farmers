@@ -38,6 +38,8 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     gun1_image.spriteMap.loadFromFile("../resources/gun1.png");
 
     barn_image.spriteMap.loadFromFile("../resources/barn.png");
+    
+    hoe_image.spriteMap.loadFromFile("../resources/hoe.png");
 
     health_image.spriteMap.loadFromFile("../resources/health_item.png");
 
@@ -130,7 +132,7 @@ void PlayerView::drawActor(Actor &a) {
             case ActorType::MELEEWEAPON:
             {
                 sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-                itemShape.setFillColor(sf::Color::Magenta);
+                itemShape.setTexture(&hoe_image.spriteMap);
                 itemShape.setPosition(a.getX(), a.getY());
                 this->window->draw(itemShape);
             }
