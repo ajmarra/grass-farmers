@@ -11,7 +11,7 @@ Bullet::Bullet(double x, double y, int size, double speed, double direction, int
     this->ySpeed = speed * sin(direction * (PI / 180));
 }
 
-void Bullet::update(float dt) {
-    Actor::update(dt);
-    this->timer -= dt;
+void Bullet::update(float delta) {
+    Actor::update(delta);
+    this->timer -= delta;
 }
