@@ -80,7 +80,7 @@ void OptionsView::update(float delta){
 }
 
 void OptionsView::drawScreen(){
-    this->window->clear(sf::Color::Black);
+    // this->window->clear(sf::Color::Black);
 
     //sf::RectangleShape options;
     
@@ -107,5 +107,5 @@ void OptionsView::drawScreen(){
     this->window->draw(options);
     this->window->draw(options_message);
     this->window->draw(UpPress_message);
-    this->window->display();
+    // this->window->display();
 }

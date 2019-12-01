@@ -38,7 +38,7 @@ void TutorialView::update(float delta){
 }
 
 void TutorialView::drawScreen(){
-    this->window->clear(sf::Color::Black);
+    // this->window->clear(sf::Color::Black);
 
     //sf::RectangleShape options;
     
@@ -89,5 +89,5 @@ void TutorialView::drawScreen(){
     this->window->draw(info_message2);
     this->window->draw(info_message3);
     this->window->draw(info_message4);
-    this->window->display();
+    // this->window->display();
 }

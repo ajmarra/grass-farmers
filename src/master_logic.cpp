@@ -21,6 +21,10 @@ void MasterLogic::startTutorial(void) {
     this->view->setTutorial();
 }
 
+void MasterLogic::startLoser(void) {
+    this->view->setLoser();
+}
+
 void MasterLogic::startPaused(void) {
     //std::cout << "HOI" << std::endl;
     this->view->setPaused();
@@ -125,7 +129,7 @@ void MasterLogic::loadInEnemies(void) {
         inFile.close();
     }
     else if (nightCount == 4) {
-        std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 80);
+        std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(55, 375, 40, 80);
         this->getCurrentRoom()->addActor(cheryl);
         this->view->addEnemy(cheryl);
     }
@@ -137,7 +141,11 @@ bool MasterLogic::isAtCloset() {
 
 void MasterLogic::checkFred(void) {
     if (this->getCurrentRoom()->getFred()->getHealth() <= 0) {
-        std::cout << "he ded." << std::endl;
+        this->paused = true;
+        this->playing = false;
+        this->options = true;
+        this->loser = true;
+        this->startLoser();
     }
 }
 
@@ -175,7 +183,7 @@ void MasterLogic::checkCollisions(void) {
         }
 
         // Attack Fred
-        if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->enemyAttackTimer >= 1) {
+        if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->enemyAttackTimer >= 0.5) {
             enemyAttackTimer = 0;
             this->getCurrentRoom()->getFred()->damage(enemy->getDamage()); //temporarily hard coded.  Will change based on enemy type?
         }
@@ -244,6 +252,8 @@ void MasterLogic::update(float delta) {
         this->enemyAttackTimer += delta;
         this->checkCollisions();
 
+        this->checkFred();
+
         // Loop throught the actor list
         for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
             curActor->update(delta);
@@ -301,6 +311,7 @@ void MasterLogic::update(float delta) {
                 this->view->addEnemy(toSpawn);
                 this->roomList.front()->addActor(toSpawn);
                 
+                // Give enemies items to drop
                 int randNum = std::rand() % 4;
                 if (randNum == 1) {
                     std::shared_ptr<Trap> item = std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred());
