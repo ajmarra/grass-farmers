@@ -87,6 +87,10 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
         void sleep(float time) { this->sleepTime = time; };
 
         float getSleepTime(void) { return this->sleepTime; };
+
+        // The following two methods used to scale Cheryl's stats during final boss battle
+        void setMaxSpeed(double maxSpeed) { this->maxSpeed = maxSpeed; };
+        void setMass(double mass) { this->mass = mass; };
 };
 
 #endif

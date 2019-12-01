@@ -22,13 +22,18 @@ void Room::addActor(std::shared_ptr<Fred> fred) {
 }
 
 void Room::addActor(std::shared_ptr<Enemy> enemy) {
-    if (enemy->getType() == ActorType::CHERYL) {
-        this->cheryl = enemy;
-    }
     this->actorList.emplace_back(enemy);
     this->enemyList.emplace_back(enemy);
     enemy->setCurrentRoom(this->shared_from_this());
 }
+
+void Room::addActor(std::shared_ptr<Cheryl> enemy) {
+    this->cheryl = enemy;
+    this->actorList.emplace_back(enemy);
+    this->enemyList.emplace_back(enemy);
+    enemy->setCurrentRoom(this->shared_from_this());
+}
+
 void Room::addActor(std::shared_ptr<Item> item) {
 
     this->actorList.emplace_back(item);
