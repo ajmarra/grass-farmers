@@ -114,70 +114,80 @@ void PlayerView::pollInput() {
 
 void PlayerView::drawActor(Actor& a) {
     switch (a.getType()) {
-    case ActorType::FRED:
-    {
-        sf::RectangleShape fredShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-        fredShape.setTexture(&FredSprite.spriteMap);
-        fredShape.setTextureRect(FredSprite.spriteFrame);
-        fredShape.setPosition(a.getX(), a.getY());
-        FredSprite.setFredSprite(fred->getDirection());
-        this->window->draw(fredShape);
-    }
-    break;
-    case ActorType::WEAPON:
-    {
-        sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-        itemShape.setTexture(&gun1_image.spriteMap);
-        itemShape.setPosition(a.getX(), a.getY());
-        this->window->draw(itemShape);
-    }
-    break;
-    case ActorType::ENEMY:
-    {
-        sf::RectangleShape enemyShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-        enemyShape.setTexture(&EnemySprite.spriteMap);
-        enemyShape.setTextureRect(EnemySprite.spriteFrame);
-        enemyShape.setPosition(a.getX(), a.getY());
-        EnemySprite.setEnemySprite(a.getDirection());
-        this->window->draw(enemyShape);
-    }
-    break;
-    case ActorType::BULLET:
-    {
-        sf::CircleShape bulletShape(a.getWidth());
-        bulletShape.setFillColor(sf::Color::Green);
-        bulletShape.setPosition(a.getX(), a.getY());
-        this->window->draw(bulletShape);
-    }
-    break;
-    case ActorType::HEALTH:
-    {
-        sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-        itemShape.setTexture(&health_image.spriteMap);
-        itemShape.setPosition(a.getX(), a.getY());
-        this->window->draw(itemShape);
-    }
-    break;
-    case ActorType::TRAP:
-    {
-        sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-        itemShape.setPosition(a.getX(), a.getY());
-        itemShape.setTexture(&unused_trap_image.spriteMap);
-        this->window->draw(itemShape);
-    }
-    break;
-    case ActorType::EXIT:
-    {
-        if (this->logic->getCurrentRoom()->getFred()->getCenterX() < a.getCenterX()) {
-            sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-            itemShape.setTexture(&exit_image.spriteMap);
-            itemShape.setPosition(a.getX(), a.getY());
-            this->window->draw(itemShape);
-        }
-        else if (this->logic->getCurrentRoom()->getFred()->getCenterX() > a.getCenterX()) {
-            sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-            itemShape.setTexture(&exit_image.spriteMap);
-            itemShape.setPosition(a.getX(), a.getY());
+            case ActorType::FRED:
+            {
+                sf::RectangleShape fredShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                fredShape.setTexture(&FredSprite.spriteMap);
+                fredShape.setTextureRect(FredSprite.spriteFrame);
+                fredShape.setPosition(a.getX(), a.getY());
+                FredSprite.setFredSprite(fred->getDirection());
+                this->window->draw(fredShape);
+            }
+                break;
+            case ActorType::RANGEWEAPON:
+            {
+                sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                itemShape.setTexture(&gun1_image.spriteMap);
+                itemShape.setPosition(a.getX(), a.getY());
+                this->window->draw(itemShape);
+            }
+                break;
+
+            case ActorType::MELEEWEAPON:
+            {
+                sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                itemShape.setFillColor(sf::Color::Magenta);
+                itemShape.setPosition(a.getX(), a.getY());
+                this->window->draw(itemShape);
+            }
+                break;
+
+            case ActorType::ENEMY:
+            {
+                sf::RectangleShape enemyShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                enemyShape.setTexture(&EnemySprite.spriteMap);
+                enemyShape.setTextureRect(EnemySprite.spriteFrame);
+                enemyShape.setPosition(a.getX(), a.getY());
+                EnemySprite.setEnemySprite(a.getDirection());
+                this->window->draw(enemyShape);
+            }
+                break;
+            case ActorType::BULLET:
+            {
+                sf::CircleShape bulletShape(a.getWidth());
+                bulletShape.setFillColor(sf::Color::Green);
+                bulletShape.setPosition(a.getX(), a.getY());
+                this->window->draw(bulletShape);
+            }
+                break;
+			case ActorType::HEALTH:
+			{
+				sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+				itemShape.setTexture(&health_image.spriteMap);
+				itemShape.setPosition(a.getX(), a.getY());
+				this->window->draw(itemShape);
+            }
+			    break;
+            case ActorType::TRAP:
+            {
+                sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                itemShape.setPosition(a.getX(), a.getY());
+                itemShape.setTexture(&unused_trap_image.spriteMap);
+                this->window->draw(itemShape);
+            }
+                break;
+            case ActorType::EXIT:
+            {
+                if (this->logic->getCurrentRoom()->getFred()->getCenterX() < a.getCenterX()) {
+                    sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                    itemShape.setTexture(&exit_image.spriteMap);
+                    itemShape.setPosition(a.getX(), a.getY());
+                    this->window->draw(itemShape);
+                }
+                else if (this->logic->getCurrentRoom()->getFred()->getCenterX() > a.getCenterX()) {
+                    sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+                    itemShape.setTexture(&exit_image.spriteMap);
+                    itemShape.setPosition(a.getX(), a.getY());
 
             sf::Transform transform;
             transform.rotate(180, a.getCenterX(), a.getCenterY());
