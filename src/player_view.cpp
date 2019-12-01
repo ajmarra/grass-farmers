@@ -70,10 +70,12 @@ void PlayerView::pollInput() {
     sf::Event Event;
 
     // Use Item (mouse)
-    //if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) this->fred->useItem(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && elapsedTime > 0.5) {
-        elapsedTime = 0;
-        this->fred->useItem(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->fred->getSelectedItem()) {
+        if (this->fred->getSelectedItem()->getType() == ActorType::RANGEWEAPON) this->fred->useItem(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
+        else if (this->elapsedTime > 0.5) {
+            this->fred->useItem(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
+            elapsedTime = 0;
+        }
     }
 
     // Move
@@ -107,12 +109,6 @@ void PlayerView::pollInput() {
         this->switchToDay();
         this->logic->setDay(true);
     }
-
-    // Use item (spacebar)
-    /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && elapsedTime > 0.5) {
-        elapsedTime = 0;
-        fred->useItem(fred->getCenterX(), fred->getCenterY());
-    }*/
 
     // Inventory selection
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelectedIndex(0);

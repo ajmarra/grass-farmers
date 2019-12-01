@@ -19,8 +19,8 @@ RangeWeapon::RangeWeapon(double x, double y, double width, double height, int da
 }
 
 void RangeWeapon::use(int x, int y) {
-	if (!this->loading) {
-		loading = this->fireRate;
+	if (!this->reloading) {
+		reloading = this->fireRate;
 		double direction = atan2(y - this->character->getCenterY(), x - this->character->getCenterX()) * 180 / PI;
 		
 		this->character->getCurrentRoom()->addActor(
@@ -30,6 +30,6 @@ void RangeWeapon::use(int x, int y) {
 }
 
 void RangeWeapon::update(float dt) {
-	loading = loading < 0? 0 : loading - dt;
+	this->reloading = this->reloading < 0? 0 : this->reloading - dt;
 	Actor::update(dt);
 }
