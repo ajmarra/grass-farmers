@@ -29,7 +29,7 @@ void RangeWeapon::use(int x, int y) {
 	}
 }
 
-void RangeWeapon::update(float dt) {
-	this->reloading = this->reloading < 0? 0 : this->reloading - dt;
-	Actor::update(dt);
+void RangeWeapon::update(float delta) {
+	this->reloading = this->reloading < 0? 0 : this->reloading - delta;
+	Actor::update(delta);
 }
