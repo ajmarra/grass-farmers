@@ -93,8 +93,9 @@ void PlayerView::pollInput() {
 
     // Temp button for testing Cheryl
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::H)) {
-        this->logic->setNightCount(3); 
+        this->logic->setNightCount(4); 
         this->switchToDay();
+        this->logic->setDay(true);
     }
 
     // Use item (spacebar)

@@ -57,6 +57,8 @@ class MasterLogic {
 
 		void loadInEnemies(void);
 
+        void setDay(bool day) { this->day = day; };
+
         std::list<std::shared_ptr<Actor>> getActorList(void) { return actorList; };
     
         std::shared_ptr<Room> getCurrentRoom(void) { return *(this->currentRoom); };
@@ -72,6 +74,8 @@ class MasterLogic {
         void setNightCount(int num) { this->nightCount = num; };
 
         void updateCheryl(void);
+
+        void checkFred(void);
 };
 
 #endif
