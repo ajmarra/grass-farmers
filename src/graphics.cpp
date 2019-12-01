@@ -6,7 +6,7 @@ void Graphics::updateFred(float delta) {
 
     
     
-    if ((elapsedFredTime >= frameRate)){
+    if ((elapsedFredTime >= frameRateFred)){
 
         
         //elapsedFredTime -= frameRate;
@@ -28,9 +28,11 @@ void Graphics::updateEnemy(float delta) {
 
     //std::cout << delta << std::endl;
     //std::cout << direction << std::endl;
+
     
     
-    if ((elapsedEnemyTime >= frameRate)){
+    
+    if ((elapsedEnemyTime >= frameRateEnemy)){
         
         //for left
         if (left == true){
@@ -38,7 +40,8 @@ void Graphics::updateEnemy(float delta) {
             //in case it goes off array map
             if (spriteFrame.top >= 128) {
                 spriteFrame.top = 0;
-        }}
+        }
+        }
 
         //for all other directions
         else if (left == false){        
@@ -52,21 +55,30 @@ void Graphics::updateEnemy(float delta) {
             }}
 
         elapsedEnemyTime = 0;
-        //elapsedEnemyTime -= frameRate;
+        
         
     }}
-    // else if ((elapsedEnemyTime >= frameRate) && (left == 1)){
+
+void Graphics::updatePortal(float delta) {
+    elapsedPortalTime += delta;
+
+    
+    
+    if ((elapsedPortalTime >= frameRatePortal)){
 
 
-    //     elapsedEnemyTime -= frameRate;
-
-    //     spriteFrame.top += 64;
-    //     std::cout << left << std::endl;
-    //     //in case it goes off array map
-    //     if (spriteFrame.top >= 128) {
-    //         spriteFrame.top = 0;
-    //     }
+        spriteFrame.left += 128;
+        //in case it goes off array map
+        if (spriteFrame.left >= 256) {
+            spriteFrame.left = 0;
+        } 
+    elapsedPortalTime  = 0;
         
+    }
+    
+    }
+
+
     
     
       
@@ -87,6 +99,11 @@ void Graphics::setFredSprite(double direction) {
 void Graphics::setEnemySprite(double direction) {
     //up 1
     if (direction >= -135.0 && direction < -45.0) {
+
+        
+        if(spriteFrame.left >= 128){
+            spriteFrame.left = 0;
+        }
         spriteFrame.top = 0;
         left = false;
 
@@ -97,6 +114,10 @@ void Graphics::setEnemySprite(double direction) {
     // //left1
     else if ((((direction < -135.0) && (direction >= -180.0)) || 
     ((direction <= 180.0) && (direction > 135.0)))){
+
+        if(spriteFrame.top >= 128){
+        spriteFrame.top = 0;
+        }
         //spriteFrame.top = 0;
         spriteFrame.left = 128;
         left = true;
@@ -106,6 +127,10 @@ void Graphics::setEnemySprite(double direction) {
 
     //down 1
     else if (direction <= 135.0 && direction > 45.0) {
+        if(spriteFrame.left >= 128){
+            spriteFrame.left = 0;
+        }
+
         spriteFrame.top = 64;
         left = false;
 
@@ -114,6 +139,9 @@ void Graphics::setEnemySprite(double direction) {
 
     //right1
     else if (direction < 45.0 && direction > 0.0 || direction >= -45.0 && direction <0.0) {
+        if(spriteFrame.left >= 128){
+            spriteFrame.left = 0;
+        }
         spriteFrame.top = 128;
         left = false;
 

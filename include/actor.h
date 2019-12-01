@@ -1,7 +1,7 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 
-enum class ActorType { ROOM, EXIT, FRED, ENEMY, HEALTH, WEAPON, BULLET, TRAP, BED, CLOSET };
+enum class ActorType { ROOM, EXIT, FRED, ENEMY, HEALTH, MELEEWEAPON, RANGEWEAPON, TRAP, BULLET, PORTAL, CHERYL, BED, CLOSET };
 
 class Actor {
     protected:
@@ -20,6 +20,8 @@ class Actor {
         virtual void update(float delta);
 
         ActorType getType(void) { return this->type; };
+
+        void setType(ActorType type) { this->type = type; };
         
         void setX(double x) { this->x = x; };
 
@@ -38,6 +40,8 @@ class Actor {
         double getWidth(void) { return this->width; };
 
         double getHeight(void) { return this->height; };
+
+        void setWidthHeight(double width, double height) { this->width = width; this->height = height; };
 
         double getXSpeed(void) { return this->xSpeed; };
 

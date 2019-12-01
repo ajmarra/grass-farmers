@@ -9,17 +9,19 @@
 #include "fred.h"
 #include "exit.h"
 #include "timer.h"
+#include "cheryl.h"
 
-class MasterView;
-#include "room.h"
-#include "bed.h"
-#include "exit.h"
 #include "item.h"
 #include "trap.h"
 #include "melee_weapon.h"
 #include "range_weapon.h"
 #include "health_item.h"
+
+#include "bed.h"
 #include "closet.h"
+
+class EnemyView;
+#include "portal.h"
 
 class MasterView;
 
@@ -30,9 +32,7 @@ class MasterLogic {
         std::list<std::shared_ptr<Room>>::iterator currentRoom;
         std::list<std::shared_ptr<Actor>> actorList;
 		std::list<std::shared_ptr<Item>> itemList;
-
-		float delta;
-
+		std::list<std::shared_ptr<Enemy>> enemyQueueList;
         std::list<std::shared_ptr<Trap>> trapList;
     
         std::shared_ptr<Exit> currentExit;
@@ -41,12 +41,15 @@ class MasterLogic {
     
         std::shared_ptr<Fred> fred;
     
-        bool day = true;
-    
         bool atCloset = false;
     
 		//float delta;
         std::shared_ptr<Timer> timer;
+		float delta;
+        bool day = false;
+        float spawnRate = 0;
+        float elapsedTime = 0;
+        int nightCount = 1;
 
     public:
         bool paused = true;
@@ -73,10 +76,18 @@ class MasterLogic {
         std::list<std::shared_ptr<Actor>> getActorList(void) { return actorList; };
     
         std::shared_ptr<Room> getCurrentRoom(void) { return *(this->currentRoom); };
-
+        
+        void checkCollisions(float delta);
+        
 		std::list<std::shared_ptr<Item>> getItemList(void) { return itemList; };
     
         std::shared_ptr<Timer> getTimer() { return timer; };
+
+        int getNightCount(void) { return nightCount; };
+        
+        void setNightCount(int num) { this->nightCount = num; };
+
+        void updateCheryl(void);
 };
 
 #endif

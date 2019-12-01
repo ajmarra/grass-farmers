@@ -4,23 +4,38 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <memory>
-#include "graphics.h"
 
+#include "graphics.h"
 #include "view.h"
 #include "fred.h"
 #include "room.h"
 #include "exit.h"
+#include "item.h"
 #include "music.h"
+#include "enemy.h"
 
 class PlayerView : public View {
     private:
         std::shared_ptr<sf::RenderWindow> window;
         std::shared_ptr<Fred> fred;
 
+        sf::RectangleShape sky;
+        sf::RectangleShape darkness;
+        bool night = true;
+
         Sounds cur_track;
         Graphics FredSprite;
         Graphics EnemySprite;
-        Graphics room_image;
+        Graphics farm_image;
+        Graphics exit_image;
+        Graphics gun1_image;
+        Graphics barn_image;
+        Graphics portalSprite;
+        Graphics health_image;
+        Graphics trap_image;
+        Graphics unused_trap_image;
+
+        sf::Font font;
         
 		float elapsedTime = 0;
 
@@ -30,14 +45,18 @@ class PlayerView : public View {
     
         void drawClosetMenu();
 
+        void drawActor(Actor &a);
+
+        void drawEnemy(Enemy &e);
+
     public:
         PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred> fred, std::shared_ptr<sf::RenderWindow> window);
 
         void update(float delta);
     
-        void setCurrentRoom(std::shared_ptr<Room> currentRoom);
+        //void setCurrentRoom(std::shared_ptr<Room> currentRoom);
     
-        void setCurrentExit(std::shared_ptr<Exit> currentExit);
+        //void setCurrentExit(std::shared_ptr<Exit> currentExit);
     
         void switchToDay();
     
