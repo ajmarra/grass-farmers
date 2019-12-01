@@ -28,6 +28,16 @@ void Character::heal(int healAmount) {
     if (health > maxHealth) health = maxHealth;
 }
 
+void Character::heal(int healAmount, float delta) {
+    curDelta += delta;
+    if (curDelta >= deltaLimit) {
+        health += healAmount;
+        curDelta = 0;
+        
+        if (health > maxHealth) health = maxHealth;
+    }
+}
+
 void Character::move(void) {
     if (this->desiredDirection >= 0) {
         this->xSpeed += (10.0 / this->mass) * cos(this->desiredDirection * (PI / 180));
@@ -95,6 +105,15 @@ void Character::addItem(void) {
                 }
                 i++;
             }
+        }
+    }
+}
+
+void Character::addItem(std::shared_ptr<Item> item) {
+    for (std::shared_ptr<Item>& slot : this->inventory) {
+        if (!slot) {
+            slot = item;
+            return;
         }
     }
 }

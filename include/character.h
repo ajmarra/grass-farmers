@@ -26,6 +26,10 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
         bool canMove = true;
         float sleepTime = 0;
 		int selectedIndex = 0;
+        int selectedClosetIndex = 0;
+    
+        float curDelta = 0;
+        const float deltaLimit = 0.5;
     
     public:
         Character(ActorType type, double x, double y, double width, double height, double mass, double maxSpeed, int maxHealth);
@@ -54,12 +58,16 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
 		int getMaxHealth(void) { return this->maxHealth; };
 
 		void heal(int healAmount);
+        void heal(int healAmount, float delta);
 
         std::shared_ptr<Item> *getInventory(void) { return (this->inventory); };
 
 		void addItem(void);
 
 		void dropItem(void);
+
+        // Used for enemy inventory
+        void addItem(std::shared_ptr<Item> item);
 
 		std::shared_ptr<Item> popItemAtIndex(int index);
 
@@ -68,7 +76,11 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
 		int getSelectedIndex(void) { return this->selectedIndex; };
 
 		std::shared_ptr<Item> getSelectedItem(void) { return this->inventory[this->selectedIndex]; };
-
+    
+        void setSelectedClosetIndex(int n) { selectedClosetIndex = n; };
+    
+        int getSelectedClosetIndex() { return selectedClosetIndex; };
+    
 		void setCurrentRoom(std::shared_ptr<Room> room) { this->curRoom = room; };
         
 		std::shared_ptr<Room> getCurrentRoom(void) { return this->curRoom; };
@@ -84,6 +96,10 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
         void sleep(float time) { this->sleepTime = time; };
 
         float getSleepTime(void) { return this->sleepTime; };
+
+        // The following two methods used to scale Cheryl's stats during final boss battle
+        void setMaxSpeed(double maxSpeed) { this->maxSpeed = maxSpeed; };
+        void setMass(double mass) { this->mass = mass; };
 };
 
 #endif

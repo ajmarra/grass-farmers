@@ -9,12 +9,17 @@
 #include "fred.h"
 #include "exit.h"
 #include "timer.h"
+#include "cheryl.h"
 
 #include "item.h"
 #include "trap.h"
 #include "melee_weapon.h"
 #include "range_weapon.h"
 #include "health_item.h"
+
+#include "bed.h"
+#include "closet.h"
+
 class EnemyView;
 #include "portal.h"
 
@@ -29,6 +34,16 @@ class MasterLogic {
 		std::list<std::shared_ptr<Item>> itemList;
 		std::list<std::shared_ptr<Enemy>> enemyQueueList;
         std::list<std::shared_ptr<Trap>> trapList;
+    
+        std::shared_ptr<Exit> currentExit;
+    
+        std::shared_ptr<Bed> bed;
+    
+        std::shared_ptr<Fred> fred;
+    
+        bool atCloset = false;
+    
+		//float delta;
         std::shared_ptr<Timer> timer;
 		float delta;
         bool day = false;
@@ -55,6 +70,10 @@ class MasterLogic {
         void update(float delta);
 
 		void loadInEnemies(void);
+    
+        bool isAtCloset();
+
+        void setDay(bool day) { this->day = day; };
 
         std::list<std::shared_ptr<Actor>> getActorList(void) { return actorList; };
     
@@ -65,6 +84,14 @@ class MasterLogic {
 		std::list<std::shared_ptr<Item>> getItemList(void) { return itemList; };
     
         std::shared_ptr<Timer> getTimer() { return timer; };
+
+        int getNightCount(void) { return nightCount; };
+        
+        void setNightCount(int num) { this->nightCount = num; };
+
+        void updateCheryl(void);
+
+        void checkFred(void);
 };
 
 #endif
