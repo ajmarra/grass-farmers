@@ -121,6 +121,9 @@ void PlayerView::pollInput() {
         this->switchToDay();
         this->logic->setDay(true);
     }
+    
+    // Kill Fred
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) fred->damage(150);
 
     // Inventory selection
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelectedIndex(0);
