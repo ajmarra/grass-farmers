@@ -41,7 +41,7 @@ void PausedView::update(float delta){
 
 void PausedView::drawScreen(){
 
-    //this->windolear(sf::Color::Black);
+    this->window->clear(sf::Color::Black);
     
     sf::RectangleShape paused;
     

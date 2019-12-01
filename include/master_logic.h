@@ -52,6 +52,8 @@ class MasterLogic {
 
         void startTutorial(void);
 
+        void startLoser(void);
+
         void startPaused(void);
 
         void startDemo(void);

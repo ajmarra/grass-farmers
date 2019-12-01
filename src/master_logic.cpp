@@ -21,6 +21,10 @@ void MasterLogic::startTutorial(void) {
     this->view->setTutorial();
 }
 
+void MasterLogic::startLoser(void) {
+    this->view->setLoser();
+}
+
 void MasterLogic::startPaused(void) {
     //std::cout << "HOI" << std::endl;
     this->view->setPaused();
@@ -92,9 +96,9 @@ void MasterLogic::checkCollisions(float delta) {
                 }
             }
 
-            if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->elapsedTime >= 1) {
+            if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->elapsedTime >= 0.5) {
                 elapsedTime = 0;
-                this->getCurrentRoom()->getFred()->damage(enemy->getDamage()); //temporarily hard coded.  Will change based on enemy type?
+                this->getCurrentRoom()->getFred()->damage(enemy->getDamage());
             }
             if (enemy->getHealth() <= 0) {
                 this->getCurrentRoom()->removeActor(enemy);
@@ -128,6 +132,9 @@ void MasterLogic::checkFred(void) {
         std::cout << "he ded." << std::endl;
         this->paused = true;
         this->playing = false;
+        this->options = true;
+        this->loser = true;
+        this->startLoser();
     }
 }
 

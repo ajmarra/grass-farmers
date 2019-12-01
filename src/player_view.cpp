@@ -375,6 +375,12 @@ void PlayerView::drawScreen(void) {
             enemyShape.setPosition((*a).getX(), (*a).getY());
             EnemySprite3.setEnemySprite((*a).getDirection());
         }
+        else if (a->getEnemyType() == 4) {
+            enemyShape.setTexture(&EnemySprite1.spriteMap);
+            enemyShape.setTextureRect(EnemySprite1.spriteFrame);
+            enemyShape.setPosition((*a).getX(), (*a).getY());
+            EnemySprite1.setEnemySprite((*a).getDirection());
+        }
         this->window->draw(enemyShape);
     }
 
