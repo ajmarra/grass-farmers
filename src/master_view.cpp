@@ -36,18 +36,14 @@ void MasterView::switchToNight() {
 }
 
 void MasterView::update(float delta) {
-    if( (this->logic->paused == true) && (this->logic->playing == false) && (this->logic ->options == false)){
-        //std::cout << "HI" << std::endl;
-    
+    if( (this->logic->paused == true) && (this->logic->playing == false) && (this->logic ->options == false)){    
         menu->update(delta);
      }
     else if ((this->logic->paused == true) && (this->logic->playing == false) && (this->logic ->options == true)){
-        //std::cout << "HULLO" << std::endl;
         tutorial->update(delta);
     }
 
     else if ( (this->logic->paused == true) && (this->logic->playing == true) && (this->logic ->options == false)){
-        
         paused->update(delta);
     }
 

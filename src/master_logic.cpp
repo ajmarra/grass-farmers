@@ -75,7 +75,7 @@ void MasterLogic::loadInEnemies(void) {
         inFile.close();
     }
     else if (nightCount == 4) {
-        std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 80);
+        std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(55, 375, 40, 80);
         this->getCurrentRoom()->addActor(cheryl);
         this->view->addEnemy(cheryl);
     }
@@ -126,6 +126,8 @@ void MasterLogic::updateCheryl(void) {
 void MasterLogic::checkFred(void) {
     if (this->getCurrentRoom()->getFred()->getHealth() <= 0) {
         std::cout << "he ded." << std::endl;
+        this->paused = true;
+        this->playing = false;
     }
 }
 
@@ -140,7 +142,7 @@ void MasterLogic::startDemo(void) {
     this->roomList.back()->addActor(std::make_shared<Exit>(400, 400, 0));
 
     // Add fred
-    std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
+    std::shared_ptr<Fred> fred = std::make_shared<Fred>(500, 500);
     this->roomList.front()->addActor(fred);
     this->view->setPlayer(fred);
 
@@ -194,6 +196,8 @@ void MasterLogic::update(float delta) {
         this->checkCollisions(delta);
 
         this->updateCheryl();
+
+        this->checkFred();
 
         // Loop throught the actor list
         for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {

@@ -41,6 +41,9 @@ class MasterLogic {
         bool paused = true;
         bool playing = false;
         bool options = false;
+        bool winner = false;
+        bool loser = false;
+
         MasterLogic(void) { };
 
         void init(std::shared_ptr<MasterView> mv);
