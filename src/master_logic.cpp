@@ -219,8 +219,8 @@ void MasterLogic::checkCollisions(void) {
 
         // Fred
         if (this->getCurrentRoom()->getFred()->collidesSquare(*bullet)) {
-            //this->getCurrentRoom()->getFred()->damage(bullet->getDamage());
-            //this->getCurrentRoom()->removeActor(bullet);
+            this->getCurrentRoom()->getFred()->damage(bullet->getDamage());
+            this->getCurrentRoom()->removeActor(bullet);
         }
 
         // enemies

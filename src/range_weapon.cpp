@@ -23,9 +23,12 @@ void RangeWeapon::use(int x, int y) {
 		reloading = this->loadTime;
 		double direction = atan2(y - this->character->getCenterY(), x - this->character->getCenterX()) * 180 / PI;
 		
+		double xSpawn = double(this->character->getWidth() / 2 + 10) * cos(direction * PI / 180);
+		double ySpawn = double(this->character->getHeight() / 2 + 10) * sin(direction * PI / 180);
 		this->character->getCurrentRoom()->addActor(
-			std::make_shared<Bullet>(this->character->getCenterX(),
-			this->character->getCenterY(), 6, 800, direction, this->damage));
+			std::make_shared<Bullet>(this->character->getCenterX() + xSpawn,
+			this->character->getCenterY() + ySpawn, 6, 800, direction, this->damage)
+		);
 	}
 }
 

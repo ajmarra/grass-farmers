@@ -25,11 +25,9 @@ void MeleeWeapon::use(int x, int y) {
         this->inUse = true;
 
         double direction = atan2(y - this->character->getCurrentRoom()->getFred()->getCenterY(), x - this->character->getCurrentRoom()->getFred()->getCenterX())*180/PI;
-            
 
         if (this->character->getCurrentRoom()->getEnemyList().size() > 0) {
             for (std::shared_ptr<Enemy> enemy : this->character->getCurrentRoom()->getEnemyList()) {
-                
                 //up sweep
                 if (direction >= -135.0 && direction < -45.0) {
                     if ((enemy->getCenterY() < this->character->getCurrentRoom()->getFred()->getCenterY())) {
@@ -47,7 +45,6 @@ void MeleeWeapon::use(int x, int y) {
                         }
                     }
                 }
-                        
 
                 //down sweep
                 else if (direction <= 135.0 && direction > 45.0) {
@@ -67,11 +64,8 @@ void MeleeWeapon::use(int x, int y) {
                     }
                 }
 
-
-                if (enemy->collidesSquare(*this->character->getCurrentRoom()->getFred())) {
-                    enemy->damage(40); //extra damage if alien is hitting fred for balance
-                }
-        
+                //extra damage if alien is hitting fred for balance
+                if (enemy->collidesSquare(*this->character->getCurrentRoom()->getFred())) enemy->damage(40);
             }
         }
     }
