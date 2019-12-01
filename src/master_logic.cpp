@@ -180,10 +180,8 @@ void MasterLogic::checkCollisions(void) {
             this->getCurrentRoom()->getFred()->damage(enemy->getDamage()); //temporarily hard coded.  Will change based on enemy type?
         }
 
-        //Remove enemy if dead
-        if (enemy->getHealth() <= 0) {
-            this->getCurrentRoom()->removeActor(enemy);
-        }
+        // Remove enemy if dead
+        if (enemy->getHealth() <= 0) this->getCurrentRoom()->removeActor(enemy);
     }
 
     // Check if Fred uses an exit
@@ -208,7 +206,10 @@ void MasterLogic::checkCollisions(void) {
 
     // Check bullet collisions
     for (std::shared_ptr<Bullet> bullet : this->getCurrentRoom()->getBulletList()) {
-            // Fred
+        // remove if timer runs out
+        if (bullet->getTimer() < 0.1) this->getCurrentRoom()->removeActor(bullet);
+
+        // Fred
         if (this->getCurrentRoom()->getFred()->collidesSquare(*bullet)) {
             //this->getCurrentRoom()->getFred()->damage(bullet->getDamage());
             //this->getCurrentRoom()->removeActor(bullet);

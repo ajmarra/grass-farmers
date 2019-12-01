@@ -25,7 +25,7 @@ void RangeWeapon::use(int x, int y) {
 		
 		this->character->getCurrentRoom()->addActor(
 			std::make_shared<Bullet>(this->character->getCenterX(),
-			this->character->getCenterY(), 2, 800, direction, this->damage));
+			this->character->getCenterY(), 6, 800, direction, this->damage));
 	}
 }
 
