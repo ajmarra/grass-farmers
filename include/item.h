@@ -20,6 +20,8 @@ class Item : public Actor {
         
     protected:
         std::shared_ptr<Character> character;
+        float reloading = 0;
+        float loadTime;
 
     public:
         Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable, std::shared_ptr<Character> character);
@@ -39,6 +41,10 @@ class Item : public Actor {
         void increaseQuantity(void);
 
         void decreaseQuantity(void);
+
+        float getLoadTime(void) { return this->loadTime; };
+        
+        float getReloading(void) { return this->reloading; };
         
         void setCharacter(std::shared_ptr<Character> character);
 
