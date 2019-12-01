@@ -54,9 +54,19 @@ void PlayerView::pollInput() {
     if (x == 0 && y == 0) fred->stop();
     else fred->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
 
-    // Pick up item
+    // Pick up item or check closet
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
         fred->addItem(this->logic->getItemList());
+    }
+    
+    // Open closet
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
+        if (logic->isAtCloset()) {
+//            while (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+//                drawScreen();
+//                drawClosetMenu();
+//            }
+        }
     }
     
     // Drop item
@@ -279,4 +289,74 @@ void PlayerView::update(float delta) {
     
     EnemySprite.updateEnemy(delta);
     this->drawScreen();
+}
+
+void PlayerView::drawClosetMenu() {
+//    sf::RectangleShape closetBlock1(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock2(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock3(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock4(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock5(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock6(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock7(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock8(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock9(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock10(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock11(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock12(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock13(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock14(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock15(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock16(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock17(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock18(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock19(sf::Vector2f(75, 75));
+//    sf::RectangleShape closetBlock20(sf::Vector2f(75, 75));
+//
+//    if (fred->getSelectedClosetIndex() == 0) inventoryBlock1.setOutlineColor(sf::Color::Red);
+//    else inventoryBlock1.setOutlineColor(sf::Color::White);
+//    inventoryBlock1.setPosition(400, 75);
+//    inventoryBlock1.setOutlineThickness(5);
+//    inventoryBlock1.setFillColor(sf::Color::Black);
+//    if (fred->getSelectedClosetIndex() == 1) inventoryBlock2.setOutlineColor(sf::Color::Red);
+//    else inventoryBlock2.setOutlineColor(sf::Color::White);
+//    inventoryBlock2.setPosition(500, 75);
+//    inventoryBlock2.setOutlineThickness(5);
+//    inventoryBlock2.setFillColor(sf::Color::Black);
+//    if (fred->getSelectedClosetIndex() == 2) inventoryBlock3.setOutlineColor(sf::Color::Red);
+//    else inventoryBlock3.setOutlineColor(sf::Color::White);
+//    inventoryBlock3.setPosition(600, 100);
+//    inventoryBlock3.setOutlineThickness(5);
+//    inventoryBlock3.setFillColor(sf::Color::Black);
+//    if (fred->getSelectedClosetIndex() == 3) inventoryBlock4.setOutlineColor(sf::Color::Red);
+//    else inventoryBlock4.setOutlineColor(sf::Color::White);
+//    inventoryBlock4.setPosition(700, 75);
+//    inventoryBlock4.setOutlineThickness(5);
+//    inventoryBlock4.setFillColor(sf::Color::Black);
+//
+//    this->window->draw(inventoryBlock1);
+//    this->window->draw(inventoryBlock2);
+//    this->window->draw(inventoryBlock3);
+//    this->window->draw(inventoryBlock4);
+    
+//    if (fred->getSelectedClosetIndex() == 4) inventoryBlock1.setOutlineColor(sf::Color::Red);
+//    else inventoryBlock1.setOutlineColor(sf::Color::White);
+//    inventoryBlock1.setPosition(800, 12);
+//    inventoryBlock1.setOutlineThickness(5);
+//    inventoryBlock1.setFillColor(sf::Color::Black);
+//    if (fred->getSelectedClosetIndex() == 5) inventoryBlock2.setOutlineColor(sf::Color::Red);
+//    else inventoryBlock2.setOutlineColor(sf::Color::White);
+//    inventoryBlock2.setPosition(900, 12);
+//    inventoryBlock2.setOutlineThickness(5);
+//    inventoryBlock2.setFillColor(sf::Color::Black);
+//    if (fred->getSelectedClosetIndex() == 6) inventoryBlock3.setOutlineColor(sf::Color::Red);
+//    else inventoryBlock3.setOutlineColor(sf::Color::White);
+//    inventoryBlock3.setPosition(1000, 12);
+//    inventoryBlock3.setOutlineThickness(5);
+//    inventoryBlock3.setFillColor(sf::Color::Black);
+//    if (fred->getSelectedClosetIndex() == 7) inventoryBlock4.setOutlineColor(sf::Color::Red);
+//    else inventoryBlock4.setOutlineColor(sf::Color::White);
+//    inventoryBlock4.setPosition(1100, 12);
+//    inventoryBlock4.setOutlineThickness(5);
+//    inventoryBlock4.setFillColor(sf::Color::Black);
 }

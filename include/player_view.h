@@ -27,6 +27,8 @@ class PlayerView : public View {
         void pollInput(void);
 
         void drawScreen(void);
+    
+        void drawClosetMenu();
 
     public:
         PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred> fred, std::shared_ptr<sf::RenderWindow> window);

@@ -25,6 +25,7 @@ class Character : public Actor {
 		std::shared_ptr<Room> curRoom;
 		std::shared_ptr<Item> inventory[4];
 		int selectedIndex = 0;
+        int selectedClosetIndex = 0;
     
         float curDelta = 0;
         const float deltaLimit = 0.5;
@@ -69,6 +70,10 @@ class Character : public Actor {
 		int getSelectedIndex(void) { return selectedIndex; };
 
 		std::shared_ptr<Item> getSelectedItem();
+    
+        void setSelectedClosetIndex(int n) { selectedClosetIndex = n; };
+    
+        int getSelectedClosetIndex() { return selectedClosetIndex; };
 
 		void setCurrentRoom(std::shared_ptr<Room> room) { curRoom = room; };
 

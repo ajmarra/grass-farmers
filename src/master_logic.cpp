@@ -59,6 +59,10 @@ void MasterLogic::loadInEnemies(void) {
 	inFile.close();
 }
 
+bool MasterLogic::isAtCloset() {
+    return this->atCloset;
+}
+
 void MasterLogic::startDemo(void) {
     fred = std::make_shared<Fred>(700, 500);
     
@@ -106,7 +110,7 @@ void MasterLogic::update(float delta) {
     
     
     else if ((paused == false) && (playing == true) && (options == false)) {
-    for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
+        for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
             curActor->update(delta);
             
             // Keep actors inside the room
@@ -134,6 +138,16 @@ void MasterLogic::update(float delta) {
                 if (this->getCurrentRoom()->getFred()->collidesSquare(*curActor)) {
                     std::shared_ptr<Bed> curBed = std::dynamic_pointer_cast<Bed>(curActor);
                     this->getCurrentRoom()->getFred()->heal(curBed->getHealAmount(), delta);
+                }
+            }
+        
+            // Check if Fred is at the closet
+            if (curActor->getType() == ActorType::CLOSET) {
+                if (this->getCurrentRoom()->getFred()->collidesSquare(*curActor)) {
+                    this->atCloset = true;
+                }
+                else {
+                    this->atCloset = false;
                 }
             }
         }

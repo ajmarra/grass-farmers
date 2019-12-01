@@ -43,6 +43,8 @@ class MasterLogic {
     
         bool day = true;
     
+        bool atCloset = false;
+    
 		//float delta;
         std::shared_ptr<Timer> timer;
 
@@ -65,6 +67,8 @@ class MasterLogic {
         void update(float delta);
 
 		void loadInEnemies(void);
+    
+        bool isAtCloset();
 
         std::list<std::shared_ptr<Actor>> getActorList(void) { return actorList; };
     
