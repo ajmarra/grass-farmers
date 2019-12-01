@@ -14,18 +14,18 @@ RangeWeapon::RangeWeapon(double x, double y, double width, double height, int da
 	this->x = x;
 	this->y = y;
 	this->damage = damage;
-	this->fireRate = fireRate;
+	this->loadTime = fireRate;
 	this->type = type;
 }
 
 void RangeWeapon::use(int x, int y) {
 	if (!this->reloading) {
-		reloading = this->fireRate;
+		reloading = this->loadTime;
 		double direction = atan2(y - this->character->getCenterY(), x - this->character->getCenterX()) * 180 / PI;
 		
 		this->character->getCurrentRoom()->addActor(
 			std::make_shared<Bullet>(this->character->getCenterX(),
-			this->character->getCenterY(), 2, 800, direction, this->damage));
+			this->character->getCenterY(), 6, 800, direction, this->damage));
 	}
 }
 

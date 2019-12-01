@@ -66,7 +66,7 @@ void MasterLogic::startDemo(void) {
 
     // Add test items
     this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 20, 40, 10, 2, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<RangeWeapon>(150, 150, 40, 20, 50, 1, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<RangeWeapon>(150, 150, 40, 20, 40, 1, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Trap>(850, 550, 64, 64, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Trap>(850, 750, 64, 64, this->getCurrentRoom()->getFred()));
@@ -180,10 +180,8 @@ void MasterLogic::checkCollisions(void) {
             this->getCurrentRoom()->getFred()->damage(enemy->getDamage()); //temporarily hard coded.  Will change based on enemy type?
         }
 
-        //Remove enemy if dead
-        if (enemy->getHealth() <= 0) {
-            this->getCurrentRoom()->removeActor(enemy);
-        }
+        // Remove enemy if dead
+        if (enemy->getHealth() <= 0) this->getCurrentRoom()->removeActor(enemy);
     }
 
     // Check if Fred uses an exit
@@ -208,7 +206,10 @@ void MasterLogic::checkCollisions(void) {
 
     // Check bullet collisions
     for (std::shared_ptr<Bullet> bullet : this->getCurrentRoom()->getBulletList()) {
-            // Fred
+        // remove if timer runs out
+        if (bullet->getTimer() < 0.1) this->getCurrentRoom()->removeActor(bullet);
+
+        // Fred
         if (this->getCurrentRoom()->getFred()->collidesSquare(*bullet)) {
             //this->getCurrentRoom()->getFred()->damage(bullet->getDamage());
             //this->getCurrentRoom()->removeActor(bullet);
