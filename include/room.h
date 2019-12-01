@@ -14,6 +14,7 @@
 #include "health_item.h"
 #include "range_weapon.h"
 #include "health_item.h"
+#include "cheryl.h"
 
 class Exit;
 class Fred;
@@ -25,6 +26,7 @@ class Room : public Actor, public std::enable_shared_from_this<Room> {
         std::list<std::shared_ptr<Actor>> actorList;
         std::list<std::shared_ptr<Exit>> exitList;
         std::shared_ptr<Fred> fred;
+        std::shared_ptr<Cheryl> cheryl;
         std::list<std::shared_ptr<Enemy>> enemyList;
         std::list<std::shared_ptr<Item>> itemList;
         std::list<std::shared_ptr<Bullet>> bulletList;
@@ -51,6 +53,8 @@ class Room : public Actor, public std::enable_shared_from_this<Room> {
         
         void addActor(std::shared_ptr<Portal> portal);
 
+        void addActor(std::shared_ptr<Cheryl> cheryl);
+
         /**
          * Remove an actor from the actor lists for actors of its type.
          */
@@ -71,6 +75,8 @@ class Room : public Actor, public std::enable_shared_from_this<Room> {
         std::list<std::shared_ptr<Exit>> getExitList(void) { return this->exitList; };
         
         std::shared_ptr<Fred> getFred(void) { return this->fred; };
+
+        std::shared_ptr<Cheryl> getCheryl(void) { return this->cheryl; };
         
         std::list<std::shared_ptr<Enemy>> getEnemyList(void) { return this->enemyList; };
         
