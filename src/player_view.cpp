@@ -164,17 +164,6 @@ void PlayerView::drawActor(Actor& a) {
             this->window->draw(itemShape);
         }
             break;
-
-        case ActorType::ENEMY:
-        {
-            sf::RectangleShape enemyShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-            enemyShape.setTexture(&EnemySprite.spriteMap);
-            enemyShape.setTextureRect(EnemySprite.spriteFrame);
-            enemyShape.setPosition(a.getX(), a.getY());
-            EnemySprite.setEnemySprite(a.getDirection());
-            this->window->draw(enemyShape);
-        }
-            break;
         case ActorType::BULLET:
         {
             sf::CircleShape bulletShape(a.getWidth());
@@ -241,16 +230,6 @@ void PlayerView::drawActor(Actor& a) {
             sp1.setTextureRect(portalSprite.spriteFrame);
             sp1.setPosition(a.getX(), a.getY());
             this->window->draw(sp1);
-        }
-            break;
-        case ActorType::CHERYL:
-        {
-            sf::RectangleShape enemyShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-            enemyShape.setTexture(&EnemySprite.spriteMap);
-            enemyShape.setTextureRect(EnemySprite.spriteFrame);
-            enemyShape.setPosition(a.getX(), a.getY());
-            EnemySprite.setEnemySprite(a.getDirection());
-            this->window->draw(enemyShape);
         }
             break;
     }
@@ -386,25 +365,25 @@ void PlayerView::drawScreen(void) {
     for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getBulletList()) this->drawActor(*actor);
 
     // draw enemies
-    for (std::shared_ptr<Enemy> actor : this->logic->getCurrentRoom()->getEnemyList()) {
+    /*for (std::shared_ptr<Enemy> actor : this->logic->getCurrentRoom()->getEnemyList()) {
         this->drawActor(*actor);
-        
+
         if (actor->getHealth() != actor->getMaxHealth()) {
             // draw health bars
             sf::RectangleShape healthBar(sf::Vector2f(float(actor->getHealth()) / float(actor->getMaxHealth()) * 30.0, 5));
             healthBar.setPosition(actor->getCenterX() - 15, actor->getY() - 10);
             healthBar.setFillColor(sf::Color::Red);
             this->window->draw(healthBar);
-            
+
             sf::RectangleShape fullHealthBar(sf::Vector2f(30, 5));
             fullHealthBar.setPosition(actor->getCenterX() - 15, actor->getY() - 10);
             fullHealthBar.setFillColor(sf::Color::Transparent);
             fullHealthBar.setOutlineThickness(1.5);
             fullHealthBar.setOutlineColor(sf::Color::Black);
-            
+
             this->window->draw(fullHealthBar);
         }
-    }
+    }*/
     
     // draw furniture
     for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getActorList()) {
@@ -414,28 +393,89 @@ void PlayerView::drawScreen(void) {
             
         }
     }
-    //for (std::shared_ptr<Actor> actor : this->logic->getCurrentRoom()->getEnemyList()) this->drawActor(*actor);
+
     for (std::shared_ptr<Enemy> a : this->logic->getCurrentRoom()->getEnemyList()) {
         sf::RectangleShape enemyShape(sf::Vector2f((*a).getWidth(), (*a).getHeight()));
         if (a->getEnemyType() == 1) {
+            if (a->getHealth() != a->getMaxHealth()) {
+                // draw health bars
+                sf::RectangleShape healthBar(sf::Vector2f(float(a->getHealth()) / float(a->getMaxHealth()) * 30.0, 5));
+                healthBar.setPosition(a->getCenterX() - 15, a->getY() - 10);
+                healthBar.setFillColor(sf::Color::Red);
+                this->window->draw(healthBar);
+
+                sf::RectangleShape fullHealthBar(sf::Vector2f(30, 5));
+                fullHealthBar.setPosition(a->getCenterX() - 15, a->getY() - 10);
+                fullHealthBar.setFillColor(sf::Color::Transparent);
+                fullHealthBar.setOutlineThickness(1.5);
+                fullHealthBar.setOutlineColor(sf::Color::Black);
+
+                this->window->draw(fullHealthBar);
+            }
+
             enemyShape.setTexture(&EnemySprite1.spriteMap);
             enemyShape.setTextureRect(EnemySprite1.spriteFrame);
             enemyShape.setPosition((*a).getX(), (*a).getY());
             EnemySprite1.setEnemySprite((*a).getDirection());
         }
         else if (a->getEnemyType() == 2) {
+            if (a->getHealth() != a->getMaxHealth()) {
+                // draw health bars
+                sf::RectangleShape healthBar(sf::Vector2f(float(a->getHealth()) / float(a->getMaxHealth()) * 30.0, 5));
+                healthBar.setPosition(a->getCenterX() - 15, a->getY() - 10);
+                healthBar.setFillColor(sf::Color::Red);
+                this->window->draw(healthBar);
+
+                sf::RectangleShape fullHealthBar(sf::Vector2f(30, 5));
+                fullHealthBar.setPosition(a->getCenterX() - 15, a->getY() - 10);
+                fullHealthBar.setFillColor(sf::Color::Transparent);
+                fullHealthBar.setOutlineThickness(1.5);
+                fullHealthBar.setOutlineColor(sf::Color::Black);
+
+                this->window->draw(fullHealthBar);
+            }
             enemyShape.setTexture(&EnemySprite2.spriteMap);
             enemyShape.setTextureRect(EnemySprite2.spriteFrame);
             enemyShape.setPosition((*a).getX(), (*a).getY());
             EnemySprite2.setEnemySprite((*a).getDirection());
         }
         else if (a->getEnemyType() == 3) {
+            if (a->getHealth() != a->getMaxHealth()) {
+                // draw health bars
+                sf::RectangleShape healthBar(sf::Vector2f(float(a->getHealth()) / float(a->getMaxHealth()) * 30.0, 5));
+                healthBar.setPosition(a->getCenterX() - 15, a->getY() - 10);
+                healthBar.setFillColor(sf::Color::Red);
+                this->window->draw(healthBar);
+
+                sf::RectangleShape fullHealthBar(sf::Vector2f(30, 5));
+                fullHealthBar.setPosition(a->getCenterX() - 15, a->getY() - 10);
+                fullHealthBar.setFillColor(sf::Color::Transparent);
+                fullHealthBar.setOutlineThickness(1.5);
+                fullHealthBar.setOutlineColor(sf::Color::Black);
+
+                this->window->draw(fullHealthBar);
+            }
             enemyShape.setTexture(&EnemySprite3.spriteMap);
             enemyShape.setTextureRect(EnemySprite3.spriteFrame);
             enemyShape.setPosition((*a).getX(), (*a).getY());
             EnemySprite3.setEnemySprite((*a).getDirection());
         }
         else if (a->getEnemyType() == 4) {
+            if (a->getHealth() != a->getMaxHealth()) {
+                // draw health bars
+                sf::RectangleShape healthBar(sf::Vector2f(float(a->getHealth()) / float(a->getMaxHealth()) * 30.0, 5));
+                healthBar.setPosition(a->getCenterX() - 15, a->getY() - 10);
+                healthBar.setFillColor(sf::Color::Red);
+                this->window->draw(healthBar);
+
+                sf::RectangleShape fullHealthBar(sf::Vector2f(30, 5));
+                fullHealthBar.setPosition(a->getCenterX() - 15, a->getY() - 10);
+                fullHealthBar.setFillColor(sf::Color::Transparent);
+                fullHealthBar.setOutlineThickness(1.5);
+                fullHealthBar.setOutlineColor(sf::Color::Black);
+
+                this->window->draw(fullHealthBar);
+            }
             enemyShape.setTexture(&EnemySprite1.spriteMap);
             enemyShape.setTextureRect(EnemySprite1.spriteFrame);
             enemyShape.setPosition((*a).getX(), (*a).getY());

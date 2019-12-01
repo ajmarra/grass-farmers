@@ -141,7 +141,11 @@ bool MasterLogic::isAtCloset() {
 
 void MasterLogic::checkFred(void) {
     if (this->getCurrentRoom()->getFred()->getHealth() <= 0) {
-        std::cout << "he ded." << std::endl;
+        this->paused = true;
+        this->playing = false;
+        this->options = true;
+        this->loser = true;
+        this->startLoser();
     }
 }
 
@@ -179,7 +183,7 @@ void MasterLogic::checkCollisions(void) {
         }
 
         // Attack Fred
-        if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->enemyAttackTimer >= 1) {
+        if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->enemyAttackTimer >= 0.5) {
             enemyAttackTimer = 0;
             this->getCurrentRoom()->getFred()->damage(enemy->getDamage()); //temporarily hard coded.  Will change based on enemy type?
         }
@@ -307,6 +311,7 @@ void MasterLogic::update(float delta) {
                 this->view->addEnemy(toSpawn);
                 this->roomList.front()->addActor(toSpawn);
                 
+                // Give enemies items to drop
                 int randNum = std::rand() % 4;
                 if (randNum == 1) {
                     std::shared_ptr<Trap> item = std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred());
