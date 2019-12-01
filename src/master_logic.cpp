@@ -123,6 +123,10 @@ void MasterLogic::updateCheryl(void) {
     }
 }
 
+bool MasterLogic::isAtCloset() {
+    return this->atCloset;
+}
+
 void MasterLogic::checkFred(void) {
     if (this->getCurrentRoom()->getFred()->getHealth() <= 0) {
         std::cout << "he ded." << std::endl;
@@ -160,6 +164,12 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(portal3);
     std::shared_ptr<Portal> portal4 = std::make_shared<Portal>(70, 750);
     this->roomList.front()->addActor(portal4);
+    
+    // Add bed
+    this->roomList.front()->addActor(std::make_shared<Bed>(ActorType::BED, 500, 250, 100, 50, 1));
+    
+    // Add closet
+    this->roomList.front()->addActor(std::make_shared<Closet>(ActorType::CLOSET, 600, 350, 100, 50));
 
     // Add test items
     this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 20, 40, 10, 2, this->getCurrentRoom()->getFred()));
@@ -190,7 +200,6 @@ void MasterLogic::update(float delta) {
 
 
     else if ((paused == false) && (playing == true) && (options == false)) {
-
         this->checkCollisions(delta);
 
         this->updateCheryl();
@@ -198,7 +207,6 @@ void MasterLogic::update(float delta) {
         // Loop throught the actor list
         for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
             curActor->update(delta);
-
 
             // Keep actors inside the room
             if (!curActor->liesInsideSquare(*(this->getCurrentRoom()))) {
@@ -217,6 +225,24 @@ void MasterLogic::update(float delta) {
                 if (curActor->getX() + curActor->getWidth() > this->getCurrentRoom()->getX() + this->getCurrentRoom()->getWidth()) {
                     curActor->hardStop();
                     curActor->setX(curActor->getX() - 1);
+                }
+            }
+        
+            // Check if Fred uses the bed
+            if (curActor->getType() == ActorType::BED) {
+                if (this->getCurrentRoom()->getFred()->collidesSquare(*curActor)) {
+                    std::shared_ptr<Bed> curBed = std::dynamic_pointer_cast<Bed>(curActor);
+                    this->getCurrentRoom()->getFred()->heal(curBed->getHealAmount(), delta);
+                }
+            }
+        
+            // Check if Fred is at the closet
+            if (curActor->getType() == ActorType::CLOSET) {
+                if (this->getCurrentRoom()->getFred()->collidesSquare(*curActor)) {
+                    this->atCloset = true;
+                }
+                else {
+                    this->atCloset = false;
                 }
             }
         }
@@ -262,7 +288,7 @@ void MasterLogic::update(float delta) {
                 this->view->switchToNight();
             }
         }
-
+            
         if (!day && enemyQueueList.size() > 0) {
             if (spawnRate <= 0 && enemyQueueList.size() > 0) {
                 if (nightCount == 1) spawnRate = 4;

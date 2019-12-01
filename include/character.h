@@ -26,6 +26,10 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
         bool canMove = true;
         float sleepTime = 0;
 		int selectedIndex = 0;
+        int selectedClosetIndex = 0;
+    
+        float curDelta = 0;
+        const float deltaLimit = 0.5;
     
     public:
         Character(ActorType type, double x, double y, double width, double height, double mass, double maxSpeed, int maxHealth);
@@ -54,6 +58,7 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
 		int getMaxHealth(void) { return this->maxHealth; };
 
 		void heal(int healAmount);
+        void heal(int healAmount, float delta);
 
         std::shared_ptr<Item> *getInventory(void) { return (this->inventory); };
 
@@ -71,7 +76,11 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
 		int getSelectedIndex(void) { return this->selectedIndex; };
 
 		std::shared_ptr<Item> getSelectedItem(void) { return this->inventory[this->selectedIndex]; };
-
+    
+        void setSelectedClosetIndex(int n) { selectedClosetIndex = n; };
+    
+        int getSelectedClosetIndex() { return selectedClosetIndex; };
+    
 		void setCurrentRoom(std::shared_ptr<Room> room) { this->curRoom = room; };
         
 		std::shared_ptr<Room> getCurrentRoom(void) { return this->curRoom; };
