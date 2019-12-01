@@ -44,6 +44,8 @@ class PlayerView : public View {
         void pollInput(void);
 
         void drawScreen(void);
+    
+        void drawClosetMenu();
 
         void drawActor(Actor &a);
 

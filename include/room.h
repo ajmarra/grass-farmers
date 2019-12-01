@@ -10,6 +10,8 @@
 #include "item.h"
 #include "trap.h"
 #include "bullet.h"
+#include "bed.h"
+#include "closet.h"
 #include "portal.h"
 #include "health_item.h"
 #include "range_weapon.h"
@@ -50,7 +52,11 @@ class Room : public Actor, public std::enable_shared_from_this<Room> {
         void addActor(std::shared_ptr<Item> item);
 
         void addActor(std::shared_ptr<Bullet> bullet);
-        
+    
+        void addActor(std::shared_ptr<Bed> bed);
+    
+        void addActor(std::shared_ptr<Closet> closet);
+
         void addActor(std::shared_ptr<Portal> portal);
 
         void addActor(std::shared_ptr<Cheryl> cheryl);

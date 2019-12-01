@@ -11,8 +11,7 @@
 class RangeWeapon : public Item {
     private:
         //scaling factors for damage and time between each hit and type of gun
-        int damage, fireRate, type;
-        float loading = 0;
+        int damage, type;
 
     public:
         RangeWeapon(double x, double y, double width, double height, int damage, int fireRate, std::shared_ptr<Character> character);
@@ -22,10 +21,6 @@ class RangeWeapon : public Item {
         void setdamage(int damage) { this->damage = damage; };
         
         int getdamage(void) { return damage; };
-
-        void setFireRate(int fireRate) { this->fireRate = fireRate; };
-        
-        int getFireRate(void) { return fireRate; };
 
         void use(int x, int y) override;
 
