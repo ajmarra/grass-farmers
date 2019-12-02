@@ -15,7 +15,7 @@ RangeEnemyView::RangeEnemyView(std::shared_ptr<MasterLogic> logic, std::shared_p
 void RangeEnemyView::update(float delta) {
     if (this->enemy->collidesCircle(*this->logic->getCurrentRoom()->getFred(), 300)) {
         this->enemy->hardStop();
-        this->enemy->useItem(this->logic->getCurrentRoom()->getFred()->getCenterX(), this->logic->getCurrentRoom()->getFred()->getCenterX());
+        this->enemy->useItem(this->logic->getCurrentRoom()->getFred()->getCenterX(), this->logic->getCurrentRoom()->getFred()->getCenterY());
     }
     else this->findFred();
 }
