@@ -68,6 +68,8 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
 
 		void dropItem(void);
 
+        void destroyItem(void);
+
         // Used for enemy inventory
         void addItem(std::shared_ptr<Item> item);
 

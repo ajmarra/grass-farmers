@@ -97,7 +97,7 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 void PlayerView::pollInput() {
     sf::Event Event;
 
-    // Use Item (mouse)
+    // Use Item
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->fred->getSelectedItem()) {
         if (this->fred->getSelectedItem()->getType() == ActorType::RANGEWEAPON || 
             this->fred->getSelectedItem()->getType() == ActorType::MELEEWEAPON) {
@@ -129,10 +129,13 @@ void PlayerView::pollInput() {
     }
 
     // Pick up item
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) fred->addItem();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) this->fred->addItem();
 
     // Drop item
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) fred->dropItem();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) this->fred->dropItem();
+
+    // Destroy Item
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) this->fred->destroyItem();
 
     // Temp button for testing Cheryl
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::H)) {
@@ -142,13 +145,13 @@ void PlayerView::pollInput() {
     }
 
     // Kill Fred
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) fred->damage(150);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) this->fred->damage(150);
 
     // Inventory selection
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelectedIndex(0);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelectedIndex(1);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelectedIndex(2);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelectedIndex(3);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) this->fred->setSelectedIndex(0);
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) this->fred->setSelectedIndex(1);
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) this->fred->setSelectedIndex(2);
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) this->fred->setSelectedIndex(3);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
         //cur_track.stopCurrentTrack();

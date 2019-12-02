@@ -131,9 +131,13 @@ std::shared_ptr<Item> Character::popItemAtIndex(int index) {
     return (toReturn);
 }
 
-void Character::dropItem() {
+void Character::dropItem(void) {
     std::shared_ptr<Item> toDrop = this->popItemAtIndex(selectedIndex);
     if (toDrop == nullptr) return;
     toDrop->setPos(this->getCenterX(), this->getCenterY());
     this->getCurrentRoom()->addActor(toDrop);
+}
+
+void Character::destroyItem(void) {
+    this->inventory[this->selectedIndex] = nullptr;
 }
