@@ -6,6 +6,8 @@ Sounds::Sounds(){
 
     swooshBuffer.loadFromFile("../resources/swoosh.ogg");
     swooshSound.setBuffer(swooshBuffer);
+    fredDamageBuffer.loadFromFile("../resources/fred_damage.ogg");
+    fredDamageSound.setBuffer(fredDamageBuffer);
 }
 
 void Sounds::playDayTrack(){
@@ -54,4 +56,8 @@ void Sounds::playPewSound(){
 
 void Sounds::playSwooshSound(){
     swooshSound.play();
+}
+
+void Sounds::playFredDamageSound(){
+    fredDamageSound.play();
 }
