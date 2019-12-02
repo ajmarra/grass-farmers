@@ -16,6 +16,7 @@
 #include "melee_weapon.h"
 #include "range_weapon.h"
 #include "health_item.h"
+#include "shield.h"
 
 #include "bed.h"
 #include "closet.h"

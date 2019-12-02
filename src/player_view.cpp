@@ -210,6 +210,14 @@ void PlayerView::drawActor(Actor& a) {
         this->window->draw(itemShape);
     }
     break;
+    case ActorType::SHIELD:
+    {
+        sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+       // itemShape.setTexture(&health_image.spriteMap);
+        itemShape.setPosition(a.getX(), a.getY());
+        this->window->draw(itemShape);
+    }
+    break;
     case ActorType::TRAP:
     {
         sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
@@ -290,11 +298,11 @@ void PlayerView::drawScreen(void) {
     this->window->draw(healthBar);
 
     //Fred's Buff Bar
-    /*sf::RectangleShape busyBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getSleepTime() * 50, 20));
-    busyBar.setPosition(10, 60);
-    busyBar.setFillColor(sf::Color::Yellow);
+    sf::RectangleShape buffBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getBuffTime() * 50, 20));
+    buffBar.setPosition(10, 60);
+    buffBar.setFillColor(sf::Color::Yellow);
 
-    this->window->draw(busyBar);*/
+    this->window->draw(buffBar);
 
     // Hard coded inventory blocks
     sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
