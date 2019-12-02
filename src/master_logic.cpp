@@ -127,12 +127,6 @@ void MasterLogic::loadInEnemies(void) {
 
         inFile.close();
     }
-    else if (nightCount == 4) {
-        std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(55, 375, 40, 80);
-        this->getCurrentRoom()->addActor(cheryl);
-        this->view->addEnemy(cheryl);
-        cherylSpawned = true;
-    }
 }
 
 bool MasterLogic::isAtCloset() {
@@ -295,9 +289,16 @@ void MasterLogic::update(float delta) {
                 this->view->switchToNight();
             }
         }
+
+        /*if (nightCount == 4 && this->getCurrentRoom()->getWidth() == 1200 && !cherylSpawned && !day) {
+            std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(55, 375, 40, 80);
+            this->getCurrentRoom()->addActor(cheryl);
+            this->view->addEnemy(cheryl);
+            cherylSpawned = true;
+        }*/
         
         // spawn enemies
-        if (!day && enemyQueueList.size() > 0) {
+        if (!day && enemyQueueList.size() > 0 && this->getCurrentRoom()->getWidth() == 1200) {
             if (spawnRate <= 0 && enemyQueueList.size() > 0) {
                 if (nightCount == 1) spawnRate = 4;
                 else if (nightCount == 2) spawnRate = 3;

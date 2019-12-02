@@ -100,6 +100,8 @@ class MasterLogic {
         void setNightCount(int num) { this->nightCount = num; };
 
         void checkFred(void);
+
+        bool getDay(void) { return day; };
 };
 
 #endif
