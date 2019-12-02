@@ -293,7 +293,7 @@ void PlayerView::drawScreen(void) {
     if (night) this->window->draw(darkness);
 
     //Fred's Health Bar
-    sf::RectangleShape healthBar(sf::Vector2f(5 * fred->getHealth(), 20));
+    sf::RectangleShape healthBar(sf::Vector2f((float(fred->getHealth()) / float(fred->getMaxHealth())) * 500, 20));
     healthBar.setPosition(10, 20);
     healthBar.setFillColor(sf::Color::Blue);
 
