@@ -79,7 +79,7 @@ void MasterLogic::startDemo(void) {
     this->roomList.back()->addActor(std::make_shared<Closet>(ActorType::CLOSET, 600, 350, 100, 50));
 
     // Add test items
-    this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 20, 40, 10, 2, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 24, 60, 10, 2, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<RangeWeapon>(150, 150, 40, 20, 40, 1));
     this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Trap>(850, 550, 64, 64, this->getCurrentRoom()->getFred()));
