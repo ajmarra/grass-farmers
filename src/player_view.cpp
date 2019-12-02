@@ -151,6 +151,12 @@ void PlayerView::drawActor(Actor& a) {
         fredShape.setPosition(a.getX(), a.getY());
         FredSprite.setFredSprite(fred->getDirection());
         this->window->draw(fredShape);
+
+        // Draw Fred's busy bar for when he's setting a trap
+        /*sf::RectangleShape busyBar(sf::Vector2f(float(a->getHealth()) / float(a->getMaxHealth()) * 30.0, 5));
+        busyBar.setPosition(a->getCenterX() - 15, a->getY() - 10);
+        busyBar.setFillColor(sf::Color::Red);
+        this->window->draw(busyBar);*/
     }
     break;
     case ActorType::RANGEWEAPON:
