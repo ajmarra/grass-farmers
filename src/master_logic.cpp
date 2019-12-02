@@ -52,10 +52,10 @@ void MasterLogic::startDemo(void) {
     this->loadInEnemies();
 
     // test range enemies
-    std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
+    /*std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
     rangeEnemy->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 40, 1));
     this->roomList.front()->addActor(rangeEnemy);
-    this->view->addEnemy(rangeEnemy);
+    this->view->addEnemy(rangeEnemy);*/
 
     //Testing Cheryl
     /*std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
@@ -86,6 +86,8 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(std::make_shared<Trap>(850, 750, 64, 64, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 32, 32, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 32, 32, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<Shield>(450, 250, 32, 32, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<Shield>(450, 550, 32, 32, this->getCurrentRoom()->getFred()));
 
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();
@@ -203,7 +205,7 @@ void MasterLogic::checkCollisions(void) {
         }
 
         // Attack Fred
-        if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->enemyAttackTimer >= 0.5) {
+        if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->enemyAttackTimer >= 0.5 && !(this->getCurrentRoom()->getFred()->getInvincibility())) {
             enemyAttackTimer = 0;
             this->getCurrentRoom()->getFred()->damage(enemy->getDamage()); //temporarily hard coded.  Will change based on enemy type?
         }
@@ -320,13 +322,17 @@ void MasterLogic::update(float delta) {
                 this->roomList.front()->addActor(toSpawn);
                 
                 // Give enemies items to drop
-                int randNum = std::rand() % 4;
+                int randNum = std::rand() % 5;
                 if (randNum == 1) {
                     std::shared_ptr<Trap> item = std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred());
                     toSpawn->addItem(item);
                 }
                 else if (randNum == 2) {
                     std::shared_ptr<HealthItem> item = std::make_shared<HealthItem>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
+                    toSpawn->addItem(item);
+                }
+                else if (randNum == 3) {
+                    std::shared_ptr<Shield> item = std::make_shared<Shield>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
                     toSpawn->addItem(item);
                 }
             }

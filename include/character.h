@@ -25,6 +25,8 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
         int desiredDirection = -1;
         bool canMove = true;
         float sleepTime = 0;
+        float buffTime = 0;
+        bool invincibility = false;
 		int selectedIndex = 0;
         int selectedClosetIndex = 0;
     
@@ -89,13 +91,23 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
 
         void setCanMove(bool canMove) { this->canMove = canMove; };
 
+        bool getCanMove(void) { return this->canMove; };
+
         /**
         * Sets a sleep timer and decreases the time on the timer every time it is called.
-        * Used for halting Fred while traps are being set and when he sleeps in the bed.
+        * Used for halting Fred while traps are being set.
         */
         void sleep(float time) { this->sleepTime = time; };
 
         float getSleepTime(void) { return this->sleepTime; };
+
+        void setBuffTime(float time) { this->buffTime = time; };
+
+        float getBuffTime(void) { return this->buffTime; };
+
+        void setInvincibility(bool toSet) { this->invincibility = toSet; };
+
+        bool getInvincibility(void) { return this->invincibility; };
 
         // The following two methods used to scale Cheryl's stats during final boss battle
         void setMaxSpeed(double maxSpeed) { this->maxSpeed = maxSpeed; };
