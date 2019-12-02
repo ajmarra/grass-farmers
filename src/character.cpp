@@ -119,6 +119,7 @@ void Character::addItem(std::shared_ptr<Item> item) {
     for (std::shared_ptr<Item>& slot : this->inventory) {
         if (!slot) {
             slot = item;
+            item->setCharacter(this->shared_from_this()); // set owned by this character
             return;
         }
     }

@@ -55,6 +55,14 @@ bool Actor::collidesCircle(Actor &a) {
     );
 }
 
+bool Actor::collidesCircle(Actor &a, int range) {
+    return (
+        sqrt(pow(this->getCenterX() - a.getCenterX(), 2) +
+        pow(this->getCenterY() - a.getCenterY(), 2)) <
+        range
+    );
+}
+
 bool Actor::liesInsideSquare(Actor &a) {
     return (
         a.getX() <= this->x &&
