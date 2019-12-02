@@ -336,7 +336,7 @@ void MasterLogic::update(float delta) {
                     toSpawn->addItem(item);
                 }
                 else if (randNum == 4) {
-                    std::shared_ptr<Shield> item = std::make_shared<SpeedBoost>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
+                    std::shared_ptr<SpeedBoost> item = std::make_shared<SpeedBoost>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
                     toSpawn->addItem(item);
                 }
             }
