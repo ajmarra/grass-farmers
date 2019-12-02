@@ -20,6 +20,7 @@ MeleeWeapon::MeleeWeapon(double x, double y, double width, double height, int da
 void MeleeWeapon::use(int x, int y) {
     if (!this->reloading) {
 		reloading = this->loadTime;
+        swoosh.playSwooshSound();
 
         double direction = atan2(y - this->character->getCurrentRoom()->getFred()->getCenterY(),
                                  x - this->character->getCurrentRoom()->getFred()->getCenterX()) * 180 / PI;
@@ -31,6 +32,7 @@ void MeleeWeapon::use(int x, int y) {
                     if ((enemy->getCenterY() < this->character->getCurrentRoom()->getFred()->getCenterY())) {
                         if (abs(enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= this->range) {
                             enemy->damage(this->damage);
+                            
                         }
                     }
                 }
@@ -40,6 +42,7 @@ void MeleeWeapon::use(int x, int y) {
                     if (enemy->getCenterX() < this->character->getCurrentRoom()->getFred()->getCenterX()){
                         if (abs((enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX())) <= this->range) {
                             enemy->damage(this->damage);
+                            
                         }
                     }
                 }
@@ -49,6 +52,7 @@ void MeleeWeapon::use(int x, int y) {
                     if (enemy->getCenterY() > this->character->getCurrentRoom()->getFred()->getCenterY()){
                         if (abs( enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= this->range){
                             enemy->damage(this->damage);
+                        
                         }
                     }
                 }
@@ -58,6 +62,7 @@ void MeleeWeapon::use(int x, int y) {
                     if (enemy->getCenterX() > this->character->getCurrentRoom()->getFred()->getCenterX()){
                         if (abs(enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX()) <= this->range) {
                             enemy->damage(this->damage);
+                            
                         }
                     }
                 }

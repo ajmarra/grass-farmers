@@ -13,6 +13,7 @@ class MeleeWeapon : public Item {
         // range of weapon
         double damage;
 	    int range = 100;
+        Sounds swoosh;
 
     public:
         MeleeWeapon(double x, double y, double width, double height, int damage, int speed);
