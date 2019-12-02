@@ -18,6 +18,7 @@
 #include "tutorial_view.h"
 #include "options_view.h"
 #include "loser_view.h"
+#include "winner_view.h"
 #include "room.h"
 #include "exit.h"
 
@@ -32,6 +33,7 @@ class MasterView {
         std::shared_ptr<MenuView> menu;
         std::shared_ptr<TutorialView> tutorial;
         std::shared_ptr<LoserView> loser;
+        std::shared_ptr<WinnerView> winner;
 		std::list<std::shared_ptr<EnemyView>> enemies;
 
 
@@ -47,6 +49,8 @@ class MasterView {
         void setTutorial();
 
         void setLoser();
+
+        void setWinner();
 
         void setPlayer(std::shared_ptr<Fred> fred);
 

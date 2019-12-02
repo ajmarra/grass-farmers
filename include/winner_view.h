@@ -1,5 +1,5 @@
-#ifndef LOSER_VIEW_H
-#define LOSER_VIEW_H
+#ifndef WINNER_VIEW_H
+#define WINNER_VIEW_H
 
 #include "view.h"
 #include "graphics.h"
@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-class LoserView : public View {
+class WinnerView : public View {
 
 private:
     std::shared_ptr<sf::RenderWindow> window;
@@ -17,18 +17,18 @@ private:
 
     //int level = 1;
 
-    sf::Text loser_message;
+    sf::Text winner_message;
     sf::Text info_message1;
     sf::Text info_message2;
-    sf::RectangleShape loser;
+    sf::RectangleShape winner;
 
     //void drawScreen(void);
-    Graphics loser_image;
+    Graphics winner_image;
     sf::Font font;
 
 public:
 
-    LoserView(std::shared_ptr<MasterLogic>& logic, std::shared_ptr<sf::RenderWindow>& window);
+    WinnerView(std::shared_ptr<MasterLogic>& logic, std::shared_ptr<sf::RenderWindow>& window);
     void update(float delta);
     void drawScreen();
 

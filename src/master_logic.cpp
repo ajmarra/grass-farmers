@@ -30,6 +30,10 @@ void MasterLogic::startPaused(void) {
     this->view->setPaused();
 }
 
+void MasterLogic::startWinner(void) {
+    this->view->setWinner();
+}
+
 void MasterLogic::startDemo(void) {
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
@@ -132,6 +136,7 @@ void MasterLogic::loadInEnemies(void) {
         std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(55, 375, 40, 80);
         this->getCurrentRoom()->addActor(cheryl);
         this->view->addEnemy(cheryl);
+        cherylSpawned = true;
     }
 }
 
@@ -146,6 +151,15 @@ void MasterLogic::checkFred(void) {
         this->options = true;
         this->loser = true;
         this->startLoser();
+    }
+    else if (this->getCurrentRoom()->getFred()->getHealth() > 0 && this->nightCount >= 4 && this->getCurrentRoom()->getEnemyList().size() <= 0) {
+        if (this->cherylSpawned) {
+            this->paused = true;
+            this->playing = false;
+            this->options = true;
+            this->winner = true;
+            this->startWinner();
+        }
     }
 }
 
@@ -166,7 +180,7 @@ void MasterLogic::checkCollisions(void) {
                 curActor->setX(curActor->getX() + 1);
             }
             if (curActor->getX() + curActor->getWidth() > this->getCurrentRoom()->getX() + this->getCurrentRoom()->getWidth()) {
-                curActor->hardStop();
+                curActor->hardStop(); 
                 curActor->setX(curActor->getX() - 1);
             }
         }
@@ -235,20 +249,8 @@ void MasterLogic::checkCollisions(void) {
 
 void MasterLogic::update(float delta) {
     this->delta = delta;
-    if ((paused == true) && (playing == false) && (options == false)) {
-        //std::cout << "HELLO" << std::endl;
-    }
 
-    else if ((paused == true) && (playing == false) && (options == true)) {
-        //std::cout << "HELLO" << std::endl;
-    }
-
-    else if ((paused == true) && (playing == true) && (options == false)) {
-        //std::cout << "HELLO" << std::endl;
-    }
-
-
-    else if ((paused == false) && (playing == true) && (options == false)) {
+    if ((paused == false) && (playing == true) && (options == false)) {
         this->enemyAttackTimer += delta;
         this->checkCollisions();
 
