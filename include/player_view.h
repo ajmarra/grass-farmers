@@ -37,6 +37,7 @@ class PlayerView : public View {
         Graphics trap_image;
         Graphics unused_trap_image;
         Graphics shield_image;
+        Graphics speed_image;
 
         sf::Font font;
         
