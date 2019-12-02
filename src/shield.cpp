@@ -2,8 +2,8 @@
 #include "shield.h"
 #include "character.h"
 
-Shield::Shield(double x, double y, double width, double height, std::shared_ptr<Character> fred) :
-    Item(ActorType::SHIELD, x, y, width, height, 1, true, fred) {
+Shield::Shield(double x, double y, double width, double height) :
+    Item(ActorType::SHIELD, x, y, width, height, 1, true) {
 
 }
 

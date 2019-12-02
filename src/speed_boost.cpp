@@ -2,8 +2,8 @@
 #include "speed_boost.h"
 #include "character.h"
 
-SpeedBoost::SpeedBoost(double x, double y, double width, double height, std::shared_ptr<Character> fred) :
-    Item(ActorType::SPEED_BOOST, x, y, width, height, 1, true, fred) {
+SpeedBoost::SpeedBoost(double x, double y, double width, double height) :
+    Item(ActorType::SPEED_BOOST, x, y, width, height, 1, true) {
 
 }
 
