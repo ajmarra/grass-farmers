@@ -35,7 +35,7 @@ void Graphics::updateEnemy(float delta) {
     if ((elapsedEnemyTime >= frameRateEnemy)){
         
         //for left
-        if (left == true){
+        if (leftEnemy == true){
             spriteFrame.top += 64;
             //in case it goes off array map
             if (spriteFrame.top >= 128) {
@@ -44,7 +44,7 @@ void Graphics::updateEnemy(float delta) {
         }
 
         //for all other directions
-        else if (left == false){        
+        else if (leftEnemy == false){        
             
         
 
@@ -78,8 +78,39 @@ void Graphics::updatePortal(float delta) {
     
     }
 
-
+void Graphics::updateCheryl(float delta) {
+    elapsedCherylTime += delta;
     
+    
+    
+    if ((elapsedCherylTime >= frameRateCheryl)){
+        
+        //for left
+        if (leftCheryl == true){
+            spriteFrame.top += 100;
+            //in case it goes off array map
+            if (spriteFrame.top >= 200) {
+                spriteFrame.top = 0;
+        }
+        }
+
+        //for all other directions
+        else if (leftCheryl == false){        
+            
+        
+
+            spriteFrame.left += 100;
+            //in case it goes off array map
+            if (spriteFrame.left >= 200) {
+                spriteFrame.left = 0;
+            }}
+
+        elapsedCherylTime = 0;
+        
+        
+    }}
+
+
     
       
 void Graphics::setFredSprite(double direction) {
@@ -105,7 +136,7 @@ void Graphics::setEnemySprite(double direction) {
             spriteFrame.left = 0;
         }
         spriteFrame.top = 0;
-        left = false;
+        leftEnemy = false;
 
 
 
@@ -120,7 +151,7 @@ void Graphics::setEnemySprite(double direction) {
         }
         //spriteFrame.top = 0;
         spriteFrame.left = 128;
-        left = true;
+        leftEnemy = true;
 
 
     }
@@ -132,7 +163,7 @@ void Graphics::setEnemySprite(double direction) {
         }
 
         spriteFrame.top = 64;
-        left = false;
+        leftEnemy = false;
 
 
     }
@@ -143,8 +174,66 @@ void Graphics::setEnemySprite(double direction) {
             spriteFrame.left = 0;
         }
         spriteFrame.top = 128;
-        left = false;
+        leftEnemy = false;
 
 
     }
 }
+
+      
+void Graphics::setCherylSprite(double direction) {
+    //up 1
+    if (direction >= -135.0 && direction < -45.0) {
+
+        
+        if(spriteFrame.left >= 200){
+            spriteFrame.left = 0;
+        }
+        spriteFrame.top = 200;
+        leftCheryl = false;
+
+
+
+    }
+
+    // //right1
+    else if (direction < 45.0 && direction > 0.0 || direction >= -45.0 && direction <0.0) {
+   // else if ((((direction < -135.0) && (direction >= -180.0)) || 
+    //((direction <= 180.0) && (direction > 135.0)))){
+
+        if(spriteFrame.top >= 200){
+        spriteFrame.top = 0;
+        }
+        //spriteFrame.top = 0;
+        spriteFrame.left = 200;
+        leftCheryl = true;
+
+
+    }
+
+    //down 1
+    else if (direction <= 135.0 && direction > 45.0) {
+        if(spriteFrame.left >= 200){
+            spriteFrame.left = 0;
+        }
+
+        spriteFrame.top = 0;
+        leftCheryl = false;
+
+
+    }
+
+    //left1
+    else if ((((direction < -135.0) && (direction >= -180.0)) || 
+    ((direction <= 180.0) && (direction > 135.0)))){
+        if(spriteFrame.left >= 200){
+            spriteFrame.left = 0;
+        }
+        spriteFrame.top = 100;
+        leftCheryl = false;
+
+
+    }
+}
+
+      
