@@ -25,3 +25,8 @@ void Cheryl::update(float delta) {
     }
     Character::update(delta);
 }
+
+void Cheryl::damage(int d) {
+    Character::damage(d);
+    //play sound here
+}

@@ -15,4 +15,3 @@ Enemy::Enemy(double x, double y, double mass, double maxSpeed, double maxHealth,
         this->damageAmount = 10;
     }
 }
-
