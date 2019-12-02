@@ -317,7 +317,15 @@ void PlayerView::drawScreen(void) {
     healthBar.setPosition(10, 20);
     healthBar.setFillColor(sf::Color::Red);
 
+    //outline
+    sf::RectangleShape healthBarOutline(sf::Vector2f(500, 20));
+    healthBarOutline.setPosition(10, 20);
+    healthBarOutline.setFillColor(sf::Color::Transparent);
+    healthBarOutline.setOutlineThickness(1.5);
+    healthBarOutline.setOutlineColor(sf::Color::Black);
+
     this->window->draw(healthBar);
+    this->window->draw(healthBarOutline);
 
     //Fred's Buff Bar
     sf::RectangleShape buffBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getBuffTime() * 50, 20));
