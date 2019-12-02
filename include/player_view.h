@@ -34,6 +34,7 @@ class PlayerView : public View {
         Graphics exit_image;
         Graphics gun1_image;
         Graphics hoe_image;
+        Graphics closet_image;
         Graphics barn_image;
         Graphics portalSprite;
         Graphics health_image;
