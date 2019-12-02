@@ -38,7 +38,7 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
 
         void update(float delta) override;
         
-        void damage(int d);
+        virtual void damage(int d);
 
         /**
          * sets the direction that the character wants to go (not necessarily 

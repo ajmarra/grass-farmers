@@ -16,6 +16,8 @@ public:
     Cheryl(double x, double y, double mass, double maxSpeed);
 
     void update(float delta) override;
+
+    void damage(int d) override;
 };
 
 #endif

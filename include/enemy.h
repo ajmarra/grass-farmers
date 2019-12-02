@@ -22,7 +22,6 @@ public:
     void setDamage(double damage) { this->damageAmount = damage; };
 
     double getDamage(void) { return damageAmount; };
-
 };
 
 #endif

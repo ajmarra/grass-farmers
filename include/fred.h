@@ -10,6 +10,7 @@ class Fred : public Character {
     public:
         Fred(double x, double y);
 
+        void damage(int d) override;
 };
 
 #endif
