@@ -21,7 +21,7 @@ RangeWeapon::RangeWeapon(double x, double y, double width, double height, int da
 void RangeWeapon::use(int x, int y) {
 	if (!this->reloading) {
 		reloading = this->loadTime;
-		double direction = atan2(y - this->character->getCenterY(), x - this->character->getCenterX()) * 180 / PI;
+		double direction = atan2(y - this->character->getCenterY(), x - this->character->getCenterX()) * 180 / PI  - 5 + (rand() % 10);
 		
 		double xOffset = double(this->character->getWidth() / 2 + 20) * cos(direction * PI / 180);
 		double yOffset = double(this->character->getHeight() / 2 + 20) * sin(direction * PI / 180);
