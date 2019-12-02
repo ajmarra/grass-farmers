@@ -87,6 +87,7 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 32, 32, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 32, 32, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Shield>(450, 250, 32, 32, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<Shield>(450, 550, 32, 32, this->getCurrentRoom()->getFred()));
 
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();
@@ -321,13 +322,17 @@ void MasterLogic::update(float delta) {
                 this->roomList.front()->addActor(toSpawn);
                 
                 // Give enemies items to drop
-                int randNum = std::rand() % 4;
+                int randNum = std::rand() % 5;
                 if (randNum == 1) {
                     std::shared_ptr<Trap> item = std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred());
                     toSpawn->addItem(item);
                 }
                 else if (randNum == 2) {
                     std::shared_ptr<HealthItem> item = std::make_shared<HealthItem>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
+                    toSpawn->addItem(item);
+                }
+                else if (randNum == 3) {
+                    std::shared_ptr<Shield> item = std::make_shared<Shield>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
                     toSpawn->addItem(item);
                 }
             }
