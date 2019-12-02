@@ -37,6 +37,10 @@ void MasterView::setLoser() {
     loser = std::make_shared<LoserView>(this->logic, this->window);
 }
 
+void MasterView::setWinner() {
+    winner = std::make_shared<WinnerView>(this->logic, this->window);
+}
+
 void MasterView::switchToDay() {
     player->switchToDay();
 }
@@ -51,7 +55,6 @@ void MasterView::update(float delta) {
     }
     else if ((this->logic->paused == true) && (this->logic->playing == false) && (this->logic->options == true) && (this->logic->loser == false) && (this->logic->winner == false)) {
         tutorial->update(delta);
-        //loser->update(delta);
     }
 
     else if ((this->logic->paused == true) && (this->logic->playing == true) && (this->logic->options == false)) {
@@ -66,6 +69,9 @@ void MasterView::update(float delta) {
 
     else if ((this->logic->paused == true) && (this->logic->playing == false) && (this->logic->options == true) && (this->logic->loser == true)) {
         loser->update(delta);
+    }
+    else if ((this->logic->paused == true) && (this->logic->playing == false) && (this->logic->options == true) && (this->logic->winner == true)) {
+        winner->update(delta);
     }
 
 }

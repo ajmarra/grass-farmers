@@ -113,10 +113,10 @@ void PlayerView::pollInput() {
     }
 
     // Pick up item
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) fred->addItem();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) fred->addItem();
 
     // Drop item
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) fred->dropItem();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) fred->dropItem();
 
     // Temp button for testing Cheryl
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::H)) {
