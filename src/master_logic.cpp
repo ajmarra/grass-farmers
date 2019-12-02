@@ -50,7 +50,9 @@ void MasterLogic::startDemo(void) {
     this->view->setPlayer(fred);
     
     // Hoe
-    this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 24, 60, 4, 2, this->getCurrentRoom()->getFred()));
+    std::shared_ptr<MeleeWeapon> hoe = std::make_shared<MeleeWeapon>(800, 300, 24, 60, 4, 2, this->getCurrentRoom()->getFred());
+    this->roomList.front()->addActor(hoe);
+    this->getCurrentRoom()->getFred()->addItem();
 
     this->loadInEnemies();
 
@@ -85,18 +87,20 @@ void MasterLogic::loadInEnemies(void) {
     double x, y, mass, maxSpeed, maxHealth;
     int type;
 
-    inFile.open("../resources/enemies" + std::to_string(nightCount) + ".txt");
-    if (!inFile) {
-        std::cout << "Unable to open enemies.txt";
-        exit(1);
-    }
+    if (nightCount < 4) {
+        inFile.open("../resources/enemies" + std::to_string(nightCount) + ".txt");
+        if (!inFile) {
+            std::cout << "Unable to open enemies#.txt";
+            exit(1);
+        }
 
-    while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth >> type) {
-        std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth, type);
-        this->enemyQueueList.push_front(testEnemy);
-    }
+        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth >> type) {
+            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth, type);
+            this->enemyQueueList.push_front(testEnemy);
+        }
 
-    inFile.close();
+        inFile.close();
+    }
 }
 
 bool MasterLogic::isAtCloset() {
@@ -105,6 +109,8 @@ bool MasterLogic::isAtCloset() {
 
 void MasterLogic::checkFred(void) {
     if (this->getCurrentRoom()->getFred()->getHealth() <= 0) {
+        this->nightCount = 1;
+        this->cherylSpawned = false;
         this->paused = true;
         this->playing = false;
         this->options = true;
@@ -248,12 +254,12 @@ void MasterLogic::update(float delta) {
             }
         }
 
-        /*if (nightCount == 4 && this->getCurrentRoom()->getWidth() == 1200 && !cherylSpawned && !day) {
+        if (nightCount >= 4 && this->getCurrentRoom()->getWidth() == 1200 && !cherylSpawned && !day) {
             std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(55, 375, 40, 80);
             this->getCurrentRoom()->addActor(cheryl);
             this->view->addEnemy(cheryl);
             cherylSpawned = true;
-        }*/
+        }
         
         // spawn enemies
         if (!day && enemyQueueList.size() > 0 && this->getCurrentRoom()->getWidth() == 1200) {
@@ -265,8 +271,8 @@ void MasterLogic::update(float delta) {
                 toSpawn = this->enemyQueueList.back();
                 
                 // Give enemies items
-                float fireRate = float(std::rand() % 100) / 50.0 + 0.08;
-                int damage = 5 * nightCount * fireRate + float(std::rand() % 5);
+                float fireRate = float(std::rand() % 80) / 50.0 + 0.08;
+                int damage = 5 * nightCount * fireRate + float(std::rand() % 3);
                 switch (std::rand() % 100) {
                     case 0 ... 29:
                         toSpawn->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, damage, fireRate));
