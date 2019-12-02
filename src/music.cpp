@@ -1,6 +1,11 @@
 #include "music.h"
 
 Sounds::Sounds(){
+    pewBuffer.loadFromFile("../resources/pewpew.ogg");
+    pewSound.setBuffer(pewBuffer);
+
+    swooshBuffer.loadFromFile("../resources/swoosh.ogg");
+    swooshSound.setBuffer(swooshBuffer);
 }
 
 void Sounds::playDayTrack(){
@@ -39,4 +44,14 @@ void Sounds::pauseCurrentTrack(){
 
 void Sounds::playCurrentTrack(){
     current_track->play();
+}
+
+void Sounds::playPewSound(){
+    pewSound.setVolume(50);
+    pewSound.play();
+    
+}
+
+void Sounds::playSwooshSound(){
+    swooshSound.play();
 }

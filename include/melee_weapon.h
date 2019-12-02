@@ -14,6 +14,7 @@ class MeleeWeapon : public Item {
         int damage = 20;
         int speed;
         bool inUse = false;
+        Sounds swoosh;
 
 
     public:
