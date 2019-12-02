@@ -14,15 +14,12 @@ MeleeWeapon::MeleeWeapon(double x, double y, double width, double height, int da
     this->x = x;
     this->y = y;
     this->damage = damage;
-    this->speed = speed;
     this->loadTime = 1;
 }
 
 void MeleeWeapon::use(int x, int y) {
     if (!this->reloading) {
 		reloading = this->loadTime;
-        double abso = 70;
-        this->inUse = true;
 
         double direction = atan2(y - this->character->getCurrentRoom()->getFred()->getCenterY(), x - this->character->getCurrentRoom()->getFred()->getCenterX())*180/PI;
 
@@ -31,7 +28,7 @@ void MeleeWeapon::use(int x, int y) {
                 //up sweep
                 if (direction >= -135.0 && direction < -45.0) {
                     if ((enemy->getCenterY() < this->character->getCurrentRoom()->getFred()->getCenterY())) {
-                        if (abs(enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= abso) {
+                        if (abs(enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= this->range) {
                             enemy->damage(this->damage);
                         }
                     }
@@ -40,7 +37,7 @@ void MeleeWeapon::use(int x, int y) {
                 //left sweep
                 else if ((direction < -135.0 && direction >= -180.0 ) || ( direction <= 180.0 && direction > 135.0)) {
                     if (enemy->getCenterX() < this->character->getCurrentRoom()->getFred()->getCenterX()){
-                        if (abs((enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX())) <= abso) {
+                        if (abs((enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX())) <= this->range) {
                             enemy->damage(this->damage);
                         }
                     }
@@ -49,7 +46,7 @@ void MeleeWeapon::use(int x, int y) {
                 //down sweep
                 else if (direction <= 135.0 && direction > 45.0) {
                     if (enemy->getCenterY() > this->character->getCurrentRoom()->getFred()->getCenterY()){
-                        if (abs( enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= abso){
+                        if (abs( enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= this->range){
                             enemy->damage(this->damage);
                         }
                     }
@@ -58,14 +55,14 @@ void MeleeWeapon::use(int x, int y) {
                 //right sweep
                 else if ((direction < 45.0 && direction > 0.0) || (direction >= -45.0 && direction < 0.0)){
                     if (enemy->getCenterX() > this->character->getCurrentRoom()->getFred()->getCenterX()){
-                        if (abs(enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX()) <= abso) {
+                        if (abs(enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX()) <= this->range) {
                             enemy->damage(this->damage);
                         }
                     }
                 }
 
                 //Damage if alien is hitting fred
-                if (enemy->collidesSquare(*this->character->getCurrentRoom()->getFred())) enemy->damage(this->damage);
+                else if (enemy->collidesSquare(*this->character->getCurrentRoom()->getFred())) enemy->damage(this->damage);
             }
         }
     }

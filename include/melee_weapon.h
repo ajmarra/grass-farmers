@@ -10,11 +10,9 @@
 
 class MeleeWeapon : public Item {
     private:
-        //scaling factors for damage and time between each hit and type of gun
-        int damage = 20;
-        int speed;
-        bool inUse = false;
-
+        // range of weapon
+        double damage;
+	    int range = 100;
 
     public:
         MeleeWeapon(double x, double y, double width, double height, int damage, int speed, std::shared_ptr<Character> character);
@@ -22,10 +20,6 @@ class MeleeWeapon : public Item {
         void setDamage(int damage) { this->damage = damage; };
         
         int getDamage(void) { return damage; };
-
-        void setSpeed(int speed) { this->speed = speed; };
-
-        int getSpeed(void) { return speed; };
 
         void use(int x, int y) override;
 
