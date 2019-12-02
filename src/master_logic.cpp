@@ -87,7 +87,7 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 32, 32, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 32, 32, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Shield>(450, 250, 32, 32, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<Shield>(450, 550, 32, 32, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<SpeedBoost>(450, 550, 32, 32, this->getCurrentRoom()->getFred()));
 
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();

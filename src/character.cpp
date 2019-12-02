@@ -75,6 +75,7 @@ void Character::update(float delta) {
 
     if (buffTime > 0) buffTime -= delta;
     else if (buffTime <= 0 && invincibility) invincibility = false;
+    else if (buffTime <= 0 && this->getType() == ActorType::FRED && maxSpeed > 200) maxSpeed = 200;
 
     //update items in inventory
     for (std::shared_ptr<Item> &slot : this->inventory) {

@@ -220,6 +220,14 @@ void PlayerView::drawActor(Actor& a) {
         this->window->draw(itemShape);
     }
     break;
+    case ActorType::SPEED_BOOST:
+    {
+        sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+        //itemShape.setTexture(&shield_image.spriteMap);
+        itemShape.setPosition(a.getX(), a.getY());
+        this->window->draw(itemShape);
+    }
+    break;
     case ActorType::TRAP:
     {
         sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));

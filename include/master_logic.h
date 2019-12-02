@@ -17,6 +17,7 @@
 #include "range_weapon.h"
 #include "health_item.h"
 #include "shield.h"
+#include "speed_boost.h"
 
 #include "bed.h"
 #include "closet.h"
