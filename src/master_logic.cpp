@@ -55,7 +55,7 @@ void MasterLogic::startDemo(void) {
     /**std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
     rangeEnemy->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 5, 0.1));
     this->roomList.front()->addActor(rangeEnemy);
-    this->view->addEnemy(rangeEnemy);
+    this->view->addEnemy(rangeEnemy);*/
 
     //Testing Cheryl
     /**std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
@@ -222,11 +222,11 @@ void MasterLogic::checkCollisions(void) {
             std::shared_ptr<Fred> fred = this->getCurrentRoom()->getFred();
             if (this->getCurrentRoom()->getFred()->getCenterX() < exit->getCenterX()) {
                 fred->setPos((*newRoom)->getExitList().front()->getCenterX() + 50,
-                                (*newRoom)->getExitList().front()->getCenterY() - 50);
+                                fred->getY());
             }
             else if (this->getCurrentRoom()->getFred()->getCenterX() > exit->getCenterX()) {
                 fred->setPos((*newRoom)->getExitList().front()->getCenterX() - 100,
-                                (*newRoom)->getExitList().front()->getCenterY() - 50);
+                                fred->getY());
             }
             this->getCurrentRoom()->removeActor(fred);
             (*newRoom)->addActor(fred);
@@ -319,10 +319,11 @@ void MasterLogic::update(float delta) {
                 toSpawn = this->enemyQueueList.back();
                 
                 // Give enemies items
-                int randNum = std::rand() % 100;
-                switch (randNum) {
+                float fireRate = float(std::rand() % 100) / 50.0 + 0.08;
+                int damage = 5 * nightCount * fireRate + float(std::rand() % 5);
+                switch (std::rand() % 100) {
                     case 0 ... 29:
-                        toSpawn->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 5, 0.1));
+                        toSpawn->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, damage, fireRate));
                         break;
                     case 30 ... 39:
                         toSpawn->addItem(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));

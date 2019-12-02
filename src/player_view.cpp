@@ -480,7 +480,6 @@ void PlayerView::drawScreen(void) {
         }
         // This one is Cheryl
         else if (a->getEnemyType() == 4) {
-            std::cout <<(*a).getWidth()<<std::endl;
             if (a->getHealth() != a->getMaxHealth()) {
                 // draw health bars
                 sf::RectangleShape healthBar(sf::Vector2f(float(a->getHealth()) / float(a->getMaxHealth()) * 30.0, 5));
