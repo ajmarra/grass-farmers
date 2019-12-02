@@ -52,15 +52,15 @@ void MasterLogic::startDemo(void) {
     this->loadInEnemies();
 
     // test range enemies
-    std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
+    /**std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
     rangeEnemy->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 5, 0.1));
     this->roomList.front()->addActor(rangeEnemy);
-    this->view->addEnemy(rangeEnemy);
+    this->view->addEnemy(rangeEnemy);*/
 
     //Testing Cheryl
-    // std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 100, 100);
-    // this->getCurrentRoom()->addActor(cheryl);
-    // this->view->addEnemy(cheryl);
+    /**std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
+    this->getCurrentRoom()->addActor(cheryl);
+    this->view->addEnemy(cheryl);*/
 
     // Creating the portals
     std::shared_ptr<Portal> portal1 = std::make_shared<Portal>(70, 150);
@@ -222,11 +222,11 @@ void MasterLogic::checkCollisions(void) {
             std::shared_ptr<Fred> fred = this->getCurrentRoom()->getFred();
             if (this->getCurrentRoom()->getFred()->getCenterX() < exit->getCenterX()) {
                 fred->setPos((*newRoom)->getExitList().front()->getCenterX() + 50,
-                                (*newRoom)->getExitList().front()->getCenterY() - 50);
+                                fred->getY());
             }
             else if (this->getCurrentRoom()->getFred()->getCenterX() > exit->getCenterX()) {
                 fred->setPos((*newRoom)->getExitList().front()->getCenterX() - 100,
-                                (*newRoom)->getExitList().front()->getCenterY() - 50);
+                                fred->getY());
             }
             this->getCurrentRoom()->removeActor(fred);
             (*newRoom)->addActor(fred);
@@ -317,28 +317,30 @@ void MasterLogic::update(float delta) {
                 else if (nightCount == 3) spawnRate = 2;
                 std::shared_ptr<Enemy> toSpawn;
                 toSpawn = this->enemyQueueList.back();
+                
+                // Give enemies items
+                float fireRate = float(std::rand() % 100) / 50.0 + 0.08;
+                int damage = 5 * nightCount * fireRate + float(std::rand() % 5);
+                switch (std::rand() % 100) {
+                    case 0 ... 29:
+                        toSpawn->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, damage, fireRate));
+                        break;
+                    case 30 ... 39:
+                        toSpawn->addItem(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
+                        break;
+                    case 40 ... 49:
+                        toSpawn->addItem(std::make_shared<HealthItem>(650, 550, 32, 32, this->getCurrentRoom()->getFred()));
+                        break;
+                    case 50 ... 59:
+                        toSpawn->addItem(std::make_shared<Shield>(650, 550, 32, 32, this->getCurrentRoom()->getFred()));
+                        break;
+                    case 60 ... 69:
+                        toSpawn->addItem(std::make_shared<SpeedBoost>(650, 550, 32, 32, this->getCurrentRoom()->getFred()));
+                        break;
+                }
                 this->enemyQueueList.remove(toSpawn);
                 this->view->addEnemy(toSpawn);
                 this->roomList.front()->addActor(toSpawn);
-                
-                // Give enemies items to drop
-                int randNum = std::rand() % 6;
-                if (randNum == 1) {
-                    std::shared_ptr<Trap> item = std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred());
-                    toSpawn->addItem(item);
-                }
-                else if (randNum == 2) {
-                    std::shared_ptr<HealthItem> item = std::make_shared<HealthItem>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
-                    toSpawn->addItem(item);
-                }
-                else if (randNum == 3) {
-                    std::shared_ptr<Shield> item = std::make_shared<Shield>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
-                    toSpawn->addItem(item);
-                }
-                else if (randNum == 4) {
-                    std::shared_ptr<SpeedBoost> item = std::make_shared<SpeedBoost>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
-                    toSpawn->addItem(item);
-                }
             }
             else {
                 spawnRate -= delta;
