@@ -55,6 +55,7 @@ class MasterLogic {
         bool paused = true;
         bool playing = false;
         bool options = false;
+        bool story = true;
         MasterLogic(void) { };
 
         void init(std::shared_ptr<MasterView> mv);

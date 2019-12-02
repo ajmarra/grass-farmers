@@ -186,6 +186,7 @@ void MasterLogic::startDemo(void) {
 
 void MasterLogic::update(float delta) {
     this->delta = delta;
+    
     if ((paused == true) && (playing == false) && (options == false)) {
         //std::cout << "HELLO" << std::endl;
     }
