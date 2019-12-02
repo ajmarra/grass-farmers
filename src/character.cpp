@@ -85,46 +85,42 @@ void Character::update(float delta) {
     }
 }
 
-void Character::addItem(void) {
+bool Character::addItem(void) {
     for (std::shared_ptr<Item> item : this->curRoom->getItemList()) {
         if (this->collidesSquare(*item) && item->getCanPickUp()) {
-
-            // if stackable, increment
-            if (item->isStackable()) {
-                for (std::shared_ptr<Item> &slot : this->inventory) {
-                    if (slot && item->getType() == slot->getType()) {
-                        this->curRoom->removeActor(item); // remove from room
-                        item->setCharacter(this->shared_from_this()); // set owned by this character
-                        slot->increaseQuantity();
-                        return;
-                    }
-                }
-            }
-
-            // add to next empty slot
-            int i = 0;
-            for (std::shared_ptr<Item> &slot : this->inventory) {
-                if (!slot) {
-                    this->curRoom->removeActor(item); // remove from room
-                    item->setCharacter(this->shared_from_this()); // set owned by this character
-                    item->setPos(837 - item->getWidth() / 2 + 100 * i, 50 - item->getHeight() / 2);
-                    slot = item;
-                    return;
-                }
-                i++;
+            if (this->addItem(item)) {
+                this->curRoom->removeActor(item); // remove from room
+                return true;
             }
         }
     }
+    return false;
 }
 
-void Character::addItem(std::shared_ptr<Item> item) {
-    for (std::shared_ptr<Item>& slot : this->inventory) {
-        if (!slot) {
-            slot = item;
-            item->setCharacter(this->shared_from_this()); // set owned by this character
-            return;
+bool Character::addItem(std::shared_ptr<Item> item) {
+    // if stackable, increment
+    if (item->isStackable()) {
+        for (std::shared_ptr<Item> &slot : this->inventory) {
+            if (slot && item->getType() == slot->getType()) {
+                item->setCharacter(this->shared_from_this()); // set owned by this character
+                slot->increaseQuantity();
+                return true;
+            }
         }
     }
+
+    // add to next empty slot
+    int i = 0;
+    for (std::shared_ptr<Item> &slot : this->inventory) {
+        if (!slot) {
+            item->setCharacter(this->shared_from_this()); // set owned by this character
+            item->setPos(837 - item->getWidth() / 2 + 100 * i, 50 - item->getHeight() / 2);
+            slot = item;
+            return true;
+        }
+        i++;
+    }
+    return false;
 }
 
 std::shared_ptr<Item> Character::popItemAtIndex(int index) {

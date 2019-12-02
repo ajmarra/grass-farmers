@@ -64,14 +64,14 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
 
         std::shared_ptr<Item> *getInventory(void) { return (this->inventory); };
 
-		void addItem(void);
-
 		void dropItem(void);
 
         void destroyItem(void);
 
+		bool addItem(void);
+
         // Used for enemy inventory
-        void addItem(std::shared_ptr<Item> item);
+        bool addItem(std::shared_ptr<Item> item);
 
 		std::shared_ptr<Item> popItemAtIndex(int index);
 

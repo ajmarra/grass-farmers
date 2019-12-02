@@ -21,7 +21,8 @@ void MeleeWeapon::use(int x, int y) {
     if (!this->reloading) {
 		reloading = this->loadTime;
 
-        double direction = atan2(y - this->character->getCurrentRoom()->getFred()->getCenterY(), x - this->character->getCurrentRoom()->getFred()->getCenterX())*180/PI;
+        double direction = atan2(y - this->character->getCurrentRoom()->getFred()->getCenterY(),
+                                 x - this->character->getCurrentRoom()->getFred()->getCenterX()) * 180 / PI;
 
         if (this->character->getCurrentRoom()->getEnemyList().size() > 0) {
             for (std::shared_ptr<Enemy> enemy : this->character->getCurrentRoom()->getEnemyList()) {

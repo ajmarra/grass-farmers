@@ -51,8 +51,7 @@ void MasterLogic::startDemo(void) {
     
     // Hoe
     std::shared_ptr<MeleeWeapon> hoe = std::make_shared<MeleeWeapon>(800, 300, 24, 60, 4, 2, this->getCurrentRoom()->getFred());
-    this->roomList.front()->addActor(hoe);
-    this->getCurrentRoom()->getFred()->addItem();
+    this->roomList.front()->getFred()->addItem(hoe);
 
     this->loadInEnemies();
 
