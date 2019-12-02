@@ -67,8 +67,11 @@ void Character::update(float delta) {
         Character::move();
     }
     else {
+        
         this->hardStop();
         sleepTime -= delta;
+        if (sleepTime <= 0) this->canMove = true;
+        else this->canMove = false;
     }
 
     //update items in inventory

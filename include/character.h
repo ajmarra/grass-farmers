@@ -89,6 +89,8 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
 
         void setCanMove(bool canMove) { this->canMove = canMove; };
 
+        bool getCanMove(void) { return this->canMove; };
+
         /**
         * Sets a sleep timer and decreases the time on the timer every time it is called.
         * Used for halting Fred while traps are being set and when he sleeps in the bed.
