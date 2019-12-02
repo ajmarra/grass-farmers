@@ -58,9 +58,9 @@ void MasterLogic::startDemo(void) {
     this->view->addEnemy(rangeEnemy);
 
     //Testing Cheryl
-    std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 100, 100);
-    this->getCurrentRoom()->addActor(cheryl);
-    this->view->addEnemy(cheryl);
+    // std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 100, 100);
+    // this->getCurrentRoom()->addActor(cheryl);
+    // this->view->addEnemy(cheryl);
 
     // Creating the portals
     std::shared_ptr<Portal> portal1 = std::make_shared<Portal>(70, 150);
@@ -79,7 +79,7 @@ void MasterLogic::startDemo(void) {
     this->roomList.back()->addActor(std::make_shared<Closet>(ActorType::CLOSET, 600, 350, 100, 50));
 
     // Add test items
-    this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 20, 40, 10, 2, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 24, 60, 10, 2, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<RangeWeapon>(150, 150, 40, 20, 40, 1));
     this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Trap>(850, 550, 64, 64, this->getCurrentRoom()->getFred()));
