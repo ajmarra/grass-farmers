@@ -55,7 +55,7 @@ void TutorialView::drawScreen(){
     tutorial_message.setPosition(470, 20);
 
     info_message1.setFont(font);
-    info_message1.setString(" MOVE UP: W \n MOVE RIGHT: D \n MOVE LEFT: A \n MOVE DOWN: S \n\n PICK UP ITEM: J \n DROP ITEM: K \n USE SELECTED ITEM: SPACE ");
+    info_message1.setString(" MOVE UP: W \n MOVE RIGHT: D \n MOVE LEFT: A \n MOVE DOWN: S \n PICK UP ITEM: E \n DROP ITEM: Q \n AIM: MOUSE \n USE SELECTED ITEM: LEFT CLICK ");
     info_message1.setCharacterSize(50); // in pixels, not points!
     info_message1.setFillColor(sf::Color::White);
     info_message1.setStyle(sf::Text::Bold);

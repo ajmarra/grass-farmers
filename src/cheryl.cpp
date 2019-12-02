@@ -2,7 +2,7 @@
 #include "cheryl.h"
 
 Cheryl::Cheryl(double x, double y, double mass, double maxSpeed) :
-    Enemy(x, y, mass, maxSpeed, 60, 4) {
+    Enemy(x, y, mass, maxSpeed, 400, 4) {
     this->setWidthHeight(100, 100);
     this->setType(ActorType::CHERYL);
 }
