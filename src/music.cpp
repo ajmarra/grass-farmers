@@ -3,6 +3,9 @@
 Sounds::Sounds(){
     pewBuffer.loadFromFile("../resources/pewpew.ogg");
     pewSound.setBuffer(pewBuffer);
+
+    swooshBuffer.loadFromFile("../resources/swoosh.ogg");
+    swooshSound.setBuffer(swooshBuffer);
 }
 
 void Sounds::playDayTrack(){
@@ -45,4 +48,8 @@ void Sounds::playCurrentTrack(){
 
 void Sounds::playPewSound(){
     pewSound.play();
+}
+
+void Sounds::playSwooshSound(){
+    swooshSound.play();
 }

@@ -13,6 +13,7 @@ class Sounds{
         void pauseCurrentTrack(); //to be implemented later
         void playCurrentTrack();
         void playPewSound();
+        void playSwooshSound();
 
 
     private:
@@ -21,6 +22,8 @@ class Sounds{
         sf::Music *current_track; //keep track of what is being played to stop/pause as necessary
         sf::SoundBuffer pewBuffer;
         sf::Sound pewSound;
+        sf::SoundBuffer swooshBuffer;
+        sf::Sound swooshSound;
 };
 
 #endif

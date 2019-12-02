@@ -23,6 +23,7 @@ void MeleeWeapon::use(int x, int y) {
 		reloading = this->loadTime;
         double abso = 70;
         this->inUse = true;
+        swoosh.playSwooshSound();
 
         double direction = atan2(y - this->character->getCurrentRoom()->getFred()->getCenterY(), x - this->character->getCurrentRoom()->getFred()->getCenterX())*180/PI;
 
@@ -33,6 +34,7 @@ void MeleeWeapon::use(int x, int y) {
                     if ((enemy->getCenterY() < this->character->getCurrentRoom()->getFred()->getCenterY())) {
                         if (abs(enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= abso) {
                             enemy->damage(this->damage);
+                            
                         }
                     }
                 }
@@ -42,6 +44,7 @@ void MeleeWeapon::use(int x, int y) {
                     if (enemy->getCenterX() < this->character->getCurrentRoom()->getFred()->getCenterX()){
                         if (abs((enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX())) <= abso) {
                             enemy->damage(this->damage);
+                            
                         }
                     }
                 }
@@ -51,6 +54,7 @@ void MeleeWeapon::use(int x, int y) {
                     if (enemy->getCenterY() > this->character->getCurrentRoom()->getFred()->getCenterY()){
                         if (abs( enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= abso){
                             enemy->damage(this->damage);
+                        
                         }
                     }
                 }
@@ -60,6 +64,7 @@ void MeleeWeapon::use(int x, int y) {
                     if (enemy->getCenterX() > this->character->getCurrentRoom()->getFred()->getCenterX()){
                         if (abs(enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX()) <= abso) {
                             enemy->damage(this->damage);
+                            
                         }
                     }
                 }
