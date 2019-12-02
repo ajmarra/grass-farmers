@@ -52,10 +52,10 @@ void MasterLogic::startDemo(void) {
     this->loadInEnemies();
 
     // test range enemies
-    /*std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
-    rangeEnemy->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 40, 1));
+    std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
+    rangeEnemy->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 5, 0.1));
     this->roomList.front()->addActor(rangeEnemy);
-    this->view->addEnemy(rangeEnemy);*/
+    this->view->addEnemy(rangeEnemy);
 
     //Testing Cheryl
     /*std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);

@@ -9,7 +9,7 @@
 #include "fred.h"
 #include "room.h"
 
-class EnemyView : View {
+class EnemyView : public View {
     protected:
         std::shared_ptr<Enemy> enemy;
         float elapsedTime = 0;
