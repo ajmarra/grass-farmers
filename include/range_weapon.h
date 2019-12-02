@@ -14,7 +14,7 @@ class RangeWeapon : public Item {
         int damage, type;
 
     public:
-        RangeWeapon(double x, double y, double width, double height, int damage, int fireRate, std::shared_ptr<Character> character);
+        RangeWeapon(double x, double y, double width, double height, int damage, int fireRate);
 
         int getStrength(void) { return damage; };
 
