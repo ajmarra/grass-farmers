@@ -30,6 +30,10 @@ void MasterLogic::startPaused(void) {
     this->view->setPaused();
 }
 
+void MasterLogic::startWinner(void) {
+    this->view->setWinner();
+}
+
 void MasterLogic::startDemo(void) {
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
@@ -48,10 +52,10 @@ void MasterLogic::startDemo(void) {
     this->loadInEnemies();
 
     // test range enemies
-    std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
+    /*std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
     rangeEnemy->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 40, 1));
     this->roomList.front()->addActor(rangeEnemy);
-    this->view->addEnemy(rangeEnemy);
+    this->view->addEnemy(rangeEnemy);*/
 
     //Testing Cheryl
     /*std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
@@ -82,6 +86,8 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(std::make_shared<Trap>(850, 750, 64, 64, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 32, 32, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 32, 32, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<Shield>(450, 250, 32, 32, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<Shield>(450, 550, 32, 32, this->getCurrentRoom()->getFred()));
 
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();
@@ -138,6 +144,7 @@ void MasterLogic::loadInEnemies(void) {
         std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(55, 375, 40, 80);
         this->getCurrentRoom()->addActor(cheryl);
         this->view->addEnemy(cheryl);
+        cherylSpawned = true;
     }
 }
 
@@ -152,6 +159,15 @@ void MasterLogic::checkFred(void) {
         this->options = true;
         this->loser = true;
         this->startLoser();
+    }
+    else if (this->getCurrentRoom()->getFred()->getHealth() > 0 && this->nightCount >= 4 && this->getCurrentRoom()->getEnemyList().size() <= 0) {
+        if (this->cherylSpawned) {
+            this->paused = true;
+            this->playing = false;
+            this->options = true;
+            this->winner = true;
+            this->startWinner();
+        }
     }
 }
 
@@ -172,7 +188,7 @@ void MasterLogic::checkCollisions(void) {
                 curActor->setX(curActor->getX() + 1);
             }
             if (curActor->getX() + curActor->getWidth() > this->getCurrentRoom()->getX() + this->getCurrentRoom()->getWidth()) {
-                curActor->hardStop();
+                curActor->hardStop(); 
                 curActor->setX(curActor->getX() - 1);
             }
         }
@@ -189,7 +205,7 @@ void MasterLogic::checkCollisions(void) {
         }
 
         // Attack Fred
-        if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->enemyAttackTimer >= 0.5) {
+        if (enemy->collidesSquare(*(this->getCurrentRoom()->getFred())) && this->enemyAttackTimer >= 0.5 && !(this->getCurrentRoom()->getFred()->getInvincibility())) {
             enemyAttackTimer = 0;
             this->getCurrentRoom()->getFred()->damage(enemy->getDamage()); //temporarily hard coded.  Will change based on enemy type?
         }
@@ -241,20 +257,8 @@ void MasterLogic::checkCollisions(void) {
 
 void MasterLogic::update(float delta) {
     this->delta = delta;
-    if ((paused == true) && (playing == false) && (options == false)) {
-        //std::cout << "HELLO" << std::endl;
-    }
 
-    else if ((paused == true) && (playing == false) && (options == true)) {
-        //std::cout << "HELLO" << std::endl;
-    }
-
-    else if ((paused == true) && (playing == true) && (options == false)) {
-        //std::cout << "HELLO" << std::endl;
-    }
-
-
-    else if ((paused == false) && (playing == true) && (options == false)) {
+    if ((paused == false) && (playing == true) && (options == false)) {
         this->enemyAttackTimer += delta;
         this->checkCollisions();
 
@@ -318,13 +322,17 @@ void MasterLogic::update(float delta) {
                 this->roomList.front()->addActor(toSpawn);
                 
                 // Give enemies items to drop
-                int randNum = std::rand() % 4;
+                int randNum = std::rand() % 5;
                 if (randNum == 1) {
                     std::shared_ptr<Trap> item = std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred());
                     toSpawn->addItem(item);
                 }
                 else if (randNum == 2) {
                     std::shared_ptr<HealthItem> item = std::make_shared<HealthItem>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
+                    toSpawn->addItem(item);
+                }
+                else if (randNum == 3) {
+                    std::shared_ptr<Shield> item = std::make_shared<Shield>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
                     toSpawn->addItem(item);
                 }
             }

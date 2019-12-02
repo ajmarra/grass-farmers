@@ -16,6 +16,7 @@
 #include "melee_weapon.h"
 #include "range_weapon.h"
 #include "health_item.h"
+#include "shield.h"
 
 #include "bed.h"
 #include "closet.h"
@@ -47,6 +48,7 @@ class MasterLogic {
         std::shared_ptr<Timer> timer;
 		float delta;
         bool day = false;
+        bool cherylSpawned = false;
         float spawnRate = 0;
         float enemyAttackTimer = 0;
         int nightCount = 1;
@@ -69,6 +71,8 @@ class MasterLogic {
         void startLoser(void);
 
         void startPaused(void);
+
+        void startWinner(void);
 
         void startDemo(void);
 

@@ -69,7 +69,12 @@ void Character::update(float delta) {
     else {
         this->hardStop();
         sleepTime -= delta;
+        if (sleepTime <= 0) this->canMove = true;
+        else this->canMove = false;
     }
+
+    if (buffTime > 0) buffTime -= delta;
+    else if (buffTime <= 0 && invincibility) invincibility = false;
 
     //update items in inventory
     for (std::shared_ptr<Item> &slot : this->inventory) {

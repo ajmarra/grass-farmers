@@ -45,6 +45,8 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 
     trap_image.spriteMap.loadFromFile("../resources/trap.png");
 
+    shield_image.spriteMap.loadFromFile("../resources/shield.png");
+
 
     EnemySprite1.spriteMap.loadFromFile("../resources/alienwalk.png");
     EnemySprite1.spriteFrame.top = 64;//x
@@ -113,10 +115,10 @@ void PlayerView::pollInput() {
     }
 
     // Pick up item
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) fred->addItem();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) fred->addItem();
 
     // Drop item
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) fred->dropItem();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) fred->dropItem();
 
     // Temp button for testing Cheryl
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::H)) {
@@ -151,6 +153,14 @@ void PlayerView::drawActor(Actor& a) {
         fredShape.setPosition(a.getX(), a.getY());
         FredSprite.setFredSprite(fred->getDirection());
         this->window->draw(fredShape);
+
+        // Draw Fred's busy bar for when he's setting a trap
+        if (logic->getCurrentRoom()->getFred()->getSleepTime() > 0) {
+            sf::RectangleShape busyBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getSleepTime() * 10.0, 5));
+            busyBar.setPosition(a.getCenterX() - 15, a.getY() - 10);
+            busyBar.setFillColor(sf::Color::Yellow);
+            this->window->draw(busyBar);
+        }
     }
     break;
     case ActorType::RANGEWEAPON:
@@ -198,6 +208,14 @@ void PlayerView::drawActor(Actor& a) {
     {
         sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
         itemShape.setTexture(&health_image.spriteMap);
+        itemShape.setPosition(a.getX(), a.getY());
+        this->window->draw(itemShape);
+    }
+    break;
+    case ActorType::SHIELD:
+    {
+        sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+        itemShape.setTexture(&shield_image.spriteMap);
         itemShape.setPosition(a.getX(), a.getY());
         this->window->draw(itemShape);
     }
@@ -281,12 +299,12 @@ void PlayerView::drawScreen(void) {
 
     this->window->draw(healthBar);
 
-    //Fred's Busy Bar
-    sf::RectangleShape busyBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getSleepTime() * 50, 20));
-    busyBar.setPosition(10, 60);
-    busyBar.setFillColor(sf::Color::Yellow);
+    //Fred's Buff Bar
+    sf::RectangleShape buffBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getBuffTime() * 50, 20));
+    buffBar.setPosition(10, 60);
+    buffBar.setFillColor(sf::Color::Yellow);
 
-    this->window->draw(busyBar);
+    this->window->draw(buffBar);
 
     // Hard coded inventory blocks
     sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
