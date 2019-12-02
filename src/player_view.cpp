@@ -37,6 +37,8 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 
     gun1_image.spriteMap.loadFromFile("../resources/gun1.png");
 
+    bed_image.spriteMap.loadFromFile("../resources/bed.png");
+
     barn_image.spriteMap.loadFromFile("../resources/barn.png");
 
     hoe_image.spriteMap.loadFromFile("../resources/hoe.png");
@@ -201,7 +203,7 @@ void PlayerView::drawActor(Actor& a) {
     case ActorType::BED:
     {
         sf::RectangleShape bedShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-        bedShape.setFillColor(sf::Color::Magenta);
+        bedShape.setTexture(&bed_image.spriteMap);
         bedShape.setPosition(a.getX(), a.getY());
         this->window->draw(bedShape);
     }

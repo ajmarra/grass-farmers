@@ -30,6 +30,7 @@ class PlayerView : public View {
         Graphics EnemySprite3;
         Graphics CherylSprite;
         Graphics farm_image;
+        Graphics bed_image;
         Graphics exit_image;
         Graphics gun1_image;
         Graphics hoe_image;
