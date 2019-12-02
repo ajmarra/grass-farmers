@@ -24,6 +24,8 @@ class Sounds{
         sf::Sound pewSound;
         sf::SoundBuffer swooshBuffer;
         sf::Sound swooshSound;
+        sf::SoundBuffer fredDamageBuffer;
+        sf::Sound fredDamageSound;
 };
 
 #endif
