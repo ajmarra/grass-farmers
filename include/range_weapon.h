@@ -11,7 +11,7 @@
 class RangeWeapon : public Item {
     private:
         //scaling factors for damage and time between each hit and type of gun
-        int damage, type;
+        int damage;
 
     public:
         RangeWeapon(double x, double y, double width, double height, int damage, int fireRate);

@@ -96,6 +96,14 @@ class Actor {
          */
         bool collidesCircle(Actor &a);
 
+        /**
+         * Calculates if Actor a is within a range of this actor.
+         *
+         * a -- the actor for comparison
+         * range -- the distance away from the actor to check within
+         */
+        bool collidesCircle(Actor &a, int range);
+
         bool liesInsideSquare(Actor &a);
 };
 

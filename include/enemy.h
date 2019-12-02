@@ -13,6 +13,7 @@ class Enemy : public Character {
 private:
     int enemyType;
     double damageAmount;
+
 public:
     Enemy(double x, double y, double mass, double maxSpeed, double maxHealth, int enemyType);
 
