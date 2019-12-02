@@ -12,7 +12,6 @@
 
 class RangeEnemyView : public EnemyView {
 	private:
-		std::shared_ptr<Enemy> enemy;
 		float elapsedTime = 0;
 
 	public:
