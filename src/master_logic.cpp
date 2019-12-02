@@ -85,48 +85,18 @@ void MasterLogic::loadInEnemies(void) {
     double x, y, mass, maxSpeed, maxHealth;
     int type;
 
-    if (nightCount == 1) {
-        inFile.open("../resources/enemies1.txt");
-        if (!inFile) {
-            std::cout << "Unable to open enemies.txt";
-            exit(1);
-        }
-
-        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth >> type) {
-            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth, type);
-            this->enemyQueueList.push_front(testEnemy);
-        }
-
-        inFile.close();
+    inFile.open("../resources/enemies" + std::to_string(nightCount) + ".txt");
+    if (!inFile) {
+        std::cout << "Unable to open enemies.txt";
+        exit(1);
     }
-    else if (nightCount == 2) {
-        inFile.open("../resources/enemies2.txt");
-        if (!inFile) {
-            std::cout << "Unable to open enemies2.txt";
-            exit(1);
-        }
 
-        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth >> type) {
-            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth, type);
-            this->enemyQueueList.push_front(testEnemy);
-        }
-
-        inFile.close();
+    while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth >> type) {
+        std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth, type);
+        this->enemyQueueList.push_front(testEnemy);
     }
-    else if (nightCount == 3) {
-        inFile.open("../resources/enemies3.txt");
-        if (!inFile) {
-            std::cout << "Unable to open enemies3.txt";
-            exit(1);
-        }
 
-        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth, type) {
-            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth, type);
-            this->enemyQueueList.push_front(testEnemy);
-        }
-
-        inFile.close();
-    }
+    inFile.close();
 }
 
 bool MasterLogic::isAtCloset() {
@@ -171,6 +141,14 @@ void MasterLogic::checkCollisions(void) {
             if (curActor->getX() + curActor->getWidth() > this->getCurrentRoom()->getX() + this->getCurrentRoom()->getWidth()) {
                 curActor->hardStop(); 
                 curActor->setX(curActor->getX() - 1);
+            }
+        }
+
+        // Check if Fred uses the bed
+        if (curActor->getType() == ActorType::BED) {
+            if (this->getCurrentRoom()->getFred()->collidesSquare(*curActor)) {
+                std::shared_ptr<Bed> curBed = std::dynamic_pointer_cast<Bed>(curActor);
+                this->getCurrentRoom()->getFred()->heal(curBed->getHealAmount(), this->delta);
             }
         }
     }
@@ -245,45 +223,25 @@ void MasterLogic::update(float delta) {
 
         this->checkFred();
 
-        // Loop throught the actor list
+        // Update all actors in the actor list
         for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
             curActor->update(delta);
         
-            // Check if Fred uses the bed
-            if (curActor->getType() == ActorType::BED) {
-                if (this->getCurrentRoom()->getFred()->collidesSquare(*curActor)) {
-                    std::shared_ptr<Bed> curBed = std::dynamic_pointer_cast<Bed>(curActor);
-                    this->getCurrentRoom()->getFred()->heal(curBed->getHealAmount(), delta);
-                }
-            }
-        
             // Check if Fred is at the closet
             if (curActor->getType() == ActorType::CLOSET) {
-                if (this->getCurrentRoom()->getFred()->collidesSquare(*curActor)) {
-                    this->atCloset = true;
-                }
-                else {
-                    this->atCloset = false;
-                }
+                this->atCloset = this->getCurrentRoom()->getFred()->collidesSquare(*curActor);
             }
         }
 
         if (timer->update(delta)) {
             day = !day;
-            if (day) {
-                //Remove enemies from actor list
-
-                //Switch to day theme
-                this->view->switchToDay();
-            }
+            if (day) this->view->switchToDay(); //Switch to day theme
 
             else {
                 //Start spawning enemies
                 this->loadInEnemies();
 
-                if (enemyQueueList.size() > 0) {
-                    nightCount++;
-                }
+                if (enemyQueueList.size() > 0) nightCount++;
 
                 //Switch to night theme
                 this->view->switchToNight();
@@ -330,9 +288,7 @@ void MasterLogic::update(float delta) {
                 this->view->addEnemy(toSpawn);
                 this->roomList.front()->addActor(toSpawn);
             }
-            else {
-                spawnRate -= delta;
-            }
+            else spawnRate -= delta;
         }
     }
 }
