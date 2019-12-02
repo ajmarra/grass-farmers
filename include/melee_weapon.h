@@ -15,6 +15,8 @@ class MeleeWeapon : public Item {
         int speed;
         bool inUse = false;
 
+        double damageWidth, damageHeight;
+
 
     public:
         MeleeWeapon(double x, double y, double width, double height, int damage, int speed, std::shared_ptr<Character> character);
@@ -30,6 +32,10 @@ class MeleeWeapon : public Item {
         void use(int x, int y) override;
 
         void update(float delta) override;
+
+        double getDamageWidth(void) { return damageWidth; };
+
+        double getDamageHeight(void) { return damageHeight; };
 };
 
 #endif
