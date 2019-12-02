@@ -47,6 +47,8 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 
     shield_image.spriteMap.loadFromFile("../resources/shield.png");
 
+    speed_image.spriteMap.loadFromFile("../resources/speed.png");
+
 
     EnemySprite1.spriteMap.loadFromFile("../resources/alienwalk.png");
     EnemySprite1.spriteFrame.top = 64;//x
@@ -222,6 +224,14 @@ void PlayerView::drawActor(Actor& a) {
     {
         sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
         itemShape.setTexture(&shield_image.spriteMap);
+        itemShape.setPosition(a.getX(), a.getY());
+        this->window->draw(itemShape);
+    }
+    break;
+    case ActorType::SPEED_BOOST:
+    {
+        sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+        itemShape.setTexture(&speed_image.spriteMap);
         itemShape.setPosition(a.getX(), a.getY());
         this->window->draw(itemShape);
     }
