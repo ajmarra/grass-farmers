@@ -52,13 +52,13 @@ void MasterLogic::startDemo(void) {
     this->loadInEnemies();
 
     // test range enemies
-    std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
+    /**std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
     rangeEnemy->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 5, 0.1));
     this->roomList.front()->addActor(rangeEnemy);
     this->view->addEnemy(rangeEnemy);
 
     //Testing Cheryl
-    /*std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
+    /**std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
     this->getCurrentRoom()->addActor(cheryl);
     this->view->addEnemy(cheryl);*/
 
@@ -317,24 +317,26 @@ void MasterLogic::update(float delta) {
                 else if (nightCount == 3) spawnRate = 2;
                 std::shared_ptr<Enemy> toSpawn;
                 toSpawn = this->enemyQueueList.back();
+                
+                // Give enemies items to drop
+                int randNum = std::rand() % 100;
+                switch (randNum) {
+                    case 0 ... 29:
+                        toSpawn->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 5, 0.1));
+                        break;
+                    case 30 ... 39:
+                        toSpawn->addItem(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
+                        break;
+                    case 40 ... 49:
+                        toSpawn->addItem(std::make_shared<HealthItem>(650, 550, 32, 32, this->getCurrentRoom()->getFred()));
+                        break;
+                    case 50 ... 59:
+                        toSpawn->addItem(std::make_shared<Shield>(650, 550, 32, 32, this->getCurrentRoom()->getFred()));
+                        break;
+                }
                 this->enemyQueueList.remove(toSpawn);
                 this->view->addEnemy(toSpawn);
                 this->roomList.front()->addActor(toSpawn);
-                
-                // Give enemies items to drop
-                int randNum = std::rand() % 5;
-                if (randNum == 1) {
-                    std::shared_ptr<Trap> item = std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred());
-                    toSpawn->addItem(item);
-                }
-                else if (randNum == 2) {
-                    std::shared_ptr<HealthItem> item = std::make_shared<HealthItem>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
-                    toSpawn->addItem(item);
-                }
-                else if (randNum == 3) {
-                    std::shared_ptr<Shield> item = std::make_shared<Shield>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
-                    toSpawn->addItem(item);
-                }
             }
             else {
                 spawnRate -= delta;
