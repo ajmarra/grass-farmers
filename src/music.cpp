@@ -1,6 +1,8 @@
 #include "music.h"
 
 Sounds::Sounds(){
+    pewBuffer.loadFromFile("../resources/pewpew.ogg");
+    pewSound.setBuffer(pewBuffer);
 }
 
 void Sounds::playDayTrack(){
@@ -39,4 +41,8 @@ void Sounds::pauseCurrentTrack(){
 
 void Sounds::playCurrentTrack(){
     current_track->play();
+}
+
+void Sounds::playPewSound(){
+    pewSound.play();
 }
