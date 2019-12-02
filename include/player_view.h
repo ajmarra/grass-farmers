@@ -25,7 +25,9 @@ class PlayerView : public View {
 
         Sounds cur_track;
         Graphics FredSprite;
-        Graphics EnemySprite;
+        Graphics EnemySprite1;
+        Graphics EnemySprite2;
+        Graphics EnemySprite3;
         Graphics farm_image;
         Graphics exit_image;
         Graphics gun1_image;
@@ -34,6 +36,7 @@ class PlayerView : public View {
         Graphics health_image;
         Graphics trap_image;
         Graphics unused_trap_image;
+        Graphics shield_image;
 
         sf::Font font;
         

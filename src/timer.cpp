@@ -2,7 +2,7 @@
 
 Timer::Timer() {
     this->curTimeElapsed = 0;
-    this->deltaLimit = dayDeltaLimit;
+    this->deltaLimit = nightDeltaLimit;
 }
 
 bool Timer::update(float delta) {

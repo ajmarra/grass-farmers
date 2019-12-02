@@ -10,16 +10,15 @@
 #include "room.h"
 
 class EnemyView : View {
-	private:
-		std::shared_ptr<Enemy> enemy;
-		float elapsedTime = 0;
+    protected:
+        std::shared_ptr<Enemy> enemy;
+        float elapsedTime = 0;
+        void findFred(void);
 
-		void findFred(float delta);
+    public:
+        EnemyView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Enemy> enemy);
 
-	public:
-		EnemyView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Enemy> enemy);
-
-		void update(float delta);
+        virtual void update(float delta);
 };
 
 #endif

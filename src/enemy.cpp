@@ -11,7 +11,7 @@ Enemy::Enemy(double x, double y, double mass, double maxSpeed, double maxHealth,
     else if (enemyType == 2) {
         this->damageAmount = 7;
     }
-    else if (enemyType = 3) {
+    else if (enemyType >= 3) {
         this->damageAmount = 10;
     }
 }

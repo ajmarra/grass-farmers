@@ -14,7 +14,7 @@ class View {
     public:
         View(std::shared_ptr<MasterLogic> logic);
 
-        void update(float delta);
+        virtual void update(float delta) = 0;
 };
 
 #endif

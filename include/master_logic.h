@@ -16,6 +16,7 @@
 #include "melee_weapon.h"
 #include "range_weapon.h"
 #include "health_item.h"
+#include "shield.h"
 
 #include "bed.h"
 #include "closet.h"
@@ -47,8 +48,9 @@ class MasterLogic {
         std::shared_ptr<Timer> timer;
 		float delta;
         bool day = false;
+        bool cherylSpawned = false;
         float spawnRate = 0;
-        float elapsedTime = 0;
+        float enemyAttackTimer = 0;
         int nightCount = 1;
 
     public:
@@ -56,6 +58,9 @@ class MasterLogic {
         bool playing = false;
         bool options = false;
         bool story = true;
+        bool winner = false;
+        bool loser = false;
+
         MasterLogic(void) { };
 
         void init(std::shared_ptr<MasterView> mv);
@@ -64,7 +69,11 @@ class MasterLogic {
 
         void startTutorial(void);
 
+        void startLoser(void);
+
         void startPaused(void);
+
+        void startWinner(void);
 
         void startDemo(void);
 
@@ -72,7 +81,7 @@ class MasterLogic {
 
 		void loadInEnemies(void);
     
-        bool isAtCloset();
+        bool isAtCloset(); // will be removed
 
         void setDay(bool day) { this->day = day; };
 
@@ -80,7 +89,7 @@ class MasterLogic {
     
         std::shared_ptr<Room> getCurrentRoom(void) { return *(this->currentRoom); };
         
-        void checkCollisions(float delta);
+        void checkCollisions(void);
         
 		std::list<std::shared_ptr<Item>> getItemList(void) { return itemList; };
     
@@ -89,8 +98,6 @@ class MasterLogic {
         int getNightCount(void) { return nightCount; };
         
         void setNightCount(int num) { this->nightCount = num; };
-
-        void updateCheryl(void);
 
         void checkFred(void);
 };
