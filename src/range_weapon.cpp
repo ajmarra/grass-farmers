@@ -10,7 +10,7 @@
 #define PI 3.14159265
 
 RangeWeapon::RangeWeapon(double x, double y, double width, double height, int damage, float fireRate) :
-	Item(ActorType::RANGEWEAPON, x, y, width, height, 1, false, NULL) {
+	Item(ActorType::RANGEWEAPON, x, y, width, height, 1, false) {
 	this->x = x;
 	this->y = y;
 	this->damage = damage;

@@ -4,8 +4,8 @@
 #include "character.h"
 #include <iostream>
 
-Trap::Trap(double x, double y, double width, double height, std::shared_ptr<Character> fred) :
-    Item(ActorType::TRAP, x, y, width, height, 1, true, fred) {
+Trap::Trap(double x, double y, double width, double height) :
+    Item(ActorType::TRAP, x, y, width, height, 1, true) {
     this->x = x;
     this->y = y;
     this->setUsedItem(false);
@@ -23,7 +23,7 @@ void Trap::use(int x, int y) {
     else if (this->getCharacter()->getCanMove()) {
         this->getCharacter()->sleep(3);
         this->decreaseQuantity();
-        std::shared_ptr<Trap> item = std::make_shared<Trap>(this->getCharacter()->getCenterX(), this->getCharacter()->getCenterY(), 64, 64, this->getCharacter());
+        std::shared_ptr<Trap> item = std::make_shared<Trap>(this->getCharacter()->getCenterX(), this->getCharacter()->getCenterY(), 64, 64);
         item->setCanPickUp(false);
         this->getCharacter()->getCurrentRoom()->addActor(item);
     }

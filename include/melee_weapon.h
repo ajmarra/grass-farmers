@@ -15,7 +15,7 @@ class MeleeWeapon : public Item {
 	    int range = 100;
 
     public:
-        MeleeWeapon(double x, double y, double width, double height, int damage, int speed, std::shared_ptr<Character> character);
+        MeleeWeapon(double x, double y, double width, double height, int damage, int speed);
 
         void setDamage(int damage) { this->damage = damage; };
         

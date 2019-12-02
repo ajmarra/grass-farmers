@@ -13,7 +13,7 @@ private:
     int buffTime = 2;
 
 public:
-    SpeedBoost(double x, double y, double width, double height, std::shared_ptr<Character> character);
+    SpeedBoost(double x, double y, double width, double height);
 
     /*
     * Makes Fred fast for a few seconds.

@@ -9,8 +9,8 @@
 #include <math.h>
 #define PI 3.14159265
 
-MeleeWeapon::MeleeWeapon(double x, double y, double width, double height, int damage, int speed, std::shared_ptr<Character> character) :
-    Item(ActorType::MELEEWEAPON, x, y, width, height, 1, false, character) {
+MeleeWeapon::MeleeWeapon(double x, double y, double width, double height, int damage, int speed) :
+    Item(ActorType::MELEEWEAPON, x, y, width, height, 1, false) {
     this->x = x;
     this->y = y;
     this->damage = damage;

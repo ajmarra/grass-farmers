@@ -49,9 +49,8 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(fred);
     this->view->setPlayer(fred);
     
-    // Hoe
-    std::shared_ptr<MeleeWeapon> hoe = std::make_shared<MeleeWeapon>(800, 300, 24, 60, 4, 2, this->getCurrentRoom()->getFred());
-    this->roomList.front()->getFred()->addItem(hoe);
+    // Add hoe
+    this->roomList.front()->getFred()->addItem(std::make_shared<MeleeWeapon>(800, 300, 24, 60, 4, 2));
 
     this->loadInEnemies();
 
@@ -71,11 +70,10 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(portal4);
     
     // Add bed
-    this->roomList.back()->addActor(std::make_shared<Bed>(ActorType::BED, 500, 250, 100, 50, 1));
+    this->roomList.back()->addActor(std::make_shared<Bed>(ActorType::BED, 720, 520, 100, 50, 1));
     
     // Add closet
-    this->roomList.back()->addActor(std::make_shared<Closet>(ActorType::CLOSET, 600, 350, 100, 50));
-
+    this->roomList.back()->addActor(std::make_shared<Closet>(ActorType::CLOSET, 600, 200, 100, 50));
 
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();
@@ -277,16 +275,16 @@ void MasterLogic::update(float delta) {
                         toSpawn->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, damage, fireRate));
                         break;
                     case 30 ... 39:
-                        toSpawn->addItem(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
+                        toSpawn->addItem(std::make_shared<Trap>(650, 550, 64, 64));
                         break;
                     case 40 ... 49:
-                        toSpawn->addItem(std::make_shared<HealthItem>(650, 550, 32, 32, this->getCurrentRoom()->getFred()));
+                        toSpawn->addItem(std::make_shared<HealthItem>(650, 550, 32, 32));
                         break;
                     case 50 ... 59:
-                        toSpawn->addItem(std::make_shared<Shield>(650, 550, 32, 32, this->getCurrentRoom()->getFred()));
+                        toSpawn->addItem(std::make_shared<Shield>(650, 550, 32, 32));
                         break;
                     case 60 ... 69:
-                        toSpawn->addItem(std::make_shared<SpeedBoost>(650, 550, 32, 32, this->getCurrentRoom()->getFred()));
+                        toSpawn->addItem(std::make_shared<SpeedBoost>(650, 550, 32, 32));
                         break;
                 }
                 this->enemyQueueList.remove(toSpawn);

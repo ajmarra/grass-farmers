@@ -13,7 +13,7 @@ private:
     int buffTime = 3;
 
 public:
-    Shield(double x, double y, double width, double height, std::shared_ptr<Character> character);
+    Shield(double x, double y, double width, double height);
 
     /*
     * Makes Fred invincible for a 3 seconds.
