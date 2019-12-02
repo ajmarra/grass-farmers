@@ -58,9 +58,9 @@ void MasterLogic::startDemo(void) {
     this->view->addEnemy(rangeEnemy);
 
     //Testing Cheryl
-    std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 100, 100);
-    this->getCurrentRoom()->addActor(cheryl);
-    this->view->addEnemy(cheryl);
+    // std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 100, 100);
+    // this->getCurrentRoom()->addActor(cheryl);
+    // this->view->addEnemy(cheryl);
 
     // Creating the portals
     std::shared_ptr<Portal> portal1 = std::make_shared<Portal>(70, 150);
