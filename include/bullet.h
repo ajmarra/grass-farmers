@@ -14,7 +14,7 @@ class Bullet : public Actor {
 
         int getDamage(void) { return this->damage; };
 
-        void update(float dt) override;
+        void update(float delta) override;
 };
 
 #endif

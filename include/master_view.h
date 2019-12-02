@@ -13,6 +13,7 @@
 
 #include "view.h"
 #include "enemy_view.h"
+#include "range_enemy_view.h"
 #include "player_view.h"
 #include "paused_view.h"
 #include "tutorial_view.h"
@@ -35,7 +36,7 @@ class MasterView {
         std::shared_ptr<LoserView> loser;
         std::shared_ptr<WinnerView> winner;
 		std::list<std::shared_ptr<EnemyView>> enemies;
-
+        std::list<std::shared_ptr<RangeEnemyView>> rangeEnemies;
 
     public:
         MasterView(std::shared_ptr<sf::RenderWindow> window);
@@ -57,7 +58,7 @@ class MasterView {
         /**
          * Create a view for the new enemy from logic and add the view to the enemyview list
          */
-		void addEnemy(std::shared_ptr<Enemy> enemy) { this->enemies.emplace_back(std::make_shared<EnemyView>(this->logic, enemy)); };
+		void addEnemy(std::shared_ptr<Enemy> enemy);
 
         void switchToDay();
     

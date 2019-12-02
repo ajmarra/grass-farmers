@@ -51,6 +51,12 @@ void MasterLogic::startDemo(void) {
 
     this->loadInEnemies();
 
+    // test range enemies
+    std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
+    rangeEnemy->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 40, 1));
+    this->roomList.front()->addActor(rangeEnemy);
+    this->view->addEnemy(rangeEnemy);
+
     //Testing Cheryl
     /*std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
     this->getCurrentRoom()->addActor(cheryl);
@@ -74,7 +80,7 @@ void MasterLogic::startDemo(void) {
 
     // Add test items
     this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 20, 40, 10, 2, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<RangeWeapon>(150, 150, 40, 20, 40, 1, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<RangeWeapon>(150, 150, 40, 20, 40, 1));
     this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Trap>(850, 550, 64, 64, this->getCurrentRoom()->getFred()));
     this->roomList.front()->addActor(std::make_shared<Trap>(850, 750, 64, 64, this->getCurrentRoom()->getFred()));
@@ -233,8 +239,8 @@ void MasterLogic::checkCollisions(void) {
 
         // Fred
         if (this->getCurrentRoom()->getFred()->collidesSquare(*bullet)) {
-            //this->getCurrentRoom()->getFred()->damage(bullet->getDamage());
-            //this->getCurrentRoom()->removeActor(bullet);
+            this->getCurrentRoom()->getFred()->damage(bullet->getDamage());
+            this->getCurrentRoom()->removeActor(bullet);
         }
 
         // enemies

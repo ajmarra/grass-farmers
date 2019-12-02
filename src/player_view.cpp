@@ -83,7 +83,10 @@ void PlayerView::pollInput() {
 
     // Use Item (mouse)
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->fred->getSelectedItem()) {
-        if (this->fred->getSelectedItem()->getType() == ActorType::RANGEWEAPON) this->fred->useItem(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
+        if (this->fred->getSelectedItem()->getType() == ActorType::RANGEWEAPON || 
+            this->fred->getSelectedItem()->getType() == ActorType::MELEEWEAPON) {
+                this->fred->useItem(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
+            }
         else if (this->elapsedTime > 0.5) {
             this->fred->useItem(sf::Mouse::getPosition(*this->window).x, sf::Mouse::getPosition(*this->window).y);
             elapsedTime = 0;

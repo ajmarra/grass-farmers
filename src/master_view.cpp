@@ -14,6 +14,13 @@ void MasterView::setPlayer(std::shared_ptr<Fred> fred) {
     player = std::make_shared<PlayerView>(this->logic, fred, this->window);
 }
 
+void MasterView::addEnemy(std::shared_ptr<Enemy> enemy) {
+    if (enemy->getSelectedItem() && enemy->getSelectedItem()->getType() == ActorType::RANGEWEAPON) {
+        this->rangeEnemies.emplace_back(std::make_shared<RangeEnemyView>(this->logic, enemy));
+    }
+    else this->enemies.emplace_back(std::make_shared<EnemyView>(this->logic, enemy));
+}
+
 void MasterView::setMenu() {
     menu = std::make_shared<MenuView>(this->logic, this->window);
 }
@@ -23,7 +30,6 @@ void MasterView::setPaused() {
 }
 
 void MasterView::setTutorial() {
-    //std::cout << "HI" << std::endl;
     tutorial = std::make_shared<TutorialView>(this->logic, this->window);
 }
 
@@ -57,9 +63,8 @@ void MasterView::update(float delta) {
 
     else if ((this->logic->paused == false) && (this->logic->playing == true) && (this->logic->options == false)) {
         player->update(delta);
-        for (std::shared_ptr<EnemyView> enemy : this->enemies) {
-            enemy->update(delta);
-        }
+        for (std::shared_ptr<EnemyView> enemy : this->enemies) enemy->update(delta);
+        for (std::shared_ptr<RangeEnemyView> rangeEnemy : this->rangeEnemies) rangeEnemy->update(delta);
     }
 
     else if ((this->logic->paused == true) && (this->logic->playing == false) && (this->logic->options == true) && (this->logic->loser == true)) {
