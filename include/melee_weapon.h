@@ -30,6 +30,7 @@ class MeleeWeapon : public Item {
         void use(int x, int y) override;
 
         void update(float delta) override;
+
 };
 
 #endif

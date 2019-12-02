@@ -267,11 +267,13 @@ void PlayerView::drawActor(Actor& a) {
     break;
     case ActorType::PORTAL:
     {
-        sf::RectangleShape sp1(sf::Vector2f(a.getWidth(), a.getHeight()));
-        sp1.setTexture(&portalSprite.spriteMap);
-        sp1.setTextureRect(portalSprite.spriteFrame);
-        sp1.setPosition(a.getX(), a.getY());
-        this->window->draw(sp1);
+        if (!(this->logic->getDay())) {
+            sf::RectangleShape sp1(sf::Vector2f(a.getWidth(), a.getHeight()));
+            sp1.setTexture(&portalSprite.spriteMap);
+            sp1.setTextureRect(portalSprite.spriteFrame);
+            sp1.setPosition(a.getX(), a.getY());
+            this->window->draw(sp1);
+        }
     }
     break;
     }
