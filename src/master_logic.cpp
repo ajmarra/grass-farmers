@@ -37,7 +37,7 @@ void MasterLogic::startWinner(void) {
 void MasterLogic::startDemo(void) {
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
-    this->roomList.push_back(std::make_shared<Room>(450, 200, 400, 400));     // farmhouse
+    this->roomList.push_back(std::make_shared<Room>(450, 200, 400, 400));   // farmhouse
     this->currentRoom = roomList.begin();
 
     // Add exits
@@ -45,12 +45,12 @@ void MasterLogic::startDemo(void) {
     this->roomList.back()->addActor(std::make_shared<Exit>(400, 400, 0));
 
     // Add fred
-    std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
+    std::shared_ptr<Fred> fred = std::make_shared<Fred>(800, 300);
     this->roomList.front()->addActor(fred);
     this->view->setPlayer(fred);
     
     // Hoe
-    this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 24, 60, 10, 2, this->getCurrentRoom()->getFred()));
+    this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 24, 60, 4, 2, this->getCurrentRoom()->getFred()));
 
     this->loadInEnemies();
 
