@@ -14,7 +14,7 @@ class RangeWeapon : public Item {
         int damage;
 
     public:
-        RangeWeapon(double x, double y, double width, double height, int damage, int fireRate);
+        RangeWeapon(double x, double y, double width, double height, int damage, float fireRate);
 
         int getStrength(void) { return damage; };
 
