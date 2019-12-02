@@ -32,7 +32,7 @@ void MeleeWeapon::use(int x, int y) {
                 if (direction >= -135.0 && direction < -45.0) {
                     if ((enemy->getCenterY() < this->character->getCurrentRoom()->getFred()->getCenterY())) {
                         if (abs(enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= abso) {
-                            enemy->damage(20);
+                            enemy->damage(this->damage);
                         }
                     }
                 }
@@ -41,7 +41,7 @@ void MeleeWeapon::use(int x, int y) {
                 else if ((direction < -135.0 && direction >= -180.0 ) || ( direction <= 180.0 && direction > 135.0)) {
                     if (enemy->getCenterX() < this->character->getCurrentRoom()->getFred()->getCenterX()){
                         if (abs((enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX())) <= abso) {
-                            enemy->damage(20);
+                            enemy->damage(this->damage);
                         }
                     }
                 }
@@ -50,7 +50,7 @@ void MeleeWeapon::use(int x, int y) {
                 else if (direction <= 135.0 && direction > 45.0) {
                     if (enemy->getCenterY() > this->character->getCurrentRoom()->getFred()->getCenterY()){
                         if (abs( enemy->getCenterY() - this->character->getCurrentRoom()->getFred()->getCenterY()) <= abso){
-                            enemy->damage(20);
+                            enemy->damage(this->damage);
                         }
                     }
                 }
@@ -59,13 +59,13 @@ void MeleeWeapon::use(int x, int y) {
                 else if ((direction < 45.0 && direction > 0.0) || (direction >= -45.0 && direction < 0.0)){
                     if (enemy->getCenterX() > this->character->getCurrentRoom()->getFred()->getCenterX()){
                         if (abs(enemy->getCenterX() - this->character->getCurrentRoom()->getFred()->getCenterX()) <= abso) {
-                            enemy->damage(20);
+                            enemy->damage(this->damage);
                         }
                     }
                 }
 
                 //extra damage if alien is hitting fred for balance
-                if (enemy->collidesSquare(*this->character->getCurrentRoom()->getFred())) enemy->damage(40);
+                //if (enemy->collidesSquare(*this->character->getCurrentRoom()->getFred())) enemy->damage(40);
             }
         }
     }

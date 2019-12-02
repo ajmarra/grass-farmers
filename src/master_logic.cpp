@@ -37,7 +37,7 @@ void MasterLogic::startWinner(void) {
 void MasterLogic::startDemo(void) {
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
-    this->roomList.push_back(std::make_shared<Room>(450, 200, 400, 400));     // farmhouse
+    this->roomList.push_back(std::make_shared<Room>(450, 200, 400, 400));   // farmhouse
     this->currentRoom = roomList.begin();
 
     // Add exits
@@ -45,17 +45,14 @@ void MasterLogic::startDemo(void) {
     this->roomList.back()->addActor(std::make_shared<Exit>(400, 400, 0));
 
     // Add fred
-    std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
+    std::shared_ptr<Fred> fred = std::make_shared<Fred>(800, 300);
     this->roomList.front()->addActor(fred);
     this->view->setPlayer(fred);
+    
+    // Hoe
+    this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 24, 60, 4, 2, this->getCurrentRoom()->getFred()));
 
     this->loadInEnemies();
-
-    // test range enemies
-    /**std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
-    rangeEnemy->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 5, 0.1));
-    this->roomList.front()->addActor(rangeEnemy);
-    this->view->addEnemy(rangeEnemy);*/
 
     //Testing Cheryl
     /**std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
@@ -78,16 +75,6 @@ void MasterLogic::startDemo(void) {
     // Add closet
     this->roomList.back()->addActor(std::make_shared<Closet>(ActorType::CLOSET, 600, 350, 100, 50));
 
-    // Add test items
-    this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 24, 60, 10, 2, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<RangeWeapon>(150, 150, 40, 20, 40, 1));
-    this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<Trap>(850, 550, 64, 64, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<Trap>(850, 750, 64, 64, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 32, 32, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 32, 32, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<Shield>(450, 250, 32, 32, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<SpeedBoost>(450, 550, 64, 64, this->getCurrentRoom()->getFred()));
 
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();
