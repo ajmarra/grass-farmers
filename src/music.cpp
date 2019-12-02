@@ -47,7 +47,9 @@ void Sounds::playCurrentTrack(){
 }
 
 void Sounds::playPewSound(){
+    pewSound.setVolume(50);
     pewSound.play();
+    
 }
 
 void Sounds::playSwooshSound(){
