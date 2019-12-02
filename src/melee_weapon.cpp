@@ -64,8 +64,8 @@ void MeleeWeapon::use(int x, int y) {
                     }
                 }
 
-                //extra damage if alien is hitting fred for balance
-                //if (enemy->collidesSquare(*this->character->getCurrentRoom()->getFred())) enemy->damage(40);
+                //Damage if alien is hitting fred
+                if (enemy->collidesSquare(*this->character->getCurrentRoom()->getFred())) enemy->damage(this->damage);
             }
         }
     }
