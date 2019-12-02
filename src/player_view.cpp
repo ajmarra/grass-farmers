@@ -47,6 +47,8 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 
     shield_image.spriteMap.loadFromFile("../resources/shield.png");
 
+    speed_image.spriteMap.loadFromFile("../resources/speed.png");
+
 
     EnemySprite1.spriteMap.loadFromFile("../resources/alienwalk.png");
     EnemySprite1.spriteFrame.top = 64;//x
@@ -71,6 +73,12 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     FredSprite.spriteFrame.left = 0;//y
     FredSprite.spriteFrame.width = 64;
     FredSprite.spriteFrame.height = 64;
+
+    CherylSprite.spriteMap.loadFromFile("../resources/cherylwalk.png");
+    CherylSprite.spriteFrame.top = 0;//x
+    CherylSprite.spriteFrame.left = 0;//y
+    CherylSprite.spriteFrame.width = 100;
+    CherylSprite.spriteFrame.height = 100;
 
     if (!font.loadFromFile("../resources/bit5x3.ttf"))
     {
@@ -216,6 +224,14 @@ void PlayerView::drawActor(Actor& a) {
     {
         sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
         itemShape.setTexture(&shield_image.spriteMap);
+        itemShape.setPosition(a.getX(), a.getY());
+        this->window->draw(itemShape);
+    }
+    break;
+    case ActorType::SPEED_BOOST:
+    {
+        sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+        itemShape.setTexture(&speed_image.spriteMap);
         itemShape.setPosition(a.getX(), a.getY());
         this->window->draw(itemShape);
     }
@@ -464,6 +480,7 @@ void PlayerView::drawScreen(void) {
         }
         // This one is Cheryl
         else if (a->getEnemyType() == 4) {
+            std::cout <<(*a).getWidth()<<std::endl;
             if (a->getHealth() != a->getMaxHealth()) {
                 // draw health bars
                 sf::RectangleShape healthBar(sf::Vector2f(float(a->getHealth()) / float(a->getMaxHealth()) * 30.0, 5));
@@ -479,10 +496,10 @@ void PlayerView::drawScreen(void) {
 
                 this->window->draw(fullHealthBar);
             }
-            enemyShape.setTexture(&EnemySprite1.spriteMap);
-            enemyShape.setTextureRect(EnemySprite1.spriteFrame);
+            enemyShape.setTexture(&CherylSprite.spriteMap);
+            enemyShape.setTextureRect(CherylSprite.spriteFrame);
             enemyShape.setPosition((*a).getX(), (*a).getY());
-            EnemySprite1.setEnemySprite((*a).getDirection());
+            CherylSprite.setCherylSprite((*a).getDirection());
         }
         this->window->draw(enemyShape);
     }
@@ -519,6 +536,7 @@ void PlayerView::update(float delta) {
     EnemySprite1.updateEnemy(delta);
     EnemySprite2.updateEnemy(delta);
     EnemySprite3.updateEnemy(delta);
+    CherylSprite.updateCheryl(delta);
     this->drawScreen();
 }
 
