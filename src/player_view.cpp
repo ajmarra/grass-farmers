@@ -153,10 +153,12 @@ void PlayerView::drawActor(Actor& a) {
         this->window->draw(fredShape);
 
         // Draw Fred's busy bar for when he's setting a trap
-        /*sf::RectangleShape busyBar(sf::Vector2f(float(a->getHealth()) / float(a->getMaxHealth()) * 30.0, 5));
-        busyBar.setPosition(a->getCenterX() - 15, a->getY() - 10);
-        busyBar.setFillColor(sf::Color::Red);
-        this->window->draw(busyBar);*/
+        if (logic->getCurrentRoom()->getFred()->getSleepTime() > 0) {
+            sf::RectangleShape busyBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getSleepTime() * 10.0, 5));
+            busyBar.setPosition(a.getCenterX() - 15, a.getY() - 10);
+            busyBar.setFillColor(sf::Color::Yellow);
+            this->window->draw(busyBar);
+        }
     }
     break;
     case ActorType::RANGEWEAPON:
@@ -287,12 +289,12 @@ void PlayerView::drawScreen(void) {
 
     this->window->draw(healthBar);
 
-    //Fred's Busy Bar
-    sf::RectangleShape busyBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getSleepTime() * 50, 20));
+    //Fred's Buff Bar
+    /*sf::RectangleShape busyBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getSleepTime() * 50, 20));
     busyBar.setPosition(10, 60);
     busyBar.setFillColor(sf::Color::Yellow);
 
-    this->window->draw(busyBar);
+    this->window->draw(busyBar);*/
 
     // Hard coded inventory blocks
     sf::RectangleShape inventoryBlock1(sf::Vector2f(75, 75));
