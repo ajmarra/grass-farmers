@@ -8,7 +8,7 @@ WinnerView::WinnerView(std::shared_ptr<MasterLogic>& logic, std::shared_ptr<sf::
     : View(logic) {
     this->window = window;
 
-    winner_image.spriteMap.loadFromFile("../resources/losescreen.png");
+    winner_image.spriteMap.loadFromFile("../resources/winscreen.png");
     if (!font.loadFromFile("../resources/Amatic-Bold.ttf")) {
         // error...
         std::cout << "ERROR LOADING FONT FROM FILE" << std::endl;
@@ -47,23 +47,23 @@ void WinnerView::drawScreen() {
     winner_message.setFont(font);
     winner_message.setString("CONGRATULATIONS");
     winner_message.setCharacterSize(100); // in pixels, not points!
-    winner_message.setFillColor(sf::Color::White);
+    winner_message.setFillColor(sf::Color::Black);
     winner_message.setStyle(sf::Text::Bold);
-    winner_message.setPosition(400, 650);
+    winner_message.setPosition(400, 470);
 
     info_message1.setFont(font);
     info_message1.setString("YOU WIN! \n");
     info_message1.setCharacterSize(40); // in pixels, not points!
-    info_message1.setFillColor(sf::Color::White);
+    info_message1.setFillColor(sf::Color::Black);
     info_message1.setStyle(sf::Text::Bold);
-    info_message1.setPosition(550, 770);
+    info_message1.setPosition(550, 590);
 
     info_message2.setFont(font);
     info_message2.setString("PRESS SPACE TO RETURN TO THE MAIN MENU AND PLAY AGAIN");
     info_message2.setCharacterSize(40); // in pixels, not points!
-    info_message2.setFillColor(sf::Color::Yellow);
+    info_message2.setFillColor(sf::Color::Blue);
     info_message2.setStyle(sf::Text::Bold);
-    info_message2.setPosition(315, 825);
+    info_message2.setPosition(315, 645);
 
 
     this->window->draw(winner);
