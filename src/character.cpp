@@ -19,22 +19,22 @@ Character::Character(ActorType type, double x, double y, double width, double he
 }
 
 void Character::damage(int d) {
-    health -= d;
-    if (health > maxHealth) health = maxHealth;
+    this->health -= d;
+    if (this->health > this->maxHealth) this->health = this->maxHealth;
 }
 
 void Character::heal(int healAmount) {
-    health += healAmount;
-    if (health > maxHealth) health = maxHealth;
+    this->health += healAmount;
+    if (this->health > this->maxHealth) this->health = this->maxHealth;
 }
 
 void Character::heal(int healAmount, float delta) {
-    curDelta += delta;
-    if (curDelta >= deltaLimit) {
-        health += healAmount;
-        curDelta = 0;
+    this->curDelta += delta;
+    if (this->curDelta >= this->deltaLimit) {
+        this->health += healAmount;
+        this->curDelta = 0;
         
-        if (health > maxHealth) health = maxHealth;
+        if (this->health > this->maxHealth) this->health = this->maxHealth;
     }
 }
 
@@ -53,29 +53,29 @@ void Character::move(void) {
     if (fabs(this->ySpeed) >= 10.0 / this->mass) {
         this->ySpeed -= (10.0 / this->mass) * sin(this->getDirection() * PI / 180);
     }
-    else ySpeed = 0;
+    else this->ySpeed = 0;
 
     if (fabs(this->xSpeed) >= 10.0 / this->mass) {
         this->xSpeed -= (10.0 / this->mass) * cos(this->getDirection() * PI / 180);
     }
-    else xSpeed = 0;
+    else this->xSpeed = 0;
 }
 
 void Character::update(float delta) {
     Actor::update(delta);
-    if (this->canMove && sleepTime <= 0) {
+    if (this->canMove && this->sleepTime <= 0) {
         Character::move();
     }
     else {
         this->hardStop();
-        sleepTime -= delta;
+        this->sleepTime -= delta;
         if (sleepTime <= 0) this->canMove = true;
         else this->canMove = false;
     }
 
-    if (buffTime > 0) buffTime -= delta;
-    else if (buffTime <= 0 && invincibility) invincibility = false;
-    else if (buffTime <= 0 && this->getType() == ActorType::FRED && maxSpeed > 200) maxSpeed = 200;
+    if (this->buffTime > 0) this->buffTime -= delta;
+    else if (this->buffTime <= 0 && this->invincibility) this->invincibility = false;
+    else if (this->buffTime <= 0 && this->getType() == ActorType::FRED && this->maxSpeed > 200) this->maxSpeed = 200;
 
     //update items in inventory
     for (std::shared_ptr<Item> &slot : this->inventory) {
@@ -128,8 +128,8 @@ void Character::addItem(std::shared_ptr<Item> item) {
 }
 
 std::shared_ptr<Item> Character::popItemAtIndex(int index) {
-    std::shared_ptr<Item> toReturn = inventory[index];
-    inventory[index] = nullptr;
+    std::shared_ptr<Item> toReturn = this->inventory[index];
+    this->inventory[index] = nullptr;
     return (toReturn);
 }
 
