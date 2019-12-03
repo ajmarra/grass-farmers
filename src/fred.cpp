@@ -6,8 +6,7 @@ Fred::Fred(double x, double y) : Character(ActorType::FRED, x, y, 64, 64, 10, 18
 }
 
 
-void Fred::damage(int d) {
+void Fred::damage(float d) {
     Character::damage(d);
     fredDamageSound.playFredDamageSound();
-    //play sound here
 }

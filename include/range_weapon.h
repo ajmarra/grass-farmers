@@ -11,18 +11,16 @@
 class RangeWeapon : public Item {
     private:
         //scaling factors for damage and time between each hit and type of gun
-        int damage;
+        float damage;
         
         Sounds pew;
 
     public:
-        RangeWeapon(double x, double y, double width, double height, int damage, float fireRate);
+        RangeWeapon(double x, double y, double width, double height, float damage, float fireRate);
 
-        int getStrength(void) { return damage; };
-
-        void setdamage(int damage) { this->damage = damage; };
+        void setdamage(float damage) { this->damage = damage; };
         
-        int getdamage(void) { return damage; };
+        float getdamage(void) { return this->damage; };
 
         void use(int x, int y) override;
 

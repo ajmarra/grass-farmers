@@ -21,7 +21,7 @@ public:
 
     void update(float delta) override;
 
-    void damage(int d) override;
+    void damage(float d) override;
 };
 
 #endif
