@@ -5,12 +5,16 @@
 #include "item.h"
 #include "character.h"
 #include "enemy.h"
+#include "music.h"
 
 #include <memory>
 #include <list>
 #include <iostream>
 
 class Cheryl : public Enemy {
+    private:
+        Sounds cherylDamageSound;
+        
 
 public:
     Cheryl(double x, double y, double mass, double maxSpeed);
