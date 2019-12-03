@@ -269,7 +269,7 @@ void MasterLogic::update(float delta) {
                 
                 // Give enemies items
                 float fireRate = float(std::rand() % 100) / 50.0 + 0.08;
-                int damage = 4 * toSpawn->getEnemyType() * fireRate + float(std::rand() % 3);
+                int damage = (4 * toSpawn->getEnemyType() + float(std::rand() % 3)) * fireRate;
                 switch (std::rand() % 100) {
                     case 0 ... 29:
                         toSpawn->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, damage, fireRate));
