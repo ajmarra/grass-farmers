@@ -114,6 +114,9 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
         // The following two methods used to scale Cheryl's stats during final boss battle
         void setMaxSpeed(double maxSpeed) { this->maxSpeed = maxSpeed; };
         void setMass(double mass) { this->mass = mass; };
+
+        void setMaxHealth(double health) { this->maxHealth = health; };
+        void setHealth(double health) { this->health = health; };
 };
 
 #endif

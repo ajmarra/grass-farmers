@@ -7,6 +7,7 @@ public:
     bool update(float delta);
     float getCurTime() { return curTime; }
     void switchCycle();
+    void setCurTime(float time) { curTime = time; };
     
 private:
     float curTimeElapsed;

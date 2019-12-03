@@ -35,6 +35,8 @@ void MasterLogic::startWinner(void) {
 }
 
 void MasterLogic::startDemo(void) {
+    this->day = false;
+
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
     this->roomList.push_back(std::make_shared<Room>(450, 200, 400, 400));   // farmhouse
@@ -70,7 +72,7 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(portal4);
     
     // Add bed
-    this->roomList.back()->addActor(std::make_shared<Bed>(ActorType::BED, 720, 520, 100, 50, 1));
+    this->roomList.back()->addActor(std::make_shared<Bed>(ActorType::BED, 720, 520, 100, 50, 2));
     
     // Add closet
     this->roomList.back()->addActor(std::make_shared<Closet>(ActorType::CLOSET, 600, 200, 100, 50));
@@ -81,7 +83,7 @@ void MasterLogic::startDemo(void) {
 
 void MasterLogic::loadInEnemies(void) {
     std::ifstream inFile;
-    double x, y, mass, maxSpeed, maxHealth;
+    double x, y, mass, maxSpeed;
     int type;
 
     if (nightCount < 4) {
@@ -91,8 +93,8 @@ void MasterLogic::loadInEnemies(void) {
             exit(1);
         }
 
-        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth >> type) {
-            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth, type);
+        while (inFile >> x >> y >> mass >> maxSpeed >> type) {
+            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, type);
             this->enemyQueueList.push_front(testEnemy);
         }
 
@@ -104,22 +106,35 @@ bool MasterLogic::isAtCloset() {
     return this->atCloset;
 }
 
+void MasterLogic::resetMasterLogic(void) {
+    this->actorList.clear();
+    this->itemList.clear();
+    this->enemyQueueList.clear();
+    this->roomList.clear();
+    currentExit = nullptr;
+    //currentRoom = nullptr;
+    bed = nullptr;
+    this->nightCount = 1;
+    this->cherylSpawned = false;
+    this->getCurrentRoom()->reset();
+}
+
 void MasterLogic::checkFred(void) {
     if (this->getCurrentRoom()->getFred()->getHealth() <= 0) {
-        this->nightCount = 1;
-        this->cherylSpawned = false;
         this->paused = true;
         this->playing = false;
         this->options = true;
         this->loser = true;
+        this->resetMasterLogic();
         this->startLoser();
     }
-    else if (this->getCurrentRoom()->getFred()->getHealth() > 0 && this->nightCount >= 4 && this->getCurrentRoom()->getEnemyList().size() <= 0) {
+    else if (this->getCurrentRoom()->getFred()->getHealth() > 0 && this->nightCount >= 4 && this->roomList.front()->getEnemyList().size() == 0) {
         if (this->cherylSpawned) {
             this->paused = true;
             this->playing = false;
             this->options = true;
             this->winner = true;
+            this->resetMasterLogic();
             this->startWinner();
         }
     }
@@ -242,9 +257,8 @@ void MasterLogic::update(float delta) {
 
             else {
                 //Start spawning enemies
+                nightCount++;
                 this->loadInEnemies();
-
-                if (enemyQueueList.size() > 0) nightCount++;
 
                 //Switch to night theme
                 this->view->switchToNight();
@@ -275,7 +289,7 @@ void MasterLogic::update(float delta) {
                         toSpawn->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, damage, fireRate));
                         break;
                     case 30 ... 39:
-                        toSpawn->addItem(std::make_shared<Trap>(650, 550, 64, 64));
+                        toSpawn->addItem(std::make_shared<SpeedBoost>(650, 550, 32, 32));
                         break;
                     case 40 ... 49:
                         toSpawn->addItem(std::make_shared<HealthItem>(650, 550, 32, 32));
@@ -283,8 +297,8 @@ void MasterLogic::update(float delta) {
                     case 50 ... 59:
                         toSpawn->addItem(std::make_shared<Shield>(650, 550, 32, 32));
                         break;
-                    case 60 ... 69:
-                        toSpawn->addItem(std::make_shared<SpeedBoost>(650, 550, 32, 32));
+                    case 60 ... 79:
+                        toSpawn->addItem(std::make_shared<Trap>(650, 550, 64, 64));
                         break;
                 }
                 this->enemyQueueList.remove(toSpawn);
