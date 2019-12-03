@@ -7,11 +7,14 @@
 #include "master_view.h"
 
 int main(int argc, char** argv) {
-    //game window
+    // game window
     std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>(sf::VideoMode(1200,900,32), "Fred the Farmer", sf::Style::Titlebar | sf::Style::Close);
     
-    //game clock
+    // game clock
     sf::Clock clock;
+
+    // random
+    srand((int) time(0));
 
     //delta time
     float delta;
