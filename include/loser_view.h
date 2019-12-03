@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+// View for when Fred runs out of health and the player loses
 class LoserView : public View {
 
 private:

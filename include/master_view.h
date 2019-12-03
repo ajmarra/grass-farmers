@@ -13,7 +13,7 @@
 
 #include "view.h"
 #include "enemy_view.h"
-//#include "range_enemy_view.h"
+#include "range_enemy_view.h"
 #include "player_view.h"
 #include "paused_view.h"
 #include "tutorial_view.h"
@@ -25,7 +25,7 @@
 #include "exit.h"
 
 
-
+/* Manages all of the different views and game states */
 class MasterView {
     private:
         std::shared_ptr<sf::RenderWindow> window;
@@ -38,7 +38,7 @@ class MasterView {
         std::shared_ptr<WinnerView> winner;
         std::shared_ptr<StoryView> story;
 		std::list<std::shared_ptr<EnemyView>> enemies;
-        //std::list<std::shared_ptr<RangeEnemyView>> rangeEnemies;
+        std::list<std::shared_ptr<RangeEnemyView>> rangeEnemies;
 
     public:
         MasterView(std::shared_ptr<sf::RenderWindow> window);

@@ -1,7 +1,10 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 
-enum class ActorType { ROOM, EXIT, FRED, ENEMY, HEALTH, MELEEWEAPON, RANGEWEAPON, TRAP, BULLET, PORTAL, CHERYL, BED, CLOSET, SHIELD };
+/*
+* Base class that all actors in the game inherit from
+*/
+enum class ActorType { ROOM, EXIT, FRED, ENEMY, HEALTH, MELEEWEAPON, RANGEWEAPON, TRAP, BULLET, PORTAL, CHERYL, BED, CLOSET, SHIELD, SPEED_BOOST };
 
 class Actor {
     protected:
@@ -95,6 +98,14 @@ class Actor {
          * a -- the actor for comparison
          */
         bool collidesCircle(Actor &a);
+
+        /**
+         * Calculates if Actor a is within a range of this actor.
+         *
+         * a -- the actor for comparison
+         * range -- the distance away from the actor to check within
+         */
+        bool collidesCircle(Actor &a, int range);
 
         bool liesInsideSquare(Actor &a);
 };

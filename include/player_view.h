@@ -15,6 +15,7 @@
 #include "music.h"
 #include "enemy.h"
 
+/*Pretty much everything the player sees during the actual game.  All actor drawing done here.*/
 class PlayerView : public View {
     private:
         std::shared_ptr<sf::RenderWindow> window;
@@ -29,15 +30,20 @@ class PlayerView : public View {
         Graphics EnemySprite1;
         Graphics EnemySprite2;
         Graphics EnemySprite3;
+        Graphics CherylSprite;
         Graphics farm_image;
+        Graphics bed_image;
         Graphics exit_image;
         Graphics gun1_image;
+        Graphics hoe_image;
+        Graphics closet_image;
         Graphics barn_image;
         Graphics portalSprite;
         Graphics health_image;
         Graphics trap_image;
         Graphics unused_trap_image;
         Graphics shield_image;
+        Graphics speed_image;
 
         sf::Font font;
         

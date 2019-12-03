@@ -9,12 +9,17 @@
 #include <list>
 #include <iostream>
 
+/*
+* The base class for all enemies.  Enemies have an enumerated type with damage, health, and speed varying
+* between the different types.  Visuall represented by different colors. Type 4 is Cheryl, the final boss.
+*/
 class Enemy : public Character {
 private:
     int enemyType;
     double damageAmount;
+
 public:
-    Enemy(double x, double y, double mass, double maxSpeed, double maxHealth, int enemyType);
+    Enemy(double x, double y, double mass, double maxSpeed, int enemyType);
 
     int getEnemyType(void) { return enemyType; };
 

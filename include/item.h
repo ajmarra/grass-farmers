@@ -24,7 +24,7 @@ class Item : public Actor {
         float loadTime;
 
     public:
-        Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable, std::shared_ptr<Character> character);
+        Item(ActorType type, double x, double y, double width, double height, int quantity, bool stackable);
 
         bool isStackable(void) { return stackable; };
 
@@ -46,9 +46,9 @@ class Item : public Actor {
         
         float getReloading(void) { return this->reloading; };
         
-        void setCharacter(std::shared_ptr<Character> character);
+        void setCharacter(std::shared_ptr<Character> character) { this->character = character; };
 
-        std::shared_ptr<Character> getCharacter(void);
+        std::shared_ptr<Character> getCharacter(void) { return this->character; };
 
         /**
         * Perform whatever is the main function of the item

@@ -37,7 +37,13 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 
     gun1_image.spriteMap.loadFromFile("../resources/gun1.png");
 
+    closet_image.spriteMap.loadFromFile("../resources/closet.png");
+
+    bed_image.spriteMap.loadFromFile("../resources/bed.png");
+
     barn_image.spriteMap.loadFromFile("../resources/barn.png");
+
+    hoe_image.spriteMap.loadFromFile("../resources/hoe.png");
 
     health_image.spriteMap.loadFromFile("../resources/health_item.png");
 
@@ -46,6 +52,8 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     trap_image.spriteMap.loadFromFile("../resources/trap.png");
 
     shield_image.spriteMap.loadFromFile("../resources/shield.png");
+
+    speed_image.spriteMap.loadFromFile("../resources/speed.png");
 
 
     EnemySprite1.spriteMap.loadFromFile("../resources/alienwalk.png");
@@ -72,6 +80,12 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
     FredSprite.spriteFrame.width = 64;
     FredSprite.spriteFrame.height = 64;
 
+    CherylSprite.spriteMap.loadFromFile("../resources/cherylwalk.png");
+    CherylSprite.spriteFrame.top = 0;//x
+    CherylSprite.spriteFrame.left = 0;//y
+    CherylSprite.spriteFrame.width = 100;
+    CherylSprite.spriteFrame.height = 100;
+
     if (!font.loadFromFile("../resources/bit5x3.ttf"))
     {
         // error...
@@ -83,7 +97,7 @@ PlayerView::PlayerView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Fred>
 void PlayerView::pollInput() {
     sf::Event Event;
 
-    // Use Item (mouse)
+    // Use Item
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->fred->getSelectedItem()) {
         if (this->fred->getSelectedItem()->getType() == ActorType::RANGEWEAPON || 
             this->fred->getSelectedItem()->getType() == ActorType::MELEEWEAPON) {
@@ -115,26 +129,27 @@ void PlayerView::pollInput() {
     }
 
     // Pick up item
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) fred->addItem();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) this->fred->addItem();
 
     // Drop item
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) fred->dropItem();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) this->fred->dropItem();
 
-    // Temp button for testing Cheryl
+    // Destroy Item
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) this->fred->destroyItem();
+
+    // Moves timer to the end of that cycle
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::H)) {
-        this->logic->setNightCount(4);
-        this->switchToDay();
-        this->logic->setDay(true);
+        this->logic->getTimer()->setCurTime(350);
     }
 
     // Kill Fred
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) fred->damage(150);
+    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) this->fred->damage(150);
 
     // Inventory selection
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) fred->setSelectedIndex(0);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) fred->setSelectedIndex(1);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) fred->setSelectedIndex(2);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) fred->setSelectedIndex(3);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) this->fred->setSelectedIndex(0);
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) this->fred->setSelectedIndex(1);
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) this->fred->setSelectedIndex(2);
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) this->fred->setSelectedIndex(3);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
         //cur_track.stopCurrentTrack();
@@ -175,7 +190,7 @@ void PlayerView::drawActor(Actor& a) {
     case ActorType::MELEEWEAPON:
     {
         sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-        itemShape.setFillColor(sf::Color::Magenta);
+        itemShape.setTexture(&hoe_image.spriteMap);
         itemShape.setPosition(a.getX(), a.getY());
         this->window->draw(itemShape);
     }
@@ -191,7 +206,7 @@ void PlayerView::drawActor(Actor& a) {
     case ActorType::BED:
     {
         sf::RectangleShape bedShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-        bedShape.setFillColor(sf::Color::Magenta);
+        bedShape.setTexture(&bed_image.spriteMap);
         bedShape.setPosition(a.getX(), a.getY());
         this->window->draw(bedShape);
     }
@@ -199,7 +214,7 @@ void PlayerView::drawActor(Actor& a) {
     case ActorType::CLOSET:
     {
         sf::RectangleShape closetShape(sf::Vector2f(a.getWidth(), a.getHeight()));
-        closetShape.setFillColor(sf::Color::Red);
+        closetShape.setTexture(&closet_image.spriteMap);
         closetShape.setPosition(a.getX(), a.getY());
         this->window->draw(closetShape);
     }
@@ -216,6 +231,14 @@ void PlayerView::drawActor(Actor& a) {
     {
         sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
         itemShape.setTexture(&shield_image.spriteMap);
+        itemShape.setPosition(a.getX(), a.getY());
+        this->window->draw(itemShape);
+    }
+    break;
+    case ActorType::SPEED_BOOST:
+    {
+        sf::RectangleShape itemShape(sf::Vector2f(a.getWidth(), a.getHeight()));
+        itemShape.setTexture(&speed_image.spriteMap);
         itemShape.setPosition(a.getX(), a.getY());
         this->window->draw(itemShape);
     }
@@ -249,11 +272,13 @@ void PlayerView::drawActor(Actor& a) {
     break;
     case ActorType::PORTAL:
     {
-        sf::RectangleShape sp1(sf::Vector2f(a.getWidth(), a.getHeight()));
-        sp1.setTexture(&portalSprite.spriteMap);
-        sp1.setTextureRect(portalSprite.spriteFrame);
-        sp1.setPosition(a.getX(), a.getY());
-        this->window->draw(sp1);
+        if (!(this->logic->getDay())) {
+            sf::RectangleShape sp1(sf::Vector2f(a.getWidth(), a.getHeight()));
+            sp1.setTexture(&portalSprite.spriteMap);
+            sp1.setTextureRect(portalSprite.spriteFrame);
+            sp1.setPosition(a.getX(), a.getY());
+            this->window->draw(sp1);
+        }
     }
     break;
     }
@@ -293,11 +318,19 @@ void PlayerView::drawScreen(void) {
     if (night) this->window->draw(darkness);
 
     //Fred's Health Bar
-    sf::RectangleShape healthBar(sf::Vector2f(5 * fred->getHealth(), 20));
+    sf::RectangleShape healthBar(sf::Vector2f((float(fred->getHealth()) / float(fred->getMaxHealth())) * 500, 20));
     healthBar.setPosition(10, 20);
-    healthBar.setFillColor(sf::Color::Blue);
+    healthBar.setFillColor(sf::Color::Red);
+
+    //outline of Fred's health bar
+    sf::RectangleShape healthBarOutline(sf::Vector2f(500, 20));
+    healthBarOutline.setPosition(10, 20);
+    healthBarOutline.setFillColor(sf::Color::Transparent);
+    healthBarOutline.setOutlineThickness(1.5);
+    healthBarOutline.setOutlineColor(sf::Color::Black);
 
     this->window->draw(healthBar);
+    this->window->draw(healthBarOutline);
 
     //Fred's Buff Bar
     sf::RectangleShape buffBar(sf::Vector2f(logic->getCurrentRoom()->getFred()->getBuffTime() * 50, 20));
@@ -344,10 +377,12 @@ void PlayerView::drawScreen(void) {
             this->drawActor(*this->fred->getInventory()[i]);
 
             // draw reload bar
-            sf::RectangleShape reloadBar(sf::Vector2f(this->fred->getInventory()[i]->getReloading() / this->fred->getInventory()[i]->getLoadTime() * 30.0, 5));
-            reloadBar.setPosition(this->fred->getInventory()[i]->getCenterX() - 15, this->fred->getInventory()[i]->getY() + this->fred->getInventory()[i]->getHeight() + 5);
-            reloadBar.setFillColor(sf::Color::Yellow);
-            this->window->draw(reloadBar);
+            if (this->fred->getInventory()[i]->getReloading() > 0) {
+                sf::RectangleShape reloadBar(sf::Vector2f(this->fred->getInventory()[i]->getReloading() / this->fred->getInventory()[i]->getLoadTime() * 30.0, 5));
+                reloadBar.setPosition(this->fred->getInventory()[i]->getCenterX() - 15, this->fred->getInventory()[i]->getY() + this->fred->getInventory()[i]->getHeight() + 5);
+                reloadBar.setFillColor(sf::Color::Yellow);
+                this->window->draw(reloadBar);
+            }
 
             if (this->fred->getInventory()[i] && this->fred->getInventory()[i]->getQuantity() > 1) {
                 sf::Text numText;
@@ -396,6 +431,7 @@ void PlayerView::drawScreen(void) {
         }
     }
 
+    // Draws enemies based on type
     for (std::shared_ptr<Enemy> a : this->logic->getCurrentRoom()->getEnemyList()) {
         sf::RectangleShape enemyShape(sf::Vector2f((*a).getWidth(), (*a).getHeight()));
         if (a->getEnemyType() == 1) {
@@ -479,10 +515,10 @@ void PlayerView::drawScreen(void) {
 
                 this->window->draw(fullHealthBar);
             }
-            enemyShape.setTexture(&EnemySprite1.spriteMap);
-            enemyShape.setTextureRect(EnemySprite1.spriteFrame);
+            enemyShape.setTexture(&CherylSprite.spriteMap);
+            enemyShape.setTextureRect(CherylSprite.spriteFrame);
             enemyShape.setPosition((*a).getX(), (*a).getY());
-            EnemySprite1.setEnemySprite((*a).getDirection());
+            CherylSprite.setCherylSprite((*a).getDirection());
         }
         this->window->draw(enemyShape);
     }
@@ -542,6 +578,7 @@ void PlayerView::update(float delta) {
     EnemySprite1.updateEnemy(delta);
     EnemySprite2.updateEnemy(delta);
     EnemySprite3.updateEnemy(delta);
+    CherylSprite.updateCheryl(delta);
     this->drawScreen();
 }
 

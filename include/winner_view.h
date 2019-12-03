@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+// View that displays when the player beats all enemies in the game.
 class WinnerView : public View {
 
 private:

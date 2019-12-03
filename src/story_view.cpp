@@ -33,6 +33,7 @@ void StoryView::pollInput() {
 void StoryView::updateText() {
     std::string str = "";
     std::string curStr;
+    curHeight = 180;
     
     textList.clear();
     std::shared_ptr<sf::Text> curText = std::make_shared<sf::Text>();
@@ -46,7 +47,7 @@ void StoryView::updateText() {
     it->get()->setCharacterSize(80);
     it->get()->setString(str);
     
-    while (inFile.peek() != '\n' && inFile >> curStr) {
+    while (inFile >> curStr && curStr != ".?") {
         str.append(curStr);
         str.append(" ");
         it->get()->setString(str);
@@ -69,6 +70,10 @@ void StoryView::updateText() {
             it->get()->setString(str);
         }
     }
+    
+//    if (inFile >> str) {
+//        // Do nothing
+//    }
 }
 
 void StoryView::update(float delta) {

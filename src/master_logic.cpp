@@ -39,9 +39,11 @@ void MasterLogic::startStory(void) {
 }
 
 void MasterLogic::startDemo(void) {
+    this->day = false;
+
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
-    this->roomList.push_back(std::make_shared<Room>(450, 200, 400, 400));     // farmhouse
+    this->roomList.push_back(std::make_shared<Room>(450, 200, 400, 400));   // farmhouse
     this->currentRoom = roomList.begin();
 
     // Add exits
@@ -49,20 +51,17 @@ void MasterLogic::startDemo(void) {
     this->roomList.back()->addActor(std::make_shared<Exit>(400, 400, 0));
 
     // Add fred
-    std::shared_ptr<Fred> fred = std::make_shared<Fred>(50, 50);
+    std::shared_ptr<Fred> fred = std::make_shared<Fred>(800, 300);
     this->roomList.front()->addActor(fred);
     this->view->setPlayer(fred);
+    
+    // Add hoe
+    this->roomList.front()->getFred()->addItem(std::make_shared<MeleeWeapon>(800, 300, 24, 60, 4, 2));
 
     this->loadInEnemies();
 
-    // test range enemies
-    /*std::shared_ptr<Enemy> rangeEnemy = std::make_shared<Enemy>(555, 375, 20, 100, 100, 1);
-    rangeEnemy->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 40, 1));
-    this->roomList.front()->addActor(rangeEnemy);
-    this->view->addEnemy(rangeEnemy);*/
-
     //Testing Cheryl
-    /*std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
+    /**std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
     this->getCurrentRoom()->addActor(cheryl);
     this->view->addEnemy(cheryl);*/
 
@@ -77,21 +76,10 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(portal4);
     
     // Add bed
-    this->roomList.back()->addActor(std::make_shared<Bed>(ActorType::BED, 500, 250, 100, 50, 1));
+    this->roomList.back()->addActor(std::make_shared<Bed>(ActorType::BED, 720, 520, 100, 50, 2));
     
     // Add closet
-    this->roomList.back()->addActor(std::make_shared<Closet>(ActorType::CLOSET, 600, 350, 100, 50));
-
-    // Add test items
-    this->roomList.front()->addActor(std::make_shared<MeleeWeapon>(480, 350, 20, 40, 10, 2, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<RangeWeapon>(150, 150, 40, 20, 40, 1));
-    this->roomList.front()->addActor(std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<Trap>(850, 550, 64, 64, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<Trap>(850, 750, 64, 64, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<HealthItem>(250, 250, 32, 32, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<HealthItem>(350, 250, 32, 32, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<Shield>(450, 250, 32, 32, this->getCurrentRoom()->getFred()));
-    this->roomList.front()->addActor(std::make_shared<Shield>(450, 550, 32, 32, this->getCurrentRoom()->getFred()));
+    this->roomList.back()->addActor(std::make_shared<Closet>(ActorType::CLOSET, 600, 200, 100, 50));
 
     // Create timer object that keeps track of day/night cycle
     this->timer = std::make_shared<Timer>();
@@ -99,61 +87,40 @@ void MasterLogic::startDemo(void) {
 
 void MasterLogic::loadInEnemies(void) {
     std::ifstream inFile;
-    double x, y, mass, maxSpeed, maxHealth;
+    double x, y, mass, maxSpeed;
     int type;
 
-    if (nightCount == 1) {
-        inFile.open("../resources/enemies1.txt");
+    if (nightCount < 4) {
+        inFile.open("../resources/enemies" + std::to_string(nightCount) + ".txt");
         if (!inFile) {
-            std::cout << "Unable to open enemies.txt";
+            std::cout << "Unable to open enemies#.txt";
             exit(1);
         }
 
-        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth >> type) {
-            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth, type);
+        while (inFile >> x >> y >> mass >> maxSpeed >> type) {
+            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, type);
             this->enemyQueueList.push_front(testEnemy);
         }
 
         inFile.close();
-    }
-    else if (nightCount == 2) {
-        inFile.open("../resources/enemies2.txt");
-        if (!inFile) {
-            std::cout << "Unable to open enemies2.txt";
-            exit(1);
-        }
-
-        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth >> type) {
-            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth, type);
-            this->enemyQueueList.push_front(testEnemy);
-        }
-
-        inFile.close();
-    }
-    else if (nightCount == 3) {
-        inFile.open("../resources/enemies3.txt");
-        if (!inFile) {
-            std::cout << "Unable to open enemies3.txt";
-            exit(1);
-        }
-
-        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth, type) {
-            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth, type);
-            this->enemyQueueList.push_front(testEnemy);
-        }
-
-        inFile.close();
-    }
-    else if (nightCount == 4) {
-        std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(55, 375, 40, 80);
-        this->getCurrentRoom()->addActor(cheryl);
-        this->view->addEnemy(cheryl);
-        cherylSpawned = true;
     }
 }
 
 bool MasterLogic::isAtCloset() {
     return this->atCloset;
+}
+
+void MasterLogic::resetMasterLogic(void) {
+    this->actorList.clear();
+    this->itemList.clear();
+    this->enemyQueueList.clear();
+    this->roomList.clear();
+    currentExit = nullptr;
+    //currentRoom = nullptr;
+    bed = nullptr;
+    this->nightCount = 1;
+    this->cherylSpawned = false;
+    this->getCurrentRoom()->reset();
 }
 
 void MasterLogic::checkFred(void) {
@@ -162,14 +129,18 @@ void MasterLogic::checkFred(void) {
         this->playing = false;
         this->options = true;
         this->loser = true;
+        this->resetMasterLogic();
         this->startLoser();
     }
-    else if (this->getCurrentRoom()->getFred()->getHealth() > 0 && this->nightCount >= 4 && this->getCurrentRoom()->getEnemyList().size() <= 0) {
+    else if (this->getCurrentRoom()->getFred()->getHealth() > 0 && this->nightCount >= 4 && this->roomList.front()->getEnemyList().size() == 0) {
         if (this->cherylSpawned) {
+            //this->story = true;
             this->paused = true;
             this->playing = false;
             this->options = true;
             this->winner = true;
+            this->resetMasterLogic();
+            //this->view->startStory();
             this->startWinner();
         }
     }
@@ -196,6 +167,14 @@ void MasterLogic::checkCollisions(void) {
                 curActor->setX(curActor->getX() - 1);
             }
         }
+
+        // Check if Fred uses the bed
+        if (curActor->getType() == ActorType::BED) {
+            if (this->getCurrentRoom()->getFred()->collidesSquare(*curActor)) {
+                std::shared_ptr<Bed> curBed = std::dynamic_pointer_cast<Bed>(curActor);
+                this->getCurrentRoom()->getFred()->heal(curBed->getHealAmount(), this->delta);
+            }
+        }
     }
 
     // Enemies
@@ -203,7 +182,8 @@ void MasterLogic::checkCollisions(void) {
         // Trap affects
         for (std::shared_ptr<Item> it : this->getCurrentRoom()->getItemList()) {
             if (it->getType() == ActorType::TRAP && enemy->collidesSquare(*it) && !it->getCanPickUp()) {
-                enemy->damage(100);
+                if (enemy->getType() == ActorType::CHERYL) enemy->damage(50);
+                else enemy->damage(100);
                 this->getCurrentRoom()->removeActor(it);
             }
         }
@@ -226,11 +206,11 @@ void MasterLogic::checkCollisions(void) {
             std::shared_ptr<Fred> fred = this->getCurrentRoom()->getFred();
             if (this->getCurrentRoom()->getFred()->getCenterX() < exit->getCenterX()) {
                 fred->setPos((*newRoom)->getExitList().front()->getCenterX() + 50,
-                                (*newRoom)->getExitList().front()->getCenterY() - 50);
+                                fred->getY());
             }
             else if (this->getCurrentRoom()->getFred()->getCenterX() > exit->getCenterX()) {
                 fred->setPos((*newRoom)->getExitList().front()->getCenterX() - 100,
-                                (*newRoom)->getExitList().front()->getCenterY() - 50);
+                                fred->getY());
             }
             this->getCurrentRoom()->removeActor(fred);
             (*newRoom)->addActor(fred);
@@ -272,31 +252,19 @@ void MasterLogic::update(float delta) {
 
         this->checkFred();
 
-        // Loop throught the actor list
+        // Update all actors in the actor list
         for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
             curActor->update(delta);
         
-            // Check if Fred uses the bed
-            if (curActor->getType() == ActorType::BED) {
-                if (this->getCurrentRoom()->getFred()->collidesSquare(*curActor)) {
-                    std::shared_ptr<Bed> curBed = std::dynamic_pointer_cast<Bed>(curActor);
-                    this->getCurrentRoom()->getFred()->heal(curBed->getHealAmount(), delta);
-                }
-            }
-        
             // Check if Fred is at the closet
             if (curActor->getType() == ActorType::CLOSET) {
-                if (this->getCurrentRoom()->getFred()->collidesSquare(*curActor)) {
-                    this->atCloset = true;
-                }
-                else {
-                    this->atCloset = false;
-                }
+                this->atCloset = this->getCurrentRoom()->getFred()->collidesSquare(*curActor);
             }
         }
 
         if (timer->update(delta)) {
             day = !day;
+
             if (day) {
                 //Remove enemies from actor list
 
@@ -308,15 +276,23 @@ void MasterLogic::update(float delta) {
 
             else {
                 //Start spawning enemies
+                nightCount++;
                 this->loadInEnemies();
-
-                if (enemyQueueList.size() > 0) {
-                    nightCount++;
-                }
 
                 //Switch to night theme
                 this->view->switchToNight();
+                
+                this->story = true;
+                this->view->startStory();
             }
+        }
+
+        if (nightCount >= 4 && !cherylSpawned && !day) {
+            std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(55, 375, 40, 80);
+            this->roomList.front()->addActor(cheryl);
+            this->view->addEnemy(cheryl);
+            cherylSpawned = true;
+            cheryl->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 43, 10));
         }
         
         // spawn enemies
@@ -324,31 +300,35 @@ void MasterLogic::update(float delta) {
             if (spawnRate <= 0 && enemyQueueList.size() > 0) {
                 if (nightCount == 1) spawnRate = 4;
                 else if (nightCount == 2) spawnRate = 3;
-                else if (nightCount == 3) spawnRate = 2;
+                else if (nightCount == 3) spawnRate = 2.5;
                 std::shared_ptr<Enemy> toSpawn;
                 toSpawn = this->enemyQueueList.back();
+                
+                // Give enemies items
+                float fireRate = float(std::rand() % 100) / 50.0 + 0.08;
+                int damage = 4 * toSpawn->getEnemyType() * fireRate + float(std::rand() % 3);
+                switch (std::rand() % 100) {
+                    case 0 ... 29:
+                        toSpawn->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, damage, fireRate));
+                        break;
+                    case 30 ... 39:
+                        toSpawn->addItem(std::make_shared<SpeedBoost>(650, 550, 32, 32));
+                        break;
+                    case 40 ... 49:
+                        toSpawn->addItem(std::make_shared<HealthItem>(650, 550, 32, 32));
+                        break;
+                    case 50 ... 59:
+                        toSpawn->addItem(std::make_shared<Shield>(650, 550, 32, 32));
+                        break;
+                    case 60 ... 79:
+                        toSpawn->addItem(std::make_shared<Trap>(650, 550, 64, 64));
+                        break;
+                }
                 this->enemyQueueList.remove(toSpawn);
                 this->view->addEnemy(toSpawn);
                 this->roomList.front()->addActor(toSpawn);
-                
-                // Give enemies items to drop
-                int randNum = std::rand() % 5;
-                if (randNum == 1) {
-                    std::shared_ptr<Trap> item = std::make_shared<Trap>(650, 550, 64, 64, this->getCurrentRoom()->getFred());
-                    toSpawn->addItem(item);
-                }
-                else if (randNum == 2) {
-                    std::shared_ptr<HealthItem> item = std::make_shared<HealthItem>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
-                    toSpawn->addItem(item);
-                }
-                else if (randNum == 3) {
-                    std::shared_ptr<Shield> item = std::make_shared<Shield>(650, 550, 32, 32, this->getCurrentRoom()->getFred());
-                    toSpawn->addItem(item);
-                }
             }
-            else {
-                spawnRate -= delta;
-            }
+            else spawnRate -= delta;
         }
     }
 }

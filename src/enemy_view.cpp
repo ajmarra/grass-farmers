@@ -23,7 +23,6 @@ void EnemyView::findFred(void) {
 
         enemy->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
     }
-
 }
 
 void EnemyView::update(float delta) {

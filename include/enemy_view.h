@@ -9,7 +9,10 @@
 #include "fred.h"
 #include "room.h"
 
-class EnemyView : View {
+/*
+* The view for all enemies.  Controls the AI so that they follow Fred or shoot at him
+*/
+class EnemyView : public View {
     protected:
         std::shared_ptr<Enemy> enemy;
         float elapsedTime = 0;

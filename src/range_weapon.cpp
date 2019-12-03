@@ -1,5 +1,5 @@
 #include "iostream"
-
+#include "music.h"
 #include "actor.h"
 #include "item.h"
 #include "range_weapon.h"
@@ -9,8 +9,8 @@
 #include <math.h>
 #define PI 3.14159265
 
-RangeWeapon::RangeWeapon(double x, double y, double width, double height, int damage, int fireRate) :
-	Item(ActorType::RANGEWEAPON, x, y, width, height, 1, false, NULL) {
+RangeWeapon::RangeWeapon(double x, double y, double width, double height, int damage, float fireRate) :
+	Item(ActorType::RANGEWEAPON, x, y, width, height, 1, false) {
 	this->x = x;
 	this->y = y;
 	this->damage = damage;
@@ -21,10 +21,11 @@ RangeWeapon::RangeWeapon(double x, double y, double width, double height, int da
 void RangeWeapon::use(int x, int y) {
 	if (!this->reloading) {
 		reloading = this->loadTime;
-		double direction = atan2(y - this->character->getCenterY(), x - this->character->getCenterX()) * 180 / PI;
+		double direction = atan2(y - this->character->getCenterY(), x - this->character->getCenterX()) * 180 / PI  - 5 + (rand() % 10);
 		
-		double xOffset = double(this->character->getWidth() / 2 + 10) * cos(direction * PI / 180);
-		double yOffset = double(this->character->getHeight() / 2 + 10) * sin(direction * PI / 180);
+		double xOffset = double(this->character->getWidth() / 2 + 20) * cos(direction * PI / 180);
+		double yOffset = double(this->character->getHeight() / 2 + 20) * sin(direction * PI / 180);
+		pew.playPewSound();
 		this->character->getCurrentRoom()->addActor(
 			std::make_shared<Bullet>(this->character->getCenterX() + xOffset,
 			this->character->getCenterY() + yOffset, 6, 800, direction, this->damage)

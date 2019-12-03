@@ -8,28 +8,25 @@
 #include "actor.h"
 #include "item.h"
 
+/* The Hoe that Fred starts with.  Has a reload time and does a fixed amount of damage*/
 class MeleeWeapon : public Item {
     private:
-        //scaling factors for damage and time between each hit and type of gun
-        int damage = 20;
-        int speed;
-        bool inUse = false;
-
+        // range of weapon
+        double damage;
+	    int range = 100;
+        Sounds swoosh;
 
     public:
-        MeleeWeapon(double x, double y, double width, double height, int damage, int speed, std::shared_ptr<Character> character);
+        MeleeWeapon(double x, double y, double width, double height, int damage, int speed);
 
         void setDamage(int damage) { this->damage = damage; };
         
         int getDamage(void) { return damage; };
 
-        void setSpeed(int speed) { this->speed = speed; };
-
-        int getSpeed(void) { return speed; };
-
         void use(int x, int y) override;
 
         void update(float delta) override;
+
 };
 
 #endif
