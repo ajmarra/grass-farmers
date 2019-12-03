@@ -6,8 +6,11 @@ Sounds::Sounds(){
 
     swooshBuffer.loadFromFile("../resources/swoosh.ogg");
     swooshSound.setBuffer(swooshBuffer);
+
     fredDamageBuffer.loadFromFile("../resources/fred_damage.ogg");
     fredDamageSound.setBuffer(fredDamageBuffer);
+    cherylDamageBuffer.loadFromFile("../resources/cheryl_damage.ogg");
+    cherylDamageSound.setBuffer(cherylDamageBuffer);
 }
 
 void Sounds::playDayTrack(){
@@ -60,4 +63,8 @@ void Sounds::playSwooshSound(){
 
 void Sounds::playFredDamageSound(){
     fredDamageSound.play();
+}
+
+void Sounds::playCherylDamageSound(){
+    cherylDamageSound.play();
 }
