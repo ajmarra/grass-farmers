@@ -6,7 +6,7 @@ Cheryl::Cheryl(double x, double y, double mass, double maxSpeed) :
     this->setWidthHeight(100, 100);
     this->setType(ActorType::CHERYL);
     this->setMaxHealth(400);
-    this->setHealth(400);
+    this->setHealth(4);
 }
 
 void Cheryl::update(float delta) {
