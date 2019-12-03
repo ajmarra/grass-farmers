@@ -14,6 +14,9 @@ class Sounds{
         void playCurrentTrack();
         void playPewSound();
         void playSwooshSound();
+        void playFredDamageSound();
+        void playCherylDamageSound();
+
 
 
     private:
@@ -26,6 +29,8 @@ class Sounds{
         sf::Sound swooshSound;
         sf::SoundBuffer fredDamageBuffer;
         sf::Sound fredDamageSound;
+        sf::SoundBuffer cherylDamageBuffer;
+        sf::Sound cherylDamageSound;
 };
 
 #endif
