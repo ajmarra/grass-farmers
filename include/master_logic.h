@@ -27,6 +27,10 @@ class EnemyView;
 
 class MasterView;
 
+/* 
+* Main logic class that controls everything.
+* Collision detection and enemy spawning done here.
+*/
 class MasterLogic {
     private: 
         std::shared_ptr<MasterView> view;

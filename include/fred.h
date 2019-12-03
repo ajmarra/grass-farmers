@@ -6,6 +6,7 @@
 #include "item.h"
 #include "music.h"
 
+/* The hero and controllable character of the game */
 class Fred : public Character {
     private:
         Sounds fredDamageSound;

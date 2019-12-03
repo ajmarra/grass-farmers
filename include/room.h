@@ -22,6 +22,7 @@ class Exit;
 class Fred;
 class Enemy;
 
+// Handles state management between the two rooms and all of the different actor lists
 class Room : public Actor, public std::enable_shared_from_this<Room> {
     private:
         // Actor lists

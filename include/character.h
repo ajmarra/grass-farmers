@@ -11,6 +11,9 @@
 class MasterLogic;
 class Room;
 
+/*
+* The parent class for all movable characters such as Fred, Cheryl, and all enemies
+*/
 class Character : public Actor, public std::enable_shared_from_this<Character> {
     private:
         void move(void);
