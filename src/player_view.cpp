@@ -143,7 +143,7 @@ void PlayerView::pollInput() {
     }
 
     // Kill Fred
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) this->fred->damage(150);
+    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) this->fred->damage(150);
 
     // Inventory selection
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) this->fred->setSelectedIndex(0);
