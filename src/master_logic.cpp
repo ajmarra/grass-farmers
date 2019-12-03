@@ -60,16 +60,6 @@ void MasterLogic::startDemo(void) {
 
     this->loadInEnemies();
 
-    //Testing Cheryl
-    /**std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
-    this->getCurrentRoom()->addActor(cheryl);
-    this->view->addEnemy(cheryl);*/
-
-    //test machine gun
-    //float fireRate = 0.1;
-    //float damage = (4 + float(std::rand() % 3 + 1)) * fireRate;
-    //this->roomList.front()->getFred()->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, damage, fireRate));
-
     // Creating the portals
     std::shared_ptr<Portal> portal1 = std::make_shared<Portal>(70, 150);
     this->roomList.front()->addActor(portal1);
@@ -237,7 +227,6 @@ void MasterLogic::checkCollisions(void) {
         // enemies
         for (std::shared_ptr<Enemy> enemy : this->getCurrentRoom()->getEnemyList()) {
             if (enemy->collidesSquare(*bullet)) {
-                std::cout << bullet->getDamage();
                 enemy->damage(bullet->getDamage());
                 this->getCurrentRoom()->removeActor(bullet);
             }
