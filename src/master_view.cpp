@@ -41,6 +41,15 @@ void MasterView::setWinner() {
     winner = std::make_shared<WinnerView>(this->logic, this->window);
 }
 
+void MasterView::setStory() {
+    story = std::make_shared<StoryView>(this->logic, this->window);
+    startStory();
+}
+
+void MasterView::startStory() {
+    story->updateText();
+}
+
 void MasterView::switchToDay() {
     player->switchToDay();
 }
@@ -59,6 +68,10 @@ void MasterView::update(float delta) {
 
     else if ((this->logic->paused == true) && (this->logic->playing == true) && (this->logic->options == false)) {
         paused->update(delta);
+    }
+    
+    else if ((this->logic->paused == false) && (this->logic->playing == true) && (this->logic->story == true)) {
+        story->update(delta);
     }
 
     else if ((this->logic->paused == false) && (this->logic->playing == true) && (this->logic->options == false)) {

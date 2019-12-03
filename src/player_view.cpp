@@ -507,6 +507,29 @@ void PlayerView::switchToNight() {
     night = true;
 }
 
+void PlayerView::switchToStory() {
+    sf::RectangleShape cover(sf::Vector2f(2000,2000));
+    cover.setFillColor(sf::Color::Black);
+    this->window->draw(cover);
+    std::ifstream inFile;
+
+    inFile.open("../resources/story.txt");
+    if (!inFile) {
+        std::cout << "Unable to open story.txt";
+        exit(1);
+    }
+
+    sf::Text text;
+    text.setFont(font);
+
+    std::string str;
+    while (inFile >> str) {
+        text.setString(str);
+        text.setFillColor(sf::Color::White);
+        this->window->draw(text);
+    }
+}
+
 void PlayerView::update(float delta) {
 
     elapsedTime += delta;

@@ -34,6 +34,10 @@ void MasterLogic::startWinner(void) {
     this->view->setWinner();
 }
 
+void MasterLogic::startStory(void) {
+    this->view->setStory();
+}
+
 void MasterLogic::startDemo(void) {
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
@@ -258,15 +262,11 @@ void MasterLogic::checkCollisions(void) {
 void MasterLogic::update(float delta) {
     this->delta = delta;
     
-    if (story == true) {
-        
-    }
-    
     if ((paused == true) && (playing == false) && (options == false)) {
         //std::cout << "HELLO" << std::endl;
     }
 
-    if ((paused == false) && (playing == true) && (options == false)) {
+    if ((paused == false) && (playing == true) && (options == false) && (story == false) && (story == false)) {
         this->enemyAttackTimer += delta;
         this->checkCollisions();
 
@@ -302,6 +302,8 @@ void MasterLogic::update(float delta) {
 
                 //Switch to day theme
                 this->view->switchToDay();
+                this->story = true;
+                this->view->startStory();
             }
 
             else {

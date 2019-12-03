@@ -74,6 +74,8 @@ class MasterLogic {
         void startPaused(void);
 
         void startWinner(void);
+    
+        void startStory(void);
 
         void startDemo(void);
 
