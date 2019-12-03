@@ -22,7 +22,7 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
 		std::shared_ptr<Room> curRoom;
 		std::shared_ptr<Item> inventory[4];
         int maxHealth;
-        int health;
+        float health;
         int mass;
         double maxSpeed;
         int desiredDirection = -1;
@@ -41,7 +41,7 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
 
         void update(float delta) override;
         
-        virtual void damage(int d);
+        virtual void damage(float d);
 
         /**
          * sets the direction that the character wants to go (not necessarily 

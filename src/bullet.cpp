@@ -4,7 +4,7 @@
 #include "actor.h"
 #include "bullet.h"
 
-Bullet::Bullet(double x, double y, int size, double speed, double direction, int damage)
+Bullet::Bullet(double x, double y, int size, double speed, double direction, float damage)
     : Actor(ActorType::BULLET, x, y, size, size) {
     this->damage = damage;
     this->xSpeed = speed * cos(direction * (PI / 180));

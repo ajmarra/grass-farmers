@@ -16,7 +16,7 @@ class Fred : public Character {
 
         Fred(double x, double y);
 
-        void damage(int d) override;
+        void damage(float d) override;
 };
 
 #endif

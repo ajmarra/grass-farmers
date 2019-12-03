@@ -60,11 +60,6 @@ void MasterLogic::startDemo(void) {
 
     this->loadInEnemies();
 
-    //Testing Cheryl
-    /**std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
-    this->getCurrentRoom()->addActor(cheryl);
-    this->view->addEnemy(cheryl);*/
-
     // Creating the portals
     std::shared_ptr<Portal> portal1 = std::make_shared<Portal>(70, 150);
     this->roomList.front()->addActor(portal1);
@@ -304,7 +299,7 @@ void MasterLogic::update(float delta) {
                 
                 // Give enemies items
                 float fireRate = float(std::rand() % 100) / 50.0 + 0.08;
-                int damage = 4 * toSpawn->getEnemyType() * fireRate + float(std::rand() % 3);
+                float damage = (4 * toSpawn->getEnemyType() + float(std::rand() % 3)) * fireRate;
                 switch (std::rand() % 100) {
                     case 0 ... 29:
                         toSpawn->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, damage, fireRate));

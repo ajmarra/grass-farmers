@@ -18,7 +18,7 @@ Character::Character(ActorType type, double x, double y, double width, double he
     this->maxHealth = maxHealth;
 }
 
-void Character::damage(int d) {
+void Character::damage(float d) {
     this->health -= d;
     if (this->health > this->maxHealth) this->health = this->maxHealth;
 }
