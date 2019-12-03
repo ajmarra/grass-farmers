@@ -58,7 +58,7 @@ void MasterLogic::startDemo(void) {
     // Add hoe
     this->roomList.front()->getFred()->addItem(std::make_shared<MeleeWeapon>(800, 300, 24, 60, 4, 2));
 
-    //this->loadInEnemies();
+    this->loadInEnemies();
 
     //Testing Cheryl
     /**std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(500, 500, 40, 60);
@@ -275,7 +275,7 @@ void MasterLogic::update(float delta) {
             else {
                 //Start spawning enemies
                 nightCount++;
-                //this->loadInEnemies();
+                this->loadInEnemies();
 
                 //Switch to night theme
                 this->view->switchToNight();
