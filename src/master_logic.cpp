@@ -176,7 +176,8 @@ void MasterLogic::checkCollisions(void) {
         // Trap affects
         for (std::shared_ptr<Item> it : this->getCurrentRoom()->getItemList()) {
             if (it->getType() == ActorType::TRAP && enemy->collidesSquare(*it) && !it->getCanPickUp()) {
-                enemy->damage(100);
+                if (enemy->getType() == ActorType::CHERYL) enemy->damage(50);
+                else enemy->damage(100);
                 this->getCurrentRoom()->removeActor(it);
             }
         }
@@ -270,6 +271,7 @@ void MasterLogic::update(float delta) {
             this->roomList.front()->addActor(cheryl);
             this->view->addEnemy(cheryl);
             cherylSpawned = true;
+            cheryl->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 43, 10));
         }
         
         // spawn enemies
@@ -277,7 +279,7 @@ void MasterLogic::update(float delta) {
             if (spawnRate <= 0 && enemyQueueList.size() > 0) {
                 if (nightCount == 1) spawnRate = 4;
                 else if (nightCount == 2) spawnRate = 3;
-                else if (nightCount == 3) spawnRate = 2;
+                else if (nightCount == 3) spawnRate = 2.5;
                 std::shared_ptr<Enemy> toSpawn;
                 toSpawn = this->enemyQueueList.back();
                 
