@@ -2,9 +2,11 @@
 #include "cheryl.h"
 
 Cheryl::Cheryl(double x, double y, double mass, double maxSpeed) :
-    Enemy(x, y, mass, maxSpeed, 400, 4) {
+    Enemy(x, y, mass, maxSpeed, 4) {
     this->setWidthHeight(100, 100);
     this->setType(ActorType::CHERYL);
+    this->setMaxHealth(400);
+    this->setHealh(400);
 }
 
 void Cheryl::update(float delta) {

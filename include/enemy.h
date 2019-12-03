@@ -15,13 +15,14 @@ private:
     double damageAmount;
 
 public:
-    Enemy(double x, double y, double mass, double maxSpeed, double maxHealth, int enemyType);
+    Enemy(double x, double y, double mass, double maxSpeed, int enemyType);
 
     int getEnemyType(void) { return enemyType; };
 
     void setDamage(double damage) { this->damageAmount = damage; };
 
     double getDamage(void) { return damageAmount; };
+
 };
 
 #endif

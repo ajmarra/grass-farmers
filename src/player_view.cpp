@@ -379,10 +379,12 @@ void PlayerView::drawScreen(void) {
             this->drawActor(*this->fred->getInventory()[i]);
 
             // draw reload bar
-            sf::RectangleShape reloadBar(sf::Vector2f(this->fred->getInventory()[i]->getReloading() / this->fred->getInventory()[i]->getLoadTime() * 30.0, 5));
-            reloadBar.setPosition(this->fred->getInventory()[i]->getCenterX() - 15, this->fred->getInventory()[i]->getY() + this->fred->getInventory()[i]->getHeight() + 5);
-            reloadBar.setFillColor(sf::Color::Yellow);
-            this->window->draw(reloadBar);
+            if (this->fred->getInventory()[i]->getReloading() > 0) {
+                sf::RectangleShape reloadBar(sf::Vector2f(this->fred->getInventory()[i]->getReloading() / this->fred->getInventory()[i]->getLoadTime() * 30.0, 5));
+                reloadBar.setPosition(this->fred->getInventory()[i]->getCenterX() - 15, this->fred->getInventory()[i]->getY() + this->fred->getInventory()[i]->getHeight() + 5);
+                reloadBar.setFillColor(sf::Color::Yellow);
+                this->window->draw(reloadBar);
+            }
 
             if (this->fred->getInventory()[i] && this->fred->getInventory()[i]->getQuantity() > 1) {
                 sf::Text numText;

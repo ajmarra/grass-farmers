@@ -70,7 +70,7 @@ void MasterLogic::startDemo(void) {
     this->roomList.front()->addActor(portal4);
     
     // Add bed
-    this->roomList.back()->addActor(std::make_shared<Bed>(ActorType::BED, 720, 520, 100, 50, 1));
+    this->roomList.back()->addActor(std::make_shared<Bed>(ActorType::BED, 720, 520, 100, 50, 2));
     
     // Add closet
     this->roomList.back()->addActor(std::make_shared<Closet>(ActorType::CLOSET, 600, 200, 100, 50));
@@ -81,7 +81,7 @@ void MasterLogic::startDemo(void) {
 
 void MasterLogic::loadInEnemies(void) {
     std::ifstream inFile;
-    double x, y, mass, maxSpeed, maxHealth;
+    double x, y, mass, maxSpeed;
     int type;
 
     if (nightCount < 4) {
@@ -91,8 +91,8 @@ void MasterLogic::loadInEnemies(void) {
             exit(1);
         }
 
-        while (inFile >> x >> y >> mass >> maxSpeed >> maxHealth >> type) {
-            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, maxHealth, type);
+        while (inFile >> x >> y >> mass >> maxSpeed >> type) {
+            std::shared_ptr<Enemy> testEnemy = std::make_shared<Enemy>(x, y, mass, maxSpeed, type);
             this->enemyQueueList.push_front(testEnemy);
         }
 
@@ -116,6 +116,8 @@ void MasterLogic::checkFred(void) {
     }
     else if (this->getCurrentRoom()->getFred()->getHealth() > 0 && this->nightCount >= 4 && this->getCurrentRoom()->getEnemyList().size() <= 0) {
         if (this->cherylSpawned) {
+            this->nightCount = 1;
+            this->cherylSpawned = false;
             this->paused = true;
             this->playing = false;
             this->options = true;
@@ -242,9 +244,8 @@ void MasterLogic::update(float delta) {
 
             else {
                 //Start spawning enemies
+                nightCount++;
                 this->loadInEnemies();
-
-                if (enemyQueueList.size() > 0) nightCount++;
 
                 //Switch to night theme
                 this->view->switchToNight();
