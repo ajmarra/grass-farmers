@@ -290,9 +290,9 @@ void MasterLogic::update(float delta) {
         if (nightCount >= 4 && !cherylSpawned && !day) {
             std::shared_ptr<Cheryl> cheryl = std::make_shared<Cheryl>(55, 375, 40, 80);
             this->roomList.front()->addActor(cheryl);
-            this->view->addEnemy(cheryl);
             cherylSpawned = true;
-            cheryl->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 43, 10));
+            cheryl->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, 10, 1));
+            this->view->addEnemy(cheryl);
         }
         
         // spawn enemies
