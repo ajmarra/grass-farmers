@@ -116,6 +116,7 @@ class Character : public Actor, public std::enable_shared_from_this<Character> {
         void setMass(double mass) { this->mass = mass; };
 
         void setMaxHealth(double health) { this->maxHealth = health; };
+        void setHealth(double health) { this->health = health; };
 };
 
 #endif

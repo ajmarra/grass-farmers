@@ -114,7 +114,7 @@ void MasterLogic::checkFred(void) {
         this->loser = true;
         this->startLoser();
     }
-    else if (this->getCurrentRoom()->getFred()->getHealth() > 0 && this->nightCount >= 4 && this->getCurrentRoom()->getEnemyList().size() <= 0) {
+    else if (this->getCurrentRoom()->getFred()->getHealth() > 0 && this->nightCount >= 4 && this->roomList.front()->getEnemyList().size() == 0) {
         if (this->cherylSpawned) {
             this->nightCount = 1;
             this->cherylSpawned = false;
