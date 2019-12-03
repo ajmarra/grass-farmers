@@ -1,6 +1,7 @@
 #ifndef timer_h
 #define timer_h
 
+// Controls the passage of time in the game
 class Timer {
 public:
     Timer();

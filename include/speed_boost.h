@@ -5,7 +5,7 @@
 #include "character.h"
 
 /*
-* Shield items that can be used to heal the user.  It's a consumable so only one use
+* Speed items that can be used to make the user faster.  It's a consumable so only one use
 * per shield item instance and the buff lasts for a certain amount of time.
 */
 class SpeedBoost : public Item {

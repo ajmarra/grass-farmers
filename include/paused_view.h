@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+// Controls the game state when the game is paused.
 class PausedView : public View {
 
     private:

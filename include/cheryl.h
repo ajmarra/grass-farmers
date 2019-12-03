@@ -11,6 +11,9 @@
 #include <list>
 #include <iostream>
 
+/*
+* The boss on the final night
+*/
 class Cheryl : public Enemy {
     private:
         Sounds cherylDamageSound;

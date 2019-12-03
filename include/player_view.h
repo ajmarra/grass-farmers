@@ -14,6 +14,7 @@
 #include "music.h"
 #include "enemy.h"
 
+/*Pretty much everything the player sees during the actual game.  All actor drawing done here.*/
 class PlayerView : public View {
     private:
         std::shared_ptr<sf::RenderWindow> window;

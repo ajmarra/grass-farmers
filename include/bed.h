@@ -1,6 +1,9 @@
 #ifndef BED_H
 #define BED_H
 
+/*
+* When Fred collides with the bed he slowly regains health as if he were resting.
+*/
 #include "actor.h"
 
 class Bed : public Actor {

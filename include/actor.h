@@ -1,6 +1,9 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 
+/*
+* Base class that all actors in the game inherit from
+*/
 enum class ActorType { ROOM, EXIT, FRED, ENEMY, HEALTH, MELEEWEAPON, RANGEWEAPON, TRAP, BULLET, PORTAL, CHERYL, BED, CLOSET, SHIELD, SPEED_BOOST };
 
 class Actor {

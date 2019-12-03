@@ -4,9 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-/** 
- * header class for Paddles for Pong
- */
+/* Handles all animations and graphics in the game */
 class Graphics {
     private:
         bool leftEnemy = false;

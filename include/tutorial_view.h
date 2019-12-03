@@ -9,6 +9,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+// Shows the tutorial for the game and all of the controls
 class TutorialView : public View {
 
     private:

@@ -24,7 +24,7 @@
 #include "exit.h"
 
 
-
+/* Manages all of the different views and game states */
 class MasterView {
     private:
         std::shared_ptr<sf::RenderWindow> window;
