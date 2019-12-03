@@ -23,6 +23,8 @@ void MenuView::pollInput() {
         this->logic->paused = false;
         this->logic->playing = true;
         this->logic->options = false;
+        this->logic->story = true;
+        this->logic->startStory();
         this->logic->startDemo();
 
     }

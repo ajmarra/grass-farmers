@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <memory>
+#include <fstream>
 
 #include "graphics.h"
 #include "view.h"
@@ -70,6 +71,8 @@ class PlayerView : public View {
         void switchToDay();
     
         void switchToNight();
+    
+        void switchToStory();
 };
 
 #endif

@@ -34,6 +34,10 @@ void MasterLogic::startWinner(void) {
     this->view->setWinner();
 }
 
+void MasterLogic::startStory(void) {
+    this->view->setStory();
+}
+
 void MasterLogic::startDemo(void) {
     this->day = false;
 
@@ -130,11 +134,13 @@ void MasterLogic::checkFred(void) {
     }
     else if (this->getCurrentRoom()->getFred()->getHealth() > 0 && this->nightCount >= 4 && this->roomList.front()->getEnemyList().size() == 0) {
         if (this->cherylSpawned) {
+            //this->story = true;
             this->paused = true;
             this->playing = false;
             this->options = true;
             this->winner = true;
             this->resetMasterLogic();
+            //this->view->startStory();
             this->startWinner();
         }
     }
@@ -235,8 +241,12 @@ void MasterLogic::checkCollisions(void) {
 
 void MasterLogic::update(float delta) {
     this->delta = delta;
+    
+    if ((paused == true) && (playing == false) && (options == false)) {
+        //std::cout << "HELLO" << std::endl;
+    }
 
-    if ((paused == false) && (playing == true) && (options == false)) {
+    if ((paused == false) && (playing == true) && (options == false) && (story == false) && (story == false)) {
         this->enemyAttackTimer += delta;
         this->checkCollisions();
 
@@ -254,7 +264,15 @@ void MasterLogic::update(float delta) {
 
         if (timer->update(delta)) {
             day = !day;
-            if (day) this->view->switchToDay(); //Switch to day theme
+
+            if (day) {
+                //Remove enemies from actor list
+
+                //Switch to day theme
+                this->view->switchToDay();
+                this->story = true;
+                this->view->startStory();
+            }
 
             else {
                 //Start spawning enemies
@@ -263,6 +281,9 @@ void MasterLogic::update(float delta) {
 
                 //Switch to night theme
                 this->view->switchToNight();
+                
+                this->story = true;
+                this->view->startStory();
             }
         }
 

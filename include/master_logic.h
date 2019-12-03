@@ -59,6 +59,7 @@ class MasterLogic {
         bool paused = true;
         bool playing = false;
         bool options = false;
+        bool story = true;
         bool winner = false;
         bool loser = false;
 
@@ -75,6 +76,8 @@ class MasterLogic {
         void startPaused(void);
 
         void startWinner(void);
+    
+        void startStory(void);
 
         void startDemo(void);
 
