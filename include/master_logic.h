@@ -96,10 +96,12 @@ class MasterLogic {
         
         void setNightCount(int num) { this->nightCount = num; };
 
+        // Checks to see if the player has won or lost
         void checkFred(void);
 
         bool getDay(void) { return day; };
 
+        // Resets all the lists in the game for when the player wins or loses
         void resetMasterLogic(void);
 };
 

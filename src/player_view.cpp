@@ -137,11 +137,9 @@ void PlayerView::pollInput() {
     // Destroy Item
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) this->fred->destroyItem();
 
-    // Temp button for testing Cheryl
+    // Moves timer to the end of that cycle
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::H)) {
-        this->logic->setNightCount(5);
-        this->switchToDay();
-        this->logic->setDay(true);
+        this->logic->getTimer()->setCurTime(350);
     }
 
     // Kill Fred
@@ -324,7 +322,7 @@ void PlayerView::drawScreen(void) {
     healthBar.setPosition(10, 20);
     healthBar.setFillColor(sf::Color::Red);
 
-    //outline
+    //outline of Fred's health bar
     sf::RectangleShape healthBarOutline(sf::Vector2f(500, 20));
     healthBarOutline.setPosition(10, 20);
     healthBarOutline.setFillColor(sf::Color::Transparent);
@@ -433,6 +431,7 @@ void PlayerView::drawScreen(void) {
         }
     }
 
+    // Draws enemies based on type
     for (std::shared_ptr<Enemy> a : this->logic->getCurrentRoom()->getEnemyList()) {
         sf::RectangleShape enemyShape(sf::Vector2f((*a).getWidth(), (*a).getHeight()));
         if (a->getEnemyType() == 1) {

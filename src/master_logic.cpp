@@ -289,7 +289,7 @@ void MasterLogic::update(float delta) {
                         toSpawn->addItem(std::make_shared<RangeWeapon>(150, 150, 40, 20, damage, fireRate));
                         break;
                     case 30 ... 39:
-                        toSpawn->addItem(std::make_shared<Trap>(650, 550, 64, 64));
+                        toSpawn->addItem(std::make_shared<SpeedBoost>(650, 550, 32, 32));
                         break;
                     case 40 ... 49:
                         toSpawn->addItem(std::make_shared<HealthItem>(650, 550, 32, 32));
@@ -297,8 +297,8 @@ void MasterLogic::update(float delta) {
                     case 50 ... 59:
                         toSpawn->addItem(std::make_shared<Shield>(650, 550, 32, 32));
                         break;
-                    case 60 ... 69:
-                        toSpawn->addItem(std::make_shared<SpeedBoost>(650, 550, 32, 32));
+                    case 60 ... 79:
+                        toSpawn->addItem(std::make_shared<Trap>(650, 550, 64, 64));
                         break;
                 }
                 this->enemyQueueList.remove(toSpawn);
