@@ -95,3 +95,14 @@ void Room::removeActor(std::shared_ptr<Portal> portal) {
     this->actorList.remove(portal);
     this->portalList.remove(portal);
 }
+
+void Room::reset(void) {
+    actorList.clear();
+    exitList.clear();
+    enemyList.clear();
+    itemList.clear();
+    bulletList.clear();
+    portalList.clear();
+    fred = nullptr;
+    cheryl = nullptr;
+}

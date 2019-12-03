@@ -35,13 +35,10 @@ class MasterLogic {
         std::list<std::shared_ptr<Actor>> actorList;
 		std::list<std::shared_ptr<Item>> itemList;
 		std::list<std::shared_ptr<Enemy>> enemyQueueList;
-        std::list<std::shared_ptr<Trap>> trapList;
     
         std::shared_ptr<Exit> currentExit;
     
         std::shared_ptr<Bed> bed;
-    
-        std::shared_ptr<Fred> fred;
     
         bool atCloset = false;
     
@@ -102,6 +99,8 @@ class MasterLogic {
         void checkFred(void);
 
         bool getDay(void) { return day; };
+
+        void resetMasterLogic(void);
 };
 
 #endif

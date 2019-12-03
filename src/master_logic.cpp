@@ -35,6 +35,8 @@ void MasterLogic::startWinner(void) {
 }
 
 void MasterLogic::startDemo(void) {
+    this->day = false;
+
     // Create rooms
     this->roomList.push_front(std::make_shared<Room>(0, 100, 1200, 800));   // battlefield
     this->roomList.push_back(std::make_shared<Room>(450, 200, 400, 400));   // farmhouse
@@ -104,24 +106,35 @@ bool MasterLogic::isAtCloset() {
     return this->atCloset;
 }
 
+void MasterLogic::resetMasterLogic(void) {
+    this->actorList.clear();
+    this->itemList.clear();
+    this->enemyQueueList.clear();
+    this->roomList.clear();
+    currentExit = nullptr;
+    //currentRoom = nullptr;
+    bed = nullptr;
+    this->nightCount = 1;
+    this->cherylSpawned = false;
+    this->getCurrentRoom()->reset();
+}
+
 void MasterLogic::checkFred(void) {
     if (this->getCurrentRoom()->getFred()->getHealth() <= 0) {
-        this->nightCount = 1;
-        this->cherylSpawned = false;
         this->paused = true;
         this->playing = false;
         this->options = true;
         this->loser = true;
+        this->resetMasterLogic();
         this->startLoser();
     }
     else if (this->getCurrentRoom()->getFred()->getHealth() > 0 && this->nightCount >= 4 && this->roomList.front()->getEnemyList().size() == 0) {
         if (this->cherylSpawned) {
-            this->nightCount = 1;
-            this->cherylSpawned = false;
             this->paused = true;
             this->playing = false;
             this->options = true;
             this->winner = true;
+            this->resetMasterLogic();
             this->startWinner();
         }
     }
