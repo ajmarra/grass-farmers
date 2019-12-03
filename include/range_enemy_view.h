@@ -10,6 +10,7 @@
 #include "fred.h"
 #include "room.h"
 
+// Controls the AI for enemies if they spawn with a gun
 class RangeEnemyView : public EnemyView {
 	private:
 		float elapsedTime = 0;

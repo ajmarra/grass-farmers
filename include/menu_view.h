@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+/*Main menu of the game.  Either starts the game or shows the tutorial depending on input*/
 class MenuView : public View {
 
     private:

@@ -1,12 +1,14 @@
 #ifndef timer_h
 #define timer_h
 
+// Controls the passage of time in the game
 class Timer {
 public:
     Timer();
     bool update(float delta);
     float getCurTime() { return curTime; }
     void switchCycle();
+    void setCurTime(float time) { curTime = time; };
     
 private:
     float curTimeElapsed;

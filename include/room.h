@@ -22,6 +22,7 @@ class Exit;
 class Fred;
 class Enemy;
 
+// Handles state management between the two rooms and all of the different actor lists
 class Room : public Actor, public std::enable_shared_from_this<Room> {
     private:
         // Actor lists
@@ -33,6 +34,8 @@ class Room : public Actor, public std::enable_shared_from_this<Room> {
         std::list<std::shared_ptr<Item>> itemList;
         std::list<std::shared_ptr<Bullet>> bulletList;
         std::list<std::shared_ptr<Portal>> portalList;
+
+        bool loser = false;
         
     public:
         Room(double x, double y, double width, double height);
@@ -97,6 +100,7 @@ class Room : public Actor, public std::enable_shared_from_this<Room> {
 
         std::shared_ptr<Fred> getFred(ActorType t) { return this->fred; };
 
+        void reset(void);
 };
 
 #endif

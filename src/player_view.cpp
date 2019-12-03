@@ -137,15 +137,13 @@ void PlayerView::pollInput() {
     // Destroy Item
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) this->fred->destroyItem();
 
-    // Temp button for testing Cheryl
+    // Moves timer to the end of that cycle
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::H)) {
-        this->logic->setNightCount(5);
-        this->switchToDay();
-        this->logic->setDay(true);
+        this->logic->getTimer()->setCurTime(350);
     }
 
     // Kill Fred
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) this->fred->damage(150);
+    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) this->fred->damage(150);
 
     // Inventory selection
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) this->fred->setSelectedIndex(0);
@@ -324,7 +322,7 @@ void PlayerView::drawScreen(void) {
     healthBar.setPosition(10, 20);
     healthBar.setFillColor(sf::Color::Red);
 
-    //outline
+    //outline of Fred's health bar
     sf::RectangleShape healthBarOutline(sf::Vector2f(500, 20));
     healthBarOutline.setPosition(10, 20);
     healthBarOutline.setFillColor(sf::Color::Transparent);
@@ -379,10 +377,12 @@ void PlayerView::drawScreen(void) {
             this->drawActor(*this->fred->getInventory()[i]);
 
             // draw reload bar
-            sf::RectangleShape reloadBar(sf::Vector2f(this->fred->getInventory()[i]->getReloading() / this->fred->getInventory()[i]->getLoadTime() * 30.0, 5));
-            reloadBar.setPosition(this->fred->getInventory()[i]->getCenterX() - 15, this->fred->getInventory()[i]->getY() + this->fred->getInventory()[i]->getHeight() + 5);
-            reloadBar.setFillColor(sf::Color::Yellow);
-            this->window->draw(reloadBar);
+            if (this->fred->getInventory()[i]->getReloading() > 0) {
+                sf::RectangleShape reloadBar(sf::Vector2f(this->fred->getInventory()[i]->getReloading() / this->fred->getInventory()[i]->getLoadTime() * 30.0, 5));
+                reloadBar.setPosition(this->fred->getInventory()[i]->getCenterX() - 15, this->fred->getInventory()[i]->getY() + this->fred->getInventory()[i]->getHeight() + 5);
+                reloadBar.setFillColor(sf::Color::Yellow);
+                this->window->draw(reloadBar);
+            }
 
             if (this->fred->getInventory()[i] && this->fred->getInventory()[i]->getQuantity() > 1) {
                 sf::Text numText;
@@ -431,6 +431,7 @@ void PlayerView::drawScreen(void) {
         }
     }
 
+    // Draws enemies based on type
     for (std::shared_ptr<Enemy> a : this->logic->getCurrentRoom()->getEnemyList()) {
         sf::RectangleShape enemyShape(sf::Vector2f((*a).getWidth(), (*a).getHeight()));
         if (a->getEnemyType() == 1) {
@@ -540,6 +541,29 @@ void PlayerView::switchToNight() {
     cur_track.playNightTrack();
     sky.setFillColor(sf::Color(25, 25, 112));
     night = true;
+}
+
+void PlayerView::switchToStory() {
+    sf::RectangleShape cover(sf::Vector2f(2000,2000));
+    cover.setFillColor(sf::Color::Black);
+    this->window->draw(cover);
+    std::ifstream inFile;
+
+    inFile.open("../resources/story.txt");
+    if (!inFile) {
+        std::cout << "Unable to open story.txt";
+        exit(1);
+    }
+
+    sf::Text text;
+    text.setFont(font);
+
+    std::string str;
+    while (inFile >> str) {
+        text.setString(str);
+        text.setFillColor(sf::Color::White);
+        this->window->draw(text);
+    }
 }
 
 void PlayerView::update(float delta) {

@@ -10,7 +10,7 @@
 */
 class HealthItem : public Item {
     private:
-        int healQuantity = 5;
+        int healQuantity = 50;
 
     public:
         HealthItem(double x, double y, double width, double height);

@@ -6,6 +6,7 @@
 #include "actor.h"
 #include "room.h"
 
+/* Exits to each of the rooms */
 class Exit : public Actor {
     protected:
         int destination;

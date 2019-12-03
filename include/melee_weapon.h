@@ -8,6 +8,7 @@
 #include "actor.h"
 #include "item.h"
 
+/* The Hoe that Fred starts with.  Has a reload time and does a fixed amount of damage*/
 class MeleeWeapon : public Item {
     private:
         // range of weapon

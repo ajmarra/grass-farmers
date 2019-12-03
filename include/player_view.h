@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <memory>
+#include <fstream>
 
 #include "graphics.h"
 #include "view.h"
@@ -14,6 +15,7 @@
 #include "music.h"
 #include "enemy.h"
 
+/*Pretty much everything the player sees during the actual game.  All actor drawing done here.*/
 class PlayerView : public View {
     private:
         std::shared_ptr<sf::RenderWindow> window;
@@ -69,6 +71,8 @@ class PlayerView : public View {
         void switchToDay();
     
         void switchToNight();
+    
+        void switchToStory();
 };
 
 #endif
