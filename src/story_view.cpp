@@ -25,7 +25,7 @@ StoryView::StoryView(std::shared_ptr<MasterLogic> &logic, std::shared_ptr<sf::Re
 void StoryView::pollInput() {
     sf::Event Event;
     
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         this->logic->story = false;
     }
 }
