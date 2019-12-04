@@ -115,6 +115,7 @@ void MasterLogic::resetMasterLogic(void) {
     bed = nullptr;
     this->nightCount = 1;
     this->cherylSpawned = false;
+    this->view->reset();
     this->getCurrentRoom()->reset();
 }
 
@@ -188,7 +189,10 @@ void MasterLogic::checkCollisions(void) {
         }
 
         // Remove enemy if dead
-        if (enemy->getHealth() <= 0) this->getCurrentRoom()->removeActor(enemy);
+        if (enemy->getHealth() <= 0) {
+            this->getCurrentRoom()->removeActor(enemy);
+            this->view->removeEnemy(enemy);
+        }
     }
 
     // Check if Fred uses an exit

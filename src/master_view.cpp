@@ -21,6 +21,24 @@ void MasterView::addEnemy(std::shared_ptr<Enemy> enemy) {
     else this->enemies.emplace_back(std::make_shared<EnemyView>(this->logic, enemy));
 }
 
+void MasterView::removeEnemy(std::shared_ptr<Enemy> enemy) {
+    if (enemy->getSelectedItem() && enemy->getSelectedItem()->getType() == ActorType::RANGEWEAPON) {
+        for (std::shared_ptr<RangeEnemyView> view : this->rangeEnemies) {
+            if (view->getEnemy() == enemy) this->rangeEnemies.remove(view);
+        }
+    }
+    else {
+        for (std::shared_ptr<EnemyView> view : this->enemies) {
+            if (view->getEnemy() == enemy) this->enemies.remove(view);
+        }
+    }
+}
+
+void MasterView::reset(void) {
+    this->enemies.clear();
+    this->rangeEnemies.clear();
+}
+
 void MasterView::setMenu() {
     menu = std::make_shared<MenuView>(this->logic, this->window);
 }
