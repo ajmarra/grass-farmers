@@ -263,8 +263,11 @@ void MasterLogic::update(float delta) {
 
                 //Switch to day theme
                 this->view->switchToDay();
-                this->story = true;
-                this->view->startStory();
+                
+                if (nightCount < 4) {
+                    this->story = true;
+                    this->view->startStory();
+                }
             }
 
             else {
@@ -275,8 +278,10 @@ void MasterLogic::update(float delta) {
                 //Switch to night theme
                 this->view->switchToNight();
                 
-                this->story = true;
-                this->view->startStory();
+                if (nightCount <= 4) {
+                    this->story = true;
+                    this->view->startStory();
+                }
             }
         }
 
