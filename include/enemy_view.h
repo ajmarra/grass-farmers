@@ -22,6 +22,8 @@ class EnemyView : public View {
         EnemyView(std::shared_ptr<MasterLogic> logic, std::shared_ptr<Enemy> enemy);
 
         virtual void update(float delta);
+
+        std::shared_ptr<Enemy> getEnemy(void) { return enemy; };
 };
 
 #endif

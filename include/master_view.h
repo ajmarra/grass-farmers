@@ -45,6 +45,10 @@ class MasterView {
 
         void init(std::shared_ptr<MasterLogic> logic);
 
+        void removeEnemy(std::shared_ptr<Enemy> enemy);
+
+        void reset();
+
         void setMenu();
 
         void setPaused();
