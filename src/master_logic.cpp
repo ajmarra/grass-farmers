@@ -55,7 +55,7 @@ void MasterLogic::startDemo(void) {
     
     // Add hoe
     this->roomList.front()->getFred()->addItem(std::make_shared<MeleeWeapon>(800, 300, 24, 60, 4, 2));
-this->roomList.front()->getFred()->addItem(std::make_shared<RangeWeapon>(800, 300, 24, 60, 100, 0.1));
+
     this->loadInEnemies();
 
     // Creating the portals
