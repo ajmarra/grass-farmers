@@ -37,6 +37,7 @@ void MasterLogic::startStory(void) {
 }
 
 void MasterLogic::startDemo(void) {
+    this->roomList.clear();
     this->day = false;
 
     // Create rooms
@@ -103,8 +104,6 @@ void MasterLogic::resetMasterLogic(void) {
     this->actorList.clear();
     this->itemList.clear();
     this->enemyQueueList.clear();
-    this->roomList.clear();
-    //currentRoom = nullptr;
     bed = nullptr;
     this->nightCount = 1;
     this->cherylSpawned = false;
