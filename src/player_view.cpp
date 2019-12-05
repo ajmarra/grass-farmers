@@ -118,16 +118,6 @@ void PlayerView::pollInput() {
     if (x == 0 && y == 0) fred->stop();
     else fred->setDesiredDirection(rint(atan2(y, x) * 180.0 / PI + 360));
 
-    // Open closet
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
-        if (logic->isAtCloset()) {
-            //            while (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-            //                drawScreen();
-            //                drawClosetMenu();
-            //            }
-        }
-    }
-
     // Pick up item
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) this->fred->addItem();
 
@@ -141,9 +131,6 @@ void PlayerView::pollInput() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::H)) {
         this->logic->getTimer()->setCurTime(350);
     }
-
-    // Kill Fred
-    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) this->fred->damage(150);
 
     // Inventory selection
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) this->fred->setSelectedIndex(0);

@@ -8,8 +8,9 @@
 #include "item.h"
 #include "bullet.h"
 
-// The guns that can be dropped by enemies and used by both enemies and Fred
-// Have randomized firing rate and damage values
+/**
+ * Gun item, can be used by all characters
+ */
 class RangeWeapon : public Item {
     private:
         //scaling factors for damage and time between each hit and type of gun

@@ -44,8 +44,6 @@ class MasterLogic {
     
         std::shared_ptr<Bed> bed;
     
-        bool atCloset = false;
-    
 		//float delta;
         std::shared_ptr<Timer> timer;
 		float delta;
@@ -84,12 +82,8 @@ class MasterLogic {
         void update(float delta);
 
 		void loadInEnemies(void);
-    
-        bool isAtCloset(); // will be removed
 
         void setDay(bool day) { this->day = day; };
-
-        std::list<std::shared_ptr<Actor>> getActorList(void) { return actorList; };
     
         std::shared_ptr<Room> getCurrentRoom(void) { return *(this->currentRoom); };
         
