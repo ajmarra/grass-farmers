@@ -17,7 +17,6 @@ void MasterLogic::startMenu(void) {
 }
 
 void MasterLogic::startTutorial(void) {
-    //std::cout << "HOI" << std::endl;
     this->view->setTutorial();
 }
 
@@ -26,7 +25,6 @@ void MasterLogic::startLoser(void) {
 }
 
 void MasterLogic::startPaused(void) {
-    //std::cout << "HOI" << std::endl;
     this->view->setPaused();
 }
 
@@ -99,10 +97,6 @@ void MasterLogic::loadInEnemies(void) {
 
         inFile.close();
     }
-}
-
-bool MasterLogic::isAtCloset() {
-    return this->atCloset;
 }
 
 void MasterLogic::resetMasterLogic(void) {
@@ -263,8 +257,6 @@ void MasterLogic::update(float delta) {
             day = !day;
 
             if (day) {
-                //Remove enemies from actor list
-
                 //Switch to day theme
                 this->view->switchToDay();
                 
