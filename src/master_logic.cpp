@@ -55,7 +55,7 @@ void MasterLogic::startDemo(void) {
     
     // Add hoe
     this->roomList.front()->getFred()->addItem(std::make_shared<MeleeWeapon>(800, 300, 24, 60, 4, 2));
-
+this->roomList.front()->getFred()->addItem(std::make_shared<RangeWeapon>(800, 300, 24, 60, 100, 0.1));
     this->loadInEnemies();
 
     // Creating the portals
@@ -104,7 +104,6 @@ void MasterLogic::resetMasterLogic(void) {
     this->itemList.clear();
     this->enemyQueueList.clear();
     this->roomList.clear();
-    currentExit = nullptr;
     //currentRoom = nullptr;
     bed = nullptr;
     this->nightCount = 1;
@@ -244,15 +243,9 @@ void MasterLogic::update(float delta) {
         this->checkFred();
 
         // Update all actors in the actor list
-        for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) {
-            curActor->update(delta);
-        
-            // Check if Fred is at the closet
-            if (curActor->getType() == ActorType::CLOSET) {
-                this->atCloset = this->getCurrentRoom()->getFred()->collidesSquare(*curActor);
-            }
+        if (this->getCurrentRoom()->getActorList().size() > 0) {
+            for (std::shared_ptr<Actor> curActor : this->getCurrentRoom()->getActorList()) curActor->update(delta);
         }
-
         if (timer->update(delta)) {
             day = !day;
 

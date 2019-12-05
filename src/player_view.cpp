@@ -132,9 +132,6 @@ void PlayerView::pollInput() {
         this->logic->getTimer()->setCurTime(350);
     }
 
-    // Kill Fred
-    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) this->fred->damage(150);
-
     // Inventory selection
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) this->fred->setSelectedIndex(0);
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) this->fred->setSelectedIndex(1);

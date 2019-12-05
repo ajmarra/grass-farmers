@@ -29,7 +29,7 @@ void MasterView::removeEnemy(std::shared_ptr<Enemy> enemy) {
     }
     else {
         for (std::shared_ptr<EnemyView> view : this->enemies) {
-            if (view->getEnemy() == enemy) this->enemies.remove(view);
+            //if (view->getEnemy() == enemy) this->enemies.remove(view); //commented out for seg fault problem
         }
     }
 }
@@ -39,40 +39,40 @@ void MasterView::reset(void) {
     this->rangeEnemies.clear();
 }
 
-void MasterView::setMenu() {
+void MasterView::setMenu(void) {
     menu = std::make_shared<MenuView>(this->logic, this->window);
 }
 
-void MasterView::setPaused() {
+void MasterView::setPaused(void) {
     paused = std::make_shared<PausedView>(this->logic, this->window);
 }
 
-void MasterView::setTutorial() {
+void MasterView::setTutorial(void) {
     tutorial = std::make_shared<TutorialView>(this->logic, this->window);
 }
 
-void MasterView::setLoser() {
+void MasterView::setLoser(void) {
     loser = std::make_shared<LoserView>(this->logic, this->window);
 }
 
-void MasterView::setWinner() {
+void MasterView::setWinner(void) {
     winner = std::make_shared<WinnerView>(this->logic, this->window);
 }
 
-void MasterView::setStory() {
+void MasterView::setStory(void) {
     story = std::make_shared<StoryView>(this->logic, this->window);
     startStory();
 }
 
-void MasterView::startStory() {
+void MasterView::startStory(void) {
     story->updateText();
 }
 
-void MasterView::switchToDay() {
+void MasterView::switchToDay(void) {
     player->switchToDay();
 }
 
-void MasterView::switchToNight() {
+void MasterView::switchToNight(void) {
     player->switchToNight();
 }
 
@@ -104,8 +104,4 @@ void MasterView::update(float delta) {
     else if ((this->logic->paused == true) && (this->logic->playing == false) && (this->logic->options == true) && (this->logic->winner == true)) {
         winner->update(delta);
     }
-
 }
-
-
-

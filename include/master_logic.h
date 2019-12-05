@@ -44,8 +44,6 @@ class MasterLogic {
     
         std::shared_ptr<Bed> bed;
     
-        bool atCloset = false;
-    
 		//float delta;
         std::shared_ptr<Timer> timer;
 		float delta;
