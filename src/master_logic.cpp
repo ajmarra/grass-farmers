@@ -213,7 +213,7 @@ void MasterLogic::checkCollisions(void) {
         if (bullet->getTimer() < 0.1) this->getCurrentRoom()->removeActor(bullet);
 
         // Fred
-        if (this->getCurrentRoom()->getFred()->collidesSquare(*bullet)) {
+        if (this->getCurrentRoom()->getFred()->collidesSquare(*bullet) && !(this->getCurrentRoom()->getFred()->getInvincibility())) {
             this->getCurrentRoom()->getFred()->damage(bullet->getDamage());
             this->getCurrentRoom()->removeActor(bullet);
         }
