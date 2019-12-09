@@ -4,7 +4,7 @@ Game Design Fall 2019 Project
 Requires SFML for C++
 
 ## To Run
-1. create a subdirectory called debug and enter it
+1. create a subdirectory called "Release" and open it
 2. run "cmake .." (Or however you run cmake on your machine) 
 3. run "make" (Or however you usually compile on your machine)
 4. run "./application_layer.exe"
