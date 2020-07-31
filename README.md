@@ -3,6 +3,8 @@ Game Design Fall 2019 Project
 
 Requires SFML for C++
 
+### [Demo video](https://www.youtube.com/watch?v=3MdgaDb5Fno)
+
 ## To Run
 1. create a subdirectory called "Release" and open it
 2. run "cmake .." (Or however you run cmake on your machine) 
